@@ -1,2 +1,2 @@
-# stephub
+# StepHub
 Step Hub
