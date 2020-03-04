@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Мар 04 2020 г., 22:24
+-- Время создания: Мар 04 2020 г., 22:53
 -- Версия сервера: 10.4.11-MariaDB
 -- Версия PHP: 7.4.2
 
@@ -53,6 +53,7 @@ CREATE TABLE `announcement` (
 -- Структура таблицы `announcement_status`
 --
 -- Создание: Мар 04 2020 г., 21:19
+-- Последнее обновление: Мар 04 2020 г., 21:52
 --
 
 CREATE TABLE `announcement_status` (
@@ -64,12 +65,22 @@ CREATE TABLE `announcement_status` (
 -- ССЫЛКИ ТАБЛИЦЫ `announcement_status`:
 --
 
+--
+-- Дамп данных таблицы `announcement_status`
+--
+
+INSERT INTO `announcement_status` (`id`, `status`) VALUES
+(1, 'actual'),
+(2, 'frozen'),
+(3, 'solved'),
+(4, 'banned');
+
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `user`
 --
--- Создание: Мар 04 2020 г., 21:10
+-- Создание: Мар 04 2020 г., 21:39
 --
 
 CREATE TABLE `user` (
@@ -94,6 +105,7 @@ CREATE TABLE `user` (
 -- Структура таблицы `user_status`
 --
 -- Создание: Мар 04 2020 г., 21:18
+-- Последнее обновление: Мар 04 2020 г., 21:50
 --
 
 CREATE TABLE `user_status` (
@@ -104,6 +116,16 @@ CREATE TABLE `user_status` (
 --
 -- ССЫЛКИ ТАБЛИЦЫ `user_status`:
 --
+
+--
+-- Дамп данных таблицы `user_status`
+--
+
+INSERT INTO `user_status` (`id`, `status`) VALUES
+(1, 'admin'),
+(2, 'user'),
+(3, 'moderator'),
+(4, 'banned');
 
 --
 -- Индексы сохранённых таблиц
@@ -125,7 +147,11 @@ ALTER TABLE `announcement_status`
 -- Индексы таблицы `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `student_num` (`student_num`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `telegram_username` (`telegram_username`),
+  ADD UNIQUE KEY `token` (`token`);
 
 --
 -- Индексы таблицы `user_status`
@@ -147,7 +173,7 @@ ALTER TABLE `announcement`
 -- AUTO_INCREMENT для таблицы `announcement_status`
 --
 ALTER TABLE `announcement_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
@@ -159,7 +185,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `user_status`
 --
 ALTER TABLE `user_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
