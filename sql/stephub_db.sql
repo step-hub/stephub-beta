@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Мар 04 2020 г., 22:53
+-- Время создания: Мар 05 2020 г., 19:18
 -- Версия сервера: 10.4.11-MariaDB
 -- Версия PHP: 7.4.2
 
@@ -21,15 +21,11 @@ SET time_zone = "+00:00";
 --
 -- База данных: `stephub_db`
 --
-CREATE DATABASE IF NOT EXISTS `stephub_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `stephub_db`;
 
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `announcement`
---
--- Создание: Мар 04 2020 г., 21:16
 --
 
 CREATE TABLE `announcement` (
@@ -44,26 +40,22 @@ CREATE TABLE `announcement` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- ССЫЛКИ ТАБЛИЦЫ `announcement`:
+-- Дамп данных таблицы `announcement`
 --
+
+INSERT INTO `announcement` (`id`, `owner_id`, `title`, `details`, `file`, `date`, `deadline`, `announcement_status_id`) VALUES
+(1, 1, '', 'qwe', 'asdf', '2020-03-03', NULL, 1);
 
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `announcement_status`
 --
--- Создание: Мар 04 2020 г., 21:19
--- Последнее обновление: Мар 04 2020 г., 21:52
---
 
 CREATE TABLE `announcement_status` (
   `id` int(11) NOT NULL,
   `status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- ССЫЛКИ ТАБЛИЦЫ `announcement_status`:
---
 
 --
 -- Дамп данных таблицы `announcement_status`
@@ -80,8 +72,6 @@ INSERT INTO `announcement_status` (`id`, `status`) VALUES
 --
 -- Структура таблицы `user`
 --
--- Создание: Мар 04 2020 г., 21:39
---
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
@@ -96,26 +86,24 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- ССЫЛКИ ТАБЛИЦЫ `user`:
+-- Дамп данных таблицы `user`
 --
+
+INSERT INTO `user` (`id`, `email`, `password`, `login`, `telegram_username`, `student_num`, `user_status_id`, `is_online`, `token`) VALUES
+(1, '1', 'asdfg', '1', '1', '1', 1, 1, '1'),
+(10, 'a', 'a', 'a', 'a', 'a', 1, 0, 'avsrdfvc'),
+(17, '', '', '', '', '', 1, 1, '');
 
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `user_status`
 --
--- Создание: Мар 04 2020 г., 21:18
--- Последнее обновление: Мар 04 2020 г., 21:50
---
 
 CREATE TABLE `user_status` (
   `id` int(11) NOT NULL,
   `status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- ССЫЛКИ ТАБЛИЦЫ `user_status`:
---
 
 --
 -- Дамп данных таблицы `user_status`
@@ -149,9 +137,11 @@ ALTER TABLE `announcement_status`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `student_num` (`student_num`),
-  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `email` (`email`,`login`,`student_num`),
   ADD UNIQUE KEY `telegram_username` (`telegram_username`),
-  ADD UNIQUE KEY `token` (`token`);
+  ADD UNIQUE KEY `token` (`token`),
+  ADD UNIQUE KEY `email_2` (`email`),
+  ADD UNIQUE KEY `login` (`login`);
 
 --
 -- Индексы таблицы `user_status`
@@ -167,7 +157,7 @@ ALTER TABLE `user_status`
 -- AUTO_INCREMENT для таблицы `announcement`
 --
 ALTER TABLE `announcement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `announcement_status`
@@ -179,7 +169,7 @@ ALTER TABLE `announcement_status`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `user_status`
