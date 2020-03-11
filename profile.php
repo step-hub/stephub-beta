@@ -1,6 +1,6 @@
 <?php
 require "php/db.php";
-include_once 'functions.php';
+include_once 'php/functions.php';
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ include_once 'functions.php';
 
 <body style="padding-top: 56px;">
     <!-- Navigation -->
-    <?php include_once 'navigation.php'; ?>
+    <?php include_once 'templates/navigation.php'; ?>
 
     <!-- Page Content -->
     <div class="container text-center">
@@ -37,9 +37,10 @@ include_once 'functions.php';
     </div>
 
     <!-- Footer -->
-    <?php include_once 'footer.php'; ?>
+    <?php include_once 'templates/footer.php'; ?>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
+</html>

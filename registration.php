@@ -4,24 +4,20 @@ require "php/db.php";
 $data = $_POST;
 
 if (isset($data['do_signup'])) {
-    //register
     $errors = array();
+
     if (trim($data['login']) == ''){
         $errors[] = 'login field is empty!!!';
     }
-
     if (trim($data['email']) == ''){
         $errors[] = 'email field is empty!!!';
     }
-
     if (trim($data['stud_num']) == ''){
         $errors[] = 'stud_num field is empty!!!';
     }
-
     if (trim($data['telegram']) == ''){
         $errors[] = 'telegram field is empty!!!';
     }
-
     if ($data['password'] == ''){
         $errors[] = 'password field is empty!!!';
     }
@@ -33,11 +29,9 @@ if (isset($data['do_signup'])) {
     if (R::count("users", "login = ?", array($data['login'])) > 0){
         $errors[] = "user with such login already exist!!!";
     }
-
     if (R::count("users", "email = ?", array($data['email'])) > 0){
         $errors[] = "user with such email already exist!!!";
     }
-
     if (R::count("users", "telegram_username = ?", array($data['telegram'])) > 0){
         $errors[] = "user with such telegram already exist!!!";
     }
@@ -53,7 +47,6 @@ if (isset($data['do_signup'])) {
     }
 
     if (empty($errors)){
-        //registration
         $user = R::dispense('users');
         $user->login = $data['login'];
         $user->email = $data['email'];
@@ -71,7 +64,6 @@ if (isset($data['do_signup'])) {
     } else {
         $error = $errors[0];
     }
-
 }
 ?>
 
@@ -83,6 +75,7 @@ if (isset($data['do_signup'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
+
 	<title>Registration</title>
 
 	<link rel="shortcut icon" href="favicon.png">
@@ -98,7 +91,6 @@ if (isset($data['do_signup'])) {
 
 <body class="text-center">
 	<form class="form-login" action="registration.php" method="POST">
-
         <p class="mt-5 mb-3 font-weight-bold text-danger"><?php echo @$errors[0]?></p>
 		<a href="index.php">
 			<img class="mb-4" src="img/logo.jpg" alt="square logo" width="72" height="72">

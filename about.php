@@ -1,6 +1,6 @@
 <?php
-require "db.php";
-include_once 'functions.php';
+require "php/db.php";
+include_once 'php/functions.php';
 ?>
 
 <!DOCTYPE html>
@@ -25,21 +25,22 @@ include_once 'functions.php';
 </head>
 
 <body style="padding-top: 56px;">
-<!-- Navigation -->
-<?php include_once 'navigation.php'; ?>
+    <!-- Navigation -->
+    <?php include_once 'templates/navigation.php'; ?>
 
-<!-- Page Content -->
-<div class="container text-center">
-    <h1>About StepHub</h1>
+    <!-- Page Content -->
+    <div class="container text-center">
+        <h1>About StepHub</h1>
 
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae consectetur deleniti ducimus ea nam, nemo nobis officiis, qui quis, quisquam soluta totam. Architecto consequuntur excepturi facilis ipsam laudantium magni necessitatibus obcaecati porro sapiente totam. Aliquid aut deleniti dignissimos distinctio dolore eligendi fugiat fugit in laborum maiores officiis placeat qui quia rem repellat, sapiente sed sit totam unde, ut vel veniam vero. A adipisci asperiores aut cumque delectus ea error est, et eveniet fugiat fugit harum id iure laborum libero maiores.</p>
-</div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae consectetur deleniti ducimus ea nam, nemo nobis officiis, qui quis, quisquam soluta totam. Architecto consequuntur excepturi facilis ipsam laudantium magni necessitatibus obcaecati porro sapiente totam. Aliquid aut deleniti dignissimos distinctio dolore eligendi fugiat fugit in laborum maiores officiis placeat qui quia rem repellat, sapiente sed sit totam unde, ut vel veniam vero. A adipisci asperiores aut cumque delectus ea error est, et eveniet fugiat fugit harum id iure laborum libero maiores.</p>
+    </div>
 
-<!-- Footer -->
-<?php include_once 'footer.php'; ?>
+    <!-- Footer -->
+    <?php include_once 'templates/footer.php'; ?>
 
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
+</html>

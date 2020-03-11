@@ -1,6 +1,6 @@
 <?php
-require "db.php";
-include_once "functions.php";
+require "php/db.php";
+include_once "php/functions.php";
 
 $data = $_POST;
 $error = "";
@@ -18,6 +18,7 @@ if (isset($data['do_login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+
     <title>Login</title>
 
     <link rel="shortcut icon" href="favicon.png">
@@ -60,4 +61,4 @@ if (isset($data['do_login'])) {
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
-
+</html>
