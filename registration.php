@@ -111,7 +111,7 @@ if (isset($data['do_signup'])) {
         <input type="text" id="inputTelegram" name="telegram" value="<?php echo @$data['telegram']; ?>" class="form-control" placeholder="Telegram ID" required>
 
 		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" id="inputPassword" name="password" class="form-control" style="margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0;" placeholder="Password" required>
+		<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
 
 		<label for="inputPasswordConfirm" class="sr-only">Confirm password</label>
 		<input type="password" id="inputPasswordConfirm" name="password_confirmation" class="form-control" placeholder="Confirm password" required>
