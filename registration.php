@@ -1,6 +1,5 @@
 <?php
-
-require "db.php";
+require "php/db.php";
 
 $data = $_POST;
 
