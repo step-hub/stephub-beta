@@ -10,7 +10,14 @@ if (isset($data['do_signup'])) {
     } else {
         // registration
         $user = R::dispense('users');
-        //update
+        $user->login = $data['login'];
+        $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
+        $user->email = $data['email'];
+        $user->telegram_username = $data['telegram'];
+        $user->studentid_id = 1;
+        $user->user_status = 1;
+        $user->is_online = true;
+        $user->reg_date = 1;
         R::store($user);
 
         $_SESSION['logged_user'] = $user;
