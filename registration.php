@@ -67,6 +67,8 @@ if (isset($data['do_signup'])) {
 
         R::store($user);
 
+        header('location: index.php');
+
     } else {
         $error = $errors[0];
     }
@@ -117,10 +119,10 @@ if (isset($data['do_signup'])) {
         <input type="text" id="inputTelegram" name="telegram" value="<?php echo @$data['telegram']; ?>" class="form-control" placeholder="Telegram ID" required>
 
 		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+		<input type="password" id="inputPassword" name="password" class="form-control" style="margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0;" placeholder="Password" required>
 
-		<label for="inputPassword" class="sr-only">Confirm password</label>
-		<input type="password" id="inputPassword" name="password_confirmation" class="form-control" placeholder="Confirm password" required>
+		<label for="inputPasswordConfirm" class="sr-only">Confirm password</label>
+		<input type="password" id="inputPasswordConfirm" name="password_confirmation" class="form-control" placeholder="Confirm password" required>
 
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="do_signup">Sign up</button>
 		<p class="mt-5 mb-3">Already have an account? <a href="login.php">Log In</a></p>
