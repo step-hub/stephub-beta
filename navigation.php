@@ -9,8 +9,14 @@
                 <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "index.php") { echo "active"; } ?>">
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
+                <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "profile.php") { echo "active"; } ?>">
+                    <a class="nav-link" href="profile.php">Profile</a>
+                </li>
+                <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "about.php") { echo "active"; } ?>">
+                    <a class="nav-link" href="about.php">About</a>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">item</a>
+                    <a class="btn btn-outline-primary mr-2" href="registration.php">Sign up</a>
                 </li>
                 <li class="nav-item">
                     <a class="btn btn-primary" href="login.php">Log in</a>

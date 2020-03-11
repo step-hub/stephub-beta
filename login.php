@@ -33,7 +33,6 @@ if (isset($data['do_login'])) {
 
 <body class="text-center">
     <form class="form-login" action="login.php" method="POST">
-
         <p class="mt-5 mb-3 font-weight-bold text-danger"><?= $error ?></p>
         <a href="index.php">
             <img class="mb-4" src="img/logo.jpg" alt="square logo" width="72" height="72">
