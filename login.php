@@ -3,10 +3,21 @@ require "php/db.php";
 include_once "php/functions.php";
 
 $data = $_POST;
-$error = "";
 
 if (isset($data['do_login'])) {
+    $errors = array();
+    $user = R::findOne('users', 'login = ?', array($data['login']));
 
+    if( $user ){
+        if (password_verify($data['password'], $user->password)){
+            $_SESSION['logged_user'] = $user;
+            header("location: index.php");
+        } else {
+            $errors[] = "password is incorrect";
+        }
+    } else {
+        $errors[] = "user with such login doesn`t exist";
+    }
 }
 ?>
 
@@ -34,14 +45,14 @@ if (isset($data['do_login'])) {
 
 <body class="text-center">
     <form class="form-login" action="login.php" method="POST">
-        <p class="mt-5 mb-3 font-weight-bold text-danger"><?= $error ?></p>
+        <p class="mt-5 mb-3 font-weight-bold text-danger"><?php echo @$errors[0]; ?></>
         <a href="index.php">
             <img class="mb-4" src="img/logo.jpg" alt="square logo" width="72" height="72">
         </a>
         <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
 
         <label for="inputLogin" class="sr-only">Login</label>
-        <input type="login" id="inputLogin" name="login" class="form-control" placeholder="Username" required autofocus>
+        <input type="login" id="inputLogin" name="login" value="<?php echo @$data['login']; ?>" class="form-control" placeholder="Username" required autofocus>
 
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>

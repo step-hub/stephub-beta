@@ -15,12 +15,18 @@
                 <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "about.php") { echo "active"; } ?>">
                     <a class="nav-link" href="about.php">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="btn btn-outline-primary mr-2" href="registration.php">Sign up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-primary" href="login.php">Log in</a>
-                </li>
+                <?php if (isset($_SESSION['logged_user'])) : ?>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary mr-2" href="logout.php">Log out</a>
+                    </li>
+                <?php else : ?>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary mr-2" href="registration.php">Sign up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="login.php">Log in</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

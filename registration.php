@@ -6,47 +6,46 @@ $data = $_POST;
 if (isset($data['do_signup'])) {
     $errors = array();
 
-    if (trim($data['login']) == ''){
+    if (trim($data['login']) == '') {
         $errors[] = 'login field is empty!!!';
     }
-    if (trim($data['email']) == ''){
+    if (trim($data['email']) == '') {
         $errors[] = 'email field is empty!!!';
     }
-    if (trim($data['stud_num']) == ''){
+    if (trim($data['stud_num']) == '') {
         $errors[] = 'stud_num field is empty!!!';
     }
-    if (trim($data['telegram']) == ''){
+    if (trim($data['telegram']) == '') {
         $errors[] = 'telegram field is empty!!!';
     }
-    if ($data['password'] == ''){
+    if ($data['password'] == '') {
         $errors[] = 'password field is empty!!!';
     }
 
-    if ($data['password_confirmation'] != $data['password']){
+    if ($data['password_confirmation'] != $data['password']) {
         $errors[] = "password does doesn't confirm!!!";
     }
 
-    if (R::count("users", "login = ?", array($data['login'])) > 0){
+    if (R::count("users", "login = ?", array($data['login'])) > 0) {
         $errors[] = "user with such login already exist!!!";
     }
-    if (R::count("users", "email = ?", array($data['email'])) > 0){
+    if (R::count("users", "email = ?", array($data['email'])) > 0) {
         $errors[] = "user with such email already exist!!!";
     }
-    if (R::count("users", "telegram_username = ?", array($data['telegram'])) > 0){
+    if (R::count("users", "telegram_username = ?", array($data['telegram'])) > 0) {
         $errors[] = "user with such telegram already exist!!!";
     }
 
-    if (R::count("student_ids", "student_id_num = ?", array($data['stud_num'])) == 0){
+    if (R::count("student_ids", "student_id_num = ?", array($data['stud_num'])) == 0) {
         $errors[] = "user with such student num can't register!!!";
-    }
-    else {
+    } else {
         $student = R::findOne('student_ids', 'student_id_num LIKE ?', array($data['stud_num']));
-        if (R::count("users", "studentid_id = ?", array($student->id)) > 0){
+        if (R::count("users", "studentid_id = ?", array($student->id)) > 0) {
             $errors[] = "user with such student num has already registered!!!";
         }
     }
 
-    if (empty($errors)){
+    if (empty($errors)) {
         $user = R::dispense('users');
         $user->login = $data['login'];
         $user->email = $data['email'];
@@ -61,8 +60,10 @@ if (isset($data['do_signup'])) {
 
         header('location: index.php');
 
-    } else {
-        $error = $errors[0];
+
+//    } else {
+//        $error = $errors[0];
+//    }
     }
 }
 ?>
