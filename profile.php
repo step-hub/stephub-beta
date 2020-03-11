@@ -24,7 +24,7 @@ include_once 'php/functions.php';
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 </head>
 
-<body style="padding-top: 56px;">
+<body class="text-center">
     <!-- Navigation -->
     <?php include_once 'templates/navigation.php'; ?>
 
