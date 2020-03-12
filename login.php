@@ -3,9 +3,9 @@ require "php/db.php";
 include_once "php/functions.php";
 
 $data = $_POST;
+$errors = array();
 
 if (isset($data['do_login'])) {
-    $errors = array();
     $user = R::findOne('users', 'login = ?', array($data['login']));
 
     if( $user ){
@@ -44,29 +44,40 @@ if (isset($data['do_login'])) {
 </head>
 
 <body class="text-center">
-    <form class="form-login" action="login.php" method="POST">
-        <p class="mt-5 mb-3 font-weight-bold text-danger"><?php echo @$errors[0]; ?></>
-        <a href="index.php">
-            <img class="mb-4" src="img/logo.jpg" alt="square logo" width="72" height="72">
-        </a>
-        <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
+    <!-- Navigation -->
+    <?php include_once 'templates/navigation.php'; ?>
 
-        <label for="inputLogin" class="sr-only">Login</label>
-        <input type="login" id="inputLogin" name="login" value="<?php echo @$data['login']; ?>" class="form-control" placeholder="Login" required autofocus>
+    <!-- Page Content -->
+    <div>
+        <div class="card">
+            <div class="card-body shadow-sm">
+                <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
 
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                <?php if($errors): ?>
+                    <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
+                <?php endif; ?>
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me" name="remember"> Remember me
-            </label>
+                <form class="form-login" action="login.php" method="POST">
+                    <label for="inputLogin" class="sr-only">Login</label>
+                    <input type="login" id="inputLogin" name="login" value="<?= @$data['login']; ?>" class="form-control bg-light" placeholder="Login" required autofocus>
+
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword" name="password" class="form-control bg-light" placeholder="Password" required>
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" value="remember-me" name="remember"> Remember me
+                        </label>
+                    </div>
+
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" name="do_login">Log in</button>
+                    <p class="mt-3 mb-0">Don't have an account? <a href="registration.php">Register Now</a></p>
+                </form>
+            </div>
         </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit" name="do_login">Log in</button>
-        <p class="mt-5 mb-3">Don't have an account? <a href="registration.php">Register Now</a></p>
-        <p class="mt-5 mb-3 text-muted">&copy; StepHub 2020</p>
-    </form>
+        <p class="mt-3 text-muted">&copy; 2020 StepHub</p>
+    </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>

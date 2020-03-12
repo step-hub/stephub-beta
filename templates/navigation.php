@@ -9,9 +9,11 @@
                 <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "index.php") { echo "active"; } ?>">
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
-                <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "profile.php") { echo "active"; } ?>">
-                    <a class="nav-link" href="profile.php">Profile</a>
-                </li>
+                <?php if (isset($_SESSION['logged_user'])) : ?>
+                    <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "profile.php") { echo "active"; } ?>">
+                        <a class="nav-link" href="profile.php">Profile</a>
+                    </li>
+                <?php endif;?>
                 <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "about.php") { echo "active"; } ?>">
                     <a class="nav-link" href="about.php">About</a>
                 </li>
@@ -22,11 +24,11 @@
                         </li>
                     <?php endif;?>
                     <li class="nav-item">
-                        <a class="btn btn-light ml-3" href="logout.php">Log out</a>
+                        <a class="btn btn-light shadow-sm ml-3" href="logout.php">Log out</a>
                     </li>
                 <?php else : ?>
                     <li class="nav-item">
-                        <a class="btn btn-light ml-3" href="login.php">Log in</a>
+                        <a class="btn btn-light shadow-sm ml-3" href="login.php">Log in</a>
                     </li>
                 <?php endif; ?>
             </ul>
