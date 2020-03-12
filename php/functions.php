@@ -16,3 +16,14 @@ function show_array($a)
 	print_r($a);
 	echo "</pre>";
 }
+
+function show_date($numberofsecs)
+{
+    return date('Y/m/d H:i:s', $numberofsecs);
+}
+
+
+function get_announcements()
+{
+    return R::getAll("SELECT * FROM announcements");
+}
