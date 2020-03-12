@@ -22,8 +22,14 @@ function show_date($numberofsecs)
     return date('Y/m/d H:i:s', $numberofsecs);
 }
 
-
 function get_announcements()
 {
     return R::getAll("SELECT * FROM announcements");
 }
+
+function get_user_by_login($login)
+{
+    return R::findOne('users', 'login = ?', array($login));
+}
+
+
