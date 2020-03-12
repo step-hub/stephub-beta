@@ -25,24 +25,28 @@ include_once 'php/functions.php';
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 </head>
 
-<body class="text-center">
+<body class="text-center bg-light">
     <!-- Navigation -->
     <?php include_once 'templates/navigation.php'; ?>
 
     <!-- Page Content -->
-    <?php if ( $_SESSION['logged_user']->user_status == 1) : ?>
-        <div class="container text-center">
-            <h1>Admin Panel</h1>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae consectetur deleniti ducimus ea nam, nemo nobis officiis, qui quis, quisquam soluta totam. Architecto consequuntur excepturi facilis ipsam laudantium magni necessitatibus obcaecati porro sapiente totam. Aliquid aut deleniti dignissimos distinctio dolore eligendi fugiat fugit in laborum maiores officiis placeat qui quia rem repellat, sapiente sed sit totam unde, ut vel veniam vero. A adipisci asperiores aut cumque delectus ea error est, et eveniet fugiat fugit harum id iure laborum libero maiores, minima molestiae placeat qui repellendus reprehenderit sapiente sunt suscipit temporibus tenetur velit voluptas! Atque in ipsam quibusdam, suscipit ullam ut?</p>
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-body shadow-sm">
+                <h5 class="card-title ">Admin Panel</h5>
+                <?php if ( $_SESSION['logged_user']->user_status == 1): ?>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet at dolore eos facilis molestias nesciunt non numquam voluptate voluptatem.</p>
+                <?php else: ?>
+                    <div class="card border-danger">
+                        <div class="card-body shadow-sm">
+                            <h5 class="card-title mb-0 text-center text-danger card-danger"><i class="fas fa-exclamation-circle mr-3"></i>You don't have permissions</h5>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
-
-    <?php else : ?>
-        <div class="container text-center">
-            <h1>You don't have permissions</h1>
-        </div>
-    <?php endif; ?>
+    </div>
 
     <!-- Footer -->
     <?php include_once 'templates/footer.php'; ?>

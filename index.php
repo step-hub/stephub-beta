@@ -65,14 +65,14 @@ $announcements = get_announcements();
 
                                             </div>
                                             <div class="col align-self-end">
-                                                <a href="#" class="btn btn-primary float-right">Open</a>
+                                                <a href="announcement.php" class="btn btn-primary float-right">Open</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             <?php endforeach;
                         else: ?>
-                            <div class="card">
+                            <div class="card border-danger">
                                 <div class="card-body shadow-sm">
                                     <h5 class="card-title mb-0 text-center text-danger"><i class="fas fa-exclamation-circle mr-3"></i>No announcements found</h5>
                                 </div>
