@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-light navbar-expand-lg fixed-top box-shadow">
+<nav class="navbar navbar-dark bg-dark shadow-sm navbar-expand-lg fixed-top box-shadow">
     <div class="container">
         <a class="navbar-brand" href="index.php"><img src="img/logo.jpg" class="mr-2" alt="Logo" width="32" height="32">StepHub</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">

@@ -31,9 +31,7 @@ include_once 'php/functions.php';
     <!-- Page Content -->
 
 
-    <div class="container">
-        <h1>Home page</h1>
-
+    <div class="container mt-5">
         <div class="row">
             <div class="col-md-4">.
                 <div class="card">
@@ -55,36 +53,6 @@ include_once 'php/functions.php';
                                 <div class="row">
                                     <div class="col">
                                         <p class="card-text mb-4">text khgjfdsasduiopoiuytfdfhjklkjh</p>
-                                        <p class="card-text text-muted small"><span class="my_label mr-3"></span><i class="far fa-calendar mr-2"></i>nbvcx</p>
-                                    </div>
-                                    <div class="col align-self-end">
-                                        <a href="#" class="btn btn-primary float-right">asfghvc</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card text-left mb-3">
-                            <div class="card-body shadow-sm">
-                                <h5 class="card-title">ASddfghd</h5>
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="card-text mb-4"></p>
-                                        <p class="card-text text-muted small"><span class="my_label mr-3"></span><i class="far fa-calendar mr-2"></i>nbvcx</p>
-                                    </div>
-                                    <div class="col align-self-end">
-                                        <a href="#" class="btn btn-primary float-right">asfghvc</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card text-left mb-3">
-                            <div class="card-body shadow-sm">
-                                <h5 class="card-title">ASddfghd</h5>
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="card-text mb-4"></p>
                                         <p class="card-text text-muted small"><span class="my_label mr-3"></span><i class="far fa-calendar mr-2"></i>nbvcx</p>
                                     </div>
                                     <div class="col align-self-end">
