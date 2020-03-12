@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-12 col-md">
                     <img class="mb-2" src="img/logo.jpg" alt="Logo" width="24" height="24">
-                    <small class="d-block mb-3 text-muted">© StepHub 2020</small>
+                    <small class="d-block mb-3 text-muted">© 2020 StepHub</small>
                 </div>
                 <div class="col-6 col-md">
                     <h5>Features</h5>
