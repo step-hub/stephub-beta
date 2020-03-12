@@ -52,7 +52,7 @@ if (isset($data['do_login'])) {
         <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
 
         <label for="inputLogin" class="sr-only">Login</label>
-        <input type="login" id="inputLogin" name="login" value="<?php echo @$data['login']; ?>" class="form-control" placeholder="Username" required autofocus>
+        <input type="login" id="inputLogin" name="login" value="<?php echo @$data['login']; ?>" class="form-control" placeholder="Login" required autofocus>
 
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>

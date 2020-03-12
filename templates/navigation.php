@@ -19,6 +19,11 @@
                     <li class="nav-item">
                         <a class="btn btn-outline-primary mr-2" href="logout.php">Log out</a>
                     </li>
+                    <?php if ($_SESSION['logged_user']->user_status == 1) : ?>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary mr-2" href="admin.php">Admin page</a>
+                        </li>
+                    <?php endif;?>
                 <?php else : ?>
                     <li class="nav-item">
                         <a class="btn btn-outline-primary mr-2" href="registration.php">Sign up</a>
