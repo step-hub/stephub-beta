@@ -30,10 +30,19 @@ include_once 'php/functions.php';
 
     <!-- Page Content -->
     <div class="container text-center">
-        <h1>About StepHub</h1>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae consectetur deleniti ducimus ea nam, nemo nobis officiis, qui quis, quisquam soluta totam. Architecto consequuntur excepturi facilis ipsam laudantium magni necessitatibus obcaecati porro sapiente totam. Aliquid aut deleniti dignissimos distinctio dolore eligendi fugiat fugit in laborum maiores officiis placeat qui quia rem repellat, sapiente sed sit totam unde, ut vel veniam vero. A adipisci asperiores aut cumque delectus ea error est, et eveniet fugiat fugit harum id iure laborum libero maiores.</p>
+        <div class="card mt-5">
+            <div class="card-body shadow-sm">
+                This is some text within a card body.
+                <div class="card mt-5">
+                    <div class="card-header">
+                        Filter
+                    </div>
+                    <div class="card-body shadow-sm">
+                        This is some text within a card body.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->

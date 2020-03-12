@@ -18,15 +18,15 @@
                 <?php if (isset($_SESSION['logged_user'])) : ?>
                     <?php if ($_SESSION['logged_user']->user_status == 1) : ?>
                         <li class="nav-item">
-                            <a class="btn btn-outline-light mr-2" href="admin.php">Admin page</a>
+                            <a class="btn btn-outline-light ml-3" href="admin.php">Admin page</a>
                         </li>
                     <?php endif;?>
                     <li class="nav-item">
-                        <a class="btn btn-light mr-2" href="logout.php">Log out</a>
+                        <a class="btn btn-light ml-3" href="logout.php">Log out</a>
                     </li>
                 <?php else : ?>
                     <li class="nav-item">
-                        <a class="btn btn-light" href="login.php">Log in</a>
+                        <a class="btn btn-light ml-3" href="login.php">Log in</a>
                     </li>
                 <?php endif; ?>
             </ul>
