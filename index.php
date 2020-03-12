@@ -1,6 +1,8 @@
 <?php
 require "php/db.php";
 include_once 'php/functions.php';
+
+$announcements = get_announcements();
 ?>
 
 <!DOCTYPE html>
@@ -25,86 +27,68 @@ include_once 'php/functions.php';
 </head>
 
 <body class="text-center bg-light">
-    <!-- Navigation -->
-    <?php include_once 'templates/navigation.php'; ?>
+<!-- Navigation -->
+<?php include_once 'templates/navigation.php'; ?>
 
-    <!-- Page Content -->
-
-
-    <div class="container">
-        <h1>Home page</h1>
-
-        <div class="row">
-            <div class="col-md-4">.
-                <div class="card">
-                    <div class="card-header">
-                        Filter
-                    </div>
-                    <div class="card-body shadow-sm">
-                        This is some text within a card body.
-                    </div>
+<!-- Page Content -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">.
+            <div class="card">
+                <div class="card-header">
+                    Filter
+                </div>
+                <div class="card-body shadow-sm">
+                    This is some text within a card body.
                 </div>
             </div>
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body shadow-sm">
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body shadow-sm">
+                    <?php if($announcements):
+                        foreach($announcements as $announcement): ?>
+                            <div class="card text-left mb-3">
+                                <div class="card-body shadow-sm">
+                                    <h5 class="card-title"><?= $announcement['title']?></h5>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="card-text mb-4"><?= $announcement['details']?></p>
 
-                        <div class="card text-left mb-3">
-                            <div class="card-body shadow-sm">
-                                <h5 class="card-title">ASddfghd</h5>
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="card-text mb-4">text khgjfdsasduiopoiuytfdfhjklkjh</p>
-                                        <p class="card-text text-muted small"><span class="my_label mr-3"></span><i class="far fa-calendar mr-2"></i>nbvcx</p>
-                                    </div>
-                                    <div class="col align-self-end">
-                                        <a href="#" class="btn btn-primary float-right">asfghvc</a>
+                                            <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date'])?></p>
+                                            <?php if($announcement['deadline']): ?>
+                                                <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['deadline'])?></p>
+                                            <?php endif;
+                                            if($announcement['file']): ?>
+                                                <p class="card-text text-muted small"><i class="far fa-file mr-2"></i></p>
+                                            <?php endif; ?>
+
+                                        </div>
+                                        <div class="col align-self-end">
+                                            <a href="#" class="btn btn-primary float-right">Open</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="card text-left mb-3">
+                        <?php endforeach;
+                    else: ?>
+                        <div class="card">
                             <div class="card-body shadow-sm">
-                                <h5 class="card-title">ASddfghd</h5>
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="card-text mb-4"></p>
-                                        <p class="card-text text-muted small"><span class="my_label mr-3"></span><i class="far fa-calendar mr-2"></i>nbvcx</p>
-                                    </div>
-                                    <div class="col align-self-end">
-                                        <a href="#" class="btn btn-primary float-right">asfghvc</a>
-                                    </div>
-                                </div>
+                                <h5 class="card-title mb-0 text-center text-danger"><i class="fas fa-exclamation-circle mr-3"></i>No announcements found</h5>
                             </div>
                         </div>
-
-                        <div class="card text-left mb-3">
-                            <div class="card-body shadow-sm">
-                                <h5 class="card-title">ASddfghd</h5>
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="card-text mb-4"></p>
-                                        <p class="card-text text-muted small"><span class="my_label mr-3"></span><i class="far fa-calendar mr-2"></i>nbvcx</p>
-                                    </div>
-                                    <div class="col align-self-end">
-                                        <a href="#" class="btn btn-primary float-right">asfghvc</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Footer -->
-    <?php include_once 'templates/footer.php'; ?>
+<!-- Footer -->
+<?php include_once 'templates/footer.php'; ?>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
