@@ -99,7 +99,7 @@ if (isset($data['do_signup'])) {
 		<h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
 
 		<label for="inputLogin" class="sr-only">Login</label>
-		<input type="login" id="inputLogin" name="login" value="<?php echo @$data['login']; ?>" class="form-control" placeholder="Login" required autofocus>
+		<input type="text" id="inputLogin" name="login" value="<?php echo @$data['login']; ?>" class="form-control" placeholder="Login" required autofocus>
 
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" name="email" value="<?php echo @$data['email']; ?>" class="form-control" placeholder="Email address" required>
