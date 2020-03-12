@@ -24,14 +24,80 @@ include_once 'php/functions.php';
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 </head>
 
-<body class="text-center">
+<body class="text-center bg-light">
     <!-- Navigation -->
     <?php include_once 'templates/navigation.php'; ?>
 
     <!-- Page Content -->
+
+
     <div class="container">
         <h1>Home page</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab, ad alias aliquam architecto assumenda consectetur delectus dolorem dolores eos facilis fuga, fugiat harum hic impedit in inventore ipsa ipsum itaque labore libero minima minus molestiae neque pariatur quaerat quibusdam quisquam ratione recusandae, rem sapiente soluta ullam unde velit voluptates voluptatibus voluptatum? Deleniti doloribus hic nihil perspiciatis. A amet aspernatur cumque dicta, distinctio fugiat inventore molestiae nam, nihil numquam odio omnis ut veniam? A, animi consequatur dignissimos dolorem eum id ipsum magni perferendis sed voluptatum. Accusantium assumenda eaque earum molestiae molestias, nam, nemo nostrum obcaecati omnis, quam sunt voluptatem voluptatibus!</p>
+
+        <div class="row">
+            <div class="col-md-4">.
+                <div class="card">
+                    <div class="card-header">
+                        Filter
+                    </div>
+                    <div class="card-body shadow-sm">
+                        This is some text within a card body.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body shadow-sm">
+
+                        <div class="card text-left mb-3">
+                            <div class="card-body shadow-sm">
+                                <h5 class="card-title">ASddfghd</h5>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="card-text mb-4">text khgjfdsasduiopoiuytfdfhjklkjh</p>
+                                        <p class="card-text text-muted small"><span class="my_label mr-3"></span><i class="far fa-calendar mr-2"></i>nbvcx</p>
+                                    </div>
+                                    <div class="col align-self-end">
+                                        <a href="#" class="btn btn-primary float-right">asfghvc</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card text-left mb-3">
+                            <div class="card-body shadow-sm">
+                                <h5 class="card-title">ASddfghd</h5>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="card-text mb-4"></p>
+                                        <p class="card-text text-muted small"><span class="my_label mr-3"></span><i class="far fa-calendar mr-2"></i>nbvcx</p>
+                                    </div>
+                                    <div class="col align-self-end">
+                                        <a href="#" class="btn btn-primary float-right">asfghvc</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card text-left mb-3">
+                            <div class="card-body shadow-sm">
+                                <h5 class="card-title">ASddfghd</h5>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="card-text mb-4"></p>
+                                        <p class="card-text text-muted small"><span class="my_label mr-3"></span><i class="far fa-calendar mr-2"></i>nbvcx</p>
+                                    </div>
+                                    <div class="col align-self-end">
+                                        <a href="#" class="btn btn-primary float-right">asfghvc</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
