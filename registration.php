@@ -81,7 +81,6 @@ if (isset($data['do_signup'])) {
 	<!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
     <link href="css/registration.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 </head>
 
 <body class="text-center">

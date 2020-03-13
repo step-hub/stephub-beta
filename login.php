@@ -56,7 +56,6 @@ if (isset($data['do_login'])) {
     <!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
     <link href="css/login.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 </head>
 
 <body class="text-center">

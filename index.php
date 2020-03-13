@@ -23,7 +23,6 @@ $announcements = get_announcements();
     <link href="vendor/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
     <!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 </head>
 
 <body class="text-center bg-light">
