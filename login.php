@@ -46,9 +46,9 @@ if (isset($data['do_login'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login</title>
+    <title>StepHub | Log In</title>
 
-    <link rel="shortcut icon" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -67,7 +67,7 @@ if (isset($data['do_login'])) {
     <div>
         <div class="card">
             <div class="card-body shadow-sm">
-                <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
+                <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
 
                 <?php if($errors): ?>
                     <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
@@ -91,7 +91,6 @@ if (isset($data['do_login'])) {
                 </form>
             </div>
         </div>
-
         <p class="mt-3 text-muted">&copy; 2020 StepHub</p>
     </div>
 

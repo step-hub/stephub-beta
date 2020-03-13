@@ -15,7 +15,7 @@ include_once 'php/functions.php';
 
     <title>StepHub | Admin Panel</title>
 
-    <link rel="shortcut icon" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
