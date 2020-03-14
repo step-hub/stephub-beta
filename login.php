@@ -65,35 +65,39 @@ if (isset($data['do_login'])) {
     <?php include_once 'templates/navigation.php'; ?>
 
     <!-- Page Content -->
-    <div>
-        <div class="card">
-            <div class="card-body shadow-sm">
-                <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
+    <?php if (!$_SESSION):?>
+        <div>
+            <div class="card">
+                <div class="card-body shadow-sm">
+                    <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
 
-                <?php if($errors): ?>
-                    <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
-                <?php endif; ?>
+                    <?php if($errors): ?>
+                        <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
+                    <?php endif; ?>
 
-                <form class="form-login" action="login.php" method="POST">
-                    <label for="inputLogin" class="sr-only">Login</label>
-                    <input type="text" id="inputLogin" name="login" value="<?= @$data['login']; ?>" class="form-control bg-light" placeholder="Login" required autofocus>
+                    <form class="form-login" action="login.php" method="POST">
+                        <label for="inputLogin" class="sr-only">Login</label>
+                        <input type="text" id="inputLogin" name="login" value="<?= @$data['login']; ?>" class="form-control bg-light" placeholder="Login" required autofocus>
 
-                    <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" name="password" class="form-control bg-light" placeholder="Password" required>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" id="inputPassword" name="password" class="form-control bg-light" placeholder="Password" required>
 
-                    <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" value="remember-me" name="remember"> Remember me
-                        </label>
-                    </div>
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" value="remember-me" name="remember"> Remember me
+                            </label>
+                        </div>
 
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" name="do_login">Log in</button>
-                    <p class="mt-3 mb-0">Don't have an account? <a href="registration.php">Register Now</a></p>
-                </form>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" name="do_login">Log in</button>
+                        <p class="mt-3 mb-0">Don't have an account? <a href="registration.php">Register Now</a></p>
+                    </form>
+                </div>
             </div>
+            <p class="mt-3 text-muted">&copy; 2020 StepHub</p>
         </div>
-        <p class="mt-3 text-muted">&copy; 2020 StepHub</p>
-    </div>
+    <?php else:?>
+        <p>You are already log in</p>
+    <?php endif;?>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
