@@ -32,14 +32,48 @@ $announcements = get_announcements();
     <!-- Page Content -->
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-4">.
-                <div class="card">
-                    <div class="card-header">
-                        Filter
-                    </div>
-                    <div class="card-body shadow-sm">
-                        This is some text within a card body.
-                    </div>
+            <div class="col-md-4">
+                <div class="card text-left">
+                    <form action="index.php" method="GET">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <label for="date_filter">Sort by</label>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="date_filter" value="create" checked>create date
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="date_filter" value="deadline">deadline date
+                                        </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <label for="announcement_qty">Announcements on page</label>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="announcement_qty" value="10" checked>10
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="announcement_qty" value="20">20
+                                        </label>
+                                    </div>
+                                    <div class="form-check disabled">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="announcement_qty" value="30">30
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block" name="do_filter">Apply</button>
+                            </li>
+                        </ul>
+                    </form>
                 </div>
             </div>
             <div class="col-md-8">
