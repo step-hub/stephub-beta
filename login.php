@@ -12,6 +12,8 @@ if (isset($data['do_login'])) {
         if (password_verify($data['password'], $user->password)) {
             // login session
             $_SESSION['logged_user'] = $user;
+            $user->is_online = 1;
+            R::store($user);
 
             // login cookie
             if ($data['remember']) {
@@ -74,7 +76,7 @@ if (isset($data['do_login'])) {
 
                 <form class="form-login" action="login.php" method="POST">
                     <label for="inputLogin" class="sr-only">Login</label>
-                    <input type="login" id="inputLogin" name="login" value="<?= @$data['login']; ?>" class="form-control bg-light" placeholder="Login" required autofocus>
+                    <input type="text" id="inputLogin" name="login" value="<?= @$data['login']; ?>" class="form-control bg-light" placeholder="Login" required autofocus>
 
                     <label for="inputPassword" class="sr-only">Password</label>
                     <input type="password" id="inputPassword" name="password" class="form-control bg-light" placeholder="Password" required>
