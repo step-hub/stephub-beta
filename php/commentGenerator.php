@@ -9,9 +9,9 @@ for ($i = 1, $j = 1; $i <= 50; $i++){
     $comment->message = 'comment message '.$j;
     $comment->is_hidden = 0;
     $comment->date = time();
-    $j++;
     R::store($comment);
 
+    $j++;
     $comment = R::dispense('comments');
 
     $comment->parent_comment_id = $i;
@@ -19,6 +19,17 @@ for ($i = 1, $j = 1; $i <= 50; $i++){
     $comment->message = 'comment message '.$j;
     $comment->is_hidden = 0;
     $comment->date = time();
-    $j++;
     R::store($comment);
+
+    $j++;
+}
+
+for ($i = 1, $j = 1; $i <= 10; $i++){
+    for ($k = 1; $k <= 5; $k++){
+        $connection = R::dispense('announcementcomment');
+        $connection->announcement_id = $i;
+        $connection->comment_id = $j;
+        R::store($connection);
+        $j++;
+    }
 }

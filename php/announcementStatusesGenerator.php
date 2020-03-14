@@ -1,6 +1,6 @@
 <?php
 
-$announcement_status = R::dispense('user_statuses');
+$announcement_status = R::dispense('userstatuses');
 
 $announcement_status->status = 'actual';
 R::store($announcement_status);
