@@ -9,24 +9,24 @@
                 <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "index.php") { echo "active"; } ?>">
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
-                <?php if (isset($_SESSION['logged_user'])) : ?>
+                <?php if (isset($_SESSION['logged_user'])): ?>
                     <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "profile.php") { echo "active"; } ?>">
                         <a class="nav-link" href="profile.php">Profile</a>
                     </li>
-                <?php endif;?>
+                <?php endif; ?>
                 <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "about.php") { echo "active"; } ?>">
                     <a class="nav-link" href="about.php">About</a>
                 </li>
-                <?php if (isset($_SESSION['logged_user'])) : ?>
-                    <?php if ($_SESSION['logged_user']->user_status == 1) : ?>
-                        <li class="nav-item">
+                <?php if (isset($_SESSION['logged_user'])):
+                    if ($_SESSION['logged_user']->user_status == 1): ?>
+                        <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "admin.php") { echo "active"; } ?>">
                             <a class="btn btn-outline-light ml-3" href="admin.php">Admin page</a>
                         </li>
-                    <?php endif;?>
+                    <?php endif; ?>
                     <li class="nav-item">
-                        <a class="btn btn-light shadow-sm ml-3" href="logout.php">Log out</a>
+                        <a class="btn btn-light shadow-sm ml-3" href="php/logout.php">Log out</a>
                     </li>
-                <?php else : ?>
+                <?php else: ?>
                     <li class="nav-item">
                         <a class="btn btn-light shadow-sm ml-3" href="login.php">Log in</a>
                     </li>

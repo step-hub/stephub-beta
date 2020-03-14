@@ -40,12 +40,6 @@ include_once 'php/functions.php';
                     <a class="btn-floating btn-lg btn-email" type="button" role="button"><i class="fas fa-envelope"></i></a>
                     <!--Github-->
                     <a class="btn-floating btn-lg btn-git" type="button" role="button"><i class="fab fa-github"></i></a>
-                    <!--Facebook-->
-                    <a class="btn-floating btn-lg btn-fb" type="button" role="button"><i class="fab fa-facebook-f"></i></a>
-                    <!--Linkedin-->
-                    <a class="btn-floating btn-lg btn-li" type="button" role="button"><i class="fab fa-linkedin-in"></i></a>
-                    <!--Instagram-->
-                    <a class="btn-floating btn-lg btn-ins" type="button" role="button"><i class="fab fa-instagram"></i></a>
                 </div>
                 <p class="small text-muted mb-3">Copyright © 2020 StepHub</p>
             </div>

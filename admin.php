@@ -1,7 +1,6 @@
 <?php
 require "php/db.php";
 include_once 'php/functions.php';
-
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +32,7 @@ include_once 'php/functions.php';
         <div class="card mt-5">
             <div class="card-body shadow-sm">
                 <h5 class="card-title ">Admin Panel</h5>
-                <?php if ( $_SESSION['logged_user']->user_status == 1): ?>
+                <?php if ($_SESSION['logged_user']->user_status == 1): ?>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet at dolore eos facilis molestias nesciunt non numquam voluptate voluptatem.</p>
                 <?php else: ?>
