@@ -35,9 +35,14 @@ function generate_random_string($length)
     return $randomString;
 }
 
-function get_announcements()
+function get_announcements_without_filter()
 {
-    return R::getAll("SELECT * FROM announcements");
+    return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT 10");
+}
+
+function get_announcements_with_filter($sort_by, $qty)
+{
+    return R::getAll("SELECT * FROM announcements ORDER BY ".$sort_by." DESC LIMIT ".$qty);
 }
 
 function get_user_by_login($login)

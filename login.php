@@ -6,7 +6,7 @@ $data = $_POST;
 $errors = array();
 
 if (isset($data['do_login'])) {
-    $user = R::findOne('users', 'login = ?', array($data['login']));
+    $user = get_user_by_login($data['login']);
 
     if ($user) {
         if (password_verify($data['password'], $user->password)) {
