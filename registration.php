@@ -84,15 +84,6 @@ if (isset($data['do_signup'])) {
 </head>
 
 <body class="text-center">
-	<form class="form-login" action="registration.php" method="POST">
-        <p class="mt-5 mb-3 font-weight-bold text-danger"><?php echo @$errors[0]?></p>
-		<a href="index.php">
-			<img class="mb-4" src="img/logo.jpg" alt="square logo" width="72" height="72">
-		</a>
-		<h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
-
-		<label for="inputLogin" class="sr-only">Login</label>
-		<input type="text" id="inputLogin" name="login" value="<?php echo @$data['login']; ?>" class="form-control" placeholder="Login" required autofocus>
     <!-- Navigation -->
     <?php include_once 'templates/navigation.php'; ?>
 
