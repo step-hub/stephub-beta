@@ -28,7 +28,7 @@
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a class="btn my-btn-dark shadow-sm ml-3" href="login.php">Log in</a>
+                        <a class="btn my-btn-dark shadow-sm ml-3" href="registration.php">Sign up</a>
                     </li>
                 <?php endif; ?>
             </ul>

@@ -123,7 +123,7 @@ if (isset($data['do_signup'])) {
                     </div>
 
                     <button class="btn btn-lg btn-primary btn-block" type="submit" name="do_signup">Sign up</button>
-                    <p class="mt-3 mb-0">Already have an account? <a href="login.php">Log In</a></p>
+                    <p class="mt-3 mb-0">Already have an account? <a href="index.php">Log In</a></p>
                 </form>
             </div>
         </div>
