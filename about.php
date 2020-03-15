@@ -30,10 +30,15 @@ include_once 'php/functions.php';
     <!-- Page Content -->
     <div class="container">
         <div class="card mt-5">
-            <div class="card-body shadow-sm">
-                <h5 class="card-title ">About StepHub</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium aspernatur atque aut autem consectetur culpa dolores ea eligendi fugit illo laborum nostrum omnis optio perferendis quod reiciendis sequi soluta, tempore. Ab ad culpa, excepturi exercitationem iste nisi quaerat quam quibusdam voluptate. Deserunt ipsa, iusto molestiae praesentium quia voluptatibus.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci architecto commodi earum laboriosam natus neque quo repellat saepe similique voluptate!</p>
+            <div class="card-body shadow-sm"> <!--About StepHub-->
+                <div class="card-title ">About StepHub</div>
+                <div class="about-title">Що ми робимо</div>
+                <p>StepHub - онлайн сервіс пошуку фахівців для вирішення побутових і професійних задач. Майданчик об'єднує замовників послуг, яким необхідно виконати будь-яку роботу, і компетентних фахівців, які шукають підробіток або додатковий заробіток.</p>
+                <div class="about_us-title">Наша Команда</div>
+                <p>Над проектом StepHub працює молода та амбіційна команда. Всі ми - різні. Кожен з нас займається своєю роботою. Ми любимо різну піцу і дивимося різні фільми. Ми виросли в різних містах і в різний час, але все стикалися з однією і тією ж проблемою - жахливим сервісом в сфері послуг. Нас всіх об'єднує бажання виправити цю ситуацію. Щоб пошук потрібного фахівця займав всього кілька хвилин. Щоб недобросовісні фахівці не залишалися безкарними. Щоб замовники ніколи "не забували" заплатити за якісно виконану роботу.</p>
+                <div class="mission-title">Наша Місія</div>
+                <p>Ми хочемо допомогти вирішити будь-яке завдання і звільнити вам час для сім'ї або друзів. Ми хочемо дати роботу компетентним і відповідальним фахівцям і розвивати підприємництво в головах студентів. Це наша головна місія і думка, з якою ми прокидаємося щоранку.</p>
+                <p>Якщо ви також поділяєте ці цінності і підтримуєте наше прагнення зробити наш університет кращим - приєднуйтесь до нашої дружної сім'ї однодумців.</p>
 
                 <div class="mt-5">
                     <!--Email-->
