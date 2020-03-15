@@ -18,7 +18,7 @@
                             <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
                         <?php endif; ?>
 
-                        <form class="form-login" action="login.php" method="POST">
+                        <form class="form-login" action="index.php" method="POST">
                             <label for="inputLogin" class="sr-only">Login</label>
                             <input type="text" id="inputLogin" name="login" value="<?= @$data['login']; ?>" class="form-control bg-light mb-2" placeholder="Login" required autofocus>
 
