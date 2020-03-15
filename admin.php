@@ -1,6 +1,13 @@
 <?php
 require "php/db.php";
 include_once 'php/functions.php';
+
+if ($_SESSION['logged_user']->user_status == 1) {
+    $users = R::getAll("SELECT * FROM users");
+    $announcements = R::getAll("SELECT * FROM announcements");
+    $user_statuses = R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
+    $announcement_statuses = R::getAll("SELECT * FROM announcementstatuses");
+}
 ?>
 
 <!DOCTYPE html>
@@ -50,26 +57,27 @@ include_once 'php/functions.php';
                                 <th>is online</th>
                                 <th></th>
                             </tr>
+                            <?php foreach ($users as $user):?>
                             <tr>
-                                <td>1</td>
-                                <td>login1</td>
+                                <td><?php echo $user['id']?></td>
+                                <td><?php echo $user['login']?></td>
                                 <td>
                                         <select class="form-control form-control-sm" id="sel1">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
+                                            <?php foreach ($user_statuses as $user_status):?>
+                                                <option value="<?php echo $user_status['id']?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected";?>><?php echo $user_status['id']?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                 </td>
                                 <td>
-                                    <input type="date" class="form-control form-control-sm">
+                                    <input type="date" class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="'.date("Y-m-d", $user['banned_to']).'"'?>>
                                 </td>
-                                <td>1</td>
+                                <td><?php echo $user['is_online']?></td>
                                 <td>
                                     <button class="btn btn-sm btn-warning">send message</button>
                                     <button class="btn btn-sm btn-danger">delete</button>
                                 </td>
                             </tr>
+                            <?php endforeach; ?>
                         </table>
                         <div class="container">
                             <button class="btn btn-info">Update</button>
