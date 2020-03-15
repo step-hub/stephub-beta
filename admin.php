@@ -28,26 +28,104 @@ include_once 'php/functions.php';
     <?php include_once 'templates/navigation.php'; ?>
 
     <!-- Page Content -->
-    <div class="container">
-        <div class="card mt-5">
-            <div class="card-body shadow-sm">
-                <h5 class="card-title ">Admin Panel</h5>
-                <?php if ($_SESSION['logged_user']->user_status == 1): ?>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet at dolore eos facilis molestias nesciunt non numquam voluptate voluptatem.</p>
-                <?php else: ?>
-                    <div class="card border-danger">
-                        <div class="card-body shadow-sm">
-                            <h5 class="card-title mb-0 text-center text-danger card-danger"><i class="fas fa-exclamation-circle mr-3"></i>You don't have permissions</h5>
+    <div class="container-fluid">
+        <?php if ($_SESSION['logged_user']->user_status == 1): ?>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="users" aria-selected="true">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="announcements" aria-selected="false">Announcements</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="table-responsive-xl">
+                        <table class="table table-sm table-striped table-bordered">
+                            <tr class="thead-light">
+                                <th>ID</th>
+                                <th>login</th>
+                                <th>status</th>
+                                <th>banned to</th>
+                                <th>is online</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>login1</td>
+                                <td>
+                                        <select class="form-control form-control-sm" id="sel1">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                </td>
+                                <td>
+                                    <input type="date" class="form-control form-control-sm">
+                                </td>
+                                <td>1</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning">send message</button>
+                                    <button class="btn btn-sm btn-danger">delete</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="container">
+                            <button class="btn btn-info">Update</button>
                         </div>
                     </div>
-                <?php endif; ?>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="table-responsive-xl">
+                        <table class="table table-sm table-striped table-bordered">
+                            <tr class="thead-light">
+                                <th>ID</th>
+                                <th>user id</th>
+                                <th>status</th>
+                                <th>title</th>
+                                <th>date</th>
+                                <th>deadline</th>
+                                <th>link</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>10</td>
+                                <td>
+                                    <select class="form-control form-control-sm" id="sel1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet illum libero possimus voluptatibus! Cupiditate eum fugit minus mo
+                                </td>
+                                <td>date</td>
+                                <td>deadline</td>
+                                <td><a href="#">link</a></td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning">send message</button>
+                                    <button class="btn btn-sm btn-danger">delete</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="container">
+                            <button class="btn btn-info">Update</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        <?php else: ?>
+            <div class="card border-danger">
+                <div class="card-body shadow-sm">
+                    <h5 class="card-title mb-0 text-center text-danger card-danger"><i class="fas fa-exclamation-circle mr-3"></i>You don't have permissions</h5>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
-
-    <!-- Footer -->
-    <?php include_once 'templates/footer.php'; ?>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
