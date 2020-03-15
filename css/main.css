@@ -2,6 +2,12 @@ body {
     padding-top: 56px !important;
     background-color: #EEEDE8;
 }
+
+img.img-large-logo {
+    max-width:100% !important;
+    max-height:100% !important;
+}
+
 /*buttons*/
 .my-btn-dark {
     background-color: #715142;
@@ -21,6 +27,10 @@ a.navbar-brand {
     color: #715142;
 }
 .navbar-nav li a{
+    color: #715142;
+}
+.navbar-toggler {
+    background-color: #DDDCD6;
     color: #715142;
 }
 
