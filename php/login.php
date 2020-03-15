@@ -1,5 +1,4 @@
 <?php
-require_once "db.php";
 include_once "functions.php";
 
 $data = $_POST;

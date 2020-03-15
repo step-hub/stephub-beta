@@ -37,10 +37,6 @@ a.navbar-brand {
 .navbar-nav li a {
     color: #715142;
 }
-.navbar-toggler {
-    background-color: #DDDCD6;
-    color: #715142;
-}
 
 /*header*/
 .intro {
