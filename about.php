@@ -23,7 +23,7 @@ include_once 'php/functions.php';
     <link href="css/main.css" rel="stylesheet">
 </head>
 
-<body class="text-center bg-light">
+<body class="text-center">
     <!-- Navigation -->
     <?php include_once 'templates/navigation.php'; ?>
 

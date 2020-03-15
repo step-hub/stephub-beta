@@ -1,3 +1,34 @@
 body {
     padding-top: 56px !important;
+    background-color: #EEEDE8;
+}
+/*buttons*/
+.my-btn-dark {
+    background-color: #715142;
+    color: #ffffff !important;
+}
+.my-btn-outline-dark {
+    border-color: #715142;
+    color: #715142;
+}
+
+/*navbar*/
+.navbar, .intro {
+    background-color: #DDDCD6;
+    color: #715142;
+}
+a.navbar-brand {
+    color: #715142;
+}
+.navbar-nav li a{
+    color: #715142;
+}
+
+/*header*/
+.intro {
+    background-size: cover;
+}
+
+.announcement-card {
+    background-color: #FFFFFF;
 }

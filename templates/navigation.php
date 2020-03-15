@@ -1,6 +1,6 @@
-<nav class="navbar navbar-dark bg-dark shadow-sm navbar-expand-lg fixed-top box-shadow">
+<nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="index.php"><img src="img/logo.jpg" class="mr-2" alt="Logo" width="32" height="32">StepHub</a>
+        <a class="navbar-brand" href="index.php">StepHub</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,15 +20,15 @@
                 <?php if (isset($_SESSION['logged_user'])):
                     if ($_SESSION['logged_user']->user_status == 1): ?>
                         <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "admin.php") { echo "active"; } ?>">
-                            <a class="btn btn-outline-light ml-3" href="admin.php">Admin page</a>
+                            <a class="btn my-btn-outline-dark ml-3" href="admin.php">Admin page</a>
                         </li>
                     <?php endif; ?>
                     <li class="nav-item">
-                        <a class="btn btn-light shadow-sm ml-3" href="php/logout.php">Log out</a>
+                        <a class="btn my-btn-dark shadow-sm ml-3" href="php/logout.php">Log out</a>
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a class="btn btn-light shadow-sm ml-3" href="login.php">Log in</a>
+                        <a class="btn my-btn-dark shadow-sm ml-3" href="login.php">Log in</a>
                     </li>
                 <?php endif; ?>
             </ul>
