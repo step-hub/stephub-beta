@@ -65,7 +65,7 @@ if (isset($data['do_login'])) {
     <?php include_once 'templates/navigation.php'; ?>
 
     <!-- Page Content -->
-    <?php if (!$_SESSION):?>
+    <?php if (!$_SESSION): ?>
         <div>
             <div class="card">
                 <div class="card-body shadow-sm">
@@ -95,9 +95,9 @@ if (isset($data['do_login'])) {
             </div>
             <p class="mt-3 text-muted">&copy; 2020 StepHub</p>
         </div>
-    <?php else:?>
+    <?php else: ?>
         <p>You are already log in</p>
-    <?php endif;?>
+    <?php endif; ?>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
