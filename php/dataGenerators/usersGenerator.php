@@ -1,6 +1,4 @@
 <?php
-// USAGE: include_once in index.php
-//include_once 'php/usersGenerator.php';
 
 for ($i = 1; $i < 51; $i++){
 

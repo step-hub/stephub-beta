@@ -13,4 +13,3 @@ R::store($user_status);
 
 $user_status->status = 'banned';
 R::store($user_status);
-
