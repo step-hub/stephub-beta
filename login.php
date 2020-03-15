@@ -62,7 +62,7 @@ if (isset($data['do_login'])) {
 
 <body class="text-center">
     <!-- Navigation -->
-    <?php include_once 'templates/navigation.php'; ?>
+    <?php include_once 'templates/navbar.php'; ?>
 
     <!-- Page Content -->
     <?php if (!$_SESSION): ?>

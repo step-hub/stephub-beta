@@ -33,7 +33,7 @@ if (isset($data['do_filter'])){
 
 <body class="text-center">
     <!-- Navigation -->
-    <?php include_once 'templates/navigation.php'; ?>
+    <?php include_once 'templates/navbar.php'; ?>
 
     <!-- Header-->
     <?php if (!$_SESSION):
