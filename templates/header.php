@@ -13,7 +13,7 @@
         </div>
         <div class="row pb-4">
             <div class="col">
-                <a class="btn my-btn-dark shadow-sm" href="create-announcement.php">Add new announcement</a>
+                <a class="btn btn-lg my-btn-dark shadow-sm" href="create-announcement.php"><i class="fas fa-plus mr-2"></i>Add new announcement</a>
             </div>
         </div>
     </div>

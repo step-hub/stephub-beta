@@ -17,6 +17,14 @@ img.img-large-logo {
     border-color: #715142;
     color: #715142;
 }
+.my-btn-blue {
+    background-color: #1a5784;
+    color: #ffffff !important;
+}
+.my-btn-outline-blue {
+    border-color: #1a5784;
+    color: #1a5784;
+}
 
 /*navbar*/
 .navbar, .intro {
