@@ -113,7 +113,7 @@ if (isset($data['do_filter'])){
 
                                                 </div>
                                                 <div class="col align-self-end">
-                                                    <a href="announcement.php" class="btn btn-primary float-right">Open</a>
+                                                    <a href="announcement.php?id=<?= $announcement['id']?>" class="btn btn-primary float-right">Open</a>
                                                 </div>
                                             </div>
                                         </div>

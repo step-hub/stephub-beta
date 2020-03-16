@@ -43,6 +43,11 @@ function generate_random_string($length)
     return $randomString;
 }
 
+function get_announcement_by_id($id)
+{
+    return R::findOne('announcements', 'id = ?', array($id));
+}
+
 function get_announcements_without_filter()
 {
     return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT 10");
@@ -51,6 +56,11 @@ function get_announcements_without_filter()
 function get_announcements_with_filter($sort_by, $qty)
 {
     return R::getAll("SELECT * FROM announcements ORDER BY ".$sort_by." DESC LIMIT ".$qty);
+}
+
+function get_comments_by_announcement_id($id){
+    //TODO
+    return 0;
 }
 
 function get_user_by_login($login)
