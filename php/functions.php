@@ -60,7 +60,8 @@ function get_announcements_with_filter($sort_by, $qty)
 
 function get_comments_by_announcement_id($id)
 {
-    return R::getAll("SELECT * FROM comments WHERE announcement_id = ".$id." ORDER BY date ASC");
+    return [R::findAll('comments',"(announcement_id = ? AND parent_comment_id IS NULL) ORDER BY date ASC", array($id)),
+        R::findAll('comments', "(announcement_id = ? AND parent_comment_id IS NOT NULL) ORDER BY date ASC", array($id))];
 }
 
 function get_user_by_login($login)
