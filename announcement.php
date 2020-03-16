@@ -24,9 +24,12 @@ function echo_comment($comments, $i, $n){
             echo_comment($comments, array_search($a, $comments), $n);
         }
     }
-    if (count($comments) > 0 and $n == 1){
-        echo_comment($comments, 0, $n);
-    }
+//    якщо можна видаляти
+//    if (count($comments) > 0 and $n == 1){
+//        echo_comment($comments, 0, $n);
+//    }
+//    якщо ні
+//    TODO
 }
 
 echo_comment($comments, 0, 1);
