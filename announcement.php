@@ -94,8 +94,10 @@ if (isset($_GET['id'])) {
                                                 <p class="card-text text-muted small mx-2"><i
                                                             class="far fa-clock mr-2"></i><?= show_time($a['date']) ?>
                                                 </p>
-                                                <span class="badge badge-secondary mx-2 mb-3"><i
-                                                            class="fas fa-user mr-2"></i>owner</span>
+                                                <?php if ($announcement['user_id'] == $a['user_id']) : ?>
+                                                    <span class="badge badge-secondary mx-2 mb-3"><i
+                                                                class="fas fa-user mr-2"></i>owner</span>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -104,29 +106,52 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body shadow-sm">
+                                <div class="card-body">
                                     <p class="card-text"> <?= $a['message'] ?></p>
+                                </div>
+                                <div class="card-footer shadow-sm">
+                                    <form class="form">
+                                        <label class="sr-only" for="comment_field">Leave Comment</label>
+                                        <textarea type="text" rows="3" class="form-control mb-2 mr-sm-2"
+                                                  id="comment_field"
+                                                  placeholder="Leave Comment"></textarea>
+                                        <button type="submit" class="btn my-btn-blue mt-1 mb-2"><i
+                                                    class="fas fa-comment mr-2"></i>Comment
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                             <?php foreach ($com_comments as $c) : ?>
                                 <?php if ($c['parent_comment_id'] == $a['id']): ?>
-                                    <div class="card mb-3 announcement-card">
-                                        <div class="card-header my-bg-gray pb-0">
-                                            <div class="row pl-1">
-                                                <div class="col-md-10">
-                                                    <div class="row">
-                                                        <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($c['date']) ?></p>
-                                                        <p class="card-text text-muted small mx-2"><i class="far fa-clock mr-2"></i><?= show_time($c['date']) ?></p>
-                                                        <span class="badge badge-secondary mx-2 mb-3"><i class="fas fa-user mr-2"></i>owner</span>
+                                    <div class="row justify-content-end">
+                                        <div class="col-md-8 ">
+                                            <div class="card mb-3 announcement-card">
+                                                <div class="card-header my-bg-gray pb-0">
+                                                    <div class="row pl-1">
+                                                        <div class="col-md-10">
+                                                            <div class="row">
+                                                                <p class="card-text text-muted small mx-2"><i
+                                                                            class="far fa-calendar mr-2"></i><?= show_date($c['date']) ?>
+                                                                </p>
+                                                                <p class="card-text text-muted small mx-2"><i
+                                                                            class="far fa-clock mr-2"></i><?= show_time($c['date']) ?>
+                                                                </p>
+                                                                <?php if ($announcement['user_id'] == $a['user_id']) : ?>
+                                                                    <span class="badge badge-secondary mx-2 mb-3"><i
+                                                                                class="fas fa-user mr-2"></i>owner</span>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <button class="btn float-right text-muted pt-0 pr-0"><i
+                                                                        class="fas fa-ban"></i></button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <button class="btn float-right text-muted pt-0 pr-0"><i class="fas fa-ban"></i></button>
+                                                <div class="card-body shadow-sm">
+                                                    <p class="card-text"><?= $c['message'] ?></p>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="card-body shadow-sm">
-                                            <p class="card-text"><?=$c['message']?></p>
                                         </div>
                                     </div>
                                 <?php endif; ?>
@@ -140,8 +165,6 @@ if (isset($_GET['id'])) {
             <div class="card">
                 <div class="card-body shadow-sm">
                     <h5 class="card-title">Do you want to help?</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet at dolore eos facilis molestias
-                        nesciunt non numquam voluptate voluptatem.</p>
                     <a href="#" class="btn btn-secondary btn-block"><i class="fas fa-comments mr-2"></i>Go to private
                         chat</a>
                     <p class="text-center my-0">or</p>
