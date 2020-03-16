@@ -26,15 +26,24 @@ foreach ($announcements as $a) {
 
 if (isset($data['do_update_users'])) {
     foreach ($users as $u) {
-        if (array_key_exists('check' . $u['id'], $data)) {
+        if (array_key_exists('check_user' . $u['id'], $data)) {
             $id = $u['id'];
-            $sel_status = $data['sel_status' . $id];
+            $sel_status = $data['sel_user_status' . $id];
             $ban_date = strtotime($data['ban_date' . $id]);
             if (($sel_status == '4' and $ban_date > time()) or ($sel_status != '4' and $ban_date == null)) {
                 $u['user_status'] = $sel_status;
                 $u['banned_to'] = $ban_date;
                 R::store($u);
             }
+        }
+    }
+}
+
+if (isset($data['do_update_ann'])) {
+    foreach ($announcements as $a) {
+        if (array_key_exists('check_ann' . $a['id'], $data)) {
+            $a['announcement_status_id'] = $data['sel_ann_status'.$a['id']];
+            R::store($a);
         }
     }
 }
@@ -94,12 +103,12 @@ if (isset($data['do_update_users'])) {
                             </tr>
                             <?php foreach ($users as $user): ?>
                                 <tr>
-                                    <td><input type="checkbox" name="check<?= $user['id'] ?>"></td>
+                                    <td><input type="checkbox" name="check_user<?= $user['id'] ?>"></td>
                                     <td><?= $user['id'] ?></td>
                                     <td><?= $user['login'] ?></td>
                                     <td>
                                         <select class="form-control form-control-sm"
-                                                name="sel_status<?php echo $user['id'] ?>">
+                                                name="sel_user_status<?= $user['id'] ?>">
                                             <?php foreach ($user_statuses as $user_status): ?>
                                                 <option value="<?= $user_status['id'] ?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected"; ?>><?= $user_status['status'] ?></option>
                                             <?php endforeach; ?>
@@ -117,15 +126,9 @@ if (isset($data['do_update_users'])) {
                                         } ?></div>
                                     </td>
                                     <td>
-                                        <div class=" row
-                                        ">
-                                        <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope mr-1"></i>message
-                                        </button>
-                                        <form action="admin.php" method="POST">
-                                            <button class="btn btn-sm btn-danger" type="submit"
-                                                    name="do_delete_user<?= $user['id'] ?>"><i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
+                                        <div class=" row">
+                                        <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope mr-1"></i></button>
+                                        <button class="btn btn-sm btn-danger" type="submit" name="do_delete_user<?= $user['id'] ?>"><i class="fas fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -143,6 +146,7 @@ if (isset($data['do_update_users'])) {
                     <div class="table-responsive-xl">
                         <table class="table table-sm table-striped table-bordered">
                             <tr class="thead-light">
+                                <th></th>
                                 <th>ID</th>
                                 <th>user id</th>
                                 <th>status</th>
@@ -154,19 +158,20 @@ if (isset($data['do_update_users'])) {
                             </tr>
                             <?php foreach ($announcements as $announcement):?>
                                 <tr>
+                                    <td><input type="checkbox" name="check_ann<?= $announcement['id']?>"></td>
                                     <td><?= $announcement['id']?></td>
                                     <td><?= $announcement['user_id']?></td>
                                     <td>
                                         <select class="form-control form-control-sm"
-                                                name="sel_an_status<?= $announcement['id'] ?>">
+                                                name="sel_ann_status<?= $announcement['id'] ?>">
                                             <?php foreach ($announcement_statuses as $announcement_status): ?>
                                                 <option value="<?= $announcement_status['id'] ?>" <?php if ($announcement['announcement_status_id'] == $announcement_status['id']) echo "selected"; ?>><?= $announcement_status['status'] ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </td>
                                     <td><?= $announcement['title']?></td>
-                                    <td><?= date("Y-m-d", $announcement['date'])?></td>
-                                    <td><?= date("Y-m-d", $announcement['deadline'])?></td>
+                                    <td><?= show_date($announcement['date'])?></td>
+                                    <td><?= show_date($announcement['deadline'])?></td>
                                     <td><a href="#">link</a></td>
                                     <td>
                                         <div class="row">
@@ -178,7 +183,7 @@ if (isset($data['do_update_users'])) {
                             <?php endforeach;?>
                         </table>
                         <div class="container">
-                            <button class="btn btn-info mb-4"><i class="fas fa-sync mr-2"></i>Update</button>
+                            <button class="btn btn-info mb-4" name="do_update_ann" type="submit"><i class="fas fa-sync mr-2"></i>Update</button>
                         </div>
                     </div>
                 </form>
