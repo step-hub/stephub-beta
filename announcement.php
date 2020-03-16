@@ -6,6 +6,30 @@ if (isset($_GET['id'])) {
     $announcement = get_announcement_by_id($_GET['id']);
     $comments = get_comments_by_announcement_id($_GET['id']);//TODO
 }
+
+//rename function
+//comments -- comments' array
+//i -- index of array
+//n -- hierarchy
+function echo_comment($comments, $i, $n){
+//    TODO
+//    display comment
+    $j = $comments[$i]['id'];
+//    якщо рекурсія буде норм працювати, то кожного разу цей цикл буде проходити на 1 ел менше
+//    якщо рекурсія не буде працювати, тоді не можна видаляти
+    unset($comments[$i]);
+    foreach ($comments as $a){
+        if ($a['parent_id'] == $j){
+            ++$n;
+            echo_comment($comments, array_search($a, $comments), $n);
+        }
+    }
+    if (count($comments) > 0 and $n == 1){
+        echo_comment($comments, 0, $n);
+    }
+}
+
+echo_comment($comments, 0, 1);
 ?>
 
 <!DOCTYPE html>

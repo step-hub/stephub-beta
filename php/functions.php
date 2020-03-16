@@ -60,6 +60,7 @@ function get_announcements_with_filter($sort_by, $qty)
 
 function get_comments_by_announcement_id($id){
     //TODO
+//    comments must be sorted by field 'date' in ascending order
     return 0;
 }
 
