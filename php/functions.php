@@ -19,7 +19,15 @@ function show_array($a)
 
 function show_date($numberofsecs)
 {
-    return date('Y/m/d H:i:s', $numberofsecs);
+    return date('d.m.Y', $numberofsecs);
+}
+function show_detailed_date($numberofsecs)
+{
+    return date('d.m.Y H:i:s', $numberofsecs);
+}
+function show_time($numberofsecs)
+{
+    return date('H:i', $numberofsecs);
 }
 
 function generate_random_string($length)
