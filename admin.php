@@ -127,7 +127,7 @@ if (isset($data['do_update_ann'])) {
                                     </td>
                                     <td>
                                         <div class=" row">
-                                        <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope mr-1"></i></button>
+                                        <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i></button>
                                         <button class="btn btn-sm btn-danger" type="submit" name="do_delete_user<?= $user['id'] ?>"><i class="fas fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
@@ -153,7 +153,6 @@ if (isset($data['do_update_ann'])) {
                                 <th>title</th>
                                 <th>date</th>
                                 <th>deadline</th>
-                                <th>link</th>
                                 <th></th>
                             </tr>
                             <?php foreach ($announcements as $announcement):?>
@@ -172,10 +171,10 @@ if (isset($data['do_update_ann'])) {
                                     <td><?= $announcement['title']?></td>
                                     <td><?= show_date($announcement['date'])?></td>
                                     <td><?= show_date($announcement['deadline'])?></td>
-                                    <td><a href="#">link</a></td>
                                     <td>
                                         <div class="row">
-                                            <button class="btn btn-sm btn-warning"><i class="fas fa-envelope mr-1"></i></button>
+                                            <a target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $announcement['id']?>" class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
+                                            <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i></button>
                                             <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?=$announcement['id'] ?>"><i class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>
@@ -192,8 +191,7 @@ if (isset($data['do_update_ann'])) {
     <?php else: ?>
         <div class="card border-danger">
             <div class="card-body shadow-sm">
-                <h5 class="card-title mb-0 text-center text-danger card-danger"><i
-                            class="fas fa-exclamation-circle mr-3"></i>You don't have permissions</h5>
+                <h5 class="card-title mb-0 text-center text-danger card-danger"><iclass="fas fa-exclamation-circle mr-3"></i>You don't have permissions</h5>
             </div>
         </div>
     <?php endif; ?>
