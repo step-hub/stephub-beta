@@ -113,7 +113,7 @@ if (isset($data['do_update'])){
                                 <?php endforeach; ?>
                             </table>
                             <div class="container">
-                                <button class="btn btn-info mb-4"><i class="fas fa-sync mr-2"></i>Update</button>
+                                <button class="btn btn-info mb-4" type="submit" name="do_update"><i class="fas fa-sync mr-2"></i>Update</button>
                             </div>
                         </form>
                     </div>
