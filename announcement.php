@@ -98,7 +98,7 @@ function echo_comment($comments, $i, $n) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ua">
 
 <head>
     <meta charset="utf-8">
@@ -106,7 +106,7 @@ function echo_comment($comments, $i, $n) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StepHub | Announcement Title</title>
+    <title>StepHub | <?= $announcement['title']?></title>
 
     <link rel="shortcut icon" href="favicon.ico">
 
@@ -147,7 +147,7 @@ function echo_comment($comments, $i, $n) {
                     </div>
                     <?php if(isset($announcement['file'])): ?>
                     <div class="card-footer">
-                        <button class="btn btn-secondary"><i class="fas fa-download mr-2"></i>Download attachment</button>
+                        <button class="btn btn-secondary"><i class="fas fa-download mr-2"></i>Завантажити прикріплений файл</button>
                         <div class="card-text text-muted small mx-2"><i class="fas fa-file mr-2"></i>file.zip</div>
                     </div>
                     <?php endif; ?>
@@ -156,9 +156,9 @@ function echo_comment($comments, $i, $n) {
                 <div class="card shadow-sm mt-5">
                     <div class="card-header">
                         <form class="form">
-                            <label class="sr-only" for="comment_field">Leave Comment</label>
+                            <label class="sr-only" for="comment_field">Залишити коментар</label>
                             <textarea type="text" rows="3" class="form-control mb-2 mr-sm-2" id="comment_field" placeholder="Leave Comment"></textarea>
-                            <button type="submit" class="btn my-btn-blue mt-1 mb-2"><i class="fas fa-comment mr-2"></i>Comment</button>
+                            <button type="submit" class="btn my-btn-blue mt-1 mb-2"><i class="fas fa-comment mr-2"></i>Коментувати</button>
                         </form>
                     </div>
                     <div class="card-body bg-light">
@@ -169,11 +169,11 @@ function echo_comment($comments, $i, $n) {
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body shadow-sm">
-                        <h5 class="card-title">Do you want to help?</h5>
+                        <h5 class="card-title">Можеш допомогти?</h5>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet at dolore eos facilis molestias nesciunt non numquam voluptate voluptatem.</p>
-                        <a href="#" class="btn btn-secondary btn-block"><i class="fas fa-comments mr-2"></i>Go to private chat</a>
-                        <p class="text-center my-0">or</p>
-                        <a href="#" class="btn btn-success btn-block"><i class="fas fa-hands-helping mr-2"></i>Help to solve</a>
+                        <a href="#" class="btn btn-secondary btn-block"><i class="fas fa-comments mr-2"></i>Написати автору</a>
+                        <p class="text-center my-0">або</p>
+                        <a href="#" class="btn btn-success btn-block"><i class="fas fa-hands-helping mr-2"></i>Допомогти</a>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@
                 <img class="mx-auto d-block img-large-logo" src="img/logo.jpg" alt="big logo">
             </div>
             <div class="col-md-5 text-left">
-                <h2>Welcome to StepHub!</h2>
+                <h2>Ласкаво просимо до StepHub!</h2>
                 <h5>Lorem ipsum dolor sit amet, consectetur</h5>
                 <br>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur culpa fugiat laudantium, nihil perferendis recusandae. </p>
@@ -19,20 +19,20 @@
                         <?php endif; ?>
 
                         <form class="form-login" action="index.php" method="POST">
-                            <label for="inputLogin" class="sr-only">Login</label>
-                            <input type="text" id="inputLogin" name="login" value="<?= @$data['login']; ?>" class="form-control bg-light mb-2" placeholder="Login" required autofocus>
+                            <label for="inputLogin" class="sr-only">Ім'я користувача</label>
+                            <input type="text" id="inputLogin" name="login" value="<?= @$data['login']; ?>" class="form-control bg-light mb-2" placeholder="Логін або email" required autofocus>
 
-                            <label for="inputPassword" class="sr-only">Password</label>
-                            <input type="password" id="inputPassword" name="password" class="form-control bg-light mb-2" placeholder="Password" required>
+                            <label for="inputPassword" class="sr-only">Пароль</label>
+                            <input type="password" id="inputPassword" name="password" class="form-control bg-light mb-2" placeholder="Пароль" required>
 
                             <div class="checkbox mb-2">
                                 <label>
-                                    <input type="checkbox" value="remember-me" name="remember"> Remember me
+                                    <input type="checkbox" value="remember-me" name="remember"> Запам'ятати мене
                                 </label>
                             </div>
 
-                            <button class="btn btn-lg my-btn-blue btn-block" type="submit" name="do_login">Log in</button>
-                            <p class="mt-3 mb-0">Don't have an account? <a href="registration.php">Register Now</a></p>
+                            <button class="btn btn-lg my-btn-blue btn-block" type="submit" name="do_login">Вхід</button>
+                            <p class="mt-3 mb-0">Не маєте акаунту? <a href="registration.php">Зареєструвати</a></p>
                         </form>
                     </div>
                 </div>

@@ -51,7 +51,7 @@ if (isset($data['do_update_ann'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ua">
 
 <head>
     <meta charset="utf-8">
@@ -59,7 +59,7 @@ if (isset($data['do_update_ann'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StepHub | Admin Panel</title>
+    <title>StepHub | Сторінка Адміністратора</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 
@@ -80,11 +80,11 @@ if (isset($data['do_update_ann'])) {
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="users"
-                   aria-selected="true">Users</a>
+                   aria-selected="true">Користувачі</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                   aria-controls="announcements" aria-selected="false">Announcements</a>
+                   aria-controls="announcements" aria-selected="false">Оголошення</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -95,10 +95,10 @@ if (isset($data['do_update_ann'])) {
                             <tr class="thead-light">
                                 <th></th>
                                 <th>ID</th>
-                                <th>login</th>
-                                <th>status</th>
-                                <th>banned to</th>
-                                <th>is online</th>
+                                <th>Ім'я</th>
+                                <th>Права</th>
+                                <th>Забанений до</th>
+                                <th>Статус</th>
                                 <th></th>
                             </tr>
                             <?php foreach ($users as $user): ?>
@@ -135,7 +135,7 @@ if (isset($data['do_update_ann'])) {
                         </table>
                         <div class="container">
                             <button class="btn btn-info mb-4" type="submit" name="do_update_users"><i
-                                        class="fas fa-sync mr-2"></i>Update
+                                        class="fas fa-sync mr-2"></i>Оновити
                             </button>
                         </div>
                     </form>
@@ -148,11 +148,11 @@ if (isset($data['do_update_ann'])) {
                             <tr class="thead-light">
                                 <th></th>
                                 <th>ID</th>
-                                <th>user id</th>
-                                <th>status</th>
-                                <th>title</th>
-                                <th>date</th>
-                                <th>deadline</th>
+                                <th>Власник</th>
+                                <th>Статус</th>
+                                <th>Заголовок</th>
+                                <th>Дата створення</th>
+                                <th>Дедлайн</th>
                                 <th></th>
                             </tr>
                             <?php foreach ($announcements as $announcement):?>
@@ -182,7 +182,7 @@ if (isset($data['do_update_ann'])) {
                             <?php endforeach;?>
                         </table>
                         <div class="container">
-                            <button class="btn btn-info mb-4" name="do_update_ann" type="submit"><i class="fas fa-sync mr-2"></i>Update</button>
+                            <button class="btn btn-info mb-4" name="do_update_ann" type="submit"><i class="fas fa-sync mr-2"></i>Оновити</button>
                         </div>
                     </div>
                 </form>
@@ -191,7 +191,7 @@ if (isset($data['do_update_ann'])) {
     <?php else: ?>
         <div class="card border-danger">
             <div class="card-body shadow-sm">
-                <h5 class="card-title mb-0 text-center text-danger card-danger"><iclass="fas fa-exclamation-circle mr-3"></i>You don't have permissions</h5>
+                <h5 class="card-title mb-0 text-center text-danger card-danger"><iclass="fas fa-exclamation-circle mr-3"></i>Ви не маєте доступу до цієї сторінки</h5>
             </div>
         </div>
     <?php endif; ?>

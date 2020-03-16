@@ -4,7 +4,7 @@ include_once 'php/functions.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ua">
 
 <head>
     <meta charset="utf-8">
@@ -12,7 +12,7 @@ include_once 'php/functions.php';
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StepHub | Create Announcement</title>
+    <title>StepHub | Створити оголошення</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 
@@ -31,7 +31,7 @@ include_once 'php/functions.php';
     <div class="container">
         <div class="card mt-5">
             <div class="card-body shadow-sm">
-                <h5 class="card-title ">Create Announcement</h5>
+                <h5 class="card-title ">Створити оголошення</h5>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet at dolore eos facilis molestias nesciunt non numquam voluptate voluptatem.</p>
             </div>

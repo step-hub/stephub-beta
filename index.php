@@ -12,7 +12,7 @@ if (isset($data['do_filter'])){
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ua">
 
 <head>
     <meta charset="utf-8">
@@ -51,22 +51,24 @@ if (isset($data['do_filter'])){
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <div class="form-group">
-                                            <label for="date_filter">Sort by</label>
+                                            <label for="date_filter">Сортувати по</label>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="date_filter" value="date" <?php if (!$data or ($data and $data['date_filter'] == 'date')) echo "checked"?>>create date
+                                                    <input type="radio" class="form-check-input" name="date_filter" value="date" <?php if (!$data or ($data and $data['date_filter'] == 'date')) echo "checked"?>>
+                                                    Даті створення
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="date_filter" value="deadline" <?php if ($data and $data['date_filter'] == 'deadline') echo "checked"?>>deadline date
+                                                    <input type="radio" class="form-check-input" name="date_filter" value="deadline" <?php if ($data and $data['date_filter'] == 'deadline') echo "checked"?>>
+                                                    Даті дедлайну
                                                 </label>
                                             </div>
                                         </div>
                                     </li>
                                     <li class="list-group-item">
                                         <div class="form-group">
-                                            <label for="announcement_qty">Announcements on page</label>
+                                            <label for="announcement_qty">К-ть оголошень на сторінку</label>
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input type="radio" class="form-check-input" name="announcement_qty" value="10" <?php if (!$data or ($data and $data['announcement_qty'] == '10')) echo "checked"?>>10
@@ -83,7 +85,7 @@ if (isset($data['do_filter'])){
                                                 </label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-success btn-block" name="do_filter">Apply</button>
+                                        <button type="submit" class="btn btn-success btn-block" name="do_filter">Зберегти</button>
                                     </li>
                                 </ul>
                             </form>
@@ -113,7 +115,7 @@ if (isset($data['do_filter'])){
 
                                                 </div>
                                                 <div class="col align-self-end">
-                                                    <a href="announcement.php?id=<?= $announcement['id']?>" class="btn btn-primary float-right">Open</a>
+                                                    <a href="announcement.php?id=<?= $announcement['id']?>" class="btn btn-primary float-right">Дізнатись більше</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -122,7 +124,7 @@ if (isset($data['do_filter'])){
                             else: ?>
                                 <div class="card border-danger">
                                     <div class="card-body shadow-sm">
-                                        <h5 class="card-title mb-0 text-center text-danger"><i class="fas fa-exclamation-circle mr-3"></i>No announcements found</h5>
+                                        <h5 class="card-title mb-0 text-center text-danger"><i class="fas fa-exclamation-circle mr-3"></i>Не знайдено оголошень</h5>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -130,7 +132,7 @@ if (isset($data['do_filter'])){
                             <nav aria-label="">
                                 <ul class="pagination">
                                     <li class="page-item disabled">
-                                        <span class="page-link">Previous</span>
+                                        <span class="page-link">Попередня</span>
                                     </li>
                                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                                     <li class="page-item active">
@@ -138,7 +140,7 @@ if (isset($data['do_filter'])){
                                     </li>
                                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                                     <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
+                                        <a class="page-link" href="#">Наступна</a>
                                     </li>
                                 </ul>
                             </nav>
