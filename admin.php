@@ -2,12 +2,21 @@
 require "php/db.php";
 include_once 'php/functions.php';
 
+$data = $_POST;
 if ($_SESSION['logged_user']->user_status == 1) {
     $users = R::getAll("SELECT * FROM users");
     $announcements = R::getAll("SELECT * FROM announcements");
     $user_statuses = R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
     $announcement_statuses = R::getAll("SELECT * FROM announcementstatuses");
 }
+
+foreach ($users as $u){
+    if (isset($data['do_delete'.$u['id']])){
+        R::trash('studentids', $u['studentid_id']);
+        header("location: admin.php");
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +83,9 @@ if ($_SESSION['logged_user']->user_status == 1) {
                                 <td><?php echo $user['is_online']?></td>
                                 <td>
                                     <button class="btn btn-sm btn-warning">send message</button>
-                                    <button class="btn btn-sm btn-danger">delete</button>
+                                    <form action="admin.php" method="post">
+                                        <button class="btn btn-sm btn-danger" type="submit" name="do_delete<?php echo $user['id']?>">delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
