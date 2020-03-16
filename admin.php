@@ -85,31 +85,35 @@ if (isset($data['do_update'])){
                                 </tr>
                                 <?php foreach ($users as $user):?>
                                 <tr>
-                                    <td><input type="checkbox" name="check<?php echo $user['id']?>"></td>
-                                    <td><?php echo $user['id']?></td>
-                                    <td><?php echo $user['login']?></td>
+                                    <td><input type="checkbox" name="check<?= $user['id']?>"></td>
+                                    <td><?= $user['id']?></td>
+                                    <td><?= $user['login']?></td>
                                     <td>
-                                            <select class="form-control form-control-sm" name="sel_status<?php echo $user['id']?>">
-                                                <?php foreach ($user_statuses as $user_status):?>
-                                                    <option value="<?php echo $user_status['id']?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected";?>><?php echo $user_status['status']?></option>
-                                                <?php endforeach; ?>
-                                            </select>
+                                        <select class="form-control form-control-sm" name="sel_status<?php echo $user['id']?>">
+                                            <?php foreach ($user_statuses as $user_status): ?>
+                                                <option value="<?= $user_status['id']?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected";?>><?= $user_status['status']?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </td>
                                     <td>
-                                        <input type="date" name="ban_date<?php echo $user['id']?>" class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="'.date("Y-m-d", $user['banned_to']).'"'?>>
+                                        <input type="date" name="ban_date<?= $user['id']?>" class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="'.date("Y-m-d", $user['banned_to']).'"'?>>
                                     </td>
-                                    <td><?php echo $user['is_online']?></td>
                                     <td>
-                                        <button class="btn btn-sm btn-warning">MESSAGE</button>
-                                        <form action="admin.php" method="POST">
-                                            <button class="btn btn-sm btn-danger" type="submit" name="do_delete<?php echo $user['id']?>">DELETE</button>
-                                        </form>
+                                        <div class="badge badge-<?php if($user['is_online']) { echo "success\">online"; } else { echo "danger\">offline"; } ?></div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope mr-1"></i>message</button>
+                                            <form action="admin.php" method="POST">
+                                                <button class="btn btn-sm btn-danger" type="submit" name="do_delete<?= $user['id']?>"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </table>
                             <div class="container">
-                                <button class="btn btn-info" type="submit" name="do_update">UPDATE</button>
+                                <button class="btn btn-info mb-4"><i class="fas fa-sync mr-2"></i>Update</button>
                             </div>
                         </form>
                     </div>
@@ -145,13 +149,15 @@ if (isset($data['do_update'])){
                                 <td>deadline</td>
                                 <td><a href="#">link</a></td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning">send message</button>
-                                    <button class="btn btn-sm btn-danger">delete</button>
+                                    <div class="row">
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-envelope mr-1"></i>message</button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
                         <div class="container">
-                            <button class="btn btn-info">Update</button>
+                            <button class="btn btn-info mb-4"><i class="fas fa-sync mr-2"></i>Update</button>
                         </div>
                     </div>
                 </div>
