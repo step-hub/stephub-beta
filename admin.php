@@ -11,8 +11,15 @@ if ($_SESSION['logged_user']->user_status == 1) {
 }
 
 foreach ($users as $u) {
-    if (isset($data['do_delete' . $u->id])) {
+    if (isset($data['do_delete_user' . $u->id])) {
         R::trash($u);
+        header("location: admin.php");
+    }
+}
+
+foreach ($announcements as $a) {
+    if (isset($data['do_delete_ann' . $a->id])) {
+        R::trash($a);
         header("location: admin.php");
     }
 }
@@ -116,7 +123,7 @@ if (isset($data['do_update_users'])) {
                                         </button>
                                         <form action="admin.php" method="POST">
                                             <button class="btn btn-sm btn-danger" type="submit"
-                                                    name="do_delete<?= $user['id'] ?>"><i class="fas fa-trash-alt"></i>
+                                                    name="do_delete_user<?= $user['id'] ?>"><i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -163,9 +170,8 @@ if (isset($data['do_update_users'])) {
                                     <td><a href="#">link</a></td>
                                     <td>
                                         <div class="row">
-                                            <button class="btn btn-sm btn-warning"><i class="fas fa-envelope mr-1"></i>message
-                                            </button>
-                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            <button class="btn btn-sm btn-warning"><i class="fas fa-envelope mr-1"></i></button>
+                                            <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?=$announcement['id'] ?>"><i class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>
                                 </tr>
