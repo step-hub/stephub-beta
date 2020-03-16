@@ -1,6 +1,11 @@
 <?php
 require "php/db.php";
 include_once 'php/functions.php';
+
+if (isset($_GET['id'])) {
+    $announcement = get_announcement_by_id($_GET['id']);
+    $comments = get_comments_by_announcement_id($_GET['id']);//TODO
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,25 +41,27 @@ include_once 'php/functions.php';
                         <div class="container">
                             <div class="row pt-2 pb-2">
                                 <div class="col-md-10">
-                                    <h3 class="card-title">Announcement Title From Database</h3>
+                                    <h3 class="card-title"><?= $announcement['title']?></h3>
                                 </div>
                                 <div class="col-md-2 pr-0">
                                     <button class="btn float-right my-color-dark"><i class="fas fa-ban"></i></button>
                                 </div>
                             </div>
                             <div class="row pt-2 px-2">
-                                <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date(1245356)?></p>
-                                <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i><?= show_date(4856743)?></p>
+                                <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date'])?></p>
+                                <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i><?= show_date($announcement['deadline'])?></p>
                             </div>
                         </div>
                     </div>
                     <div class="card-body bg-light">
-                        <p>Announcement text Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
+                        <p><?= $announcement['details']?></p>
                     </div>
+                    <?php if(isset($announcement['file'])): ?>
                     <div class="card-footer">
                         <button class="btn btn-secondary"><i class="fas fa-download mr-2"></i>Download attachment</button>
                         <div class="card-text text-muted small mx-2"><i class="fas fa-file mr-2"></i>file.zip</div>
                     </div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="card shadow-sm mt-5">

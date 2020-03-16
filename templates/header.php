@@ -5,7 +5,7 @@
                 <img class="mx-auto d-block img-large-logo" src="img/logo.jpg" alt="big logo">
             </div>
             <div class="col-md-9 text-left">
-                <h2>Hello, "username"!</h2>
+                <h2>Hello, <?= $_SESSION['logged_user']['login']?>!</h2>
                 <h5>Lorem ipsum dolor sit amet, consectetur</h5>
                 <br>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur culpa fugiat laudantium, nihil perferendis recusandae. </p>
