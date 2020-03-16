@@ -4,16 +4,31 @@ include_once 'php/functions.php';
 
 $data = $_POST;
 if ($_SESSION['logged_user']->user_status == 1) {
-    $users = R::getAll("SELECT * FROM users");
-    $announcements = R::getAll("SELECT * FROM announcements");
+    $users = R::findAll('users');
+    $announcements = R::findAll('announcements');
     $user_statuses = R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
     $announcement_statuses = R::getAll("SELECT * FROM announcementstatuses");
 }
 
 foreach ($users as $u){
-    if (isset($data['do_delete'.$u['id']])){
-        R::trash('studentids', $u['studentid_id']);
+    if (isset($data['do_delete'.$u->id])){
+        R::trash($u);
         header("location: admin.php");
+    }
+}
+
+if (isset($data['do_update'])){
+    foreach ($users as $u){
+        if (array_key_exists('check'.$u['id'], $data)) {
+            $id = $u['id'];
+            $sel_status = $data['sel_status' . $id];
+            $ban_date = strtotime($data['ban_date'.$id]);
+            if (($sel_status == '4' and $ban_date > time()) or ($sel_status != '4' and $ban_date == null)){
+                $u['user_status'] = $sel_status;
+                $u['banned_to'] = $ban_date;
+                R::store($u);
+            }
+        }
     }
 }
 
@@ -57,42 +72,46 @@ foreach ($users as $u){
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="table-responsive-xl">
-                        <table class="table table-sm table-striped table-bordered">
-                            <tr class="thead-light">
-                                <th>ID</th>
-                                <th>login</th>
-                                <th>status</th>
-                                <th>banned to</th>
-                                <th>is online</th>
-                                <th></th>
-                            </tr>
-                            <?php foreach ($users as $user):?>
-                            <tr>
-                                <td><?php echo $user['id']?></td>
-                                <td><?php echo $user['login']?></td>
-                                <td>
-                                        <select class="form-control form-control-sm" id="sel1">
-                                            <?php foreach ($user_statuses as $user_status):?>
-                                                <option value="<?php echo $user_status['id']?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected";?>><?php echo $user_status['id']?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                </td>
-                                <td>
-                                    <input type="date" class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="'.date("Y-m-d", $user['banned_to']).'"'?>>
-                                </td>
-                                <td><?php echo $user['is_online']?></td>
-                                <td>
-                                    <button class="btn btn-sm btn-warning">send message</button>
-                                    <form action="admin.php" method="post">
-                                        <button class="btn btn-sm btn-danger" type="submit" name="do_delete<?php echo $user['id']?>">delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </table>
-                        <div class="container">
-                            <button class="btn btn-info">Update</button>
-                        </div>
+                        <form action="admin.php" method="POST">
+                            <table class="table table-sm table-striped table-bordered">
+                                <tr class="thead-light">
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th>login</th>
+                                    <th>status</th>
+                                    <th>banned to</th>
+                                    <th>is online</th>
+                                    <th></th>
+                                </tr>
+                                <?php foreach ($users as $user):?>
+                                <tr>
+                                    <td><input type="checkbox" name="check<?php echo $user['id']?>"></td>
+                                    <td><?php echo $user['id']?></td>
+                                    <td><?php echo $user['login']?></td>
+                                    <td>
+                                            <select class="form-control form-control-sm" name="sel_status<?php echo $user['id']?>">
+                                                <?php foreach ($user_statuses as $user_status):?>
+                                                    <option value="<?php echo $user_status['id']?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected";?>><?php echo $user_status['status']?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                    </td>
+                                    <td>
+                                        <input type="date" name="ban_date<?php echo $user['id']?>" class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="'.date("Y-m-d", $user['banned_to']).'"'?>>
+                                    </td>
+                                    <td><?php echo $user['is_online']?></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning">MESSAGE</button>
+                                        <form action="admin.php" method="POST">
+                                            <button class="btn btn-sm btn-danger" type="submit" name="do_delete<?php echo $user['id']?>">DELETE</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </table>
+                            <div class="container">
+                                <button class="btn btn-info" type="submit" name="do_update">UPDATE</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
