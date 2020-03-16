@@ -58,10 +58,9 @@ function get_announcements_with_filter($sort_by, $qty)
     return R::getAll("SELECT * FROM announcements ORDER BY ".$sort_by." DESC LIMIT ".$qty);
 }
 
-function get_comments_by_announcement_id($id){
-    //TODO
-//    comments must be sorted by field 'date' in ascending order
-    return 0;
+function get_comments_by_announcement_id($id)
+{
+    return R::getAll("SELECT * FROM comments WHERE announcement_id = ".$id." ORDER BY date ASC");
 }
 
 function get_user_by_login($login)

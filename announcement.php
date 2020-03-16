@@ -4,46 +4,97 @@ include_once 'php/functions.php';
 
 if (isset($_GET['id'])) {
     $announcement = get_announcement_by_id($_GET['id']);
-    $comments = get_comments_by_announcement_id($_GET['id']);//TODO
+    $comments = get_comments_by_announcement_id($_GET['id']);
 }
 
 //rename function
 //comments -- comments' array
 //i -- index of array
 //n -- hierarchy
-function echo_comment($comments, $i, $n){
-//    TODO
+function echo_comment($comments, $i, $n) {
 //    display comment
+    if($comments) {
+        $comment = $comments[$i];
 
-//    запамятовуємо ід комента
-    $j = $comments[$i]['id'];
-//    якщо рекурсія буде норм працювати, то кожного разу цей цикл буде проходити на 1 ел менше
-//    якщо рекурсія не буде працювати, тоді не можна видаляти
-
-//    видаляємо комент
-    unset($comments[$i]);
-
-//    запускаємо цикл для того щоб перевірити чи є якісь коменти до цього комента
-    foreach ($comments as $a){
-//        якщо ід комента співпадає з parent_id якогось іншого
-        if ($a['parent_id'] == $j){
-//            збільшуємо ієрархію
-            ++$n;
-//            викликаємо функцію, в якій вже нема теперішнього комента, шукаємо індекс того комента, в якого parent_id =
-            echo_comment($comments, array_search($a, $comments), $n);
+        if ($comment['is_hidden'] == 0) {
+            if ($n == 1) {
+                //1st level
+                echo "<div class=\"card mb-3 announcement-card\">
+                            <div class=\"card-header my-bg-gray pb-0\">
+                                <div class=\"row pl-1\">
+                                    <div class=\"col-md-10\">
+                                        <div class=\"row\">
+                                            <p class=\"card-text text-muted small mx-2\"><i class=\"far fa-calendar mr-2\"></i>" . show_date($comment['date']) . "</p>
+                                            <p class=\"card-text text-muted small mx-2\"><i class=\"far fa-clock mr-2\"></i>" . show_time($comment['date']) . "</p>
+                                            <span class=\"badge badge-secondary mx-2 mb-3\"><i class=\"fas fa-user mr-2\"></i>owner</span>
+                                        </div>
+                                    </div>
+                                    <div class=\"col-md-2\">
+                                        <button class=\"btn float-right text-muted pt-0 pr-0\"><i class=\"fas fa-ban\"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=\"card-body shadow-sm\">
+                                <p class=\"card-text\">" . $comment['message'] . "</p>
+                            </div>
+                        </div>";
+            } elseif ($n == 2) {
+                //2nd level
+                //TODO echo 2nd lvl
+                echo "<div class=\"card mb-3 announcement-card\">
+                            <div class=\"card-header my-bg-gray pb-0\">
+                                <div class=\"row pl-1\">
+                                    <div class=\"col-md-10\">
+                                        <div class=\"row\">
+                                            <p class=\"card-text text-muted small mx-2\"><i class=\"far fa-calendar mr-2\"></i>" . show_date($comment['date']) . "</p>
+                                            <p class=\"card-text text-muted small mx-2\"><i class=\"far fa-clock mr-2\"></i>" . show_time($comment['date']) . "</p>
+                                            <span class=\"badge badge-secondary mx-2 mb-3\"><i class=\"fas fa-user mr-2\"></i>owner</span>
+                                        </div>
+                                    </div>
+                                    <div class=\"col-md-2\">
+                                        <button class=\"btn float-right text-muted pt-0 pr-0\"><i class=\"fas fa-ban\"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=\"card-body shadow-sm\">
+                                <p class=\"card-text\">" . $comment['message'] . "</p>
+                            </div>
+                        </div>";
+            }
         }
-    }
 
-//    після того як видалилися всі коменти повязані з теперішнім, залишаються інші по тій самій ієрархії
-//    а так як масив відсортований по часу, то зрозуміло, що 0 елемент буде підходити
-//    if (count($comments) > 0 and $n == 1){
-//        echo_comment($comments, 0, $n);
-//    }
-//    якщо ні -> не придумав))
-//    TODO
+//      запамятовуємо ід комента
+        $j = $comment['id'];
+//      якщо рекурсія буде норм працювати, то кожного разу цей цикл буде проходити на 1 ел менше
+//      якщо рекурсія не буде працювати, тоді не можна видаляти
+
+//      видаляємо комент
+        unset($comment);
+
+//      запускаємо цикл для того щоб перевірити чи є якісь коменти до цього комента
+        foreach ($comments as $a) {
+//          якщо ід комента співпадає з parent_id якогось іншого
+            if ($a['parent_comment_id'] == $j) {
+//              збільшуємо ієрархію
+                ++$n;
+//              викликаємо функцію, в якій вже нема теперішнього комента, шукаємо індекс того комента, в якого parent_id =
+                echo_comment($comments, array_search($a, $comments), $n);
+            }
+        }
+
+//      після того як видалилися всі коменти повязані з теперішнім, залишаються інші по тій самій ієрархії
+//      а так як масив відсортований по часу, то зрозуміло, що 0 елемент буде підходити
+//      if (count($comments) > 0 and $n == 1){
+//          echo_comment($comments, 0, $n);
+//      }
+//      якщо ні -> не придумав))
+//      TODO
+
+    } else {
+        //TODO there are no comments
+    }
 }
 
-echo_comment($comments, 0, 1);
 ?>
 
 <!DOCTYPE html>
@@ -111,64 +162,7 @@ echo_comment($comments, 0, 1);
                         </form>
                     </div>
                     <div class="card-body bg-light">
-
-                        <div class="card mb-3 announcement-card">
-                            <div class="card-header my-bg-gray pb-0">
-                                <div class="row pl-1">
-                                    <div class="col-md-10">
-                                        <div class="row">
-                                            <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date(5132643)?></p>
-                                            <p class="card-text text-muted small mx-2"><i class="far fa-clock mr-2"></i><?= show_time(5132643)?></p>
-                                            <span class="badge badge-secondary mx-2 mb-3"><i class="fas fa-user mr-2"></i>owner</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button class="btn float-right text-muted pt-0 pr-0"><i class="fas fa-ban"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body shadow-sm">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, quod?</p>
-                            </div>
-                        </div>
-
-                        <div class="card mb-3 announcement-card">
-                            <div class="card-header my-bg-gray pb-0">
-                                <div class="row pl-1">
-                                    <div class="col-md-10">
-                                        <div class="row">
-                                            <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date(5132643)?></p>
-                                            <p class="card-text text-muted small mx-2"><i class="far fa-clock mr-2"></i><?= show_time(5132643)?></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button class="btn float-right text-muted pt-0 pr-0"><i class="fas fa-ban"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body shadow-sm">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, quod?</p>
-                            </div>
-                        </div>
-
-                        <div class="card mb-3 announcement-card">
-                            <div class="card-header my-bg-gray pb-0">
-                                <div class="row pl-1">
-                                    <div class="col-md-10">
-                                        <div class="row">
-                                            <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date(5132643)?></p>
-                                            <p class="card-text text-muted small mx-2"><i class="far fa-clock mr-2"></i><?= show_time(5132643)?></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button class="btn float-right text-muted pt-0 pr-0"><i class="fas fa-ban"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body shadow-sm">
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, quod?</p>
-                            </div>
-                        </div>
+                        <?php echo_comment($comments, 0, 1); ?>
                     </div>
                 </div>
             </div>
