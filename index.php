@@ -4,7 +4,8 @@ include_once 'php/functions.php';
 
 $data = $_GET;
 if (isset($data['sort_by']) and isset($data['qty'])){
-    $announcements = get_announcements_with_filter($data['sort_by'], $data['qty']);
+    $announcements = get_announcements_with_filter($data['sort_by'], $data['sort_asc'], $data['qty']);
+
 } else {
     $announcements = get_announcements_without_filter();    
 }
@@ -52,6 +53,10 @@ if (isset($data['sort_by']) and isset($data['qty'])){
                             <select class="form-control-sm ml-2" name="sort_by" id="sort_by">
                                 <option value="date" <?php if (!$data or ($data and $data['sort_by'] == 'date')) echo "selected"?>>Дата створення</option>
                                 <option value="deadline" <?php if ($data and $data['sort_by'] == 'deadline') echo "selected"?>>Дедлайн</option>
+                            </select>
+                            <select class="form-control-sm ml-2" name="sort_asc" id="sort_asc">
+                                <option value="asc" <?php if ($data and $data['sort_by'] == 'asc') echo "selected"?>>За зростанням</option>
+                                <option value="desc" <?php if (!$data or ($data and $data['sort_asc'] == 'desc')) echo "selected"?>>За спаданням</option>
                             </select>
                         </div>
                         <div class="form-group mr-2">

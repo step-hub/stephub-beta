@@ -55,9 +55,9 @@ function get_announcements_without_filter()
     return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT 10");
 }
 
-function get_announcements_with_filter($sort_by, $qty)
+function get_announcements_with_filter($sort_by, $sort_asc, $qty)
 {
-    return R::getAll("SELECT * FROM announcements ORDER BY " . $sort_by . " DESC LIMIT " . $qty);
+    return R::getAll("SELECT * FROM announcements ORDER BY " . $sort_by . " " . $sort_asc . " LIMIT " . $qty);
 }
 
 function get_comments_by_announcement_id($id)
