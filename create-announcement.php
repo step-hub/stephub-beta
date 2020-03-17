@@ -24,25 +24,44 @@ include_once 'php/functions.php';
 </head>
 
 <body class="text-center">
-    <!-- Navigation -->
-    <?php include_once 'templates/navbar.php'; ?>
+<!-- Navigation -->
+<?php include_once 'templates/navbar.php'; ?>
 
-    <!-- Page Content -->
-    <div class="container">
-        <div class="card mt-5">
-            <div class="card-body shadow-sm">
-                <h5 class="card-title ">Створити оголошення</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet at dolore eos facilis molestias nesciunt non numquam voluptate voluptatem.</p>
-            </div>
+<!-- Page Content -->
+<div class="container pt-5">
+    <h2>Створити нове оголошення</h2>
+    <div class="card mt-0">
+        <div class="card-body shadow-sm">
+            <form class="form-group" action="create-announcement.php" method="POST">
+                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Заголовок">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="qw">Потрібно до</label>
+                        <input class="form-control" type="date" id="qw">
+                    </div>
+                    <div class="col-md-8">
+                        <textarea rows="10" class="form-control mb-2 mr-sm-2"
+                                  placeholder="Деталі оголошення"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="file">
+                </div>
+                <div class="row justify-content-center">
+                    <button type="submit" name=""
+                            class="btn btn-success mt-1 mb-2">Сворити оголошення
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-    
-    <!-- Footer -->
-    <?php include_once 'templates/footer.php'; ?>
+</div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<?php include_once 'templates/footer.php'; ?>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
