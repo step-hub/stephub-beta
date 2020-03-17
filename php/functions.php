@@ -5,26 +5,28 @@ error_reporting(-1);
 
 function console_log($data)
 {
-	echo '<script>';
-	echo 'console.log(' . json_encode($data) . ')';
-	echo '</script>';
+    echo '<script>';
+    echo 'console.log(' . json_encode($data) . ')';
+    echo '</script>';
 }
 
 function show_array($a)
 {
-	echo "<pre>";
-	print_r($a);
-	echo "</pre>";
+    echo "<pre>";
+    print_r($a);
+    echo "</pre>";
 }
 
 function show_date($numberofsecs)
 {
     return date('d.m.Y', $numberofsecs);
 }
+
 function show_detailed_date($numberofsecs)
 {
     return date('d.m.Y H:i:s', $numberofsecs);
 }
+
 function show_time($numberofsecs)
 {
     return date('H:i', $numberofsecs);
@@ -55,13 +57,13 @@ function get_announcements_without_filter()
 
 function get_announcements_with_filter($sort_by, $qty)
 {
-    return R::getAll("SELECT * FROM announcements ORDER BY ".$sort_by." DESC LIMIT ".$qty);
+    return R::getAll("SELECT * FROM announcements ORDER BY " . $sort_by . " DESC LIMIT " . $qty);
 }
 
 function get_comments_by_announcement_id($id)
 {
-    return [R::findAll('comments',"(announcement_id = ? AND parent_comment_id IS NULL) ORDER BY date ASC", array($id)),
-        R::findAll('comments', "(announcement_id = ? AND parent_comment_id IS NOT NULL) ORDER BY date ASC", array($id))];
+    return [R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NULL ORDER BY date DESC", array($id)),
+        R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NOT NULL ORDER BY date DESC", array($id))];
 }
 
 function get_user_by_login($login)
