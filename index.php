@@ -4,7 +4,7 @@ include_once 'php/functions.php';
 
 $data = $_GET;
 if (isset($data['do_filter'])){
-    $announcements = get_announcements_with_filter($data['sort_by'], $data['announcement_qty']);
+    $announcements = get_announcements_with_filter($data['sort_by'], $data['sort_asc'], $data['announcement_qty']);
 } else {
     $announcements = get_announcements_without_filter();    
 }
@@ -53,13 +53,17 @@ if (isset($data['do_filter'])){
                                 <option value="date" <?php if (!$data or ($data and $data['sort_by'] == 'date')) echo "selected"?>>Дата створення</option>
                                 <option value="deadline" <?php if ($data and $data['sort_by'] == 'deadline') echo "selected"?>>Дедлайн</option>
                             </select>
+                            <select class="form-control-sm ml-2" name="sort_asc" id="sort_asc">
+                                <option value="asc" <?php if ($data and $data['sort_by'] == 'asc') echo "selected"?>>За зростанням</option>
+                                <option value="desc" <?php if (!$data or ($data and $data['sort_asc'] == 'desc')) echo "selected"?>>За спаданням</option>
+                            </select>
                         </div>
                         <div class="form-group mr-2">
                             <label for="announcement_qty">Оголошень на сторінці</label>
                             <select class="form-control-sm ml-2 " name="announcement_qty" id="announcement_qty">
                                 <option value="10" <?php if (!$data or ($data and $data['announcement_qty'] == '10')) echo "selected"?>>10</option>
-                                <option value="20" <?php if ($data and ($data and $data['announcement_qty'] == '20')) echo "selected"?>>20</option>
-                                <option value="30" <?php if ($data and ($data and $data['announcement_qty'] == '30')) echo "selected"?>>30</option>
+                                <option value="20" <?php if ($data and $data['announcement_qty'] == '20') echo "selected"?>>20</option>
+                                <option value="30" <?php if ($data and $data['announcement_qty'] == '30') echo "selected"?>>30</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-sm btn-secondary" name="do_filter"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
@@ -78,7 +82,7 @@ if (isset($data['do_filter'])){
 
                                                 <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date'])?></p>
                                                 <?php if($announcement['deadline']): ?>
-                                                    <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['deadline'])?></p>
+                                                    <p class="card-text text-muted small"><i class="far fa-calendar-times mr-2"></i><?= show_date($announcement['deadline'])?></p>
                                                 <?php endif;
                                                 if($announcement['file']): ?>
                                                     <p class="card-text text-muted small"><i class="far fa-file mr-2"></i></p>
