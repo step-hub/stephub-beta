@@ -184,9 +184,7 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                                                class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
                                             <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
                                             </button>
-                                            <button class="btn btn-sm btn-danger" type="submit"
-                                                    name="do_delete_ann<?= $announcement['id'] ?>"><i
-                                                        class="fas fa-trash-alt"></i></button>
+                                            <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?= $announcement['id'] ?>"><i class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>
                                 </tr>

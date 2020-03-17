@@ -3,8 +3,8 @@ require "php/db.php";
 include_once 'php/functions.php';
 
 $data = $_GET;
-if (isset($data['do_filter'])){
-    $announcements = get_announcements_with_filter($data['sort_by'], $data['announcement_qty']);
+if (isset($data['sort_by']) and isset($data['qty'])){
+    $announcements = get_announcements_with_filter($data['sort_by'], $data['qty']);
 } else {
     $announcements = get_announcements_without_filter();    
 }
@@ -48,75 +48,76 @@ if (isset($data['do_filter'])){
                 <div class="row my-2 mx-0">
                     <form class="form-inline small float-right ml-auto" action="index.php" method="GET">
                         <div class="form-group mr-2">
-                            <label for="date_filter">Сортування</label>
+                            <label for="sort_by">Сортування</label>
                             <select class="form-control-sm ml-2" name="sort_by" id="sort_by">
                                 <option value="date" <?php if (!$data or ($data and $data['sort_by'] == 'date')) echo "selected"?>>Дата створення</option>
                                 <option value="deadline" <?php if ($data and $data['sort_by'] == 'deadline') echo "selected"?>>Дедлайн</option>
                             </select>
                         </div>
                         <div class="form-group mr-2">
-                            <label for="announcement_qty">Оголошень на сторінці</label>
-                            <select class="form-control-sm ml-2 " name="announcement_qty" id="announcement_qty">
-                                <option value="10" <?php if (!$data or ($data and $data['announcement_qty'] == '10')) echo "selected"?>>10</option>
-                                <option value="20" <?php if ($data and ($data and $data['announcement_qty'] == '20')) echo "selected"?>>20</option>
-                                <option value="30" <?php if ($data and ($data and $data['announcement_qty'] == '30')) echo "selected"?>>30</option>
+                            <label for="qty">Оголошень на сторінці</label>
+                            <select class="form-control-sm ml-2 " name="qty" id="announcement_qty">
+                                <option value="10" <?php if (!$data or ($data and $data['qty'] == '10')) echo "selected"?>>10</option>
+                                <option value="20" <?php if ($data and ($data and $data['qty'] == '20')) echo "selected"?>>20</option>
+                                <option value="30" <?php if ($data and ($data and $data['qty'] == '30')) echo "selected"?>>30</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-sm btn-secondary" name="do_filter"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
+                        <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
                     </form>
                 </div>
                 <div class="card">
-                    <div class="card-body shadow-sm bg-light">
+                    <div class="card-body shadow-sm bg-light pb-0">
                         <?php if($announcements):
                             foreach($announcements as $announcement): ?>
                                 <div class="card text-left mb-3 announcement-card">
                                     <div class="card-body shadow-sm">
                                         <h5 class="card-title"><?= $announcement['title']?></h5>
+                                        <p class="card-text mb-4"><?= $announcement['details']?></p>
                                         <div class="row">
-                                            <div class="col">
-                                                <p class="card-text mb-4"><?= $announcement['details']?></p>
+                                            <div class="col-md-8">
+                                                <div class="row pt-2 px-2">
+                                                    <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
+                                                    <?php if($announcement['deadline']): ?>
+                                                        <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i><?= show_date($announcement['deadline']) ?></p>
+                                                    <?php endif; ?>
+                                                    <p class="card-text text-muted small mx-2"><i class="far fa-comments mr-2"></i>0</p>
+                                                    <?php if($announcement['file']): ?>
+                                                        <p class="card-text text-muted small mx-2"><i class="fa fa-paperclip mr-2"></i><?= $announcement['file'] ?></p>
+                                                    <?php endif; ?>
 
-                                                <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date'])?></p>
-                                                <?php if($announcement['deadline']): ?>
-                                                    <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['deadline'])?></p>
-                                                <?php endif;
-                                                if($announcement['file']): ?>
-                                                    <p class="card-text text-muted small"><i class="far fa-file mr-2"></i></p>
-                                                <?php endif; ?>
-
+                                                </div>
                                             </div>
                                             <div class="col align-self-end">
-                                                <a href="announcement.php?id=<?= $announcement['id']?>" class="btn btn-primary float-right">Дізнатись більше</a>
+                                                <a href="announcement.php?id=<?= $announcement['id']?>" class="btn my-btn-blue float-right">Детальніше</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            <?php endforeach;
-                        else: ?>
+                            <?php endforeach; ?>
+
+                            <!-- Pagination-->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Назад</span>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item active">
+                                        <span class="page-link">2<span class="sr-only">(current)</span></span>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Вперед</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php else: ?>
                             <div class="card border-danger">
                                 <div class="card-body shadow-sm">
                                     <h5 class="card-title mb-0 text-center text-danger"><i class="fas fa-exclamation-circle mr-3"></i>Не знайдено оголошень</h5>
                                 </div>
                             </div>
                         <?php endif; ?>
-
-                        <!-- Pagination-->
-                        <nav aria-label="">
-                            <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <span class="page-link">Попередня</span>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active">
-                                    <span class="page-link">2<span class="sr-only">(current)</span></span>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Наступна</a>
-                                </li>
-                            </ul>
-                        </nav>
-
                     </div>
                 </div>
             </div>
