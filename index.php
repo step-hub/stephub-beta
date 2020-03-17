@@ -4,7 +4,7 @@ include_once 'php/functions.php';
 
 $data = $_GET;
 if (isset($data['do_filter'])){
-    $announcements = get_announcements_with_filter($data['date_filter'], $data['announcement_qty']);
+    $announcements = get_announcements_with_filter($data['sort_by'], $data['announcement_qty']);
 } else {
     $announcements = get_announcements_without_filter();    
 }
@@ -42,113 +42,86 @@ if (isset($data['do_filter'])){
         include_once 'templates/header.php'; ?>
 
         <!-- Page Content -->
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card text-left">
-                        <div class="card-body shadow-sm bg-light">
-                            <form action="index.php" method="GET">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <div class="form-group">
-                                            <label for="date_filter">Сортувати по</label>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="date_filter" value="date" <?php if (!$data or ($data and $data['date_filter'] == 'date')) echo "checked"?>>
-                                                    Даті створення
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="date_filter" value="deadline" <?php if ($data and $data['date_filter'] == 'deadline') echo "checked"?>>
-                                                    Даті дедлайну
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div class="form-group">
-                                            <label for="announcement_qty">К-ть оголошень на сторінку</label>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="announcement_qty" value="10" <?php if (!$data or ($data and $data['announcement_qty'] == '10')) echo "checked"?>>10
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="announcement_qty" value="20" <?php if ($data and $data['announcement_qty'] == '20') echo "checked"?>>20
-                                                </label>
-                                            </div>
-                                            <div class="form-check disabled">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="announcement_qty" value="30" <?php if ($data and $data['announcement_qty'] == '30') echo "checked"?>>30
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-success btn-block" name="do_filter">Зберегти</button>
-                                    </li>
-                                </ul>
-                            </form>
+    <div class="container">
+        <div class="row mx-5">
+            <div class="col">
+                <div class="row my-2 mx-0">
+                    <form class="form-inline small float-right ml-auto" action="index.php" method="GET">
+                        <div class="form-group mr-2">
+                            <label for="date_filter">Сортування</label>
+                            <select class="form-control-sm ml-2" name="sort_by" id="sort_by">
+                                <option value="date" <?php if (!$data or ($data and $data['sort_by'] == 'date')) echo "selected"?>>Дата створення</option>
+                                <option value="deadline" <?php if ($data and $data['sort_by'] == 'deadline') echo "selected"?>>Дедлайн</option>
+                            </select>
                         </div>
-                    </div>
+                        <div class="form-group mr-2">
+                            <label for="announcement_qty">Оголошень на сторінці</label>
+                            <select class="form-control-sm ml-2 " name="announcement_qty" id="announcement_qty">
+                                <option value="10" <?php if (!$data or ($data and $data['announcement_qty'] == '10')) echo "selected"?>>10</option>
+                                <option value="20" <?php if ($data and ($data and $data['announcement_qty'] == '20')) echo "selected"?>>20</option>
+                                <option value="30" <?php if ($data and ($data and $data['announcement_qty'] == '30')) echo "selected"?>>30</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-secondary" name="do_filter"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
+                    </form>
                 </div>
+                <div class="card">
+                    <div class="card-body shadow-sm bg-light">
+                        <?php if($announcements):
+                            foreach($announcements as $announcement): ?>
+                                <div class="card text-left mb-3 announcement-card">
+                                    <div class="card-body shadow-sm">
+                                        <h5 class="card-title"><?= $announcement['title']?></h5>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="card-text mb-4"><?= $announcement['details']?></p>
 
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body shadow-sm bg-light">
-                            <?php if($announcements):
-                                foreach($announcements as $announcement): ?>
-                                    <div class="card text-left mb-3 announcement-card">
-                                        <div class="card-body shadow-sm">
-                                            <h5 class="card-title"><?= $announcement['title']?></h5>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <p class="card-text mb-4"><?= $announcement['details']?></p>
+                                                <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date'])?></p>
+                                                <?php if($announcement['deadline']): ?>
+                                                    <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['deadline'])?></p>
+                                                <?php endif;
+                                                if($announcement['file']): ?>
+                                                    <p class="card-text text-muted small"><i class="far fa-file mr-2"></i></p>
+                                                <?php endif; ?>
 
-                                                    <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date'])?></p>
-                                                    <?php if($announcement['deadline']): ?>
-                                                        <p class="card-text text-muted small"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['deadline'])?></p>
-                                                    <?php endif;
-                                                    if($announcement['file']): ?>
-                                                        <p class="card-text text-muted small"><i class="far fa-file mr-2"></i></p>
-                                                    <?php endif; ?>
-
-                                                </div>
-                                                <div class="col align-self-end">
-                                                    <a href="announcement.php?id=<?= $announcement['id']?>" class="btn btn-primary float-right">Дізнатись більше</a>
-                                                </div>
+                                            </div>
+                                            <div class="col align-self-end">
+                                                <a href="announcement.php?id=<?= $announcement['id']?>" class="btn btn-primary float-right">Дізнатись більше</a>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php endforeach;
-                            else: ?>
-                                <div class="card border-danger">
-                                    <div class="card-body shadow-sm">
-                                        <h5 class="card-title mb-0 text-center text-danger"><i class="fas fa-exclamation-circle mr-3"></i>Не знайдено оголошень</h5>
                                     </div>
                                 </div>
-                            <?php endif; ?>
-                            <!-- Pagination-->
-                            <nav aria-label="">
-                                <ul class="pagination">
-                                    <li class="page-item disabled">
-                                        <span class="page-link">Попередня</span>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item active">
-                                        <span class="page-link">2<span class="sr-only">(current)</span></span>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Наступна</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                            <?php endforeach;
+                        else: ?>
+                            <div class="card border-danger">
+                                <div class="card-body shadow-sm">
+                                    <h5 class="card-title mb-0 text-center text-danger"><i class="fas fa-exclamation-circle mr-3"></i>Не знайдено оголошень</h5>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Pagination-->
+                        <nav aria-label="">
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <span class="page-link">Попередня</span>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active">
+                                    <span class="page-link">2<span class="sr-only">(current)</span></span>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Наступна</a>
+                                </li>
+                            </ul>
+                        </nav>
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     <?php endif; ?>
 
     <!-- Footer -->
