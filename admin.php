@@ -2,48 +2,50 @@
 require "php/db.php";
 include_once 'php/functions.php';
 
-$data = $_POST;
-if ($_SESSION['logged_user']->user_status == 1) {
-    $users = R::findAll('users');
-    $announcements = R::findAll('announcements');
-    $user_statuses = R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
-    $announcement_statuses = R::getAll("SELECT * FROM announcementstatuses");
-}
-
-foreach ($users as $u) {
-    if (isset($data['do_delete_user' . $u->id])) {
-        R::trash($u);
-        header("location: admin.php");
+if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
+    $data = $_POST;
+    if ($_SESSION['logged_user']->user_status == 1) {
+        $users = R::findAll('users');
+        $announcements = R::findAll('announcements');
+        $user_statuses = R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
+        $announcement_statuses = R::getAll("SELECT * FROM announcementstatuses");
     }
-}
 
-foreach ($announcements as $a) {
-    if (isset($data['do_delete_ann' . $a->id])) {
-        R::trash($a);
-        header("location: admin.php");
-    }
-}
-
-if (isset($data['do_update_users'])) {
     foreach ($users as $u) {
-        if (array_key_exists('check_user' . $u['id'], $data)) {
-            $id = $u['id'];
-            $sel_status = $data['sel_user_status' . $id];
-            $ban_date = strtotime($data['ban_date' . $id]);
-            if (($sel_status == '4' and $ban_date > time()) or ($sel_status != '4' and $ban_date == null)) {
-                $u['user_status'] = $sel_status;
-                $u['banned_to'] = $ban_date;
-                R::store($u);
+        if (isset($data['do_delete_user' . $u->id])) {
+            R::trash($u);
+            header("location: admin.php");
+        }
+    }
+
+    foreach ($announcements as $a) {
+        if (isset($data['do_delete_ann' . $a->id])) {
+            R::trash($a);
+            header("location: admin.php");
+        }
+    }
+
+    if (isset($data['do_update_users'])) {
+        foreach ($users as $u) {
+            if (array_key_exists('check_user' . $u['id'], $data)) {
+                $id = $u['id'];
+                $sel_status = $data['sel_user_status' . $id];
+                $ban_date = strtotime($data['ban_date' . $id]);
+                if (($sel_status == '4' and $ban_date > time()) or ($sel_status != '4' and $ban_date == null)) {
+                    $u['user_status'] = $sel_status;
+                    $u['banned_to'] = $ban_date;
+                    R::store($u);
+                }
             }
         }
     }
-}
 
-if (isset($data['do_update_ann'])) {
-    foreach ($announcements as $a) {
-        if (array_key_exists('check_ann' . $a['id'], $data)) {
-            $a['announcement_status_id'] = $data['sel_ann_status'.$a['id']];
-            R::store($a);
+    if (isset($data['do_update_ann'])) {
+        foreach ($announcements as $a) {
+            if (array_key_exists('check_ann' . $a['id'], $data)) {
+                $a['announcement_status_id'] = $data['sel_ann_status' . $a['id']];
+                R::store($a);
+            }
         }
     }
 }
@@ -76,7 +78,7 @@ if (isset($data['do_update_ann'])) {
 
 <!-- Page Content -->
 <div class="container-fluid">
-    <?php if ($_SESSION['logged_user']->user_status == 1): ?>
+    <?php if ($_SESSION and $_SESSION['logged_user']->user_status == 1): ?>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="users"
@@ -126,9 +128,13 @@ if (isset($data['do_update_ann'])) {
                                         } ?></div>
                                     </td>
                                     <td>
-                                        <div class=" row">
-                                        <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i></button>
-                                        <button class="btn btn-sm btn-danger" type="submit" name="do_delete_user<?= $user['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+                                        <div class=" row
+                                        ">
+                                        <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" type="submit"
+                                                name="do_delete_user<?= $user['id'] ?>"><i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -155,11 +161,11 @@ if (isset($data['do_update_ann'])) {
                                 <th>Дедлайн</th>
                                 <th></th>
                             </tr>
-                            <?php foreach ($announcements as $announcement):?>
+                            <?php foreach ($announcements as $announcement): ?>
                                 <tr>
-                                    <td><input type="checkbox" name="check_ann<?= $announcement['id']?>"></td>
-                                    <td><?= $announcement['id']?></td>
-                                    <td><?= $announcement['user_id']?></td>
+                                    <td><input type="checkbox" name="check_ann<?= $announcement['id'] ?>"></td>
+                                    <td><?= $announcement['id'] ?></td>
+                                    <td><?= $announcement['user_id'] ?></td>
                                     <td>
                                         <select class="form-control form-control-sm"
                                                 name="sel_ann_status<?= $announcement['id'] ?>">
@@ -168,18 +174,23 @@ if (isset($data['do_update_ann'])) {
                                             <?php endforeach; ?>
                                         </select>
                                     </td>
-                                    <td><?= $announcement['title']?></td>
-                                    <td><?= show_date($announcement['date'])?></td>
-                                    <td><?= show_date($announcement['deadline'])?></td>
+                                    <td><?= $announcement['title'] ?></td>
+                                    <td><?= show_date($announcement['date']) ?></td>
+                                    <td><?= show_date($announcement['deadline']) ?></td>
                                     <td>
                                         <div class="row">
-                                            <a target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $announcement['id']?>" class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
-                                            <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i></button>
-                                            <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?=$announcement['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+                                            <a target="_blank" rel="noopener noreferrer"
+                                               href="announcement.php?id=<?= $announcement['id'] ?>"
+                                               class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
+                                            <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" type="submit"
+                                                    name="do_delete_ann<?= $announcement['id'] ?>"><i
+                                                        class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>
                                 </tr>
-                            <?php endforeach;?>
+                            <?php endforeach; ?>
                         </table>
                         <div class="container">
                             <button class="btn btn-info mb-4" name="do_update_ann" type="submit"><i class="fas fa-sync mr-2"></i>Оновити</button>
@@ -191,7 +202,7 @@ if (isset($data['do_update_ann'])) {
     <?php else: ?>
         <div class="card border-danger">
             <div class="card-body shadow-sm">
-                <h5 class="card-title mb-0 text-center text-danger card-danger"><iclass="fas fa-exclamation-circle mr-3"></i>Ви не маєте доступу до цієї сторінки</h5>
+                <h5 class="card-title mb-0 text-center text-danger card-danger"><i class="fas fa-exclamation-circle mr-3"></i>Ви не маєте доступу до цієї сторінки</h5>
             </div>
         </div>
     <?php endif; ?>
