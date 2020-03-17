@@ -77,11 +77,8 @@ if ($_SESSION) {
                                 </div>
                             </div>
                             <div class="row pt-2 px-2">
-                                <p class="card-text text-muted small mx-2"><i
-                                            class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
-                                <p class="card-text text-muted small mx-2"><i
-                                            class="far fa-calendar-times mr-2"></i><?= show_date($announcement['deadline']) ?>
-                                </p>
+                                <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
+                                <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i><?= show_date($announcement['deadline']) ?></p>
                             </div>
                         </div>
                     </div>
@@ -99,88 +96,89 @@ if ($_SESSION) {
                 <div class="card shadow-sm mt-5">
                     <div class="card-header">
                         <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
-                            <label class="sr-only" for="comment_field">Залишити коментар</label>
+                            <label class="sr-only" for="comment_field">Написати коментар</label>
                             <textarea type="text" name="comment_to_ann" rows="3" class="form-control mb-2 mr-sm-2"
                                       id="comment_field"
-                                      placeholder="Leave Comment"></textarea>
+                                      placeholder="Написати коментар"></textarea>
                             <button type="submit" name="do_comment" class="btn my-btn-blue mt-1 mb-2"><i
                                         class="fas fa-comment mr-2"></i>Коментувати
                             </button>
                         </form>
                     </div>
-                    <div class="card-body bg-light">
+                    <div class="card-body bg-light pb-0">
                         <?php if (count($ann_comments) > 0): ?>
                             <?php foreach ($ann_comments as $a): ?>
                                 <div class="card mb-3 announcement-card">
-                                    <div class="card-header my-bg-gray pb-0">
-                                        <div class="row pl-1">
+                                    <div class="card-header my-bg-gray pb-0 pt-1">
+                                        <div class="row">
                                             <div class="col-md-10">
                                                 <div class="row">
-                                                    <p class="card-text text-muted small mx-2"><i
-                                                                class="far fa-calendar mr-2"></i><?= show_date($a['date']) ?>
+                                                    <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($a['date']) ?>
                                                     </p>
-                                                    <p class="card-text text-muted small mx-2"><i
-                                                                class="far fa-clock mr-2"></i><?= show_time($a['date']) ?>
+                                                    <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-clock mr-2"></i><?= show_time($a['date']) ?>
                                                     </p>
-                                                    <?php if ($announcement['user_id'] == $a['user_id']) : ?>
-                                                        <span class="badge badge-secondary mx-2 mb-3"><i
-                                                                    class="fas fa-user mr-2"></i>owner</span>
+                                                    <?php if ($announcement['user_id'] == $a['user_id']): ?>
+                                                        <span class="badge badge-success mx-2 mb-0"><i class="fas fa-user mr-2"></i>Автор оголошення</span>
+                                                    <?php elseif ($user['id'] == $a['user_id']): ?>
+                                                        <span class="badge badge-secondary mx-2 mb-0"><i class="fas fa-user mr-2"></i>Ваш коментар</span>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2">
-                                                <button class="btn float-right text-muted pt-0 pr-0"><i
-                                                            class="fas fa-ban"></i></button>
+                                            <div class="col-md-2 pr-1">
+                                                <button class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <p class="card-text"> <?= $a['message'] ?></p>
                                     </div>
-                                    <div class="card-footer shadow-sm">
-                                        <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>"
-                                              method="POST">
-                                            <label class="sr-only" for="comment_field">Leave Comment</label>
-                                            <textarea type="text" name="comment_to_com<?= $a['id'] ?>" rows="3"
-                                                      class="form-control mb-2 mr-sm-2"
-                                                      id="comment_field"
-                                                      placeholder="Leave Comment"></textarea>
-                                            <button type="submit" name="do_comment_to_comment<?= $a['id'] ?>"
-                                                    class="btn my-btn-blue mt-1 mb-2"><i
-                                                        class="fas fa-comment mr-2"></i>Comment
-                                            </button>
+                                    <div class="card-footer px-2 pb-1">
+                                        <form class="form-inline" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-9 pl-0">
+                                                        <label class="sr-only" for="comment_field">Написати коментар</label>
+                                                        <textarea class="form-control-sm  mr-sm-2"
+                                                                  style="min-width: 100%"
+                                                                  type="text"
+                                                                  name="comment_to_com<?= $a['id'] ?>"
+                                                                  rows="1"
+                                                                  id="comment_field"
+                                                                  placeholder="Написати коментар"></textarea>
+                                                    </div>
+                                                    <div class="col-md-auto pl-0">
+                                                        <button type="submit" name="do_comment_to_comment<?= $a['id'] ?>" class="btn btn-sm my-btn-blue ">
+                                                            <i class="fas fa-reply mr-2"></i>Відповісти
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
-                                        <?php foreach ($com_comments as $c) : ?>
+
+                                        <?php foreach ($com_comments as $c): ?>
                                             <?php if ($c['parent_comment_id'] == $a['id']): ?>
                                                 <div class="row justify-content-end">
-                                                    <div class="col-md-8 ">
-                                                        <div class="card mb-3 announcement-card">
-                                                            <div class="card-header my-bg-gray pb-0">
-                                                                <div class="row pl-1">
+                                                    <div class="col-md-10">
+                                                        <div class="card mt-2 announcement-card">
+                                                            <div class="card-header my-bg-gray pb-0 pt-1">
+                                                                <div class="row">
                                                                     <div class="col-md-10">
                                                                         <div class="row">
-                                                                            <p class="card-text text-muted small mx-2">
-                                                                                <i
-                                                                                        class="far fa-calendar mr-2"></i><?= show_date($c['date']) ?>
-                                                                            </p>
-                                                                            <p class="card-text text-muted small mx-2">
-                                                                                <i
-                                                                                        class="far fa-clock mr-2"></i><?= show_time($c['date']) ?>
-                                                                            </p>
-                                                                            <?php if ($announcement['user_id'] == $c['user_id']) : ?>
-                                                                                <span class="badge badge-secondary mx-2 mb-3"><i
-                                                                                            class="fas fa-user mr-2"></i>owner</span>
+                                                                            <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($a['date']) ?></p>
+                                                                            <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-clock mr-2"></i><?= show_time($a['date']) ?></p>
+                                                                            <?php if ($announcement['user_id'] == $c['user_id']): ?>
+                                                                                <span class="badge badge-success mx-2 mb-0"><i class="fas fa-user mr-2"></i>Автор оголошення</span>
+                                                                            <?php elseif ($user['id'] == $c['user_id']): ?>
+                                                                                <span class="badge badge-secondary mx-2 mb-0"><i class="fas fa-user mr-2"></i>Ваш коментар</span>
                                                                             <?php endif; ?>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-2">
-                                                                        <button class="btn float-right text-muted pt-0 pr-0">
-                                                                            <i
-                                                                                    class="fas fa-ban"></i></button>
+                                                                    <div class="col-md-2 pr-1">
+                                                                        <button class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="card-body shadow-sm">
+                                                            <div class="card-body p-2 shadow-sm">
                                                                 <p class="card-text"><?= $c['message'] ?></p>
                                                             </div>
                                                         </div>
