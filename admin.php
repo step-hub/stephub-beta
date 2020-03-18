@@ -93,16 +93,34 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="table-responsive-xl">
                     <form action="admin.php" method="POST">
-                        <table class="table table-sm table-striped table-bordered">
+                        <table class="table table-sm table-striped table-bordered table-hover">
+                            <thead>
                             <tr class="thead-light">
-                                <th></th>
-                                <th>ID</th>
-                                <th>Ім'я</th>
-                                <th>Права</th>
-                                <th>Забанений до</th>
-                                <th>Статус</th>
-                                <th></th>
+                                <th class="p-1"></th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">ID <i class="fas fa-sort"></i><i
+                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">Ім'я <i class="fas fa-sort"></i><i
+                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">Права <i class="fas fa-sort"></i><i
+                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">Забанений до <i class="fas fa-sort"></i><i
+                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">Статус <i class="fas fa-sort"></i><i
+                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1"></th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <?php foreach ($users as $user): ?>
                                 <tr>
                                     <td><input type="checkbox" name="check_user<?= $user['id'] ?>"></td>
@@ -136,6 +154,7 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+                            </tbody>
                         </table>
                         <div class="container">
                             <button class="btn btn-info mb-4" type="submit" name="do_update_users"><i
@@ -149,16 +168,37 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                 <form action="admin.php" method="POST">
                     <div class="table-responsive-xl">
                         <table class="table table-sm table-striped table-bordered">
+                            <thead>
                             <tr class="thead-light">
-                                <th></th>
-                                <th>ID</th>
-                                <th>Власник</th>
-                                <th>Статус</th>
-                                <th>Заголовок</th>
-                                <th>Дата створення</th>
-                                <th>Дедлайн</th>
-                                <th></th>
+                                <th class="p-1"></th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">ID <i class="fas fa-sort"></i><i
+                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">Власник <i class="fas fa-sort"></i><i
+                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">Статус <i class="fas fa-sort"></i><i
+                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">Заголовок <i class="fas fa-sort"></i><i
+                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">Дата створення <i class="fas fa-sort"></i><i
+                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1">
+                                    <button class="btn btn-info h-100 w-100">Дедлайн <i class="fas fa-sort"></i><i
+                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                </th>
+                                <th class="p-1"></th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <?php foreach ($announcements as $announcement): ?>
                                 <tr>
                                     <td><input type="checkbox" name="check_ann<?= $announcement['id'] ?>"></td>
@@ -189,6 +229,7 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+                            </tbody>
                         </table>
                         <div class="container">
                             <button class="btn btn-info mb-4" name="do_update_ann" type="submit"><i
