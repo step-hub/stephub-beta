@@ -36,10 +36,10 @@ if (!$_SESSION) {
             $errors[] = "user with such telegram already exist!!!";
         }
 
-        if (R::count("student_ids", "student_id_num = ?", array($data['stud_num'])) == 0) {
+        if (R::count("studentids", "student_id_num = ?", array($data['stud_num'])) == 0) {
             $errors[] = "user with such student num can't register!!!";
         } else {
-            $student = R::findOne('student_ids', 'student_id_num LIKE ?', array($data['stud_num']));
+            $student = R::findOne('studentids', 'student_id_num LIKE ?', array($data['stud_num']));
             if (R::count("users", "studentid_id = ?", array($student->id)) > 0) {
                 $errors[] = "user with such student num has already registered!!!";
             }
