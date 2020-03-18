@@ -123,7 +123,7 @@ if (!$_SESSION) {
                             <input name="stud_num" class="form-control" type="text" id="inputStudNum" value="<?= @$data['stud_num']; ?>" placeholder="BK12345678" required>
                         </div>
                         <div class="col-sm-4 pl-0">
-                            <button type="button" class="btn float-left" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                            <button type="button" class="btn float-left" data-toggle="tooltip" data-placement="top" title="Серію і номер студентського квитка ви можете дізнатися на лицевій стороні вашого студентського квитка">
                                 <i class="fa fa-info-circle text-muted"></i>
                             </button>
                         </div>
