@@ -96,17 +96,18 @@ if ($_SESSION) {
                             </div>
                             <div class="row pt-2 px-2">
                                 <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
+                                <p class="card-text text-muted small mx-2 mr-4"><i class="far fa-clock mr-2"></i><?= show_time($announcement['date']) ?></p>
                                 <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i><?= show_date($announcement['deadline']) ?></p>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body bg-light">
+                    <div class="card-body">
                         <p><?= $announcement['details'] ?></p>
                     </div>
                     <?php if (isset($announcement['file'])): ?>
                         <div class="card-footer">
-                            <button class="btn btn-secondary"><i class="fas fa-download mr-2"></i>Завантажити прикріплений файл</button>
-                            <div class="card-text text-muted small mx-2"><i class="fas fa-file mr-2"></i>file.zip</div>
+                            <p><i class="fa fa-paperclip mr-2"></i><?= $announcement['file']?></p>
+                            <button class="btn btn-secondary"><i class="fas fa-file-download mr-2"></i>Завантажити</button>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -178,7 +179,7 @@ if ($_SESSION) {
                                                                 <button type="submit"
                                                                         name="do_comment_to_comment<?= $a['id'] ?>"
                                                                         class="btn btn-sm my-btn-blue">
-                                                                    <i class="fas fa-reply mr-2"></i>Відповісти
+                                                                    <i class="fa fa-paper-plane mr-2"></i>Відправити
                                                                 </button>
                                                             </div>
                                                         </div>
