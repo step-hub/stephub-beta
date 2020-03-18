@@ -240,14 +240,9 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                 </form>
             </div>
         </div>
-    <?php else: ?>
-        <div class="card border-danger">
-            <div class="card-body shadow-sm">
-                <h5 class="card-title mb-0 text-center text-danger card-danger"><i
-                            class="fas fa-exclamation-circle mr-3"></i>Ви не маєте доступу до цієї сторінки</h5>
-            </div>
-        </div>
-    <?php endif; ?>
+    <?php else:
+        header("location: index.php");
+    endif; ?>
 </div>
 
 <!-- Bootstrap core JavaScript -->
