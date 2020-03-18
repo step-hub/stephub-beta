@@ -71,4 +71,11 @@ function get_user_by_login($login)
     return R::findOne('users', 'login = ?', array($login));
 }
 
+function count_comments_by_announcement_id($id)
+{
+    return R::count('comments', 'announcement_id = ?', array($id));
+}
+
+
+
 

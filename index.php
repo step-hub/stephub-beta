@@ -83,12 +83,13 @@ if (isset($data['s']) and isset($data['o']) and isset($data['q'])){
                                                     <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
                                                     <?php if($announcement['deadline']): ?>
                                                         <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i><?= show_date($announcement['deadline']) ?></p>
-                                                    <?php endif; ?>
-                                                    <p class="card-text text-muted small mx-2"><i class="far fa-comments mr-2"></i>0</p>
-                                                    <?php if($announcement['file']): ?>
+                                                    <?php endif;
+                                                    if(count_comments_by_announcement_id($announcement['id']) > 0): ?>
+                                                        <p class="card-text text-muted small mx-2"><i class="far fa-comments mr-2"></i><?= count_comments_by_announcement_id($announcement['id'])?></p>
+                                                    <?php endif;
+                                                    if($announcement['file']): ?>
                                                         <p class="card-text text-muted small mx-2"><i class="fa fa-paperclip mr-2"></i><?= $announcement['file'] ?></p>
                                                     <?php endif; ?>
-
                                                 </div>
                                             </div>
                                             <div class="col align-self-end">
