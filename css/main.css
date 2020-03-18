@@ -1,3 +1,81 @@
 body {
-    padding-top: 56px;
+    padding-top: 56px !important;
+    background-color: #EEEDE8;
+}
+
+img.img-large-logo {
+    max-width:100% !important;
+    max-height:100% !important;
+}
+
+/*background*/
+.my-bg-dark {
+    background-color: #715142;
+}
+.my-bg-blue {
+    background-color: #1a5784;
+}
+.my-bg-gray {
+    background-color: #DDDCD6;
+}
+.my-bg-light {
+    background-color: #EEEDE8;
+}
+
+/*color*/
+.my-color-dark {
+    color: #715142;
+}
+.my-color-blue {
+    color: #1a5784;
+}
+.my-color-gray {
+    color: #DDDCD6;
+}
+.my-color-light {
+    color: #EEEDE8;
+}
+
+/*buttons*/
+.my-btn-dark {
+    background-color: #715142;
+    color: #ffffff !important;
+}
+.my-btn-outline-dark {
+    border-color: #715142;
+    color: #715142;
+}
+.my-btn-blue {
+    background-color: #1a5784;
+    color: #ffffff !important;
+}
+.my-btn-outline-blue {
+    border-color: #1a5784;
+    color: #1a5784;
+}
+
+.my-linebreak {
+    height:10px;
+    color: #DDDCD6;
+}
+
+/*navbar*/
+.navbar, .intro {
+    background-color: #DDDCD6;
+    color: #715142;
+}
+a.navbar-brand {
+    color: #715142;
+}
+.navbar-nav li a {
+    color: #715142;
+}
+
+/*header*/
+.intro {
+    background-size: cover;
+}
+
+.announcement-card {
+    background-color: #FFFFFF;
 }

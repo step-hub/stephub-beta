@@ -1,136 +1,300 @@
 <?php
+require "php/db.php";
 
-require "db.php";
-
-$data = $_POST;
-
-if (isset($data['do_signup'])) {
-    //register
+if (!$_SESSION) {
+    $data = $_POST;
     $errors = array();
-    if (trim($data['login']) == ''){
-        $errors[] = 'login field is empty!!!';
-    }
 
-    if (trim($data['email']) == ''){
-        $errors[] = 'email field is empty!!!';
-    }
+    if (isset($data['do_signup'])) {
+        if (trim($data['login']) == '') {
+            $errors[] = 'login field is empty!!!';
+        }
+        if (trim($data['email']) == '') {
+            $errors[] = 'email field is empty!!!';
+        }
+        if (trim($data['stud_num']) == '') {
+            $errors[] = 'stud_num field is empty!!!';
+        }
+        if (trim($data['telegram']) == '') {
+            $errors[] = 'telegram field is empty!!!';
+        }
+        if ($data['password'] == '') {
+            $errors[] = 'password field is empty!!!';
+        }
 
-    if (trim($data['stud_num']) == ''){
-        $errors[] = 'stud_num field is empty!!!';
-    }
+        if ($data['password_confirmation'] != $data['password']) {
+            $errors[] = "password does doesn't confirm!!!";
+        }
 
-    if (trim($data['telegram']) == ''){
-        $errors[] = 'telegram field is empty!!!';
-    }
+        if (R::count("users", "login = ?", array($data['login'])) > 0) {
+            $errors[] = "user with such login already exist!!!";
+        }
+        if (R::count("users", "email = ?", array($data['email'])) > 0) {
+            $errors[] = "user with such email already exist!!!";
+        }
+        if (R::count("users", "telegram_username = ?", array($data['telegram'])) > 0) {
+            $errors[] = "user with such telegram already exist!!!";
+        }
 
-    if ($data['password'] == ''){
-        $errors[] = 'password field is empty!!!';
-    }
+        if (R::count("student_ids", "student_id_num = ?", array($data['stud_num'])) == 0) {
+            $errors[] = "user with such student num can't register!!!";
+        } else {
+            $student = R::findOne('student_ids', 'student_id_num LIKE ?', array($data['stud_num']));
+            if (R::count("users", "studentid_id = ?", array($student->id)) > 0) {
+                $errors[] = "user with such student num has already registered!!!";
+            }
+        }
 
-    if ($data['password_confirmation'] != $data['password']){
-        $errors[] = "password does doesn't confirm!!!";
-    }
+        if (empty($errors)) {
+            $user = R::dispense('users');
+            $user->login = $data['login'];
+            $user->email = $data['email'];
+            $user->studentid_id = $student->id;
+            $user->telegram_username = $data['telegram'];
+            $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
+            $user->is_online = 1;
+            $user->user_status = 3;
+            $user->reg_date = time();
 
-    if (R::count("users", "login = ?", array($data['login'])) > 0){
-        $errors[] = "user with such login already exist!!!";
-    }
+            R::store($user);
 
-    if (R::count("users", "email = ?", array($data['email'])) > 0){
-        $errors[] = "user with such email already exist!!!";
-    }
-
-    if (R::count("users", "telegram_username = ?", array($data['telegram'])) > 0){
-        $errors[] = "user with such telegram already exist!!!";
-    }
-
-    if (R::count("student_ids", "student_id_num = ?", array($data['stud_num'])) == 0){
-        $errors[] = "user with such student num can't register!!!";
-    }
-    else {
-        $student = R::findOne('student_ids', 'student_id_num LIKE ?', array($data['stud_num']));
-        if (R::count("users", "studentid_id = ?", array($student->id)) > 0){
-            $errors[] = "user with such student num has already registered!!!";
+            header('location: index.php');
         }
     }
-
-    if (empty($errors)){
-        //registration
-        $user = R::dispense('users');
-        $user->login = $data['login'];
-        $user->email = $data['email'];
-        $user->studentid_id = $student->id;
-        $user->telegram_username = $data['telegram'];
-        $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
-        $user->is_online = 1;
-        $user->user_status = 3;
-        $user->reg_date = time();
-
-        R::store($user);
-
-        header('location: index.php');
-
-    } else {
-        $error = $errors[0];
-    }
-
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ua">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>Registration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-	<link rel="shortcut icon" href="favicon.png">
+    <title>StepHub | Реєстрація</title>
 
-	<!-- Bootstrap core CSS -->
-	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="vendor/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
-	<!--load all styles -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
+    <!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
-    <link href="css/registration.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 </head>
 
 <body class="text-center">
-	<form class="form-login" action="registration.php" method="POST">
+    <!-- Navigation -->
+    <?php include_once 'templates/navbar.php'; ?>
 
-        <p class="mt-5 mb-3 font-weight-bold text-danger"><?php echo @$errors[0]?></p>
-		<a href="index.php">
-			<img class="mb-4" src="img/logo.jpg" alt="square logo" width="72" height="72">
-		</a>
-		<h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+    <?php if ($_SESSION):
+        header("location: index.php"); ?>
+    <?php else: ?>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row pt-3">
+            <div class="col-md-7">
+                <h1 class="h3 mb-3 font-weight-normal">Створити новий акаунт</h1>
 
-		<label for="inputLogin" class="sr-only">Login</label>
-		<input type="login" id="inputLogin" name="login" value="<?php echo @$data['login']; ?>" class="form-control" placeholder="Login" required autofocus>
+                <?php if ($errors): ?>
+                    <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
+                <?php endif; ?>
 
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" name="email" value="<?php echo @$data['email']; ?>" class="form-control" placeholder="Email address" required>
+                <form class="form" action="registration.php" method="POST">
+                    <div class="form-group row px-3">
+                        <label class="col-sm-3 col-form-label" for="inputLogin">Ім'я користувача</label>
+                        <div class="col-sm-9">
+                            <input name="login" class="form-control" type="text" id="inputLogin" value="<?= @$data['login']; ?>" placeholder="Ім'я користувача" required autofocus aria-describedby="loginHelp">
+                            <small id="loginHelp" class="form-text text-muted">
+                                Ваш логін може складитись із латинських літер та цифр.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group row px-3">
+                        <label class="col-sm-3 col-form-label" for="inputEmail">Ел. пошта</label>
+                        <div class="col-sm-9">
+                            <input name="email" class="form-control" type="email" id="inputEmail" value="<?= @$data['email']; ?>" placeholder="example@gmail.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group row px-3">
+                        <label class="col-sm-3 col-form-label" for="inputStudNum">Студентський</label>
+                        <div class="col-sm-5">
+                            <input name="stud_num" class="form-control" type="text" id="inputStudNum" value="<?= @$data['stud_num']; ?>" placeholder="BK12345678" required>
+                        </div>
+                        <div class="col-sm-4 pl-0">
+                            <button type="button" class="btn float-left" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                <i class="fa fa-info-circle text-muted"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group row px-3">
+                        <label class="col-sm-3 col-form-label" for="inputTelegram">Телеграм</label>
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">@</div>
+                                </div>
+                                <input name="telegram" class="form-control" type="text" id="inputTelegram" value="<?= @$data['telegram']; ?>" placeholder="example" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
 
-        <label for="inputStudNum" class="sr-only">Student ID</label>
-        <input type="text" id="inputStudNum" name="stud_num" value="<?php echo @$data['stud_num']; ?>" class="form-control" placeholder="Student ID" required>
+                    <div class="card">
+                        <div class="card-body my-bg-light px-0">
+                            <div class="form-group row px-3">
+                                <label class="col-sm-3 col-form-label" for="inputPassword">Пароль</label>
+                                <div class="col-sm-9">
+                                    <input name="password" class="form-control" type="password" id="inputPassword" placeholder="Пароль" required aria-describedby="passHelp">
+                                    <small id="passHelp" class="form-text text-muted">
+                                        Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group row px-3">
+                                <label class="col-sm-3 col-form-label" for="inputPasswordConfirm">Підтвердження</label>
+                                <div class="col-sm-9">
+                                    <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть пароль" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        <label for="inputTelegram" class="sr-only">Telegram ID</label>
-        <input type="text" id="inputTelegram" name="telegram" value="<?php echo @$data['telegram']; ?>" class="form-control" placeholder="Telegram ID" required>
+                    <div class="checkbox mt-3 mb-0">
+                        <label>
+                            <input type="checkbox" value="remember-me" name="remember">
+                            <small>Я підтверджую, що ознайомився(лась) із <a href="#" data-toggle="collapse" data-target="#collapseTwo">правилами користування</a> сайтом і <a href="#" data-toggle="collapse" data-target="#collapseThree">політикою конфіденційності</a></small>
+                        </label>
+                    </div>
 
-		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" id="inputPassword" name="password" class="form-control" style="margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0;" placeholder="Password" required>
+                    <small class="mt-2 mx-3 float-left">Вже маєте зареєстрований акаунт? <a href="index.php">Ввійти</a></small>
+                    <button class="btn my-btn-blue float-right" type="submit" name="do_signup">Зареєструвати</button>
+                </form>
+            </div>
+            <div class="col-md-5">
 
-		<label for="inputPasswordConfirm" class="sr-only">Confirm password</label>
-		<input type="password" id="inputPasswordConfirm" name="password_confirmation" class="form-control" placeholder="Confirm password" required>
+                <div class="accordion" id="idAccordion">
+                    <div class="card ">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Для чого нам ці дані?
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#idAccordion">
+                            <div class="card-body text-left small">
+                                <p><strong>Ім'я користувача (логін)</strong> - використовується тільки для зручності авторизації, ми не поширюємо його для забезпечення повної анонімності.</p>
+                                <p><strong>Адреса ел. пошти</strong> - використовуємо, щоб повідомляти вас про важливі оновленняі та сповіщенняі. Поширюємо лише при згоді обох користувачів для подальшого вирішення проблеми.</p>
+                                <p><strong>Номер студентського квитка</strong> - для ідентифікації, чи є ви студентом вищого навчального закладу "ІТ СТЕП Університет". Не поширюється.</p>
+                                <p><strong>Логін телеграму</strong> - використовуємо лише для зручнішого зв'язку з вами іншим користувачам, і лише за згоди обох учасників.</p>
+                            </div>
+                        </div>
+                    </div>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit" name="do_signup">Sign up</button>
-		<p class="mt-5 mb-3">Already have an account? <a href="login.php">Log In</a></p>
-		<p class="mt-5 mb-3 text-muted">&copy; StepHub 2020</p>
-	</form>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Правила користування сервісом
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#idAccordion">
+                            <div class="card-body text-left small">
+                                <ol class="pl-2">
+                                    <li><h6>Загальні положення</h6>
+                                        <ol class="pl-4">
+                                            <li>Метою отримання і обробки Отримуючою стороною конфіденційної інформації і персональних даних є:
+                                                <ul class="pl-4">
+                                                    <li>надання Передавальній стороні доступу до можливостей Сервісу, інформації і матеріалів, розміщених на Сайті;</li>
+                                                    <li>організація комунікації між Сторонами</li>
+                                                    <li>забезпечення успішної реалізації предмета Договору на виконання робіт/надання послуг, що укладається Замовниками та Виконавцями з використанням Сервісу</li>
+                                                </ul>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li><h6>Повідомлення</h6>
+                                        <ol class="pl-4">
+                                            <li>
+                                                Відвідувачі Сайту, що не реєструють обліковий запис, ознайомлені й згодні з тим, що
+                                                сторона має право збирати про таких відвідувачів певну інформацію, в т. ч. URL і IP
+                                                –адреси і т. д., які були переглянуті під час відвідування. Ця інформація
+                                                використовується виключно для внутрішніх цілей і служить для поліпшення роботи
+                                                Сервісу.
+                                            </li>
+                                            <li>
+                                                Одержуюча сторона обробляє тільки ту конфіденційну інформацію та персональні
+                                                дані, які необхідні для забезпечення якості надаваємих послуг і не використовує таку
+                                                інформацію для інших цілей без згоди Передавальної сторони.
+                                            </li>
+                                            <li>
+                                                Одержуюча Сторона зберігає конфіденційну інформацію та персональні дані до тих
+                                                пір, поки це необхідно для обумовлених цілей у відповідності з чинним законодавством.
+                                            </li>
+                                            <li>
+                                                Передавальній стороні надається безперешкодний доступ до належної їй
+                                                конфіденційної інформації та персональних даних.
+                                            </li>
+                                            <li>
+                                                Сторона не передає конфіденційну інформацію та персональні дані Передавальної
+                                                сторони третім особам без згоди власників такої
+                                                інформації, за винятком випадків, прямо передбачених законом.
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                                3. ЗОБОВ&#39;ЯЗАННЯ
+                                3.1 Передавальна сторона зобов&#39;язується надати достовірну і повну інформацію.
+                                3.2 Отримуюча сторона зобов&#39;язується:
+                                 використовувати конфіденційну інформацію та персональні дані виключно в цілях
+                                забезпечення працездатності Сервісу та реалізації предмета Договору на виконання
+                                робіт/надання послуг;
+                                 не розголошувати конфіденційну інформацію третім особам за винятком передбачених
+                                законом випадків;
+                                 не використовувати конфіденційну інформацію та персональні дані в інтересах, що
+                                суперечать цілям, зазначеним у п. 1.1 Політики конфіденційності;
+                                 максимально обмежити кількість працівників та інших осіб, які мають доступ до
+                                конфіденційної інформації та персональних даних, забезпечивши при цьому отримання
+                                від них письмових зобов&#39;язань про нерозголошення та невикористання в своїх або чужих
+                                інтересах конфіденційної інформації та персональних даних Передавальної сторони.;
+                                 негайно повідомляти Передавальну сторону про виявлені факти несанкціонованого
+                                використання чи розголошення конфіденційної інформації та персональних даних,
+                                організовуючи всі необхідні заходи для запобігання подальшого несанкціонованого
+                                використання або розкриття такої інформації.;
+                                 на вимогу сторони, яка Передає знищити отриману конфіденційну інформацію та
+                                персональні дані.
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Політика кофіденційності
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#idAccordion">
+                            <div class="card-body small text-left">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <!-- Footer -->
+    <?php include_once 'templates/footer.php'; ?>
+
+    <script src="js/script.js"></script>
     <!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
