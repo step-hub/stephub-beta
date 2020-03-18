@@ -29,11 +29,11 @@ if ($_SESSION) {
 
     foreach ($ann_comments as $ann_comment) {
         if (isset($data['do_comment_to_comment' . $ann_comment['id']])) {
-            if (trim($data['comment_to_com'.$ann_comment['id']]) == '') {
+            if (trim($data['comment_to_com' . $ann_comment['id']]) == '') {
                 $errors[] = 'коментар не може бути пустим';
             }
 
-            if(empty($errors)) {
+            if (empty($errors)) {
                 $comment = R::dispense('comments');
                 $comment->parent_comment_id = $ann_comment['id'];
                 $comment->message = nl2br($data['comment_to_com' . $ann_comment['id']]);

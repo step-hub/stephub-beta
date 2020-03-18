@@ -121,16 +121,14 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                                                class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="' . date("Y-m-d", $user['banned_to']) . '"' ?>>
                                     </td>
                                     <td>
-                                        <div class="badge badge-<?php if ($user['is_online']) {
-                                            echo "success\">online";
-                                        } else {
-                                            echo "danger\">offline";
-                                        } ?></div>
+                                        <div class="badge badge-<?= $user['is_online'] ? 'success' : 'danger' ?>">
+                                            <?= $user['is_online'] ? 'онлайн' : 'оффлайн' ?>
+                                        </div>
                                     </td>
                                     <td>
-                                        <div class=" row
-                                        ">
-                                        <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
+
+                                        <button class=" btn btn-sm btn-warning mr-2">
+                                            <i class="fas fa-envelope"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger" type="submit"
                                                 name="do_delete_user<?= $user['id'] ?>"><i class="fas fa-trash-alt"></i>
@@ -178,20 +176,24 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                                     <td><?= show_date($announcement['date']) ?></td>
                                     <td><?= show_date($announcement['deadline']) ?></td>
                                     <td>
-                                        <div class="row">
+                                        <div class="row justify-content-center">
                                             <a target="_blank" rel="noopener noreferrer"
                                                href="announcement.php?id=<?= $announcement['id'] ?>"
                                                class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
                                             <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
                                             </button>
-                                            <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?= $announcement['id'] ?>"><i class="fas fa-trash-alt"></i></button>
+                                            <button class="btn btn-sm btn-danger" type="submit"
+                                                    name="do_delete_ann<?= $announcement['id'] ?>"><i
+                                                        class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
                         <div class="container">
-                            <button class="btn btn-info mb-4" name="do_update_ann" type="submit"><i class="fas fa-sync mr-2"></i>Оновити</button>
+                            <button class="btn btn-info mb-4" name="do_update_ann" type="submit"><i
+                                        class="fas fa-sync mr-2"></i>Оновити
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -200,7 +202,8 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
     <?php else: ?>
         <div class="card border-danger">
             <div class="card-body shadow-sm">
-                <h5 class="card-title mb-0 text-center text-danger card-danger"><i class="fas fa-exclamation-circle mr-3"></i>Ви не маєте доступу до цієї сторінки</h5>
+                <h5 class="card-title mb-0 text-center text-danger card-danger"><i
+                            class="fas fa-exclamation-circle mr-3"></i>Ви не маєте доступу до цієї сторінки</h5>
             </div>
         </div>
     <?php endif; ?>
