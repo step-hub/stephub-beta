@@ -3,7 +3,9 @@ require "php/db.php";
 include_once 'php/functions.php';
 
 if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
-    $data = $_POST;
+    $data_post = $_POST;
+    $data_get = $_GET;
+
     if ($_SESSION['logged_user']->user_status == 1) {
         $users = R::findAll('users');
         $announcements = R::findAll('announcements');
@@ -12,25 +14,26 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
     }
 
     foreach ($users as $u) {
-        if (isset($data['do_delete_user' . $u->id])) {
+        if (isset($data_post['do_delete_user' . $u->id])) {
             R::trash($u);
             header("location: admin.php");
         }
     }
 
     foreach ($announcements as $a) {
-        if (isset($data['do_delete_ann' . $a->id])) {
+        if (isset($data_post['do_delete_ann' . $a->id])) {
             R::trash($a);
             header("location: admin.php");
         }
     }
 
-    if (isset($data['do_update_users'])) {
+    if (isset($data_post['do_update_users'])) {
+        echo "UPDATE";
         foreach ($users as $u) {
-            if (array_key_exists('check_user' . $u['id'], $data)) {
+            if (array_key_exists('check_user' . $u['id'], $data_post)) {
                 $id = $u['id'];
-                $sel_status = $data['sel_user_status' . $id];
-                $ban_date = strtotime($data['ban_date' . $id]);
+                $sel_status = $data_post['sel_user_status' . $id];
+                $ban_date = strtotime($data_post['ban_date' . $id]);
                 if (($sel_status == '4' and $ban_date > time()) or ($sel_status != '4' and $ban_date == null)) {
                     $u['user_status'] = $sel_status;
                     $u['banned_to'] = $ban_date;
@@ -40,14 +43,15 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
         }
     }
 
-    if (isset($data['do_update_ann'])) {
+    if (isset($data_post['do_update_ann'])) {
         foreach ($announcements as $a) {
-            if (array_key_exists('check_ann' . $a['id'], $data)) {
-                $a['announcement_status_id'] = $data['sel_ann_status' . $a['id']];
+            if (array_key_exists('check_ann' . $a['id'], $data_post)) {
+                $a['announcement_status_id'] = $data_post['sel_ann_status' . $a['id']];
                 R::store($a);
             }
         }
     }
+
 }
 
 ?>
@@ -92,76 +96,84 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="table-responsive-xl">
-                    <form action="admin.php" method="POST">
-                        <table class="table table-sm table-striped table-bordered table-hover">
+                    <table class="table table-sm table-striped table-bordered table-hover">
+                        <form action="admin.php" method="GET">
                             <thead>
-                            <tr class="thead-light">
-                                <th class="p-1"></th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">ID <i class="fas fa-sort"></i><i
-                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
-                                </th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Ім'я <i class="fas fa-sort"></i><i
-                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
-                                </th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Права <i class="fas fa-sort"></i><i
-                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
-                                </th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Забанений до <i class="fas fa-sort"></i><i
-                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
-                                </th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Статус <i class="fas fa-sort"></i><i
-                                                class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
-                                </th>
-                                <th class="p-1"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php foreach ($users as $user): ?>
-                                <tr>
-                                    <td><input type="checkbox" name="check_user<?= $user['id'] ?>"></td>
-                                    <td><?= $user['id'] ?></td>
-                                    <td><?= $user['login'] ?></td>
-                                    <td>
-                                        <select class="form-control form-control-sm"
-                                                name="sel_user_status<?= $user['id'] ?>">
-                                            <?php foreach ($user_statuses as $user_status): ?>
-                                                <option value="<?= $user_status['id'] ?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected"; ?>><?= $user_status['status'] ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="date" name="ban_date<?= $user['id'] ?>"
-                                               class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="' . date("Y-m-d", $user['banned_to']) . '"' ?>>
-                                    </td>
-                                    <td>
-                                        <div class="badge badge-<?= $user['is_online'] ? 'success' : 'danger' ?>">
-                                            <?= $user['is_online'] ? 'онлайн' : 'оффлайн' ?>
-                                        </div>
-                                    </td>
-                                    <td>
-
-                                        <button class=" btn btn-sm btn-warning mr-2">
-                                            <i class="fas fa-envelope"></i>
+                                <tr class="thead-light">
+                                    <th class="p-1"></th>
+                                    <th class="p-1">
+                                        <button name="user_id" value="<?= !$data_get ? 'desc' : (!array_key_exists('user_id', $data_get) ? 'asc' : ($data_get['user_id'] == 'asc' ? 'desc' : 'asc'))?>" type="submit" class="btn btn-info h-100 w-100">ID
+                                            <?= !$data_get ? '<i class="fas fa-sort-up"></i>' : (!array_key_exists('user_id', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['user_id'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
                                         </button>
-                                        <button class="btn btn-sm btn-danger" type="submit"
-                                                name="do_delete_user<?= $user['id'] ?>"><i class="fas fa-trash-alt"></i>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="login" value="<?= !$data_get ? 'asc' : (!array_key_exists('login', $data_get) ? 'asc' : ($data_get['login'] == 'asc' ? 'desc' : 'asc'))?>" type="submit" class="btn btn-info h-100 w-100">Ім'я
+                                            <?= !$data_get ? '<i class="fas fa-sort"></i>' : (!array_key_exists('login', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['login'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
                                         </button>
-                                    </td>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="status" value="<?= !$data_get ? 'asc' : (!array_key_exists('status', $data_get) ? 'asc' : ($data_get['status'] == 'asc' ? 'desc' : 'asc'))?>" class="btn btn-info h-100 w-100">Права
+                                            <?= !$data_get ? '<i class="fas fa-sort"></i>' : (!array_key_exists('status', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['status'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
+                                        </button>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="banned_to" value="<?= !$data_get ? 'asc' : (!array_key_exists('banned_to', $data_get) ? 'asc' : ($data_get['banned_to'] == 'asc' ? 'desc' : 'asc'))?>" class="btn btn-info h-100 w-100">Забанений до
+                                            <?= !$data_get ? '<i class="fas fa-sort"></i>' : (!array_key_exists('banned_to', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['banned_to'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
+                                        </button>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="is_online" value="<?= !$data_get ? 'asc' : (!array_key_exists('is_online', $data_get) ? 'asc' : ($data_get['is_online'] == 'asc' ? 'desc' : 'asc'))?>" class="btn btn-info h-100 w-100">Статус
+                                            <?= !$data_get ? '<i class="fas fa-sort"></i>' : (!array_key_exists('is_online', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['is_online'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
+                                        </button>
+                                    </th>
+                                    <th class="p-1"></th>
                                 </tr>
-                            <?php endforeach; ?>
+                            </thead>
+                        </form>
+                        <form action="admin.php" id="update" method="POST">
+                            <tbody>
+                                <?php foreach ($users as $user): ?>
+                                    <tr>
+                                        <td><input type="checkbox" name="check_user<?= $user['id'] ?>"></td>
+                                        <td><?= $user['id'] ?></td>
+                                        <td><?= $user['login'] ?></td>
+                                        <td>
+                                            <select class="form-control form-control-sm"
+                                                    name="sel_user_status<?= $user['id'] ?>">
+                                                <?php foreach ($user_statuses as $user_status): ?>
+                                                    <option value="<?= $user_status['id'] ?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected"; ?>><?= $user_status['status'] ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="date" name="ban_date<?= $user['id'] ?>"
+                                                   class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="' . date("Y-m-d", $user['banned_to']) . '"' ?>>
+                                        </td>
+                                        <td>
+                                            <div class="badge badge-<?= $user['is_online'] ? 'success' : 'danger' ?>">
+                                                <?= $user['is_online'] ? 'онлайн' : 'оффлайн' ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="row justify-content-center">
+                                                <button class=" btn btn-sm btn-warning mr-2">
+                                                    <i class="fas fa-envelope"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger" type="submit" name="do_delete_user<?= $user['id'] ?>">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
-                        </table>
-                        <div class="container">
-                            <button class="btn btn-info mb-4" type="submit" name="do_update_users"><i
-                                        class="fas fa-sync mr-2"></i>Оновити
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    </table>
+                    <div class="container">
+                        <button class="btn btn-info mb-4" type="submit" form="update" name="do_update_users"><i
+                                class="fas fa-sync mr-2"></i>Оновити
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -172,28 +184,35 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                             <tr class="thead-light">
                                 <th class="p-1"></th>
                                 <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">ID <i class="fas fa-sort"></i><i
-                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                    <button class="btn btn-info h-100 w-100">ID <i class="fas fa-sort"></i>
+                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
+                                    </button>
                                 </th>
                                 <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Власник <i class="fas fa-sort"></i><i
-                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                    <button class="btn btn-info h-100 w-100">Власник <i class="fas fa-sort"></i>
+                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
+                                    </button>
                                 </th>
                                 <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Статус <i class="fas fa-sort"></i><i
-                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                    <button class="btn btn-info h-100 w-100">Статус <i class="fas fa-sort"></i>
+                                                <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
+                                    </button>
                                 </th>
                                 <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Заголовок <i class="fas fa-sort"></i><i
-                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                    <button class="btn btn-info h-100 w-100">Заголовок <i class="fas fa-sort"></i>
+                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
+                                    </button>
                                 </th>
                                 <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Дата створення <i class="fas fa-sort"></i><i
-                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                    <button class="btn btn-info h-100 w-100">Дата створення
+                                        <i class="fas fa-sort"></i>
+                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
+                                    </button>
                                 </th>
                                 <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Дедлайн <i class="fas fa-sort"></i><i
-                                            class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+                                    <button class="btn btn-info h-100 w-100">Дедлайн <i class="fas fa-sort"></i>
+                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
+                                    </button>
                                 </th>
                                 <th class="p-1"></th>
                             </tr>
@@ -222,9 +241,9 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                                                class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
                                             <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
                                             </button>
-                                            <button class="btn btn-sm btn-danger" type="submit"
-                                                    name="do_delete_ann<?= $announcement['id'] ?>"><i
-                                                        class="fas fa-trash-alt"></i></button>
+                                            <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?= $announcement['id'] ?>">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
