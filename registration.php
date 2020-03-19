@@ -2,7 +2,7 @@
 require "php/db.php";
 include_once "php/functions.php";
 
-if (!$_SESSION) {
+if (!array_key_exists('logged_user',$_SESSION)) {
     $data = $_POST;
     $errors = array();
 
