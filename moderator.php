@@ -2,7 +2,7 @@
 require "php/db.php";
 include_once 'php/functions.php';
 
-if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status == 1) {
+if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status < 3) {
     $data_post = $_POST;
     $data_get = $_GET;
 
@@ -14,7 +14,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         $_SESSION['ann_sort_by'] = 'id';
         $_SESSION['ann_sort_order'] = 'asc';
     } else {
-        if (array_key_exists('users', $data_get)) {
+        if (array_key_exists('users',$data_get)) {
             $_SESSION['users_qty'] = $data_get['users_qty'];
             if (count($data_get) > 2) {
                 $_SESSION['user_sort_by'] = array_key_last($data_get);
@@ -34,17 +34,10 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     $user_statuses = R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
     $announcement_statuses = R::getAll("SELECT * FROM announcementstatuses");
 
-    foreach ($users as $u) {
-        if (isset($data_post['do_delete_user' . $u->id])) {
-            R::trash($u);
-            header("location: admin.php");
-        }
-    }
-
     foreach ($announcements as $a) {
         if (isset($data_post['do_delete_ann' . $a->id])) {
             R::trash($a);
-            header("location: admin.php");
+            header("location: moderator.php");
         }
     }
 
@@ -72,6 +65,8 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         }
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +95,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 
 <!-- Page Content -->
 <div class="container-fluid">
-    <?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status == 1): ?>
+    <?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status < 3): ?>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#users_table" role="tab" aria-controls="users"
@@ -115,7 +110,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             <div class="tab-pane fade show active" id="users_table" role="tabpanel" aria-labelledby="home-tab">
                 <div class="table-responsive-xl">
                     <table class="table table-sm table-striped table-bordered table-hover">
-                        <form action="admin.php" method="GET">
+                        <form action="moderator.php" method="GET">
                             <thead>
                                 <input type="hidden" name="users" value="true">
                                 <tr class="thead-light">
@@ -155,24 +150,31 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                 </tr>
                             </thead>
                         </form>
-                        <form id="update" action="admin.php" method="POST">
+                        <form id="update" action="moderator.php" method="POST">
                             <tbody>
                                 <?php foreach ($users as $user): ?>
                                     <tr>
-                                        <td><div class="row justify-content-center"><input type="checkbox" name="check_user<?= $user['id'] ?>"></div></td>
+                                        <td>
+                                            <?php if ($user['user_status'] > 2): ?>
+                                                <div class="row justify-content-center">
+                                                    <input type="checkbox" name="check_user<?= $user['id'] ?>">
+                                                </div>
+                                            <?php endif; ?>
+                                        </td>
                                         <td><?= $user['id'] ?></td>
                                         <td><?= $user['login'] ?></td>
                                         <td>
                                             <select class="form-control form-control-sm"
                                                     name="sel_user_status<?= $user['id'] ?>">
                                                 <?php foreach ($user_statuses as $user_status): ?>
-                                                    <option value="<?= $user_status['id'] ?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected"; ?>><?= $user_status['status'] ?></option>
+                                                    <option value="<?= $user_status['id'] ?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected"; ?> <?php if ($user['user_status'] < 3 or $user_status['id'] < 3) echo "disabled"?>><?= $user_status['status'] ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </td>
                                         <td>
                                             <input type="date" name="ban_date<?= $user['id'] ?>"
-                                                   class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="' . date("Y-m-d", $user['banned_to']) . '"' ?>>
+                                                   class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="' . date("Y-m-d", $user['banned_to']) . '"' ?> <?php if ($user['user_status'] < 3) echo "disabled"?>>
+
                                         </td>
                                         <td>
                                             <div class="badge badge-<?= $user['is_online'] ? 'success' : 'danger' ?>">
@@ -183,9 +185,6 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                             <div class="row justify-content-center">
                                                 <button class=" btn btn-sm btn-warning mr-2">
                                                     <i class="fas fa-envelope"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger" type="submit" name="do_delete_user<?= $user['id'] ?>">
-                                                    <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -204,7 +203,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             <div class="tab-pane fade" id="announcements_table" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="table-responsive-xl">
                     <table class="table table-sm table-striped table-bordered">
-                        <form action="admin.php" method="GET">
+                        <form action="moderator.php" method="GET">
                             <thead>
                                 <input type="hidden" name="announcements" value="true">
                                 <tr class="thead-light">
@@ -249,7 +248,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                 </tr>
                             </thead>
                         </form>
-                        <form id="update_ann" action="admin.php" method="POST">
+                        <form id="update_ann" action="moderator.php" method="POST">
                             <tbody>
                                 <?php foreach ($announcements as $announcement): ?>
                                     <tr>

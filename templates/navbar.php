@@ -23,6 +23,12 @@
                             <a class="btn my-btn-outline-dark ml-3" href="admin.php">Адміністратор</a>
                         </li>
                     <?php endif; ?>
+
+                    <?php if ($_SESSION['logged_user']->user_status <= 2): ?>
+                    <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "moderator.php") { echo "active font-weight-bold"; } ?>">
+                        <a class="btn my-btn-outline-dark ml-3" href="moderator.php">Модератор</a>
+                    </li>
+                    <?php endif; ?>
                     <li class="nav-item">
                         <a class="btn my-btn-dark ml-3" href="php/logout.php">Вихід</a>
                     </li>
