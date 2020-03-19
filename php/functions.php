@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Europe/Kiev');
+
 // Show errors
 ini_set("display_errors", 1);
 error_reporting(-1);
@@ -68,7 +70,7 @@ function get_announcements_with_limit($start, $num)
 function get_comments_by_announcement_id($id)
 {
     return [R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NULL ORDER BY date DESC", array($id)),
-        R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NOT NULL ORDER BY date DESC", array($id))];
+        R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NOT NULL ORDER BY date ASC", array($id))];
 }
 
 function get_user_by_login($login)

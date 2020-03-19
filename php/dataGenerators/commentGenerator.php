@@ -1,5 +1,5 @@
 <?php
-//include_once "php/dataGenerators/commentGenerator.php";
+date_default_timezone_set('Europe/Kiev');
 
 for ($i = 1, $j = 1; $i <= 50; $i++){
 

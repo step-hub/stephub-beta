@@ -1,6 +1,7 @@
 <?php
 //require_once "db.php";
 //include_once "functions.php";
+date_default_timezone_set('Europe/Kiev');
 
 $data = $_POST;
 $errors = array();
