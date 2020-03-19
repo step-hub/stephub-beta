@@ -69,11 +69,11 @@ if (array_key_exists('logged_user', $_SESSION)) {
 </head>
 
 <body>
-<!-- Navigation -->
-<?php include_once 'templates/navbar.php'; ?>
+    <!-- Navigation -->
+    <?php include_once 'templates/navbar.php'; ?>
 
-<!-- Page Content -->
-<?php if (array_key_exists('logged_user', $_SESSION)): ?>
+    <!-- Page Content -->
+    <?php if (array_key_exists('logged_user', $_SESSION)): ?>
     <div class="container pt-5">
         <div class="row">
             <div class="col-md-9">
@@ -248,15 +248,15 @@ if (array_key_exists('logged_user', $_SESSION)) {
             <?php endif; ?>
         </div>
     </div>
-<?php else:
-    header("location: index.php");
-endif; ?>
+    <?php else:
+        header("location: index.php");
+    endif; ?>
 
-<!-- Footer -->
-<?php include_once 'templates/footer.php'; ?>
+    <!-- Footer -->
+    <?php include_once 'templates/footer.php'; ?>
 
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

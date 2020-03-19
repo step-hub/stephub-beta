@@ -55,9 +55,14 @@ function get_announcements_without_filter()
     return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT 10");
 }
 
-function get_announcements_with_filter($sort_by, $sort_asc, $qty)
+function get_announcements_with_filter($sort_by, $sort_asc, $start, $qty)
 {
-    return R::getAll("SELECT * FROM announcements ORDER BY " . $sort_by . " " . $sort_asc . " LIMIT " . $qty);
+    return R::getAll("SELECT * FROM announcements ORDER BY " . $sort_by . " " . $sort_asc . " LIMIT " . $start . ", " . $qty);
+}
+
+function get_announcements_with_limit($start, $num)
+{
+    return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT ". $start .", ". $num);
 }
 
 function get_comments_by_announcement_id($id)
@@ -75,6 +80,7 @@ function count_comments_by_announcement_id($id)
 {
     return R::count('comments', 'announcement_id = ?', array($id));
 }
+
 
 
 

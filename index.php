@@ -3,11 +3,25 @@ require "php/db.php";
 include_once 'php/functions.php';
 
 $data = $_GET;
+
 if (isset($data['s']) and isset($data['o']) and isset($data['q'])){
-    $announcements = get_announcements_with_filter($data['s'], $data['o'], $data['q']);
+    $sort_by = $data['s'];
+    $order = $data['o'];
+    $quantity_per_page = $data['q'];
 } else {
-    $announcements = get_announcements_without_filter();    
+    $sort_by = 'date';
+    $order = 'desc';
+    $quantity_per_page = 10;
 }
+
+if (isset($data["page"])) {
+    $page  = $data["page"];
+} else {
+    $page = 1;
+}
+
+$start = ($page-1) * $quantity_per_page;
+$announcements = get_announcements_with_filter($sort_by, $order, $start, $quantity_per_page);
 
 ?>
 
@@ -103,17 +117,34 @@ if (isset($data['s']) and isset($data['o']) and isset($data['q'])){
                             <!-- Pagination-->
                             <nav aria-label="Page navigation">
                                 <ul class="pagination justify-content-center">
-                                    <li class="page-item disabled">
-                                        <span class="page-link">Назад</span>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <?php if($page == 1): ?>
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Назад</span>
+                                        </li>
+                                    <?php else: ?>
+                                        <li class="page-item">
+                                            <a class="page-link" href="pagination-test.php?page=<?= $page-1 ?>">Попередня</a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="pagination-test.php?page=1">1</a></li>
+                                        <?php if($page > 2): ?>
+                                            <li class="page-item"><a class="page-link" href="pagination-test.php?page=<?= $page-1 ?>"><?= $page-1 ?></a></li>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+
                                     <li class="page-item active">
-                                        <span class="page-link">2<span class="sr-only">(current)</span></span>
+                                        <span class="page-link"><?= $page ?><span class="sr-only">(current)</span></span>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Вперед</a>
-                                    </li>
+
+                                    <?php if(get_announcements_with_limit($page * $quantity_per_page, $quantity_per_page)): ?>
+                                        <li class="page-item"><a class="page-link" href="pagination-test.php?page=<?= $page+1 ?>"><?= $page+1 ?></a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="pagination-test.php?page=<?= $page+1 ?>">Наступна</a>
+                                        </li>
+                                    <? else: ?>
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Вперед</span>
+                                        </li>
+                                    <? endif; ?>
                                 </ul>
                             </nav>
                         <?php else: ?>
