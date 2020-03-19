@@ -36,7 +36,7 @@ if (isset($data['s']) and isset($data['o']) and isset($data['q'])){
     <?php include_once 'templates/navbar.php'; ?>
 
     <!-- Header-->
-    <?php if (!$_SESSION):
+    <?php if (!array_key_exists('logged_user', $_SESSION)):
         include_once 'templates/intro.php'; ?>
     <?php else:
         include_once 'templates/header.php'; ?>

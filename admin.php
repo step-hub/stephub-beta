@@ -7,8 +7,31 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
     $data_get = $_GET;
 
     if ($_SESSION['logged_user']->user_status == 1) {
-        $users = R::findAll('users');
-        $announcements = R::findAll('announcements');
+        if (!$data_get) {
+            $_SESSION['users_qty'] = 20;
+            $_SESSION['user_sort_by'] = 'id';
+            $_SESSION['user_sort_order'] = 'asc';
+            $_SESSION['ann_qty'] = 20;
+            $_SESSION['ann_sort_by'] = 'id';
+            $_SESSION['ann_sort_order'] = 'asc';
+        } else {
+            if (array_key_exists('users',$data_get)) {
+                $_SESSION['users_qty'] = $data_get['users_qty'];
+                if (count($data_get) > 2) {
+                    $_SESSION['user_sort_by'] = array_key_last($data_get);
+                    $_SESSION['user_sort_order'] = end($data_get);
+                }
+            } else {
+                $_SESSION['ann_qty'] = $data_get['ann_qty'];
+                if (count($data_get) > 2) {
+                    $_SESSION['ann_sort_by'] = array_key_last($data_get);
+                    $_SESSION['ann_sort_order'] = end($data_get);
+                }
+            }
+        }
+
+        $users = R::findAll('users', 'ORDER BY ' . $_SESSION['user_sort_by'] . ' ' . $_SESSION['user_sort_order'] . ' LIMIT ' . $_SESSION['users_qty']);
+        $announcements = R::findAll('announcements', 'ORDER BY ' . $_SESSION['ann_sort_by'] . ' ' . $_SESSION['ann_sort_order'] . ' LIMIT ' . $_SESSION['ann_qty']);
         $user_statuses = R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
         $announcement_statuses = R::getAll("SELECT * FROM announcementstatuses");
     }
@@ -28,7 +51,6 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
     }
 
     if (isset($data_post['do_update_users'])) {
-        echo "UPDATE";
         foreach ($users as $u) {
             if (array_key_exists('check_user' . $u['id'], $data_post)) {
                 $id = $u['id'];
@@ -51,7 +73,6 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
             }
         }
     }
-
 }
 
 ?>
@@ -82,59 +103,66 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
 
 <!-- Page Content -->
 <div class="container-fluid">
-    <?php if ($_SESSION and $_SESSION['logged_user']->user_status == 1): ?>
+    <?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status == 1): ?>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="users"
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#users_table" role="tab" aria-controls="users"
                    aria-selected="true">Користувачі</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#announcements_table" role="tab"
                    aria-controls="announcements" aria-selected="false">Оголошення</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="tab-pane fade show active" id="users_table" role="tabpanel" aria-labelledby="home-tab">
                 <div class="table-responsive-xl">
                     <table class="table table-sm table-striped table-bordered table-hover">
                         <form action="admin.php" method="GET">
                             <thead>
+                                <input type="hidden" name="users" value="true">
                                 <tr class="thead-light">
-                                    <th class="p-1"></th>
                                     <th class="p-1">
-                                        <button name="user_id" value="<?= !$data_get ? 'desc' : (!array_key_exists('user_id', $data_get) ? 'asc' : ($data_get['user_id'] == 'asc' ? 'desc' : 'asc'))?>" type="submit" class="btn btn-info h-100 w-100">ID
-                                            <?= !$data_get ? '<i class="fas fa-sort-up"></i>' : (!array_key_exists('user_id', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['user_id'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
+                                        <select name="users_qty" class="form-control-sm btn btn-info h-100 w-100" onchange="this.form.submit()">
+                                            <option value="20" <?php if ($_SESSION['users_qty'] == 20) echo 'selected'?>>20</option>
+                                            <option value="30" <?php if ($_SESSION['users_qty'] == 30) echo 'selected'?>>30</option>
+                                            <option value="40" <?php if ($_SESSION['users_qty'] == 40) echo 'selected'?>>40</option>
+                                        </select>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="id" value="<?= $_SESSION['user_sort_by'] != 'id' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">ID
+                                            <?= $_SESSION['user_sort_by'] != 'id' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
                                         </button>
                                     </th>
                                     <th class="p-1">
-                                        <button name="login" value="<?= !$data_get ? 'asc' : (!array_key_exists('login', $data_get) ? 'asc' : ($data_get['login'] == 'asc' ? 'desc' : 'asc'))?>" type="submit" class="btn btn-info h-100 w-100">Ім'я
-                                            <?= !$data_get ? '<i class="fas fa-sort"></i>' : (!array_key_exists('login', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['login'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
+                                        <button name="login" value="<?= $_SESSION['user_sort_by'] != 'login' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Ім'я
+                                            <?= $_SESSION['user_sort_by'] != 'login' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
                                         </button>
                                     </th>
                                     <th class="p-1">
-                                        <button name="status" value="<?= !$data_get ? 'asc' : (!array_key_exists('status', $data_get) ? 'asc' : ($data_get['status'] == 'asc' ? 'desc' : 'asc'))?>" class="btn btn-info h-100 w-100">Права
-                                            <?= !$data_get ? '<i class="fas fa-sort"></i>' : (!array_key_exists('status', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['status'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
+                                        <button name="user_status" value="<?= $_SESSION['user_sort_by'] != 'user_status' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" class="btn btn-info h-100 w-100">Права
+                                            <?= $_SESSION['user_sort_by'] != 'user_status' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
                                         </button>
                                     </th>
                                     <th class="p-1">
-                                        <button name="banned_to" value="<?= !$data_get ? 'asc' : (!array_key_exists('banned_to', $data_get) ? 'asc' : ($data_get['banned_to'] == 'asc' ? 'desc' : 'asc'))?>" class="btn btn-info h-100 w-100">Забанений до
-                                            <?= !$data_get ? '<i class="fas fa-sort"></i>' : (!array_key_exists('banned_to', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['banned_to'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
+                                        <button name="banned_to" value="<?= $_SESSION['user_sort_by'] != 'banned_to' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" class="btn btn-info h-100 w-100">Забанений до
+                                            <?= $_SESSION['user_sort_by'] != 'banned_to' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
                                         </button>
                                     </th>
                                     <th class="p-1">
-                                        <button name="is_online" value="<?= !$data_get ? 'asc' : (!array_key_exists('is_online', $data_get) ? 'asc' : ($data_get['is_online'] == 'asc' ? 'desc' : 'asc'))?>" class="btn btn-info h-100 w-100">Статус
-                                            <?= !$data_get ? '<i class="fas fa-sort"></i>' : (!array_key_exists('is_online', $data_get) ? '<i class="fas fa-sort"></i>' : (($data_get['is_online'] == 'asc') ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>'))?>
+                                        <button name="is_online" value="<?= $_SESSION['user_sort_by'] != 'is_online' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" class="btn btn-info h-100 w-100">Статус
+                                            <?= $_SESSION['user_sort_by'] != 'is_online' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
                                         </button>
                                     </th>
                                     <th class="p-1"></th>
                                 </tr>
                             </thead>
                         </form>
-                        <form action="admin.php" id="update" method="POST">
+                        <form id="update" action="admin.php" method="POST">
                             <tbody>
                                 <?php foreach ($users as $user): ?>
                                     <tr>
-                                        <td><input type="checkbox" name="check_user<?= $user['id'] ?>"></td>
+                                        <td><div class="row justify-content-center"><input type="checkbox" name="check_user<?= $user['id'] ?>"></div></td>
                                         <td><?= $user['id'] ?></td>
                                         <td><?= $user['login'] ?></td>
                                         <td>
@@ -176,87 +204,95 @@ if ($_SESSION and $_SESSION['logged_user']->user_status == 1) {
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <form action="admin.php" method="POST">
-                    <div class="table-responsive-xl">
-                        <table class="table table-sm table-striped table-bordered">
+            <div class="tab-pane fade" id="announcements_table" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="table-responsive-xl">
+                    <table class="table table-sm table-striped table-bordered">
+                        <form action="admin.php" method="GET">
                             <thead>
-                            <tr class="thead-light">
-                                <th class="p-1"></th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">ID <i class="fas fa-sort"></i>
-                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
-                                    </button>
-                                </th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Власник <i class="fas fa-sort"></i>
-                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
-                                    </button>
-                                </th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Статус <i class="fas fa-sort"></i>
-                                                <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
-                                    </button>
-                                </th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Заголовок <i class="fas fa-sort"></i>
-                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
-                                    </button>
-                                </th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Дата створення
-                                        <i class="fas fa-sort"></i>
-                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
-                                    </button>
-                                </th>
-                                <th class="p-1">
-                                    <button class="btn btn-info h-100 w-100">Дедлайн <i class="fas fa-sort"></i>
-                                        <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i>
-                                    </button>
-                                </th>
-                                <th class="p-1"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php foreach ($announcements as $announcement): ?>
-                                <tr>
-                                    <td><input type="checkbox" name="check_ann<?= $announcement['id'] ?>"></td>
-                                    <td><?= $announcement['id'] ?></td>
-                                    <td><?= $announcement['user_id'] ?></td>
-                                    <td>
-                                        <select class="form-control form-control-sm"
-                                                name="sel_ann_status<?= $announcement['id'] ?>">
-                                            <?php foreach ($announcement_statuses as $announcement_status): ?>
-                                                <option value="<?= $announcement_status['id'] ?>" <?php if ($announcement['announcement_status_id'] == $announcement_status['id']) echo "selected"; ?>><?= $announcement_status['status'] ?></option>
-                                            <?php endforeach; ?>
+                                <input type="hidden" name="announcements" value="true">
+                                <tr class="thead-light">
+                                    <th class="p-1">
+                                        <select name="ann_qty" class="form-control-sm btn btn-info h-100 w-100" onchange="this.form.submit()">
+                                            <option value="20" <?php if ($_SESSION['ann_qty'] == 20) echo 'selected'?>>20</option>
+                                            <option value="30" <?php if ($_SESSION['ann_qty'] == 30) echo 'selected'?>>30</option>
+                                            <option value="40" <?php if ($_SESSION['ann_qty'] == 40) echo 'selected'?>>40</option>
                                         </select>
-                                    </td>
-                                    <td><?= $announcement['title'] ?></td>
-                                    <td><?= show_date($announcement['date']) ?></td>
-                                    <td><?= show_date($announcement['deadline']) ?></td>
-                                    <td>
-                                        <div class="row justify-content-center">
-                                            <a target="_blank" rel="noopener noreferrer"
-                                               href="announcement.php?id=<?= $announcement['id'] ?>"
-                                               class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
-                                            <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?= $announcement['id'] ?>">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </td>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="id" value="<?= $_SESSION['ann_sort_by'] != 'id' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">ID
+                                            <?= $_SESSION['ann_sort_by'] != 'id' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
+                                        </button>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="user_id" value="<?= $_SESSION['ann_sort_by'] != 'user_id' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Власник
+                                            <?= $_SESSION['ann_sort_by'] != 'user_id' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
+                                        </button>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="announcement_status_id" value="<?= $_SESSION['ann_sort_by'] != 'announcement_status_id' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Статус
+                                            <?= $_SESSION['ann_sort_by'] != 'announcement_status_id' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
+                                        </button>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="title" value="<?= $_SESSION['ann_sort_by'] != 'title' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Заголовок
+                                            <?= $_SESSION['ann_sort_by'] != 'title' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
+                                        </button>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="date" value="<?= $_SESSION['ann_sort_by'] != 'date' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Дата створення
+                                            <?= $_SESSION['ann_sort_by'] != 'date' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
+                                        </button>
+                                    </th>
+                                    <th class="p-1">
+                                        <button name="deadline" value="<?= $_SESSION['ann_sort_by'] != 'deadline' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Дедлайн
+                                            <?= $_SESSION['ann_sort_by'] != 'deadline' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
+                                        </button>
+                                    </th>
+                                    <th class="p-1"></th>
                                 </tr>
-                            <?php endforeach; ?>
+                            </thead>
+                        </form>
+                        <form id="update_ann" action="admin.php" method="POST">
+                            <tbody>
+                                <?php foreach ($announcements as $announcement): ?>
+                                    <tr>
+                                        <td><div class="row justify-content-center"><input type="checkbox" name="check_ann<?= $announcement['id'] ?>"></div></td>
+                                        <td><?= $announcement['id'] ?></td>
+                                        <td><?= $announcement['user_id'] ?></td>
+                                        <td>
+                                            <select class="form-control form-control-sm"
+                                                    name="sel_ann_status<?= $announcement['id'] ?>">
+                                                <?php foreach ($announcement_statuses as $announcement_status): ?>
+                                                    <option value="<?= $announcement_status['id'] ?>" <?php if ($announcement['announcement_status_id'] == $announcement_status['id']) echo "selected"; ?>><?= $announcement_status['status'] ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </td>
+                                        <td><?= $announcement['title'] ?></td>
+                                        <td><?= show_date($announcement['date']) ?></td>
+                                        <td><?= show_date($announcement['deadline']) ?></td>
+                                        <td>
+                                            <div class="row justify-content-center">
+                                                <a target="_blank" rel="noopener noreferrer"
+                                                   href="announcement.php?id=<?= $announcement['id'] ?>"
+                                                   class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
+                                                <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?= $announcement['id'] ?>">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
-                        </table>
-                        <div class="container">
-                            <button class="btn btn-info mb-4" name="do_update_ann" type="submit"><i
-                                        class="fas fa-sync mr-2"></i>Оновити
-                            </button>
-                        </div>
+                        </form>
+                    </table>
+                    <div class="container">
+                        <button class="btn btn-info mb-4" form="update_ann" name="do_update_ann" type="submit"><i
+                                    class="fas fa-sync mr-2"></i>Оновити
+                        </button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     <?php else:

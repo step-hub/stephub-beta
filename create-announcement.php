@@ -28,34 +28,38 @@ include_once 'php/functions.php';
 <?php include_once 'templates/navbar.php'; ?>
 
 <!-- Page Content -->
-<div class="container pt-5">
-    <h2>Створити нове оголошення</h2>
-    <div class="card mt-0">
-        <div class="card-body shadow-sm">
-            <form class="form-group" action="create-announcement.php" method="POST">
-                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Заголовок">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="qw">Потрібно до</label>
-                        <input class="form-control" type="date" id="qw">
+<?php if (array_key_exists('logged_user', $_SESSION)): ?>
+    <div class="container pt-5">
+        <h2>Створити нове оголошення</h2>
+        <div class="card mt-0">
+            <div class="card-body shadow-sm">
+                <form class="form-group" action="create-announcement.php" method="POST">
+                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Заголовок">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="qw">Потрібно до</label>
+                            <input class="form-control" type="date" id="qw">
+                        </div>
+                        <div class="col-md-8">
+                            <textarea rows="10" class="form-control mb-2 mr-sm-2"
+                                      placeholder="Деталі оголошення"></textarea>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <textarea rows="10" class="form-control mb-2 mr-sm-2"
-                                  placeholder="Деталі оголошення"></textarea>
+                    <div class="row">
+                        <input type="file">
                     </div>
-                </div>
-                <div class="row">
-                    <input type="file">
-                </div>
-                <div class="row justify-content-center">
-                    <button type="submit" name=""
-                            class="btn btn-success mt-1 mb-2">Сворити оголошення
-                    </button>
-                </div>
-            </form>
+                    <div class="row justify-content-center">
+                        <button type="submit" name=""
+                                class="btn btn-success mt-1 mb-2">Сворити оголошення
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+<?php else:
+    header("location: index.php");
+endif;?>
 
 <!-- Footer -->
 <?php include_once 'templates/footer.php'; ?>

@@ -28,6 +28,7 @@ include_once 'php/functions.php';
     <?php include_once 'templates/navbar.php'; ?>
 
     <!-- Page Content -->
+<?php if (array_key_exists('logged_user', $_SESSION)): ?>
     <div class="container">
         <div class="card mt-5">
             <div class="card-body shadow-sm">
@@ -37,7 +38,9 @@ include_once 'php/functions.php';
             </div>
         </div>
     </div>
-    
+<?php else:
+    header("location: index.php");
+endif;?>
     <!-- Footer -->
     <?php include_once 'templates/footer.php'; ?>
 

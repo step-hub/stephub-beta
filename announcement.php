@@ -2,7 +2,7 @@
 require "php/db.php";
 include_once 'php/functions.php';
 
-if ($_SESSION) {
+if (array_key_exists('logged_user', $_SESSION)) {
     $data = $_POST;
     $errors = array();
 
@@ -73,9 +73,7 @@ if ($_SESSION) {
 <?php include_once 'templates/navbar.php'; ?>
 
 <!-- Page Content -->
-<?php if (!$_SESSION):
-    include_once 'templates/intro.php'; ?>
-<?php else: ?>
+<?php if (array_key_exists('logged_user', $_SESSION)): ?>
     <div class="container pt-5">
         <div class="row">
             <div class="col-md-9">
@@ -250,7 +248,9 @@ if ($_SESSION) {
             <?php endif; ?>
         </div>
     </div>
-<?php endif; ?>
+<?php else:
+    header("location: index.php");
+endif; ?>
 
 <!-- Footer -->
 <?php include_once 'templates/footer.php'; ?>

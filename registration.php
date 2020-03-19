@@ -88,7 +88,7 @@ if (!$_SESSION) {
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
-    <?php if ($_SESSION):
+    <?php if (array_key_exists('logged_user', $_SESSION)):
         header("location: index.php"); ?>
     <?php else: ?>
     <!-- Page Content -->
