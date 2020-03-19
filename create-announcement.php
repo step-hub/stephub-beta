@@ -2,7 +2,7 @@
 require "php/db.php";
 include_once 'php/functions.php';
 
-if (array_key_exists('logged_user', $_SESSION)){
+if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['user_status'] != 4){
     $data = $_POST;
     $errors = array();
 
@@ -64,7 +64,7 @@ if (array_key_exists('logged_user', $_SESSION)){
 <?php include_once 'templates/navbar.php'; ?>
 
 <!-- Page Content -->
-<?php if (array_key_exists('logged_user', $_SESSION)): ?>
+<?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['user_status'] != 4): ?>
     <div class="container pt-5">
         <h2>Створити нове оголошення</h2>
         <div class="card mt-0">
