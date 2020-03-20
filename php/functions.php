@@ -83,6 +83,11 @@ function count_comments_by_announcement_id($id)
     return R::count('comments', 'announcement_id = ?', array($id));
 }
 
+function count_announcements()
+{
+    return R::count('announcements');
+}
+
 
 
 

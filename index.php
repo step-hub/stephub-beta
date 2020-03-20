@@ -14,8 +14,14 @@ if (isset($data['s']) and isset($data['o']) and isset($data['q'])) {
     $quantity_per_page = 10;
 }
 
-if (isset($data["page"])) {
-    $page  = $data["page"];
+$total = intval((count_announcements() - 1) / $quantity_per_page) + 1;
+
+if (isset($data['page']) and $data['page'] > 0) {
+    if($data['page'] > $total) {
+        $page = $total;
+    } else {
+        $page  = $data['page'];
+    }
 } else {
     $page = 1;
 }
@@ -119,13 +125,19 @@ $announcements = get_announcements_with_filter($sort_by, $order, $start, $quanti
                                 <ul class="pagination justify-content-center">
                                     <?php if($page == 1): ?>
                                         <li class="page-item disabled">
-                                            <span class="page-link">Назад</span>
+                                            <span class="page-link">&laquo;</span>
                                         </li>
                                     <?php else: ?>
                                         <li class="page-item">
-                                            <a class="page-link" href="index.php?page=<?= $page-1 ?>">Попередня</a>
+                                            <a class="page-link" href="index.php?page=<?= $page-1 ?>">&laquo;</a>
                                         </li>
                                         <li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>
+                                        <?php if($page > 4): ?>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page-3 ?>"><?= $page-3 ?></a></li>
+                                        <?php endif; ?>
+                                        <?php if($page > 3): ?>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page-2 ?>"><?= $page-2 ?></a></li>
+                                        <?php endif; ?>
                                         <?php if($page > 2): ?>
                                             <li class="page-item"><a class="page-link" href="index.php?page=<?= $page-1 ?>"><?= $page-1 ?></a></li>
                                         <?php endif; ?>
@@ -135,14 +147,24 @@ $announcements = get_announcements_with_filter($sort_by, $order, $start, $quanti
                                         <span class="page-link"><?= $page ?><span class="sr-only">(current)</span></span>
                                     </li>
 
-                                    <?php if(get_announcements_with_limit($page * $quantity_per_page, $quantity_per_page)): ?>
+                                    <?php if($page != $total): ?>
+                                        <?php if($page+1 < $total): ?>
                                         <li class="page-item"><a class="page-link" href="index.php?page=<?= $page+1 ?>"><?= $page+1 ?></a></li>
+                                        <?php endif; ?>
+                                        <?php if($page+2 < $total): ?>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page+2 ?>"><?= $page+2 ?></a></li>
+                                        <?php endif; ?>
+                                        <?php if($page+3 < $total): ?>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page+3 ?>"><?= $page+3 ?></a></li>
+                                        <?php endif; ?>
+                                        <li class="page-item"><a class="page-link" href="index.php?page=<?= $total ?>"><?= $total ?></a></li>
+
                                         <li class="page-item">
-                                            <a class="page-link" href="index.php?page=<?= $page+1 ?>">Наступна</a>
+                                            <a class="page-link" href="index.php?page=<?= $page+1 ?>">&raquo;</a>
                                         </li>
                                     <? else: ?>
                                         <li class="page-item disabled">
-                                            <span class="page-link">Вперед</span>
+                                            <span class="page-link">&raquo;</span>
                                         </li>
                                     <? endif; ?>
                                 </ul>
