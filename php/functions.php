@@ -5,6 +5,11 @@ date_default_timezone_set('Europe/Kiev');
 ini_set("display_errors", 1);
 error_reporting(-1);
 
+function show_apache_owner()
+{
+    echo exec('whoami');
+}
+
 function console_log($data)
 {
     echo '<script>';
@@ -46,6 +51,13 @@ function generate_random_string($length)
 
     return $randomString;
 }
+
+function get_upload_path()
+{
+    return "uploads/";
+}
+
+
 
 function get_announcement_by_id($id)
 {
