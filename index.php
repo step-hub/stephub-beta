@@ -4,7 +4,7 @@ include_once 'php/functions.php';
 
 $data = $_GET;
 
-if (isset($data['s']) and isset($data['o']) and isset($data['q'])){
+if (isset($data['s']) and isset($data['o']) and isset($data['q'])) {
     $sort_by = $data['s'];
     $order = $data['o'];
     $quantity_per_page = $data['q'];
@@ -64,20 +64,20 @@ $announcements = get_announcements_with_filter($sort_by, $order, $start, $quanti
                         <div class="form-group mr-2">
                             <label for="sort_by">Сортування</label>
                             <select class="form-control-sm ml-2" name="s" id="sort_by">
-                                <option value="date" <?php if (!$data or ($data and $data['s'] == 'date')) echo "selected"?>>Дата створення</option>
-                                <option value="deadline" <?php if ($data and $data['s'] == 'deadline') echo "selected"?>>Дедлайн</option>
+                                <option value="date" <?php if (!isset($data['s']) or (isset($data['s']) and $data['s'] == 'date')) echo "selected"?>>Дата створення</option>
+                                <option value="deadline" <?php if (isset($data['s']) and $data['s'] == 'deadline') echo "selected"?>>Дедлайн</option>
                             </select>
                             <select class="form-control-sm ml-2" name="o" id="order" style="font-family: 'FontAwesome', serif !important;">
-                                <option value="asc" <?php if ($data and $data['o'] == 'asc') echo "selected"?>>&#xf161;</option>
-                                <option value="desc" <?php if (!$data or ($data and $data['o'] == 'desc')) echo "selected"?>>&#xf160;</i></option>
+                                <option value="asc" <?php if (isset($data['o']) and $data['o'] == 'asc') echo "selected"?>>&#xf161;</option>
+                                <option value="desc" <?php if (!isset($data['o']) or ($data['o'] and $data['o'] == 'desc')) echo "selected"?>>&#xf160;</i></option>
                             </select>
                         </div>
                         <div class="form-group mr-2">
                             <label for="qty">Оголошень на сторінці</label>
                             <select class="form-control-sm ml-2 " name="q" id="announcement_qty">
-                                <option value="10" <?php if (!$data or ($data and $data['q'] == '10')) echo "selected"?>>10</option>
-                                <option value="20" <?php if ($data and ($data and $data['q'] == '20')) echo "selected"?>>20</option>
-                                <option value="30" <?php if ($data and ($data and $data['q'] == '30')) echo "selected"?>>30</option>
+                                <option value="10" <?php if (!isset($data['q']) or (isset($data['q']) and $data['q'] == '10')) echo "selected"?>>10</option>
+                                <option value="20" <?php if (isset($data['q']) and (isset($data['q']) and $data['q'] == '20')) echo "selected"?>>20</option>
+                                <option value="30" <?php if (isset($data['q']) and (isset($data['q']) and $data['q'] == '30')) echo "selected"?>>30</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
@@ -123,11 +123,11 @@ $announcements = get_announcements_with_filter($sort_by, $order, $start, $quanti
                                         </li>
                                     <?php else: ?>
                                         <li class="page-item">
-                                            <a class="page-link" href="pagination-test.php?page=<?= $page-1 ?>">Попередня</a>
+                                            <a class="page-link" href="index.php?page=<?= $page-1 ?>">Попередня</a>
                                         </li>
-                                        <li class="page-item"><a class="page-link" href="pagination-test.php?page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>
                                         <?php if($page > 2): ?>
-                                            <li class="page-item"><a class="page-link" href="pagination-test.php?page=<?= $page-1 ?>"><?= $page-1 ?></a></li>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page-1 ?>"><?= $page-1 ?></a></li>
                                         <?php endif; ?>
                                     <?php endif; ?>
 
@@ -136,9 +136,9 @@ $announcements = get_announcements_with_filter($sort_by, $order, $start, $quanti
                                     </li>
 
                                     <?php if(get_announcements_with_limit($page * $quantity_per_page, $quantity_per_page)): ?>
-                                        <li class="page-item"><a class="page-link" href="pagination-test.php?page=<?= $page+1 ?>"><?= $page+1 ?></a></li>
+                                        <li class="page-item"><a class="page-link" href="index.php?page=<?= $page+1 ?>"><?= $page+1 ?></a></li>
                                         <li class="page-item">
-                                            <a class="page-link" href="pagination-test.php?page=<?= $page+1 ?>">Наступна</a>
+                                            <a class="page-link" href="index.php?page=<?= $page+1 ?>">Наступна</a>
                                         </li>
                                     <? else: ?>
                                         <li class="page-item disabled">
