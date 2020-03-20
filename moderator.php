@@ -29,10 +29,10 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         }
     }
 
-    $users = R::findAll('users', 'ORDER BY ' . $_SESSION['user_sort_by'] . ' ' . $_SESSION['user_sort_order'] . ' LIMIT ' . $_SESSION['users_qty']);
-    $announcements = R::findAll('announcements', 'ORDER BY ' . $_SESSION['ann_sort_by'] . ' ' . $_SESSION['ann_sort_order'] . ' LIMIT ' . $_SESSION['ann_qty']);
-    $user_statuses = R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
-    $announcement_statuses = R::getAll("SELECT * FROM announcementstatuses");
+    $users = get_users_with_filter($_SESSION['user_sort_by'], $_SESSION['user_sort_order'], $_SESSION['users_qty']);
+    $announcements = R::findAll('announcements', 'ORDER BY ' . $_SESSION['ann_sort_by'] . ' ' . $_SESSION['ann_sort_order'] . ' LIMIT ' . $_SESSION['ann_qty']); // get_announcements_with_filter()
+    $user_statuses = get_user_statuses();
+    $announcement_statuses = get_announcement_statuses();
 
     foreach ($announcements as $a) {
         if (isset($data_post['do_delete_ann' . $a->id])) {

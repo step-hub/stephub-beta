@@ -27,21 +27,21 @@ if (!array_key_exists('logged_user',$_SESSION)) {
             $errors[] = "password does doesn't confirm!!!";
         }
 
-        if (R::count("users", "login = ?", array($data['login'])) > 0) {
+        if (count_users_by_login($data['login']) > 0) {
             $errors[] = "user with such login already exist!!!";
         }
-        if (R::count("users", "email = ?", array($data['email'])) > 0) {
+        if (count_users_by_email($data['email']) > 0) {
             $errors[] = "user with such email already exist!!!";
         }
-        if (R::count("users", "telegram_username = ?", array($data['telegram'])) > 0) {
+        if (count_users_by_telegram($data['telegram']) > 0) {
             $errors[] = "user with such telegram already exist!!!";
         }
 
-        if (R::count("studentids", "student_id_num = ?", array($data['stud_num'])) == 0) {
+        if (count_studentid_by_num($data['stud_num']) == 0) {
             $errors[] = "user with such student num can't register!!!";
         } else {
-            $student = R::findOne('studentids', 'student_id_num LIKE ?', array($data['stud_num']));
-            if (R::count("users", "studentid_id = ?", array($student->id)) > 0) {
+            $student = find_studentid_by_num($data['stud_num']);
+            if (count_users_by_student_id($student->id) > 0) {
                 $errors[] = "user with such student num has already registered!!!";
             }
         }

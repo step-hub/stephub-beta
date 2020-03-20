@@ -58,49 +58,108 @@ function get_upload_path()
 }
 
 
+// ==============================================================
+//
+// SQL QUERIES TO DB
+//
+// ==============================================================
 
+//------------------------------------------
+// SELECT
+//------------------------------------------
+
+// SELECT announcements
 function get_announcement_by_id($id)
 {
     return R::findOne('announcements', 'id = ?', array($id));
 }
-
 function get_announcements_without_filter()
 {
     return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT 10");
 }
-
 function get_announcements_with_filter($sort_by, $sort_asc, $start, $qty)
 {
     return R::getAll("SELECT * FROM announcements ORDER BY " . $sort_by . " " . $sort_asc . " LIMIT " . $start . ", " . $qty);
 }
-
 function get_announcements_with_limit($start, $num)
 {
     return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT ". $start .", ". $num);
 }
 
+// SELECT comments
 function get_comments_by_announcement_id($id)
 {
     return [R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NULL ORDER BY date DESC", array($id)),
         R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NOT NULL ORDER BY date ASC", array($id))];
 }
 
+// SELECT users
 function get_user_by_login($login)
 {
     return R::findOne('users', 'login = ?', array($login));
 }
+function get_users_with_filter($sort_by, $sort_order, $qty)
+{
+    return R::findAll('users', 'ORDER BY ' . $sort_by . ' ' . $sort_order . ' LIMIT ' . $qty);
+}
 
+// SELECT userstatuses
+function get_user_statuses()
+{
+    return R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
+}
+function get_announcement_statuses()
+{
+    return R::getAll("SELECT * FROM announcementstatuses");
+}
+
+
+//------------------------------------------
+// COUNT
+//------------------------------------------
+
+// COUNT comments
 function count_comments_by_announcement_id($id)
 {
     return R::count('comments', 'announcement_id = ?', array($id));
 }
 
+// COUNT announcements
 function count_announcements()
 {
     return R::count('announcements');
 }
 
+// COUNT users
+function count_users_by_login($login)
+{
+    return R::count("users", "login = ?", array($login));
+}
+function count_users_by_email($email)
+{
+    return R::count("users", "email = ?", array($email));
+}
+function count_users_by_telegram($telegram_username)
+{
+    return R::count("users", "telegram_username = ?", array($telegram_username));
+}
+function count_users_by_student_id($student_number_id)
+{
+    return R::count("users", "studentid_id = ?", array($student_number_id));
+}
 
+// COUNT studentid
+function count_studentid_by_num($student_number)
+{
+    return R::count("studentids", "student_id_num = ?", array($student_number));
+}
 
+//------------------------------------------
+// FIND
+//------------------------------------------
 
-
+// FIND
+function find_studentid_by_num($student_number)
+{
+    return R::findOne('studentids', 'student_id_num LIKE ?', array($student_number));
+}
