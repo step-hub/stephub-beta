@@ -49,7 +49,10 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 $ban_date = strtotime($data_post['ban_date' . $id]);
                 if (($sel_status == '4' and $ban_date > time()) or ($sel_status != '4' and $ban_date == null)) {
                     $u['user_status'] = $sel_status;
-                    $u['banned_to'] = $ban_date;
+                    if ($ban_date == 0)
+                        $u['banned_to'] = null;
+                    else
+                        $u['banned_to'] = $ban_date;
                     R::store($u);
                 }
             }
