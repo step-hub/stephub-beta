@@ -133,6 +133,7 @@ $announcements = get_announcements_with_filter($sort_by, $order, $start, $quanti
                                         </li>
                                         <li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>
                                         <?php if($page > 4): ?>
+                                            <li class="page-item disabled"><a class="page-link">...</a></li>
                                             <li class="page-item"><a class="page-link" href="index.php?page=<?= $page-3 ?>"><?= $page-3 ?></a></li>
                                         <?php endif; ?>
                                         <?php if($page > 3): ?>
@@ -156,7 +157,11 @@ $announcements = get_announcements_with_filter($sort_by, $order, $start, $quanti
                                         <?php endif; ?>
                                         <?php if($page+3 < $total): ?>
                                             <li class="page-item"><a class="page-link" href="index.php?page=<?= $page+3 ?>"><?= $page+3 ?></a></li>
+                                            <?php if($page+3 != $total-1): ?>
+                                                <li class="page-item disabled"><a class="page-link">...</a></li>
+                                            <?php endif; ?>
                                         <?php endif; ?>
+
                                         <li class="page-item"><a class="page-link" href="index.php?page=<?= $total ?>"><?= $total ?></a></li>
 
                                         <li class="page-item">
