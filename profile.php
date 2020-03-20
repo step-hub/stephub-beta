@@ -23,24 +23,109 @@ include_once 'php/functions.php';
     <link href="css/main.css" rel="stylesheet">
 </head>
 
-<body class="text-center">
+<body class="">
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
     <!-- Page Content -->
-<?php if (array_key_exists('logged_user', $_SESSION)): ?>
-    <div class="container">
-        <div class="card mt-5">
-            <div class="card-body shadow-sm">
-                <h5 class="card-title ">Профіль</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto dolores ea et ex explicabo, fugiat in, ipsam iure magnam natus nihil quibusdam ratione? Asperiores iusto nihil non reiciendis sequi. Animi asperiores atque autem consectetur cumque dignissimos dolor, dolorem eum explicabo, harum impedit incidunt iste laborum non numquam officia perspiciatis praesentium quis saepe voluptatibus! Accusamus dolor excepturi exercitationem hic, laudantium magnam maxime pariatur repellendus totam voluptates. A ab accusantium consequuntur culpa dolor dolore doloremque eaque earum, esse est facere fuga fugiat fugit id, illum ipsam iste itaque numquam quas quo repellat temporibus voluptatibus. Beatae commodi debitis dolores harum obcaecati reprehenderit voluptate?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae consectetur deleniti ducimus ea nam, nemo nobis officiis, qui quis, quisquam soluta totam. Architecto consequuntur excepturi facilis ipsam laudantium magni necessitatibus obcaecati porro sapiente totam. Aliquid aut deleniti dignissimos distinctio dolore eligendi fugiat fugit in laborum maiores officiis placeat qui quia rem repellat, sapiente sed sit totam unde, ut vel veniam vero. A adipisci asperiores aut cumque delectus ea error est, et eveniet fugiat fugit harum id iure laborum libero maiores, minima molestiae placeat qui repellendus reprehenderit sapiente sunt suscipit temporibus tenetur velit voluptas! Atque in ipsam quibusdam, suscipit ullam ut?</p>
+    <?php if (array_key_exists('logged_user', $_SESSION)): ?>
+        <div class="container">
+            <div class="card mt-5">
+                <div class="card-body shadow-sm">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form class="form" action="profile.php" method="POST">
+                                <div class="form-group row px-3">
+                                    <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ваше ім'я</label>
+                                    <div class="col-sm-9">
+                                        <input name="login" class="form-control" type="text" id="inputLogin" value="" placeholder="Ім'я користувача" required aria-describedby="loginHelp">
+                                        <small id="loginHelp" class="form-text text-muted">
+                                            Ваш логін може складитись із латинських літер та цифр.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group row px-3">
+                                    <label class="col-sm-3 col-form-label text-right" for="inputEmail">Ел. пошта</label>
+                                    <div class="col-sm-9">
+                                        <input name="email" class="form-control" type="email" id="inputEmail" value="" placeholder="example@gmail.com" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row px-3">
+                                    <label class="col-sm-3 col-form-label text-right" for="inputTelegram">Телеграм</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">@</div>
+                                            </div>
+                                            <input name="telegram" class="form-control" type="text" id="inputTelegram" value="" placeholder="example" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row px-3">
+                                    <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Студентський</label>
+                                    <div class="col-sm-3">
+                                        <input name="stud_num" class="form-control disabled" type="text" id="inputStudNum" value="AБ12345678" readonly>
+                                    </div>
+                                    <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Статус профілю</label>
+                                    <div class="col-sm-3">
+                                        <input name="status" class="form-control" type="text" value="user" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row px-3">
+                                    <label class="col-sm-3 col-form-label text-right" for="inputReg">Дата реєстрації</label>
+                                    <div class="col-sm-3">
+                                        <input name="status" class="form-control" type="text" id="inputReg" value="<?= show_date(124312) ?>" readonly>
+                                    </div>
+                                    <label class="col-sm-3 col-form-label text-right" for="inputBan">Забанено до</label>
+                                    <div class="col-sm-3">
+                                        <input name="status" class="form-control" type="text" id="inputBan" value="<?= show_date(124312) ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button class="btn my-btn-blue float-right mx-3 mb-3" type="submit" name="do_update">Оновити</button>
+                                </div>
+                            </form>
+
+                            <form class="form" action="profile.php" method="post">
+                                <div class="card">
+                                    <div class="card-header my-bg-gray">
+                                        Змінити пароль
+                                    </div>
+                                    <div class="card-body my-bg-light px-0">
+                                        <div class="form-group row px-3">
+                                            <label class="col-sm-3 col-form-label" for="inputPassword">Пароль</label>
+                                            <div class="col-sm-9">
+                                                <input name="password" class="form-control" type="password" id="inputPassword" placeholder="Пароль" required aria-describedby="passHelp">
+                                                <small id="passHelp" class="form-text text-muted">
+                                                    Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-3">
+                                            <label class="col-sm-3 col-form-label" for="inputPasswordConfirm">Підтвердження</label>
+                                            <div class="col-sm-9">
+                                                <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть пароль" required>
+                                            </div>
+                                        </div>
+                                        <button class="btn my-btn-blue float-right mr-3" type="submit" name="do_change_pass">Змінити пароль</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-<?php else:
-    header("location: index.php");
-endif;?>
+    <?php else:
+        header("location: index.php");
+    endif;?>
     <!-- Footer -->
     <?php include_once 'templates/footer.php'; ?>
 
