@@ -278,6 +278,12 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="card mt-3 announcement-card" id="commentsNotFound">
+                                <div class="card-body">
+                                    <p class="card-text text-center text-muted mb-2 mx-2"><i class="fas fa-exclamation-circle mr-3"></i>Коментарів цього оголошення не знайдено</p>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
