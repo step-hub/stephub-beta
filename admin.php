@@ -14,6 +14,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         $data_get['ann_sort_by'] = 'id';
         $data_get['ann_sort_order'] = 'ASC';
         $data_get['anns_qty'] = 20;
+        $data_get['com_compl_sort_by'] = "";
+        $data_get['com_compl_order_by'] = "";
+        $data_get['com_compl_qty'] = 20;
     }
 
     $request = '';
@@ -108,8 +111,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         <div>
             <form name="filter" action="admin.php" method="GET">
                 <select name="table" onchange="this.form.submit()">
-                    <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected'?>>users</option>
-                    <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>announcements</option>
+                    <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected'?>>користувачі</option>
+                    <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>оголошення</option>
+                    <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>бани коментів</option>
                 </select>
                 <select name="users_sort_by" <?php if ($data_get['table'] == 'announcements') echo 'hidden'?>>
                     <option value="id" <?php if ($data_get['users_sort_by'] == 'id') echo 'selected'?>>ID</option>
@@ -131,9 +135,10 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     <option value="id" <?php if ($data_get['ann_sort_by'] == 'id') echo 'selected'?>>ID</option>
                     <option value="user_id" <?php if ($data_get['ann_sort_by'] == 'user_id') echo 'selected'?>>власник</option>
                     <option value="announcement_status_id" <?php if ($data_get['ann_sort_by'] == 'announcement_status_id') echo 'selected'?>>статус</option>
-                    <option value="title" <?php if ($data_get['ann_sort_by'] == 'title') echo 'selected'?>>Заголовок</option>
-                    <option value="date" <?php if ($data_get['ann_sort_by'] == 'date') echo 'selected'?>>Дата створення</option>
-                    <option value="deadline" <?php if ($data_get['ann_sort_by'] == 'deadline') echo 'selected'?>>Дедлайн</option>
+                    <option value="title" <?php if ($data_get['ann_sort_by'] == 'title') echo 'selected'?>>заголовок</option>
+                    <option value="date" <?php if ($data_get['ann_sort_by'] == 'date') echo 'selected'?>>дата створення</option>
+                    <option value="deadline" <?php if ($data_get['ann_sort_by'] == 'deadline') echo 'selected'?>>дедлайн</option>
+                    <option value="complaint" <?php if ($data_get['ann_sort_by'] == 'complaint') echo 'selected'?>>скарга від</option>
                 </select>
                 <select name="ann_sort_order" <?php if ($data_get['table'] == 'users') echo 'hidden'?>>
                     <option value="ASC" <?php if ($data_get['ann_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
@@ -218,6 +223,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                         <th class="p-1">Заголовок</th>
                         <th class="p-1">Дата створення</th>
                         <th class="p-1">Дедлайн</th>
+                        <th class="p-1">Скарга від</th>
                         <th class="p-1"></th>
                     </tr>
                     </thead>
@@ -239,6 +245,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                 <td><?= $announcement['title'] ?></td>
                                 <td><?= show_date($announcement['date']) ?></td>
                                 <td><?= show_date($announcement['deadline']) ?></td>
+                                <td><?= $announcement['complaint'] ?></td>
                                 <td>
                                     <div class="row justify-content-center">
                                         <a target="_blank" rel="noopener noreferrer"
@@ -262,6 +269,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     </button>
                 </div>
             </div>
+        <?php elseif ($data_get['table'] == 'com_complaints'):?>
         <?php endif; ?>
     <?php else:
         header("location: index.php");
