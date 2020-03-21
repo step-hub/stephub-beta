@@ -87,7 +87,9 @@ $user_status = get_user_status_by_id($user['user_status'])['status'];
                                     <?php endif; ?>
                                 </div>
                                 <div class="row">
-                                    <button class="btn my-btn-blue float-right mx-3 mb-3" type="submit" name="do_update">Оновити</button>
+                                    <div class="col-12">
+                                        <button class="btn my-btn-blue float-right mx-3 mb-3" type="submit" name="do_update"><i class="fa fa-save mr-2"></i>Зберегти</button>
+                                    </div>
                                 </div>
                             </form>
 
