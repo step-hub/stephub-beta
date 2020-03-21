@@ -14,8 +14,8 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         $data_get['ann_sort_by'] = 'id';
         $data_get['ann_sort_order'] = 'ASC';
         $data_get['anns_qty'] = 20;
-        $data_get['com_compl_sort_by'] = "";
-        $data_get['com_compl_order_by'] = "";
+        $data_get['com_compl_sort_by'] = "id";
+        $data_get['com_compl_order_by'] = "ASC";
         $data_get['com_compl_qty'] = 20;
     }
 
@@ -53,6 +53,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     }
                 }
             }
+            header("location: admin.php?".$request);
         }
     }
     elseif ($data_get['table'] == 'announcements') {
@@ -62,6 +63,12 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         foreach ($announcements as $a) {
             if (isset($data_post['do_delete_ann' . $a['id']])) {
                 R::trash($a);
+                header("location: admin.php?" . $request);
+            }
+
+            if (isset($data_post['do_delete_ann_complaint' . $a['id']])){
+                $a['complaint'] = null;
+                R::store($a);
                 header("location: admin.php?".$request);
             }
         }
@@ -71,7 +78,23 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 if (array_key_exists('check_ann' . $a['id'], $data_post)) {
                     $a['announcement_status_id'] = $data_post['sel_ann_status' . $a['id']];
                     R::store($a);
+                    header("location: admin.php?".$request);
                 }
+            }
+        }
+    }
+    elseif ($data_get['table'] == 'com_complaints'){
+        $complaints = R::findAll('comments', 'WHERE complaint IS NOT NULL ORDER BY ' . $data_get['com_compl_sort_by'] . ' ' . $data_get['com_compl_order_by'] . ' LIMIT ' . $data_get['com_compl_qty']);
+        foreach ($complaints as $c){
+            if (isset($data_post['do_delete_comment'.$c['id']])){
+                R::hunt('comments', 'parent_comment_id = ?', array($c['id']));
+                R::trash($c);
+                header("location: admin.php?".$request);
+            }
+            if (isset($data_post['do_delete_complaint'.$c['id']])){
+                $c['complaint'] = null;
+                R::store($c);
+                header("location: admin.php?".$request);
             }
         }
     }
@@ -113,25 +136,25 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 <select name="table" onchange="this.form.submit()">
                     <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected'?>>користувачі</option>
                     <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>оголошення</option>
-                    <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>бани коментів</option>
+                    <option value="com_complaints" <?php if ($data_get['table'] == 'com_complaints') echo 'selected'?>>бани коментів</option>
                 </select>
-                <select name="users_sort_by" <?php if ($data_get['table'] == 'announcements') echo 'hidden'?>>
+                <select name="users_sort_by" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>
                     <option value="id" <?php if ($data_get['users_sort_by'] == 'id') echo 'selected'?>>ID</option>
                     <option value="login" <?php if ($data_get['users_sort_by'] == 'login') echo 'selected'?>>логін</option>
                     <option value="user_status" <?php if ($data_get['users_sort_by'] == 'user_status') echo 'selected'?>>права</option>
                     <option value="banned_to" <?php if ($data_get['users_sort_by'] == 'banned_to') echo 'selected'?>>забанений до</option>
                     <option value="is_online" <?php if ($data_get['users_sort_by'] == 'is_online') echo 'selected'?>>статус</option>
                 </select>
-                <select name="users_sort_order" <?php if ($data_get['table'] == 'announcements') echo 'hidden'?>>
+                <select name="users_sort_order" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>
                     <option value="ASC" <?php if ($data_get['users_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
                     <option value="DESC" <?php if ($data_get['users_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
                 </select>
-                <select name="users_qty" <?php if ($data_get['table'] == 'announcements') echo 'hidden'?>>
+                <select name="users_qty" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>
                     <option value="20" <?php if ($data_get['users_qty'] == '20') echo 'selected'?>>20</option>
                     <option value="30" <?php if ($data_get['users_qty'] == '30') echo 'selected'?>>30</option>
                     <option value="40" <?php if ($data_get['users_qty'] == '40') echo 'selected'?>>40</option>
                 </select>
-                <select name="ann_sort_by" <?php if ($data_get['table'] == 'users') echo 'hidden'?>>
+                <select name="ann_sort_by" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>
                     <option value="id" <?php if ($data_get['ann_sort_by'] == 'id') echo 'selected'?>>ID</option>
                     <option value="user_id" <?php if ($data_get['ann_sort_by'] == 'user_id') echo 'selected'?>>власник</option>
                     <option value="announcement_status_id" <?php if ($data_get['ann_sort_by'] == 'announcement_status_id') echo 'selected'?>>статус</option>
@@ -140,14 +163,30 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     <option value="deadline" <?php if ($data_get['ann_sort_by'] == 'deadline') echo 'selected'?>>дедлайн</option>
                     <option value="complaint" <?php if ($data_get['ann_sort_by'] == 'complaint') echo 'selected'?>>скарга від</option>
                 </select>
-                <select name="ann_sort_order" <?php if ($data_get['table'] == 'users') echo 'hidden'?>>
+                <select name="ann_sort_order" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>
                     <option value="ASC" <?php if ($data_get['ann_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
                     <option value="DESC" <?php if ($data_get['ann_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
                 </select>
-                <select name="anns_qty" <?php if ($data_get['table'] == 'users') echo 'hidden'?>>
+                <select name="anns_qty" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>
                     <option value="20" <?php if ($data_get['anns_qty'] == '20') echo 'selected'?>>20</option>
                     <option value="30" <?php if ($data_get['anns_qty'] == '30') echo 'selected'?>>30</option>
                     <option value="40" <?php if ($data_get['anns_qty'] == '40') echo 'selected'?>>40</option>
+                </select>
+                <select name="com_compl_sort_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>
+                    <option value="id" <?php if ($data_get['com_compl_sort_by'] == 'id') echo 'selected'?>>ID</option>
+                    <option value="announcement_id" <?php if ($data_get['com_compl_sort_by'] == 'announcement_id') echo 'selected'?>>оголошення</option>
+                    <option value="user_id" <?php if ($data_get['com_compl_sort_by'] == 'user_id') echo 'selected'?>>чий комент</option>
+                    <option value="complaint" <?php if ($data_get['com_compl_sort_by'] == 'complaint') echo 'selected'?>>хто скаржився</option>
+                    <option value="date" <?php if ($data_get['com_compl_sort_by'] == 'date') echo 'selected'?>>дата коменту</option>
+                </select>
+                <select name="com_compl_order_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>
+                    <option value="ASC" <?php if ($data_get['com_compl_order_by'] == 'ASC') echo 'selected'?>>зростанням</option>
+                    <option value="DESC" <?php if ($data_get['com_compl_order_by'] == 'DESC') echo 'selected'?>>спаданням</option>
+                </select>
+                <select name="com_compl_qty" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>
+                    <option value="20" <?php if ($data_get['com_compl_qty'] == '20') echo 'selected'?>>20</option>
+                    <option value="30" <?php if ($data_get['com_compl_qty'] == '30') echo 'selected'?>>30</option>
+                    <option value="40" <?php if ($data_get['com_compl_qty'] == '40') echo 'selected'?>>40</option>
                 </select>
                 <button type="submit" name="do_filter">Фільтрувати</button>
             </form>
@@ -253,7 +292,10 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                            class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
                                         <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?= $announcement['id'] ?>" value="<?= $announcement['id']?>">
+                                        <button class="btn btn-sm btn-danger mr-2" type="submit" name="do_delete_ann_complaint<?= $announcement['id'] ?>">
+                                            <i class="fas fa-trash-restore"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger mr-2" type="submit" name="do_delete_ann<?= $announcement['id'] ?>">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </div>
@@ -270,6 +312,51 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 </div>
             </div>
         <?php elseif ($data_get['table'] == 'com_complaints'):?>
+            <div>
+                <table class="table table-sm table-striped table-bordered">
+                    <thead>
+                    <tr class="thead-light">
+                        <th class="p-1"></th>
+                        <th class="p-1">ID</th>
+                        <th class="p-1">Оголошення</th>
+                        <th class="p-1">Чий комент</th>
+                        <th class="p-1">Повідомлення</th>
+                        <th class="p-1">Скарга від</th>
+                        <th class="p-1">Дата коменту</th>
+                        <th class="p-1"></th>
+                    </tr>
+                    </thead>
+                    <form id="update" action="admin.php?<?= $request?>" method="POST">
+                        <tbody>
+                            <?php foreach ($complaints as $complaint): ?>
+                                <tr>
+                                    <td><div class="row justify-content-center"><input type="checkbox" name="check_complaint<?= $complaint['id'] ?>"></div></td>
+                                    <td><?= $complaint['id'] ?></td>
+                                    <td><a href="announcement.php?id=<?= $complaint['announcement_id']?>"><?= $complaint['announcement_id']?></a></td>
+                                    <td><?= $complaint['user_id']?></td>
+                                    <td><?= substr($complaint['message'], 0, 30)?></td>
+                                    <td><?= $complaint['complaint']?></td>
+                                    <td><?= show_detailed_date($complaint['date'])?></td>
+                                    <td>
+                                        <div class="row justify-content-center">
+                                            <a target="_blank" rel="noopener noreferrer"
+                                               href="announcement.php?id=<?= $complaint['announcement_id']?>#comment<?= $complaint['id']?>"
+                                               class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
+                                            <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger mr-2" type="submit" name="do_delete_complaint<?= $complaint['id'] ?>">
+                                                <i class="fas fa-trash-restore"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger mr-2" type="submit" name="do_delete_comment<?= $complaint['id'] ?>">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach;?>
+                        </tbody>
+                    </form>
+            </div>
         <?php endif; ?>
     <?php else:
         header("location: index.php");

@@ -44,6 +44,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     }
                 }
             }
+            header("location: moderator.php?".$request);
         }
     }
     elseif ($data_get['table'] == 'announcements') {
@@ -64,6 +65,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     R::store($a);
                 }
             }
+            header("location: moderator.php?".$request);
         }
     }
 }
