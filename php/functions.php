@@ -174,3 +174,16 @@ function count_studentid_by_num($student_number)
 {
     return R::count("studentids", "student_id_num = ?", array($student_number));
 }
+
+
+
+//------------------------------------------
+// UPDATE
+//------------------------------------------
+function update_password($user_id, $new_password)
+{
+    R::exec("UPDATE `users`
+						SET password = '$new_password'
+						WHERE id = '$user_id'");
+}
+

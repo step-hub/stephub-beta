@@ -2,9 +2,40 @@
 require "php/db.php";
 include_once 'php/functions.php';
 
+$data = $_POST;
 $user = $_SESSION['logged_user'];
 $studentid_num = get_studentid_by_id($user['studentid_id'])['student_id_num'];
 $user_status = get_user_status_by_id($user['user_status'])['status'];
+
+//errors
+$old_password_error = null;
+$new_password_error = null;
+$repeat_password_error = null;
+
+// CHANGE PASSWORD
+if (isset($data['do_change_pass'])) {
+    $curPass = $user['password'];
+    $oldPass = $data['password_old'];
+    $newPass = $data['password_new'];
+    $conPass = $data['password_confirmation'];
+
+    if (password_verify($oldPass, $curPass)) {
+        if ($newPass != null) {
+            if ($newPass == $conPass) {
+                $pass = password_hash($newPass, PASSWORD_DEFAULT);
+                console_log($pass);
+                update_password($user['id'], $pass);
+                $user['password'] = $pass;
+            } else {
+                $repeat_password_error = "Your password doesn't match.";
+            }
+        } else {
+            $new_password_error = "Empty password. Please enter your new password.";
+        }
+    } else {
+        $old_password_error = "Wrong password!";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -103,22 +134,28 @@ $user_status = get_user_status_by_id($user['user_status'])['status'];
                                         <div class="form-group row px-3">
                                             <label class="col-sm-3 col-form-label" for="inputPassword">Старий пароль</label>
                                             <div class="col-sm-9">
-                                                <input name="password_old" class="form-control" type="password" id="inputPasswordOld" placeholder="Введіть ваш пароль" required aria-describedby="passHelp">
+                                                <input name="password_old" class="form-control" type="password" id="inputPasswordOld" placeholder="Введіть ваш пароль" required aria-describedby="passHelp1">
+                                                <small id="passHelp1" class="form-text text-danger"><?= $old_password_error ?></small>
                                             </div>
                                         </div>
                                         <div class="form-group row px-3">
                                             <label class="col-sm-3 col-form-label" for="inputPassword">Новий пароль</label>
                                             <div class="col-sm-9">
-                                                <input name="password_new" class="form-control" type="password" id="inputPasswordNew" placeholder="Введіть новий пароль" required aria-describedby="passHelp">
-                                                <small id="passHelp" class="form-text text-muted">
-                                                    Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
-                                                </small>
+                                                <input name="password_new" class="form-control" type="password" id="inputPasswordNew" placeholder="Введіть новий пароль" required aria-describedby="passHelp2">
+                                                <?php if($new_password_error): ?>
+                                                    <small id="passHelp1" class="form-text text-danger"><?= $new_password_error ?></small>
+                                                <?php else: ?>
+                                                    <small id="passHelp2" class="form-text text-muted">
+                                                        Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
+                                                    </small>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         <div class="form-group row px-3">
                                             <label class="col-sm-3 col-form-label" for="inputPasswordConfirm">Підтвердження</label>
                                             <div class="col-sm-9">
-                                                <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть новий пароль" required>
+                                                <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть новий пароль" required aria-describedby="passHelp3">
+                                                <small id="passHelp3" class="form-text text-danger"><?= $repeat_password_error ?></small>
                                             </div>
                                         </div>
                                         <button class="btn my-btn-blue float-right mr-3" type="submit" name="do_change_pass">Змінити пароль</button>
