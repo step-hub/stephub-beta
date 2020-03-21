@@ -103,15 +103,32 @@ function get_users_with_filter($sort_by, $sort_order, $qty)
     return R::findAll('users', 'ORDER BY ' . $sort_by . ' ' . $sort_order . ' LIMIT ' . $qty);
 }
 
-// SELECT statuses
+// SELECT userstatuses
 function get_user_statuses()
 {
     return R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
 }
+function get_user_status_by_id($id)
+{
+    return R::findOne('userstatuses', 'id LIKE ?', array($id));
+}
+
+// SELECT announcement statuses
 function get_announcement_statuses()
 {
     return R::getAll("SELECT * FROM announcementstatuses");
 }
+
+// SELECT studentids
+function find_studentid_by_num($student_number)
+{
+    return R::findOne('studentids', 'student_id_num LIKE ?', array($student_number));
+}
+function get_studentid_by_id($id)
+{
+    return R::findOne('studentids', 'id LIKE ?', array($id));
+}
+
 
 
 //------------------------------------------
@@ -156,14 +173,4 @@ function count_users_by_student_id($student_number_id)
 function count_studentid_by_num($student_number)
 {
     return R::count("studentids", "student_id_num = ?", array($student_number));
-}
-
-//------------------------------------------
-// FIND
-//------------------------------------------
-
-// FIND
-function find_studentid_by_num($student_number)
-{
-    return R::findOne('studentids', 'student_id_num LIKE ?', array($student_number));
 }
