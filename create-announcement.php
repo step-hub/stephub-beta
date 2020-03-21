@@ -24,7 +24,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
             $announcement = R::dispense('announcements');
             $announcement->user_id = $_SESSION['logged_user']['id'];
             $announcement->title = $data['title'];
-            $announcement->details = $data['details'];
+            $announcement->details = nl2br($data['details']);
             $announcement->deadline = strtotime($data['deadline']);
             $announcement->announcement_status_id = 2;
             $announcement->date = time();
