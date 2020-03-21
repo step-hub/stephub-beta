@@ -30,7 +30,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
             $announcement->date = time();
 
             // attach file
-//            if(isset($_FILES['userfile'])) {
+            if(isset($_FILES['userfile'])) {
                 $uploadName = basename($_FILES['userfile']['name']);
                 $uploadFile = get_upload_path() . $uploadName;
                 echo "<script> alert(".$uploadName.");</script>";
@@ -39,7 +39,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                 } else {
                     $errors[] = "file error";
                 }
-//            }
+            }
 
             R::store($announcement);
 

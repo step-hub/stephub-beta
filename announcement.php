@@ -7,36 +7,18 @@ if (array_key_exists('logged_user', $_SESSION)) {
     $errors = array();
 
     $announcement = get_announcement_by_id($_GET['id']);
-    [$ann_comments, $com_comments] = get_comments_by_announcement_id($_GET['id']);
-    $user = $_SESSION['logged_user'];
+    if ($announcement) {
+        [$ann_comments, $com_comments] = get_comments_by_announcement_id($_GET['id']);
+        $user = $_SESSION['logged_user'];
 
-
-    if (isset($data['do_comment'])) {
-        if (trim($data['comment_to_ann']) == '') {
-            $errors[] = 'коментар не може бути пустим';
-        }
-
-        if (empty($errors)) {
-            $comment = R::dispense('comments');
-            $comment->message = nl2br($data['comment_to_ann']);
-            $comment->date = time();
-            $comment->user_id = $user['id'];
-            $comment->announcement_id = $announcement['id'];
-            R::store($comment);
-            header("location: announcement.php?id=" . $_GET['id']);
-        }
-    }
-
-    foreach ($ann_comments as $ann_comment) {
-        if (isset($data['do_comment_to_comment' . $ann_comment['id']])) {
-            if (trim($data['comment_to_com' . $ann_comment['id']]) == '') {
+        if (isset($data['do_comment'])) {
+            if (trim($data['comment_to_ann']) == '') {
                 $errors[] = 'коментар не може бути пустим';
             }
 
             if (empty($errors)) {
                 $comment = R::dispense('comments');
-                $comment->parent_comment_id = $ann_comment['id'];
-                $comment->message = nl2br($data['comment_to_com' . $ann_comment['id']]);
+                $comment->message = nl2br($data['comment_to_ann']);
                 $comment->date = time();
                 $comment->user_id = $user['id'];
                 $comment->announcement_id = $announcement['id'];
@@ -44,6 +26,38 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 header("location: announcement.php?id=" . $_GET['id']);
             }
         }
+
+        foreach ($ann_comments as $ann_comment) {
+            if (isset($data['do_comment_to_comment' . $ann_comment['id']])) {
+                if (trim($data['comment_to_com' . $ann_comment['id']]) == '') {
+                    $errors[] = 'коментар не може бути пустим';
+                }
+
+                if (empty($errors)) {
+                    $comment = R::dispense('comments');
+                    $comment->parent_comment_id = $ann_comment['id'];
+                    $comment->message = nl2br($data['comment_to_com' . $ann_comment['id']]);
+                    $comment->date = time();
+                    $comment->user_id = $user['id'];
+                    $comment->announcement_id = $announcement['id'];
+                    R::store($comment);
+                    header("location: announcement.php?id=" . $_GET['id']);
+                }
+            }
+        }
+
+        if (isset($data['do_delete'])) {
+            R::trash($announcement);
+            header("location: index.php");
+        }
+
+        if (isset($data['do_ban'])) {
+            $announcement['complaint'] = $user['id'];
+            R::store($announcement);
+            header("location: announcement.php?id=" . $announcement['id']);
+        }
+    } else {
+        header("location: index.php");
     }
 }
 ?>
@@ -85,11 +99,13 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <h3 class="card-title"><?= $announcement['title'] ?></h3>
                                 </div>
                                 <div class="col-md-2 pr-0">
-                                    <?php if ($user['id'] == $announcement['user_id']): ?>
-                                        <button class="btn float-right my-color-dark"><i class="fas fa-trash"></i></button>
-                                    <?php else: ?>
-                                        <button class="btn float-right my-color-dark"><i class="fas fa-ban"></i></button>
-                                    <?php endif; ?>
+                                    <form action="announcement.php?id=<?= $announcement['id']?>" method="post">
+                                        <?php if ($user['id'] == $announcement['user_id']): ?>
+                                            <button class="btn float-right my-color-dark" name="do_delete" type="submit"><i class="fas fa-trash"></i></button>
+                                        <?php elseif (!$announcement['complaint']): ?>
+                                            <button class="btn float-right my-color-dark" name="do_ban" type="submit"><i class="fas fa-ban"></i></button>
+                                        <?php endif; ?>
+                                    </form>
                                 </div>
                             </div>
                             <div class="row pt-2 px-2">
