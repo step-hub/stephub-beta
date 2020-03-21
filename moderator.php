@@ -3,73 +3,70 @@ require "php/db.php";
 include_once 'php/functions.php';
 
 if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status < 3) {
+
     $data_post = $_POST;
     $data_get = $_GET;
 
-    if (!$data_get) {
-        $_SESSION['users_qty'] = 20;
-        $_SESSION['user_sort_by'] = 'id';
-        $_SESSION['user_sort_order'] = 'asc';
-        $_SESSION['ann_qty'] = 20;
-        $_SESSION['ann_sort_by'] = 'id';
-        $_SESSION['ann_sort_order'] = 'asc';
-    } else {
-        if (array_key_exists('users',$data_get)) {
-            $_SESSION['users_qty'] = $data_get['users_qty'];
-            if (count($data_get) > 2) {
-                $_SESSION['user_sort_by'] = array_key_last($data_get);
-                $_SESSION['user_sort_order'] = end($data_get);
-            }
-        } else {
-            $_SESSION['ann_qty'] = $data_get['ann_qty'];
-            if (count($data_get) > 2) {
-                $_SESSION['ann_sort_by'] = array_key_last($data_get);
-                $_SESSION['ann_sort_order'] = end($data_get);
-            }
-        }
+    if (!$data_get){
+        $data_get['table'] = 'users';
+        $data_get['users_sort_by'] = 'id';
+        $data_get['users_sort_order'] = 'ASC';
+        $data_get['users_qty'] = 20;
+        $data_get['ann_sort_by'] = 'id';
+        $data_get['ann_sort_order'] = 'ASC';
+        $data_get['anns_qty'] = 20;
     }
 
-    $users = get_users_with_filter($_SESSION['user_sort_by'], $_SESSION['user_sort_order'], $_SESSION['users_qty']);
-    $announcements = R::findAll('announcements', 'ORDER BY ' . $_SESSION['ann_sort_by'] . ' ' . $_SESSION['ann_sort_order'] . ' LIMIT ' . $_SESSION['ann_qty']); // get_announcements_with_filter()
-    $user_statuses = get_user_statuses();
-    $announcement_statuses = get_announcement_statuses();
-
-    foreach ($announcements as $a) {
-        if (isset($data_post['do_delete_ann' . $a->id])) {
-            R::trash($a);
-            header("location: moderator.php");
-        }
+    $request = '';
+    foreach (array_keys($data_get) as $key){
+        $request .= $key . '=' . $data_get[$key];
+        if (array_key_last($data_get) != $key)
+            $request .= '&';
     }
 
-    if (isset($data_post['do_update_users'])) {
-        foreach ($users as $u) {
-            if (array_key_exists('check_user' . $u['id'], $data_post)) {
-                $id = $u['id'];
-                $sel_status = $data_post['sel_user_status' . $id];
-                $ban_date = strtotime($data_post['ban_date' . $id]);
-                if (($sel_status == '4' and $ban_date > time()) or ($sel_status != '4' and $ban_date == null)) {
-                    $u['user_status'] = $sel_status;
-                    if ($ban_date == 0)
-                        $u['banned_to'] = null;
-                    else
-                        $u['banned_to'] = $ban_date;
-                    R::store($u);
+    if ($data_get['table'] == 'users') {
+        $users = R::findAll('users', 'ORDER BY ' . $data_get['users_sort_by'] . ' ' . $data_get['users_sort_order'] . ' LIMIT ' . $data_get['users_qty']);
+        $user_statuses = get_user_statuses();
+
+        if (isset($data_post['do_update_users'])) {
+            foreach ($users as $u) {
+                if (array_key_exists('check_user' . $u['id'], $data_post)) {
+                    $id = $u['id'];
+                    $sel_status = $data_post['sel_user_status' . $id];
+                    $ban_date = strtotime($data_post['ban_date' . $id]);
+                    if (($sel_status == '4' and $ban_date > time()) or ($sel_status != '4' and $ban_date == 0)) {
+                        $u['user_status'] = $sel_status;
+                        if ($ban_date == 0)
+                            $u['banned_to'] = null;
+                        else
+                            $u['banned_to'] = $ban_date;
+                        R::store($u);
+                    }
                 }
             }
         }
     }
+    elseif ($data_get['table'] == 'announcements') {
+        $announcements = R::findAll('announcements', 'ORDER BY ' . $data_get['ann_sort_by'] . ' ' . $data_get['ann_sort_order'] . ' LIMIT ' . $data_get['anns_qty']);
+        $announcement_statuses = get_announcement_statuses();
 
-    if (isset($data_post['do_update_ann'])) {
         foreach ($announcements as $a) {
-            if (array_key_exists('check_ann' . $a['id'], $data_post)) {
-                $a['announcement_status_id'] = $data_post['sel_ann_status' . $a['id']];
-                R::store($a);
+            if (isset($data_post['do_delete_ann' . $a['id']])) {
+                R::trash($a);
+                header("location: moderator.php?".$request);
+            }
+        }
+
+        if (isset($data_post['do_update_ann'])) {
+            foreach ($announcements as $a) {
+                if (array_key_exists('check_ann' . $a['id'], $data_post)) {
+                    $a['announcement_status_id'] = $data_post['sel_ann_status' . $a['id']];
+                    R::store($a);
+                }
             }
         }
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +78,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StepHub | Сторінка Адміністратора</title>
+    <title>StepHub | Сторінка Модератора</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 
@@ -93,212 +90,184 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 </head>
 
 <body class="text-center">
-<!-- Navigation -->
+    <!-- Navigation -->
 <?php include_once 'templates/navbar.php'; ?>
 
-<!-- Page Content -->
+    <!-- Page Content -->
 <div class="container-fluid">
     <?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status < 3): ?>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#users_table" role="tab" aria-controls="users"
-                   aria-selected="true">Користувачі</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#announcements_table" role="tab"
-                   aria-controls="announcements" aria-selected="false">Оголошення</a>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="users_table" role="tabpanel" aria-labelledby="home-tab">
-                <div class="table-responsive-xl">
-                    <table class="table table-sm table-striped table-bordered table-hover">
-                        <form action="moderator.php" method="GET">
-                            <thead>
-                                <input type="hidden" name="users" value="true">
-                                <tr class="thead-light">
-                                    <th class="p-1">
-                                        <select name="users_qty" class="form-control-sm btn btn-info h-100 w-100" onchange="this.form.submit()">
-                                            <option value="20" <?php if ($_SESSION['users_qty'] == 20) echo 'selected'?>>20</option>
-                                            <option value="30" <?php if ($_SESSION['users_qty'] == 30) echo 'selected'?>>30</option>
-                                            <option value="40" <?php if ($_SESSION['users_qty'] == 40) echo 'selected'?>>40</option>
-                                        </select>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="id" value="<?= $_SESSION['user_sort_by'] != 'id' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">ID
-                                            <?= $_SESSION['user_sort_by'] != 'id' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="login" value="<?= $_SESSION['user_sort_by'] != 'login' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Ім'я
-                                            <?= $_SESSION['user_sort_by'] != 'login' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="user_status" value="<?= $_SESSION['user_sort_by'] != 'user_status' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" class="btn btn-info h-100 w-100">Права
-                                            <?= $_SESSION['user_sort_by'] != 'user_status' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="banned_to" value="<?= $_SESSION['user_sort_by'] != 'banned_to' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" class="btn btn-info h-100 w-100">Забанений до
-                                            <?= $_SESSION['user_sort_by'] != 'banned_to' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="is_online" value="<?= $_SESSION['user_sort_by'] != 'is_online' ? 'asc' : ($_SESSION['user_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" class="btn btn-info h-100 w-100">Статус
-                                            <?= $_SESSION['user_sort_by'] != 'is_online' ? '<i class="fas fa-sort"></i>' : ($_SESSION['user_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1"></th>
-                                </tr>
-                            </thead>
-                        </form>
-                        <form id="update" action="moderator.php" method="POST">
-                            <tbody>
-                                <?php foreach ($users as $user): ?>
-                                    <tr>
-                                        <td>
-                                            <?php if ($user['user_status'] > 2): ?>
-                                                <div class="row justify-content-center">
-                                                    <input type="checkbox" name="check_user<?= $user['id'] ?>">
-                                                </div>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><?= $user['id'] ?></td>
-                                        <td><?= $user['login'] ?></td>
-                                        <td>
-                                            <select class="form-control form-control-sm"
-                                                    name="sel_user_status<?= $user['id'] ?>">
-                                                <?php foreach ($user_statuses as $user_status): ?>
-                                                    <option value="<?= $user_status['id'] ?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected"; ?> <?php if ($user['user_status'] < 3 or $user_status['id'] < 3) echo "disabled"?>><?= $user_status['status'] ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="date" name="ban_date<?= $user['id'] ?>"
-                                                   class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="' . date("Y-m-d", $user['banned_to']) . '"' ?> <?php if ($user['user_status'] < 3) echo "disabled"?>>
-
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-<?= $user['is_online'] ? 'success' : 'danger' ?>">
-                                                <?= $user['is_online'] ? 'онлайн' : 'оффлайн' ?>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="row justify-content-center">
-                                                <button class=" btn btn-sm btn-warning mr-2">
-                                                    <i class="fas fa-envelope"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </form>
-                    </table>
-                    <div class="container">
-                        <button class="btn btn-info mb-4" type="submit" form="update" name="do_update_users"><i
-                                class="fas fa-sync mr-2"></i>Оновити
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="announcements_table" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="table-responsive-xl">
-                    <table class="table table-sm table-striped table-bordered">
-                        <form action="moderator.php" method="GET">
-                            <thead>
-                                <input type="hidden" name="announcements" value="true">
-                                <tr class="thead-light">
-                                    <th class="p-1">
-                                        <select name="ann_qty" class="form-control-sm btn btn-info h-100 w-100" onchange="this.form.submit()">
-                                            <option value="20" <?php if ($_SESSION['ann_qty'] == 20) echo 'selected'?>>20</option>
-                                            <option value="30" <?php if ($_SESSION['ann_qty'] == 30) echo 'selected'?>>30</option>
-                                            <option value="40" <?php if ($_SESSION['ann_qty'] == 40) echo 'selected'?>>40</option>
-                                        </select>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="id" value="<?= $_SESSION['ann_sort_by'] != 'id' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">ID
-                                            <?= $_SESSION['ann_sort_by'] != 'id' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="user_id" value="<?= $_SESSION['ann_sort_by'] != 'user_id' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Власник
-                                            <?= $_SESSION['ann_sort_by'] != 'user_id' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="announcement_status_id" value="<?= $_SESSION['ann_sort_by'] != 'announcement_status_id' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Статус
-                                            <?= $_SESSION['ann_sort_by'] != 'announcement_status_id' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="title" value="<?= $_SESSION['ann_sort_by'] != 'title' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Заголовок
-                                            <?= $_SESSION['ann_sort_by'] != 'title' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="date" value="<?= $_SESSION['ann_sort_by'] != 'date' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Дата створення
-                                            <?= $_SESSION['ann_sort_by'] != 'date' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1">
-                                        <button name="deadline" value="<?= $_SESSION['ann_sort_by'] != 'deadline' ? 'asc' : ($_SESSION['ann_sort_order'] == 'asc' ? 'desc' : 'asc') ?>" type="submit" class="btn btn-info h-100 w-100">Дедлайн
-                                            <?= $_SESSION['ann_sort_by'] != 'deadline' ? '<i class="fas fa-sort"></i>' : ($_SESSION['ann_sort_order'] == 'asc' ? '<i class="fas fa-sort-up"></i>' : '<i class="fas fa-sort-down"></i>')?>
-                                        </button>
-                                    </th>
-                                    <th class="p-1"></th>
-                                </tr>
-                            </thead>
-                        </form>
-                        <form id="update_ann" action="moderator.php" method="POST">
-                            <tbody>
-                                <?php foreach ($announcements as $announcement): ?>
-                                    <tr>
-                                        <td><div class="row justify-content-center"><input type="checkbox" name="check_ann<?= $announcement['id'] ?>"></div></td>
-                                        <td><?= $announcement['id'] ?></td>
-                                        <td><?= $announcement['user_id'] ?></td>
-                                        <td>
-                                            <select class="form-control form-control-sm"
-                                                    name="sel_ann_status<?= $announcement['id'] ?>">
-                                                <?php foreach ($announcement_statuses as $announcement_status): ?>
-                                                    <option value="<?= $announcement_status['id'] ?>" <?php if ($announcement['announcement_status_id'] == $announcement_status['id']) echo "selected"; ?>><?= $announcement_status['status'] ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </td>
-                                        <td><?= $announcement['title'] ?></td>
-                                        <td><?= show_date($announcement['date']) ?></td>
-                                        <td><?= show_date($announcement['deadline']) ?></td>
-                                        <td>
-                                            <div class="row justify-content-center">
-                                                <a target="_blank" rel="noopener noreferrer"
-                                                   href="announcement.php?id=<?= $announcement['id'] ?>"
-                                                   class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
-                                                <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?= $announcement['id'] ?>">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </form>
-                    </table>
-                    <div class="container">
-                        <button class="btn btn-info mb-4" form="update_ann" name="do_update_ann" type="submit"><i
-                                    class="fas fa-sync mr-2"></i>Оновити
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <form name="filter" action="moderator.php" method="GET">
+                <select name="table" onchange="this.form.submit()">
+                    <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected'?>>users</option>
+                    <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>announcements</option>
+                </select>
+                <select name="users_sort_by" <?php if ($data_get['table'] == 'announcements') echo 'hidden'?>>
+                    <option value="id" <?php if ($data_get['users_sort_by'] == 'id') echo 'selected'?>>ID</option>
+                    <option value="login" <?php if ($data_get['users_sort_by'] == 'login') echo 'selected'?>>логін</option>
+                    <option value="user_status" <?php if ($data_get['users_sort_by'] == 'user_status') echo 'selected'?>>права</option>
+                    <option value="banned_to" <?php if ($data_get['users_sort_by'] == 'banned_to') echo 'selected'?>>забанений до</option>
+                    <option value="is_online" <?php if ($data_get['users_sort_by'] == 'is_online') echo 'selected'?>>статус</option>
+                </select>
+                <select name="users_sort_order" <?php if ($data_get['table'] == 'announcements') echo 'hidden'?>>
+                    <option value="ASC" <?php if ($data_get['users_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
+                    <option value="DESC" <?php if ($data_get['users_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
+                </select>
+                <select name="users_qty" <?php if ($data_get['table'] == 'announcements') echo 'hidden'?>>
+                    <option value="20" <?php if ($data_get['users_qty'] == '20') echo 'selected'?>>20</option>
+                    <option value="30" <?php if ($data_get['users_qty'] == '30') echo 'selected'?>>30</option>
+                    <option value="40" <?php if ($data_get['users_qty'] == '40') echo 'selected'?>>40</option>
+                </select>
+                <select name="ann_sort_by" <?php if ($data_get['table'] == 'users') echo 'hidden'?>>
+                    <option value="id" <?php if ($data_get['ann_sort_by'] == 'id') echo 'selected'?>>ID</option>
+                    <option value="user_id" <?php if ($data_get['ann_sort_by'] == 'user_id') echo 'selected'?>>власник</option>
+                    <option value="announcement_status_id" <?php if ($data_get['ann_sort_by'] == 'announcement_status_id') echo 'selected'?>>статус</option>
+                    <option value="title" <?php if ($data_get['ann_sort_by'] == 'title') echo 'selected'?>>Заголовок</option>
+                    <option value="date" <?php if ($data_get['ann_sort_by'] == 'date') echo 'selected'?>>Дата створення</option>
+                    <option value="deadline" <?php if ($data_get['ann_sort_by'] == 'deadline') echo 'selected'?>>Дедлайн</option>
+                </select>
+                <select name="ann_sort_order" <?php if ($data_get['table'] == 'users') echo 'hidden'?>>
+                    <option value="ASC" <?php if ($data_get['ann_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
+                    <option value="DESC" <?php if ($data_get['ann_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
+                </select>
+                <select name="anns_qty" <?php if ($data_get['table'] == 'users') echo 'hidden'?>>
+                    <option value="20" <?php if ($data_get['anns_qty'] == '20') echo 'selected'?>>20</option>
+                    <option value="30" <?php if ($data_get['anns_qty'] == '30') echo 'selected'?>>30</option>
+                    <option value="40" <?php if ($data_get['anns_qty'] == '40') echo 'selected'?>>40</option>
+                </select>
+                <button type="submit" name="do_filter">Фільтрувати</button>
+            </form>
         </div>
+        <?php if ($data_get['table'] == 'users'):?>
+            <div>
+                <table class="table table-sm table-striped table-bordered table-hover">
+                    <thead>
+                    <tr class="thead-light">
+                        <th class="p-1"></th>
+                        <th class="p-1">ID</th>
+                        <th class="p-1">Ім'я</th>
+                        <th class="p-1">Права</th>
+                        <th class="p-1">Забанений до</th>
+                        <th class="p-1">Статус</th>
+                        <th class="p-1"></th>
+                    </tr>
+                    </thead>
+                    <form id="update" action="moderator.php?<?= $request?>" method="POST">
+                        <tbody>
+                            <?php foreach ($users as $user): ?>
+                                <tr>
+                                    <td>
+                                        <?php if ($user['user_status'] > 2): ?>
+                                            <div class="row justify-content-center">
+                                                <input type="checkbox" name="check_user<?= $user['id'] ?>">
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= $user['id'] ?></td>
+                                    <td><?= $user['login'] ?></td>
+                                    <td>
+                                        <select class="form-control form-control-sm"
+                                                name="sel_user_status<?= $user['id'] ?>">
+                                            <?php foreach ($user_statuses as $user_status): ?>
+                                                <option value="<?= $user_status['id'] ?>"
+                                                    <?php if ($user['user_status'] == $user_status['id']) echo "selected"; ?>
+                                                    <?php if ($user['user_status'] < 3 or $user_status['id'] < 3) echo "disabled"?>>
+                                                    <?= $user_status['status'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="date" name="ban_date<?= $user['id'] ?>"
+                                               class="form-control form-control-sm"
+                                            <?php if ($user['banned_to']) echo 'value="' . date("Y-m-d", $user['banned_to']) . '"' ?>
+                                            <?php if ($user['user_status'] < 3) echo "disabled"?>>
+                                    </td>
+                                    <td>
+                                        <div class="badge badge-<?= $user['is_online'] ? 'success' : 'danger' ?>">
+                                            <?= $user['is_online'] ? 'онлайн' : 'оффлайн' ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row justify-content-center">
+                                            <button class=" btn btn-sm btn-warning mr-2">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach;?>
+                        </tbody>
+                    </form>
+                </table>
+                <div class="container">
+                    <button class="btn btn-info mb-4" type="submit" form="update" name="do_update_users"><i
+                                class="fas fa-sync mr-2"></i>Оновити
+                    </button>
+                </div>
+            </div>
+        <?php elseif ($data_get['table'] == 'announcements') :?>
+            <div>
+                <table class="table table-sm table-striped table-bordered">
+                    <thead>
+                    <tr class="thead-light">
+                        <th class="p-1"></th>
+                        <th class="p-1">ID</th>
+                        <th class="p-1">Власник</th>
+                        <th class="p-1">Статус</th>
+                        <th class="p-1">Заголовок</th>
+                        <th class="p-1">Дата створення</th>
+                        <th class="p-1">Дедлайн</th>
+                        <th class="p-1"></th>
+                    </tr>
+                    </thead>
+                    <form id="update_ann" action="moderator.php?<?= $request?>" method="POST">
+                        <tbody>
+                            <?php foreach ($announcements as $announcement): ?>
+                                <tr>
+                                    <td><div class="row justify-content-center"><input type="checkbox" name="check_ann<?= $announcement['id'] ?>"></div></td>
+                                    <td><?= $announcement['id'] ?></td>
+                                    <td><?= $announcement['user_id'] ?></td>
+                                    <td>
+                                        <select class="form-control form-control-sm"
+                                                name="sel_ann_status<?= $announcement['id'] ?>">
+                                            <?php foreach ($announcement_statuses as $announcement_status): ?>
+                                                <option value="<?= $announcement_status['id'] ?>"
+                                                    <?php if ($announcement['announcement_status_id'] == $announcement_status['id']) echo "selected"; ?>>
+                                                    <?= $announcement_status['status'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                    <td><?= $announcement['title'] ?></td>
+                                    <td><?= show_date($announcement['date']) ?></td>
+                                    <td><?= show_date($announcement['deadline']) ?></td>
+                                    <td>
+                                        <div class="row justify-content-center">
+                                            <a target="_blank" rel="noopener noreferrer"
+                                               href="announcement.php?id=<?= $announcement['id'] ?>"
+                                               class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
+                                            <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?= $announcement['id'] ?>" value="<?= $announcement['id']?>">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </form>
+                </table>
+            </div>
+            <div class="container">
+                <button class="btn btn-info mb-4" form="update_ann" name="do_update_ann" type="submit"><i
+                            class="fas fa-sync mr-2"></i>Оновити
+                </button>
+            </div>
+        <?php endif; ?>
     <?php else:
         header("location: index.php");
     endif; ?>
 </div>
-
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
