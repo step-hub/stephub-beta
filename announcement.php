@@ -244,10 +244,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                             <div class="col-md-10">
                                                                 <div class="row">
                                                                     <p class="card-text text-muted small mx-2 mb-0">
-                                                                        <i class="far fa-calendar mr-2"></i><?= show_date($a['date']) ?>
+                                                                        <i class="far fa-calendar mr-2"></i><?= show_date($c['date']) ?>
                                                                     </p>
                                                                     <p class="card-text text-muted small mx-2 mb-0">
-                                                                        <i class="far fa-clock mr-2"></i><?= show_time($a['date']) ?>
+                                                                        <i class="far fa-clock mr-2"></i><?= show_time($c['date']) ?>
                                                                     </p>
                                                                     <?php if ($announcement['user_id'] == $c['user_id']): ?>
                                                                         <span class="badge badge-success mx-2 mb-0"><i
