@@ -266,7 +266,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                         <th class="p-1"></th>
                     </tr>
                     </thead>
-                    <form id="update" action="admin.php?<?= $request?>" method="POST">
+                    <form id="update_ann" action="admin.php?<?= $request?>" method="POST">
                         <tbody>
                         <?php foreach ($announcements as $announcement): ?>
                             <tr>
@@ -306,7 +306,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     </form>
                 </table>
                 <div class="container">
-                    <button class="btn btn-info mb-4" form="update" name="do_update_ann" type="submit"><i
+                    <button class="btn btn-info mb-4" form="update_ann" name="do_update_ann" type="submit"><i
                                 class="fas fa-sync mr-2"></i>Оновити
                     </button>
                 </div>
@@ -356,6 +356,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                             <?php endforeach;?>
                         </tbody>
                     </form>
+                </table>
             </div>
         <?php endif; ?>
     <?php else:
