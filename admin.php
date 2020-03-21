@@ -128,76 +128,74 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 <div class="container-fluid">
     <?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status == 1): ?>
         <div class="row mt-1 mb-1 justify-content-center">
-            <div class="col-lg-12">
-                <form name="filter" action="admin.php" method="GET" class="form-inline">
-                    <label for="select_table">таблиця</label>
-                    <select name="table" id="select_table" onchange="this.form.submit()" class="form-control form-control-sm m-1">
-                        <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected'?>>користувачі</option>
-                        <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>оголошення</option>
-                        <option value="com_complaints" <?php if ($data_get['table'] == 'com_complaints') echo 'selected'?>>бани коментів</option>
-                    </select>
-                    <label for="select_users_sort_by" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>сортувати за</label>
-                    <select name="users_sort_by" id="select_users_sort_by" <?php if ($data_get['table'] != 'users') echo 'hidden'?> class="form-control form-control-sm m-1">
-                        <option value="id" <?php if ($data_get['users_sort_by'] == 'id') echo 'selected'?>>ID</option>
-                        <option value="login" <?php if ($data_get['users_sort_by'] == 'login') echo 'selected'?>>логін</option>
-                        <option value="user_status" <?php if ($data_get['users_sort_by'] == 'user_status') echo 'selected'?>>права</option>
-                        <option value="banned_to" <?php if ($data_get['users_sort_by'] == 'banned_to') echo 'selected'?>>забанений до</option>
-                        <option value="is_online" <?php if ($data_get['users_sort_by'] == 'is_online') echo 'selected'?>>статус</option>
-                    </select>
-                    <label for="select_users_sort_order" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>порядок</label>
-                    <select name="users_sort_order" id="select_users_sort_order" <?php if ($data_get['table'] != 'users') echo 'hidden'?> class="form-control form-control-sm m-1">
-                        <option value="ASC" <?php if ($data_get['users_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
-                        <option value="DESC" <?php if ($data_get['users_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
-                    </select>
-                    <label for="select_users_qty" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>кількість</label>
-                    <select name="users_qty" id="select_users_qty" <?php if ($data_get['table'] != 'users') echo 'hidden'?> class="form-control form-control-sm m-1">
-                        <option value="20" <?php if ($data_get['users_qty'] == '20') echo 'selected'?>>20</option>
-                        <option value="30" <?php if ($data_get['users_qty'] == '30') echo 'selected'?>>30</option>
-                        <option value="40" <?php if ($data_get['users_qty'] == '40') echo 'selected'?>>40</option>
-                    </select>
-                    <label for="select_ann_sort_by" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>сортувати за</label>
-                    <select name="ann_sort_by" id="select_ann_sort_by" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?> class="form-control form-control-sm m-1">
-                        <option value="id" <?php if ($data_get['ann_sort_by'] == 'id') echo 'selected'?>>ID</option>
-                        <option value="user_id" <?php if ($data_get['ann_sort_by'] == 'user_id') echo 'selected'?>>власник</option>
-                        <option value="announcement_status_id" <?php if ($data_get['ann_sort_by'] == 'announcement_status_id') echo 'selected'?>>статус</option>
-                        <option value="title" <?php if ($data_get['ann_sort_by'] == 'title') echo 'selected'?>>заголовок</option>
-                        <option value="date" <?php if ($data_get['ann_sort_by'] == 'date') echo 'selected'?>>дата створення</option>
-                        <option value="deadline" <?php if ($data_get['ann_sort_by'] == 'deadline') echo 'selected'?>>дедлайн</option>
-                        <option value="complaint" <?php if ($data_get['ann_sort_by'] == 'complaint') echo 'selected'?>>скарга від</option>
-                    </select>
-                    <label for="select_ann_sort_order" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>порядок</label>
-                    <select name="ann_sort_order" id="select_ann_sort_order" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?> class="form-control form-control-sm m-1">
-                        <option value="ASC" <?php if ($data_get['ann_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
-                        <option value="DESC" <?php if ($data_get['ann_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
-                    </select>
-                    <label for="select_anns_qty" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>кількість</label>
-                    <select name="anns_qty" id="select_anns_qty" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?> class="form-control form-control-sm m-1">
-                        <option value="20" <?php if ($data_get['anns_qty'] == '20') echo 'selected'?>>20</option>
-                        <option value="30" <?php if ($data_get['anns_qty'] == '30') echo 'selected'?>>30</option>
-                        <option value="40" <?php if ($data_get['anns_qty'] == '40') echo 'selected'?>>40</option>
-                    </select>
-                    <label for="select_com_compl_sort_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>сортувати за</label>
-                    <select name="com_compl_sort_by" id="select_com_compl_sort_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?> class="form-control form-control-sm m-1">
-                        <option value="id" <?php if ($data_get['com_compl_sort_by'] == 'id') echo 'selected'?>>ID</option>
-                        <option value="announcement_id" <?php if ($data_get['com_compl_sort_by'] == 'announcement_id') echo 'selected'?>>оголошення</option>
-                        <option value="user_id" <?php if ($data_get['com_compl_sort_by'] == 'user_id') echo 'selected'?>>чий комент</option>
-                        <option value="complaint" <?php if ($data_get['com_compl_sort_by'] == 'complaint') echo 'selected'?>>хто скаржився</option>
-                        <option value="date" <?php if ($data_get['com_compl_sort_by'] == 'date') echo 'selected'?>>дата коменту</option>
-                    </select>
-                    <label for="select_com_compl_order_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>порядок</label>
-                    <select name="com_compl_order_by" id="select_com_compl_order_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?> class="form-control form-control-sm m-1">
-                        <option value="ASC" <?php if ($data_get['com_compl_order_by'] == 'ASC') echo 'selected'?>>зростанням</option>
-                        <option value="DESC" <?php if ($data_get['com_compl_order_by'] == 'DESC') echo 'selected'?>>спаданням</option>
-                    </select>
-                    <label for="select_com_compl_qty" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>кількість</label>
-                    <select name="com_compl_qty" id="select_com_compl_qty" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?> class="form-control form-control-sm m-1">
-                        <option value="20" <?php if ($data_get['com_compl_qty'] == '20') echo 'selected'?>>20</option>
-                        <option value="30" <?php if ($data_get['com_compl_qty'] == '30') echo 'selected'?>>30</option>
-                        <option value="40" <?php if ($data_get['com_compl_qty'] == '40') echo 'selected'?>>40</option>
-                    </select>
-                    <button type="submit" name="do_filter" class="btn btn-success ml-3">Фільтрувати</button>
-                </form>
-            </div>
+            <form name="filter" action="admin.php" method="GET" class="form-inline">
+                <label for="select_table">таблиця</label>
+                <select name="table" id="select_table" onchange="this.form.submit()" class="form-control form-control-sm m-1">
+                    <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected'?>>користувачі</option>
+                    <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>оголошення</option>
+                    <option value="com_complaints" <?php if ($data_get['table'] == 'com_complaints') echo 'selected'?>>бани коментів</option>
+                </select>
+                <label for="select_users_sort_by" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>сортувати за</label>
+                <select name="users_sort_by" id="select_users_sort_by" <?php if ($data_get['table'] != 'users') echo 'hidden'?> class="form-control form-control-sm m-1">
+                    <option value="id" <?php if ($data_get['users_sort_by'] == 'id') echo 'selected'?>>ID</option>
+                    <option value="login" <?php if ($data_get['users_sort_by'] == 'login') echo 'selected'?>>логін</option>
+                    <option value="user_status" <?php if ($data_get['users_sort_by'] == 'user_status') echo 'selected'?>>права</option>
+                    <option value="banned_to" <?php if ($data_get['users_sort_by'] == 'banned_to') echo 'selected'?>>забанений до</option>
+                    <option value="is_online" <?php if ($data_get['users_sort_by'] == 'is_online') echo 'selected'?>>статус</option>
+                </select>
+                <label for="select_users_sort_order" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>порядок</label>
+                <select name="users_sort_order" id="select_users_sort_order" <?php if ($data_get['table'] != 'users') echo 'hidden'?> class="form-control form-control-sm m-1">
+                    <option value="ASC" <?php if ($data_get['users_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
+                    <option value="DESC" <?php if ($data_get['users_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
+                </select>
+                <label for="select_users_qty" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>кількість</label>
+                <select name="users_qty" id="select_users_qty" <?php if ($data_get['table'] != 'users') echo 'hidden'?> class="form-control form-control-sm m-1">
+                    <option value="20" <?php if ($data_get['users_qty'] == '20') echo 'selected'?>>20</option>
+                    <option value="30" <?php if ($data_get['users_qty'] == '30') echo 'selected'?>>30</option>
+                    <option value="40" <?php if ($data_get['users_qty'] == '40') echo 'selected'?>>40</option>
+                </select>
+                <label for="select_ann_sort_by" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>сортувати за</label>
+                <select name="ann_sort_by" id="select_ann_sort_by" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?> class="form-control form-control-sm m-1">
+                    <option value="id" <?php if ($data_get['ann_sort_by'] == 'id') echo 'selected'?>>ID</option>
+                    <option value="user_id" <?php if ($data_get['ann_sort_by'] == 'user_id') echo 'selected'?>>власник</option>
+                    <option value="announcement_status_id" <?php if ($data_get['ann_sort_by'] == 'announcement_status_id') echo 'selected'?>>статус</option>
+                    <option value="title" <?php if ($data_get['ann_sort_by'] == 'title') echo 'selected'?>>заголовок</option>
+                    <option value="date" <?php if ($data_get['ann_sort_by'] == 'date') echo 'selected'?>>дата створення</option>
+                    <option value="deadline" <?php if ($data_get['ann_sort_by'] == 'deadline') echo 'selected'?>>дедлайн</option>
+                    <option value="complaint" <?php if ($data_get['ann_sort_by'] == 'complaint') echo 'selected'?>>скарга від</option>
+                </select>
+                <label for="select_ann_sort_order" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>порядок</label>
+                <select name="ann_sort_order" id="select_ann_sort_order" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?> class="form-control form-control-sm m-1">
+                    <option value="ASC" <?php if ($data_get['ann_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
+                    <option value="DESC" <?php if ($data_get['ann_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
+                </select>
+                <label for="select_anns_qty" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>кількість</label>
+                <select name="anns_qty" id="select_anns_qty" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?> class="form-control form-control-sm m-1">
+                    <option value="20" <?php if ($data_get['anns_qty'] == '20') echo 'selected'?>>20</option>
+                    <option value="30" <?php if ($data_get['anns_qty'] == '30') echo 'selected'?>>30</option>
+                    <option value="40" <?php if ($data_get['anns_qty'] == '40') echo 'selected'?>>40</option>
+                </select>
+                <label for="select_com_compl_sort_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>сортувати за</label>
+                <select name="com_compl_sort_by" id="select_com_compl_sort_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?> class="form-control form-control-sm m-1">
+                    <option value="id" <?php if ($data_get['com_compl_sort_by'] == 'id') echo 'selected'?>>ID</option>
+                    <option value="announcement_id" <?php if ($data_get['com_compl_sort_by'] == 'announcement_id') echo 'selected'?>>оголошення</option>
+                    <option value="user_id" <?php if ($data_get['com_compl_sort_by'] == 'user_id') echo 'selected'?>>чий комент</option>
+                    <option value="complaint" <?php if ($data_get['com_compl_sort_by'] == 'complaint') echo 'selected'?>>хто скаржився</option>
+                    <option value="date" <?php if ($data_get['com_compl_sort_by'] == 'date') echo 'selected'?>>дата коменту</option>
+                </select>
+                <label for="select_com_compl_order_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>порядок</label>
+                <select name="com_compl_order_by" id="select_com_compl_order_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?> class="form-control form-control-sm m-1">
+                    <option value="ASC" <?php if ($data_get['com_compl_order_by'] == 'ASC') echo 'selected'?>>зростанням</option>
+                    <option value="DESC" <?php if ($data_get['com_compl_order_by'] == 'DESC') echo 'selected'?>>спаданням</option>
+                </select>
+                <label for="select_com_compl_qty" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>кількість</label>
+                <select name="com_compl_qty" id="select_com_compl_qty" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?> class="form-control form-control-sm m-1">
+                    <option value="20" <?php if ($data_get['com_compl_qty'] == '20') echo 'selected'?>>20</option>
+                    <option value="30" <?php if ($data_get['com_compl_qty'] == '30') echo 'selected'?>>30</option>
+                    <option value="40" <?php if ($data_get['com_compl_qty'] == '40') echo 'selected'?>>40</option>
+                </select>
+                <button type="submit" name="do_filter" class="btn btn-success ml-3">Фільтрувати</button>
+            </form>
         </div>
         <?php if ($data_get['table'] == 'users'):?>
             <div>
