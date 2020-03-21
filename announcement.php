@@ -23,7 +23,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 $comment->user_id = $user['id'];
                 $comment->announcement_id = $announcement['id'];
                 R::store($comment);
-                header("location: announcement.php?id=" . $_GET['id']);
+                header("location: announcement.php?id=" . $announcement['id']);
             }
         }
 
@@ -41,17 +41,34 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     $comment->user_id = $user['id'];
                     $comment->announcement_id = $announcement['id'];
                     R::store($comment);
-                    header("location: announcement.php?id=" . $_GET['id']);
+                    header("location: announcement.php?id=" . $announcement['id']);
                 }
+            }
+
+            if (isset($data['do_delete_comment'.$ann_comment['id']])){
+                foreach ($com_comments as $com_comment){
+                    if ($com_comment['parent_comment_id'] == $ann_comment['id']){
+                        R::trash($com_comment);
+                    }
+                }
+                R::trash($ann_comment);
+                header("location: announcement.php?id=" . $announcement['id']);
             }
         }
 
-        if (isset($data['do_delete'])) {
+        foreach ($com_comments as $com_comment){
+            if (isset($data['do_delete_comment'.$com_comment['id']])){
+                R::trash($com_comment);
+                header("location: announcement.php?id=".$announcement['id']);
+            }
+        }
+
+        if (isset($data['do_delete_ann'])) {
             R::trash($announcement);
             header("location: index.php");
         }
 
-        if (isset($data['do_ban'])) {
+        if (isset($data['do_ban_ann'])) {
             $announcement['complaint'] = $user['id'];
             R::store($announcement);
             header("location: announcement.php?id=" . $announcement['id']);
@@ -101,9 +118,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <div class="col-md-2 pr-0">
                                     <form action="announcement.php?id=<?= $announcement['id']?>" method="post">
                                         <?php if ($user['id'] == $announcement['user_id']): ?>
-                                            <button class="btn float-right my-color-dark" name="do_delete" type="submit"><i class="fas fa-trash"></i></button>
+                                            <button class="btn float-right my-color-dark" name="do_delete_ann" type="submit"><i class="fas fa-trash"></i></button>
                                         <?php elseif (!$announcement['complaint']): ?>
-                                            <button class="btn float-right my-color-dark" name="do_ban" type="submit"><i class="fas fa-ban"></i></button>
+                                            <button class="btn float-right my-color-dark" name="do_ban_ann" type="submit"><i class="fas fa-ban"></i></button>
                                         <?php endif; ?>
                                     </form>
                                 </div>
@@ -159,11 +176,13 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                 </div>
                                             </div>
                                             <div class="col-md-2 pr-1">
-                                                <?php if ($user['id'] == $a['user_id']): ?>
-                                                    <button class="btn btn-sm float-right text-muted p-0"><i class="fas fa-trash"></i></button>
-                                                <?php else: ?>
-                                                    <button class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
-                                                <?php endif; ?>
+                                                <form action="announcement.php?id=<?= $announcement['id']?>" method="POST">
+                                                    <?php if ($user['id'] == $a['user_id']): ?>
+                                                        <button name="do_delete_comment<?= $a['id']?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-trash"></i></button>
+                                                    <?php else: ?>
+                                                        <button name="do_ban_comment<?= $a['id']?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
+                                                    <?php endif; ?>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -228,11 +247,13 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-2 pr-1">
-                                                                <?php if ($user['id'] == $a['user_id']): ?>
-                                                                    <button class="btn btn-sm float-right text-muted p-0"><i class="fas fa-trash"></i></button>
-                                                                <?php else: ?>
-                                                                    <button class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
-                                                                <?php endif; ?>
+                                                                <form action="announcement.php?id=<?= $announcement['id']?>" method="POST">
+                                                                    <?php if ($user['id'] == $c['user_id']): ?>
+                                                                        <button name="do_delete_comment<?= $c['id']?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-trash"></i></button>
+                                                                    <?php else: ?>
+                                                                        <button name="do_ban_comment<?= $c['id']?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
+                                                                    <?php endif; ?>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
