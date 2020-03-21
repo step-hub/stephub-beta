@@ -16,6 +16,12 @@ function console_log($data)
     echo 'console.log(' . json_encode($data) . ')';
     echo '</script>';
 }
+function alert($data)
+{
+    echo '<script>';
+    echo 'alert(' . json_encode($data) . ')';
+    echo '</script>';
+}
 
 function show_array($a)
 {
@@ -94,9 +100,17 @@ function get_comments_by_announcement_id($id)
 }
 
 // SELECT users
+function get_user_by_id($id)
+{
+    return R::findOne('users', 'id = ?', array($id));
+}
 function get_user_by_login($login)
 {
     return R::findOne('users', 'login = ?', array($login));
+}
+function get_user_by_token($token)
+{
+    return R::findOne('users', 'token = ?', array($token));
 }
 function get_users_with_filter($sort_by, $sort_order, $qty)
 {
@@ -186,4 +200,15 @@ function update_password($user_id, $new_password)
 						SET password = '$new_password'
 						WHERE id = '$user_id'");
 }
-
+function update_telegram($user_id, $new_telegram_username)
+{
+    R::exec("UPDATE `users`
+                SET `telegram_username` = '$new_telegram_username'
+                WHERE id = '$user_id'");
+}
+function update_email($user_id, $new_email)
+{
+    R::exec("UPDATE `users`
+                SET `email` = '$new_email'
+                WHERE id = '$user_id'");
+}
