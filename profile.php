@@ -2,7 +2,7 @@
 require "php/db.php";
 include_once 'php/functions.php';
 
-
+$_SESSION['logged_user'] = get_user_by_id($_SESSION['logged_user']['id']);
 $user = $_SESSION['logged_user'];
 
 
