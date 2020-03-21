@@ -5,7 +5,6 @@ include_once 'php/functions.php';
 $_SESSION['logged_user'] = get_user_by_id($_SESSION['logged_user']['id']);
 $user = $_SESSION['logged_user'];
 
-
 $data = $_POST;
 $studentid_num = get_studentid_by_id($user['studentid_id'])['student_id_num'];
 $user_status = get_user_status_by_id($user['user_status'])['status'];
@@ -18,11 +17,9 @@ $repeat_password_error = null;
 
 // EDIT USER INFO
 if (isset($data['do_update'])) {
+    console_log($user);
     $newTelegram = $data['telegram'];
     $newEmail = $data['email'];
-
-//    alert($newTelegram);
-    console_log($user);
 
     if($newEmail != $user['email']) {
         if (trim($newEmail) == '') {
@@ -46,7 +43,6 @@ if (isset($data['do_update'])) {
         update_email($user['id'], $newEmail);
         update_telegram($user['id'], $newTelegram);
 
-        alert($user['telegram_username']);
         header("Refresh:0");
     }
 }
