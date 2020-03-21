@@ -54,11 +54,23 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 R::trash($ann_comment);
                 header("location: announcement.php?id=" . $announcement['id']);
             }
+
+            if (isset($data['do_ban_comment'.$ann_comment['id']])){
+                $ann_comment['complaint'] = $user['id'];
+                R::store($ann_comment);
+                header("location: announcement.php?id=".$announcement['id']);
+            }
         }
 
         foreach ($com_comments as $com_comment){
             if (isset($data['do_delete_comment'.$com_comment['id']])){
                 R::trash($com_comment);
+                header("location: announcement.php?id=".$announcement['id']);
+            }
+
+            if (isset($data['do_ban_comment'.$com_comment['id']])){
+                $com_comment['complaint'] = $user['id'];
+                R::store($com_comment);
                 header("location: announcement.php?id=".$announcement['id']);
             }
         }
@@ -179,7 +191,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                 <form action="announcement.php?id=<?= $announcement['id']?>" method="POST">
                                                     <?php if ($user['id'] == $a['user_id']): ?>
                                                         <button name="do_delete_comment<?= $a['id']?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-trash"></i></button>
-                                                    <?php else: ?>
+                                                    <?php elseif(!$a['complaint']): ?>
                                                         <button name="do_ban_comment<?= $a['id']?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
                                                     <?php endif; ?>
                                                 </form>
@@ -250,7 +262,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                 <form action="announcement.php?id=<?= $announcement['id']?>" method="POST">
                                                                     <?php if ($user['id'] == $c['user_id']): ?>
                                                                         <button name="do_delete_comment<?= $c['id']?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-trash"></i></button>
-                                                                    <?php else: ?>
+                                                                    <?php elseif(!$c['complaint']): ?>
                                                                         <button name="do_ban_comment<?= $c['id']?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
                                                                     <?php endif; ?>
                                                                 </form>
