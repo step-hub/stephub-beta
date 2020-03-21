@@ -73,9 +73,9 @@ function get_announcement_by_id($id)
 {
     return R::findOne('announcements', 'id = ?', array($id));
 }
-function get_announcements_without_filter()
+function get_actual_announcements_with_filter($sort_by, $sort_asc, $start, $qty)
 {
-    return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT 10");
+    return R::getAll("SELECT * FROM announcements WHERE announcement_status_id = 1 ORDER BY " . $sort_by . " " . $sort_asc . " LIMIT " . $start . ", " . $qty);
 }
 function get_announcements_with_filter($sort_by, $sort_asc, $start, $qty)
 {
@@ -103,7 +103,7 @@ function get_users_with_filter($sort_by, $sort_order, $qty)
     return R::findAll('users', 'ORDER BY ' . $sort_by . ' ' . $sort_order . ' LIMIT ' . $qty);
 }
 
-// SELECT userstatuses
+// SELECT statuses
 function get_user_statuses()
 {
     return R::getAll("SELECT * FROM userstatuses ORDER BY id ASC");
@@ -125,6 +125,10 @@ function count_comments_by_announcement_id($id)
 }
 
 // COUNT announcements
+function count_actual_announcements()
+{
+    return R::count('announcements', 'announcement_status_id = 1');
+}
 function count_announcements()
 {
     return R::count('announcements');

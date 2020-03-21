@@ -14,7 +14,7 @@ if (isset($data['s']) and isset($data['o']) and isset($data['q'])) {
     $quantity_per_page = 10;
 }
 
-$total = intval((count_announcements() - 1) / $quantity_per_page) + 1;
+$total = intval((count_actual_announcements() - 1) / $quantity_per_page) + 1;
 
 if (isset($data['page']) and $data['page'] > 0) {
     if($data['page'] > $total) {
@@ -27,7 +27,7 @@ if (isset($data['page']) and $data['page'] > 0) {
 }
 
 $start = ($page-1) * $quantity_per_page;
-$announcements = get_announcements_with_filter($sort_by, $order, $start, $quantity_per_page);
+$announcements = get_actual_announcements_with_filter($sort_by, $order, $start, $quantity_per_page);
 
 ?>
 
