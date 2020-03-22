@@ -161,7 +161,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     <link href="css/main.css" rel="stylesheet">
 </head>
 
-<body class="text-center">
+<body class="text-center" style="padding-top: 46px !important;">
 <!-- Navigation -->
 <?php include_once 'templates/navbar.php'; ?>
 
@@ -170,13 +170,13 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     <?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status == 1): ?>
         <div class="row mt-1 mb-1 justify-content-center">
             <form name="filter" action="admin.php" method="GET" class="form-inline">
-                <label for="select_table">таблиця</label>
+                <label for="select_table" class="small ml-1">таблиця</label>
                 <select name="table" id="select_table" onchange="this.form.submit()" class="form-control form-control-sm m-1">
                     <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected'?>>користувачі</option>
                     <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>оголошення</option>
                     <option value="com_complaints" <?php if ($data_get['table'] == 'com_complaints') echo 'selected'?>>бани коментів</option>
                 </select>
-                <label for="select_users_sort_by" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>сортувати за</label>
+                <label for="select_users_sort_by" class="small ml-1" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>сортувати за</label>
                 <select name="users_sort_by" id="select_users_sort_by" <?php if ($data_get['table'] != 'users') echo 'hidden'?> class="form-control form-control-sm m-1">
                     <option value="id" <?php if ($data_get['users_sort_by'] == 'id') echo 'selected'?>>ID</option>
                     <option value="login" <?php if ($data_get['users_sort_by'] == 'login') echo 'selected'?>>логін</option>
@@ -184,18 +184,18 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     <option value="banned_to" <?php if ($data_get['users_sort_by'] == 'banned_to') echo 'selected'?>>забанений до</option>
                     <option value="is_online" <?php if ($data_get['users_sort_by'] == 'is_online') echo 'selected'?>>статус</option>
                 </select>
-                <label for="select_users_sort_order" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>порядок</label>
+                <label for="select_users_sort_order" class="small ml-1" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>порядок</label>
                 <select name="users_sort_order" id="select_users_sort_order" <?php if ($data_get['table'] != 'users') echo 'hidden'?> class="form-control form-control-sm m-1">
                     <option value="ASC" <?php if ($data_get['users_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
                     <option value="DESC" <?php if ($data_get['users_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
                 </select>
-                <label for="select_users_qty" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>кількість</label>
+                <label for="select_users_qty" class="small ml-1" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>кількість</label>
                 <select name="users_qty" id="select_users_qty" <?php if ($data_get['table'] != 'users') echo 'hidden'?> class="form-control form-control-sm m-1">
                     <option value="20" <?php if ($data_get['users_qty'] == '20') echo 'selected'?>>20</option>
                     <option value="30" <?php if ($data_get['users_qty'] == '30') echo 'selected'?>>30</option>
                     <option value="40" <?php if ($data_get['users_qty'] == '40') echo 'selected'?>>40</option>
                 </select>
-                <label for="select_ann_sort_by" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>сортувати за</label>
+                <label for="select_ann_sort_by" class="small ml-1" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>сортувати за</label>
                 <select name="ann_sort_by" id="select_ann_sort_by" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?> class="form-control form-control-sm m-1">
                     <option value="id" <?php if ($data_get['ann_sort_by'] == 'id') echo 'selected'?>>ID</option>
                     <option value="user_id" <?php if ($data_get['ann_sort_by'] == 'user_id') echo 'selected'?>>власник</option>
@@ -205,18 +205,18 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     <option value="deadline" <?php if ($data_get['ann_sort_by'] == 'deadline') echo 'selected'?>>дедлайн</option>
                     <option value="complaint" <?php if ($data_get['ann_sort_by'] == 'complaint') echo 'selected'?>>скарга від</option>
                 </select>
-                <label for="select_ann_sort_order" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>порядок</label>
+                <label for="select_ann_sort_order" class="small ml-1" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>порядок</label>
                 <select name="ann_sort_order" id="select_ann_sort_order" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?> class="form-control form-control-sm m-1">
                     <option value="ASC" <?php if ($data_get['ann_sort_order'] == 'ASC') echo 'selected'?>>зростанням</option>
                     <option value="DESC" <?php if ($data_get['ann_sort_order'] == 'DESC') echo 'selected'?>>спаданням</option>
                 </select>
-                <label for="select_anns_qty" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>кількість</label>
+                <label for="select_anns_qty" class="small ml-1" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?>>кількість</label>
                 <select name="anns_qty" id="select_anns_qty" <?php if ($data_get['table'] != 'announcements') echo 'hidden'?> class="form-control form-control-sm m-1">
                     <option value="20" <?php if ($data_get['anns_qty'] == '20') echo 'selected'?>>20</option>
                     <option value="30" <?php if ($data_get['anns_qty'] == '30') echo 'selected'?>>30</option>
                     <option value="40" <?php if ($data_get['anns_qty'] == '40') echo 'selected'?>>40</option>
                 </select>
-                <label for="select_com_compl_sort_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>сортувати за</label>
+                <label for="select_com_compl_sort_by" class="small ml-1" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>сортувати за</label>
                 <select name="com_compl_sort_by" id="select_com_compl_sort_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?> class="form-control form-control-sm m-1">
                     <option value="id" <?php if ($data_get['com_compl_sort_by'] == 'id') echo 'selected'?>>ID</option>
                     <option value="announcement_id" <?php if ($data_get['com_compl_sort_by'] == 'announcement_id') echo 'selected'?>>оголошення</option>
@@ -224,12 +224,12 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     <option value="complaint" <?php if ($data_get['com_compl_sort_by'] == 'complaint') echo 'selected'?>>хто скаржився</option>
                     <option value="date" <?php if ($data_get['com_compl_sort_by'] == 'date') echo 'selected'?>>дата коменту</option>
                 </select>
-                <label for="select_com_compl_order_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>порядок</label>
+                <label for="select_com_compl_order_by" class="small ml-1" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>порядок</label>
                 <select name="com_compl_order_by" id="select_com_compl_order_by" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?> class="form-control form-control-sm m-1">
                     <option value="ASC" <?php if ($data_get['com_compl_order_by'] == 'ASC') echo 'selected'?>>зростанням</option>
                     <option value="DESC" <?php if ($data_get['com_compl_order_by'] == 'DESC') echo 'selected'?>>спаданням</option>
                 </select>
-                <label for="select_com_compl_qty" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>кількість</label>
+                <label for="select_com_compl_qty" class="small ml-1" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?>>кількість</label>
                 <select name="com_compl_qty" id="select_com_compl_qty" <?php if ($data_get['table'] != 'com_complaints') echo 'hidden'?> class="form-control form-control-sm m-1">
                     <option value="20" <?php if ($data_get['com_compl_qty'] == '20') echo 'selected'?>>20</option>
                     <option value="30" <?php if ($data_get['com_compl_qty'] == '30') echo 'selected'?>>30</option>
@@ -291,9 +291,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 </form>
             </table>
             <div class="container">
-                <button class="btn btn-info mb-4" type="submit" form="update" name="do_update_users"><i
-                            class="fas fa-sync mr-2"></i>Оновити
-                </button>
+                <button class="btn btn-sm btn-info mb-4" type="submit" form="update" name="do_update_users"><i class="fas fa-sync mr-2"></i>Оновити</button>
             </div>
         <?php elseif ($data_get['table'] == 'announcements') :?>
             <div>
@@ -351,9 +349,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     </form>
                 </table>
                 <div class="container">
-                    <button class="btn btn-info mb-4" form="update_ann" name="do_update_ann" type="submit"><i
-                                class="fas fa-sync mr-2"></i>Оновити
-                    </button>
+                    <button class="btn btn-sm btn-info mb-4" form="update_ann" name="do_update_ann" type="submit"><i class="fas fa-sync mr-2"></i>Оновити</button>
                 </div>
             </div>
         <?php elseif ($data_get['table'] == 'com_complaints'):?>
@@ -405,7 +401,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             </div>
         <?php endif; ?>
         <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination pagination-sm justify-content-center">
                 <?php if($page == 1): ?>
                     <li class="page-item disabled">
                         <span class="page-link">&laquo;</span>
