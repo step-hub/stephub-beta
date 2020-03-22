@@ -13,8 +13,11 @@ if (!array_key_exists('logged_user',$_SESSION)) {
         if (trim($data['email']) == '') {
             $errors[] = 'email field is empty!!!';
         }
-        if (trim($data['stud_num']) == '') {
-            $errors[] = 'stud_num field is empty!!!';
+        if (trim($data['stud_num_series']) == '') {
+            $errors[] = 'stud_num_ser field is empty!!!';
+        }
+        if (trim($data['stud_num_number']) == '') {
+            $errors[] = 'stud_num_num field is empty!!!';
         }
         if (trim($data['telegram']) == '') {
             $errors[] = 'telegram field is empty!!!';
@@ -37,11 +40,11 @@ if (!array_key_exists('logged_user',$_SESSION)) {
             $errors[] = "user with such telegram already exist!!!";
         }
 
-        if (count_studentid_by_num($data['stud_num']) == 0) {
+        if (count_studentid_by_num($data['stud_num_series'].$data['stud_num_number']) == 0) {
             $errors[] = "user with such student num can't register!!!";
         } else {
-            $student = find_studentid_by_num($data['stud_num']);
-            if (count_users_by_student_id($student->id) > 0) {
+            $studentid = find_studentid_by_num($data['stud_num_series'].$data['stud_num_number']);
+            if (count_users_by_student_id($studentid->id) > 0) {
                 $errors[] = "user with such student num has already registered!!!";
             }
         }
@@ -50,7 +53,7 @@ if (!array_key_exists('logged_user',$_SESSION)) {
             $user = R::dispense('users');
             $user->login = $data['login'];
             $user->email = $data['email'];
-            $user->studentid_id = $student->id;
+            $user->studentid_id = $studentid->id;
             $user->telegram_username = $data['telegram'];
             $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
             $user->is_online = 1;
@@ -120,8 +123,9 @@ if (!array_key_exists('logged_user',$_SESSION)) {
                     </div>
                     <div class="form-group row px-3">
                         <label class="col-sm-3 col-form-label" for="inputStudNum">Студентський</label>
-                        <div class="col-sm-5">
-                            <input name="stud_num" class="form-control" type="text" id="inputStudNum" value="<?= @$data['stud_num']; ?>" placeholder="BK12345678" required>
+                        <div class="input-group col-sm-5" id="inputStudNum">
+                            <input name="stud_num_series" class="form-control" type="text" value="<?= @$data['stud_num_ser']; ?>" placeholder="BK" required>
+                            <input name="stud_num_number" class="form-control" type="text" value="<?= @$data['stud_num_num']; ?>" placeholder="12345678" required>
                         </div>
                         <div class="col-sm-4 pl-0">
                             <button type="button" class="btn float-left myPopover" data-toggle="popover" data-placement="right" title="Де взяти номер студентського квитка?" data-trigger="hower" data-content="Серію і номер студентського квитка можна дізнатися на лицевій стороні вашого студентського квитка">
