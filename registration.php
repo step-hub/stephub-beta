@@ -124,8 +124,9 @@ if (!array_key_exists('logged_user',$_SESSION)) {
                     <div class="form-group row px-3">
                         <label class="col-sm-3 col-form-label" for="inputStudNum">Студентський</label>
                         <div class="input-group col-sm-5" id="inputStudNum">
-                            <input name="stud_num_series" class="form-control" type="text" value="<?= @$data['stud_num_ser']; ?>" placeholder="BK" required>
-                            <input name="stud_num_number" class="form-control" type="text" value="<?= @$data['stud_num_num']; ?>" placeholder="12345678" required>
+                            <input name="stud_num_series" class="form-control col-3 mx-0" type="text" value="<?= @$data['stud_num_ser']; ?>" placeholder="АБ" required>
+                            <div class="input-group-text" style="border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0;">№</div>
+                            <input name="stud_num_number" class="form-control col-5 mx-0" type="text" value="<?= @$data['stud_num_num']; ?>" placeholder="12345678" required>
                         </div>
                         <div class="col-sm-4 pl-0">
                             <button type="button" class="btn float-left myPopover" data-toggle="popover" data-placement="right" title="Де взяти номер студентського квитка?" data-trigger="hower" data-content="Серію і номер студентського квитка можна дізнатися на лицевій стороні вашого студентського квитка">
