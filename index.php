@@ -14,6 +14,15 @@ if (isset($data['s']) and isset($data['o']) and isset($data['q'])) {
     $quantity_per_page = 10;
 }
 
+$request = '';
+foreach (array_keys($data) as $key){
+    if ($key != 'page') {
+        $request .= $key . '=' . $data[$key];
+        if (array_key_last($data) != $key)
+            $request .= '&';
+    }
+}
+
 $total = intval((count_actual_announcements() - 1) / $quantity_per_page) + 1;
 
 if (isset($data['page']) and $data['page'] > 0) {
@@ -129,18 +138,18 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                                         </li>
                                     <?php else: ?>
                                         <li class="page-item">
-                                            <a class="page-link" href="index.php?page=<?= $page-1 ?>">&laquo;</a>
+                                            <a class="page-link" href="index.php?page=<?= ($page-1).'&'.$request ?>">&laquo;</a>
                                         </li>
-                                        <li class="page-item"><a class="page-link" href="index.php?page=1">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="index.php?page=1&<?= $request?>">1</a></li>
                                         <?php if($page > 4): ?>
                                             <li class="page-item disabled"><a class="page-link">...</a></li>
-                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page-3 ?>"><?= $page-3 ?></a></li>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= ($page-3).'&'.$request ?>"><?= $page-3 ?></a></li>
                                         <?php endif; ?>
                                         <?php if($page > 3): ?>
-                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page-2 ?>"><?= $page-2 ?></a></li>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= ($page-2).'&'.$request ?>"><?= $page-2 ?></a></li>
                                         <?php endif; ?>
                                         <?php if($page > 2): ?>
-                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page-1 ?>"><?= $page-1 ?></a></li>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= ($page-1).'&'.$request ?>"><?= $page-1 ?></a></li>
                                         <?php endif; ?>
                                     <?php endif; ?>
 
@@ -150,22 +159,22 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
 
                                     <?php if($page != $total): ?>
                                         <?php if($page+1 < $total): ?>
-                                        <li class="page-item"><a class="page-link" href="index.php?page=<?= $page+1 ?>"><?= $page+1 ?></a></li>
+                                        <li class="page-item"><a class="page-link" href="index.php?page=<?= ($page+1).'&'.$request ?>"><?= $page+1 ?></a></li>
                                         <?php endif; ?>
                                         <?php if($page+2 < $total): ?>
-                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page+2 ?>"><?= $page+2 ?></a></li>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= ($page+2).'&'.$request ?>"><?= $page+2 ?></a></li>
                                         <?php endif; ?>
                                         <?php if($page+3 < $total): ?>
-                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= $page+3 ?>"><?= $page+3 ?></a></li>
+                                            <li class="page-item"><a class="page-link" href="index.php?page=<?= ($page+3).'&'.$request ?>"><?= $page+3 ?></a></li>
                                             <?php if($page+3 != $total-1): ?>
                                                 <li class="page-item disabled"><a class="page-link">...</a></li>
                                             <?php endif; ?>
                                         <?php endif; ?>
 
-                                        <li class="page-item"><a class="page-link" href="index.php?page=<?= $total ?>"><?= $total ?></a></li>
+                                        <li class="page-item"><a class="page-link" href="index.php?page=<?= $total.'&'.$request ?>"><?= $total ?></a></li>
 
                                         <li class="page-item">
-                                            <a class="page-link" href="index.php?page=<?= $page+1 ?>">&raquo;</a>
+                                            <a class="page-link" href="index.php?page=<?= ($page+1).'&'.$request ?>">&raquo;</a>
                                         </li>
                                     <? else: ?>
                                         <li class="page-item disabled">
