@@ -21,13 +21,28 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 
     $request = '';
     foreach (array_keys($data_get) as $key){
-        $request .= $key . '=' . $data_get[$key];
-        if (array_key_last($data_get) != $key)
-            $request .= '&';
+        if ($key != 'page') {
+            $request .= $key . '=' . $data_get[$key];
+            if (array_key_last($data_get) != $key)
+                $request .= '&';
+        }
     }
 
     if ($data_get['table'] == 'users') {
-        $users = R::findAll('users', 'ORDER BY ' . $data_get['users_sort_by'] . ' ' . $data_get['users_sort_order'] . ' LIMIT ' . $data_get['users_qty']);
+        $total = intval((R::count('users') - 1) / $data_get['users_qty']) + 1;
+
+        if (isset($data_get['page']) and $data_get['page'] > 0) {
+            if($data_get['page'] > $total) {
+                $page = $total;
+            } else {
+                $page  = $data_get['page'];
+            }
+        } else {
+            $page = 1;
+        }
+
+        $start = ($page-1) * $data_get['users_qty'];
+        $users = R::findAll('users', 'ORDER BY ' . $data_get['users_sort_by'] . ' ' . $data_get['users_sort_order'] . ' LIMIT ' . $start . ', ' . $data_get['users_qty']);
         $user_statuses = get_user_statuses();
 
         if (isset($data_post['do_update_users'])) {
@@ -50,7 +65,20 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         }
     }
     elseif ($data_get['table'] == 'announcements') {
-        $announcements = R::findAll('announcements', 'ORDER BY ' . $data_get['ann_sort_by'] . ' ' . $data_get['ann_sort_order'] . ' LIMIT ' . $data_get['anns_qty']);
+        $total = intval((R::count('announcements') - 1) / $data_get['users_qty']) + 1;
+
+        if (isset($data_get['page']) and $data_get['page'] > 0) {
+            if($data_get['page'] > $total) {
+                $page = $total;
+            } else {
+                $page  = $data_get['page'];
+            }
+        } else {
+            $page = 1;
+        }
+
+        $start = ($page-1) * $data_get['anns_qty'];
+        $announcements = R::findAll('announcements', 'ORDER BY ' . $data_get['ann_sort_by'] . ' ' . $data_get['ann_sort_order'] . ' LIMIT ' . $start . ', ' . $data_get['anns_qty']);
         $announcement_statuses = get_announcement_statuses();
 
         foreach ($announcements as $a) {
@@ -77,7 +105,20 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         }
     }
     elseif ($data_get['table'] == 'com_complaints'){
-        $complaints = R::findAll('comments', 'WHERE complaint IS NOT NULL ORDER BY ' . $data_get['com_compl_sort_by'] . ' ' . $data_get['com_compl_order_by'] . ' LIMIT ' . $data_get['com_compl_qty']);
+        $total = intval((R::count('comments', 'WHERE complaint IS NOT NULL') - 1) / $data_get['com_compl_qty']) + 1;
+
+        if (isset($data_get['page']) and $data_get['page'] > 0) {
+            if($data_get['page'] > $total) {
+                $page = $total;
+            } else {
+                $page  = $data_get['page'];
+            }
+        } else {
+            $page = 1;
+        }
+
+        $start = ($page-1) * $data_get['com_compl_qty'];
+        $complaints = R::findAll('comments', 'WHERE complaint IS NOT NULL ORDER BY ' . $data_get['com_compl_sort_by'] . ' ' . $data_get['com_compl_order_by'] . ' LIMIT ' . $start . ', ' . $data_get['com_compl_qty']);
         foreach ($complaints as $c){
             if (isset($data_post['do_delete_comment'.$c['id']])){
                 R::hunt('comments', 'parent_comment_id = ?', array($c['id']));
@@ -368,6 +409,57 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 </table>
             </div>
         <?php endif; ?>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <?php if($page == 1): ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">&laquo;</span>
+                    </li>
+                <?php else: ?>
+                    <li class="page-item">
+                        <a class="page-link" href="moderator.php?page=<?= ($page-1).'&'.$request ?>">&laquo;</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="moderator.php?page=1&<?= $request?>">1</a></li>
+                    <?php if($page > 4): ?>
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                        <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page-3).'&'.$request ?>"><?= $page-3 ?></a></li>
+                    <?php endif; ?>
+                    <?php if($page > 3): ?>
+                        <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page-2).'&'.$request ?>"><?= $page-2 ?></a></li>
+                    <?php endif; ?>
+                    <?php if($page > 2): ?>
+                        <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page-1).'&'.$request ?>"><?= $page-1 ?></a></li>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <li class="page-item active">
+                    <span class="page-link"><?= $page ?><span class="sr-only">(current)</span></span>
+                </li>
+                <?php if($page != $total): ?>
+                    <?php if($page+1 < $total): ?>
+                        <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page+1).'&'.$request ?>"><?= $page+1 ?></a></li>
+                    <?php endif; ?>
+                    <?php if($page+2 < $total): ?>
+                        <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page+2).'&'.$request ?>"><?= $page+2 ?></a></li>
+                    <?php endif; ?>
+                    <?php if($page+3 < $total): ?>
+                        <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page+3).'&'.$request ?>"><?= $page+3 ?></a></li>
+                        <?php if($page+3 != $total-1): ?>
+                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    <li class="page-item"><a class="page-link" href="moderator.php?page=<?= $total.'&'.$request ?>"><?= $total ?></a></li>
+
+                    <li class="page-item">
+                        <a class="page-link" href="moderator.php?page=<?= ($page+1).'&'.$request ?>">&raquo;</a>
+                    </li>
+                <? else: ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">&raquo;</span>
+                    </li>
+                <? endif; ?>
+            </ul>
+        </nav>
     <?php else:
         header("location: index.php");
     endif; ?>
