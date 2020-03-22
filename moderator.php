@@ -228,7 +228,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     <option value="30" <?php if ($data_get['com_compl_qty'] == '30') echo 'selected'?>>30</option>
                     <option value="40" <?php if ($data_get['com_compl_qty'] == '40') echo 'selected'?>>40</option>
                 </select>
-                <button type="submit" name="do_filter" class="btn btn-success ml-3">Фільтрувати</button>
+                <button type="submit" name="do_filter" class="btn btn-sm btn-success ml-3">Фільтрувати</button>
             </form>
         </div>
         <?php if ($data_get['table'] == 'users'):?>
