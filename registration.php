@@ -50,18 +50,21 @@ if (!array_key_exists('logged_user',$_SESSION)) {
         }
 
         if (empty($errors)) {
+            $user_token = generate_random_string(80);
             $user = R::dispense('users');
             $user->login = $data['login'];
             $user->email = $data['email'];
             $user->studentid_id = $studentid->id;
             $user->telegram_username = $data['telegram'];
             $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
-            $user->is_online = 1;
+            $user->is_online = 0;
+            $user->token = $user_token;
             $user->user_status = 3;
             $user->reg_date = time();
 
             R::store($user);
-
+            $link = 'http://localhost/stephub/php/activate.php?token='.$user_token;
+            mail($data['email'], 'Account activation', 'Для активації перейдіть за посиланням '.$link, 'From: stephub.com@gmail.com');
             header('location: index.php');
         }
     }

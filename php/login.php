@@ -17,18 +17,18 @@ if (isset($data['do_login'])) {
             R::store($user);
 
             // login cookie
-            if ($data['remember']) {
-                if (isset($_COOKIE['user_token']))
-                    setcookie('user_token', '', 0, "/");
-
-                $user_token = generate_random_string(80);
-                $time = 31536000;
-                setcookie('user_token', $user_token, time() + $time, "/");
-
-                $login = $data['login'];
-
-                R::exec("UPDATE `users` SET token = '$user_token' WHERE login = '$login'");
-            }
+//            if ($data['remember']) {
+//                if (isset($_COOKIE['user_token']))
+//                    setcookie('user_token', '', 0, "/");
+//
+//                $user_token = generate_random_string(80);
+//                $time = 31536000;
+//                setcookie('user_token', $user_token, time() + $time, "/");
+//
+//                $login = $data['login'];
+//
+//                R::exec("UPDATE `users` SET token = '$user_token' WHERE login = '$login'");
+//            }
 
             header("location: index.php");
         } else {
