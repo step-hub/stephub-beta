@@ -6,8 +6,10 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     $data_get = $_GET;
     $data_post = $_POST;
 
-    if (array_key_exists('subject', $data_post)){
-        echo "<script>window.close();</script>";
+    if (isset($data_post['do_send'])){
+        $user = R::findOne('users', 'id = ?', array($data_post['to']));
+        mail($user['email'], $data_post['subject'], $data_post['message'], 'From: stephub.com@gmail.com');
+        echo "<script>window.close()</script>>";
     }
     elseif (!array_key_exists('id', $data_get)){
         header("location: index.php");
@@ -42,12 +44,11 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 <?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status < 3): ?>
     <div class="container">
         <form action="mail.php" method="POST" class="form-group">
-            <label for="send_to">До</label>
-            <input type="text" name="to" id="send_to" class="form-control" placeholder="<?= 'email address'?>" disabled>
+            <input type="text" name="to" class="form-control" value="<?= $data_get['id']?>" hidden>
             <label for="mail_subject">Тема</label>
             <input type="text" name="subject" id="mail_subject"  class="form-control">
             <label for="mail_message">Повідомлення</label>
-            <textarea name="letter" id="mail_message" cols="30" rows="10" class="form-control"></textarea>
+            <textarea name="message" id="mail_message" cols="30" rows="10" class="form-control"></textarea>
             <button name="do_send" type="submit" class="btn btn-info">Відправити</button>
         </form>
     </div>
