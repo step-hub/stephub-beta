@@ -30,20 +30,20 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
             $announcement->date = time();
 
             // attach file
-            if(isset($_FILES['userfile'])) {
-                $uploadName = basename($_FILES['userfile']['name']);
-                $uploadFile = get_upload_path() . $uploadName;
-                echo "<script> alert(".$uploadName.");</script>";
-                if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadFile)) {
-                    $announcement->file = "".$uploadName;
-                } else {
-                    $errors[] = "file error";
-                }
-            }
+//            if(isset($_FILES['userfile'])) {
+//                $uploadName = basename($_FILES['userfile']['name']);
+//                $uploadFile = get_upload_path() . $uploadName;
+//                echo "<script> alert(".$uploadName.");</script>";
+//                if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadFile)) {
+//                    $announcement->file = "".$uploadName;
+//                } else {
+//                    $errors[] = "file error";
+//                }
+//            }
 
             R::store($announcement);
 
-            //header('location: announcement.php?id='.$announcement->id);
+            header('location: announcement.php?id='.$announcement->id);
         }
     }
 }
