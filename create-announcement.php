@@ -58,7 +58,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StepHub | Створити оголошення</title>
+    <title>Розмістити Оголошення | StepHub</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 

@@ -150,7 +150,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StepHub | Сторінка Адміністратора</title>
+    <title>Сторінка Адміністратора | StepHub</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 

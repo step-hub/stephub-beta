@@ -82,7 +82,7 @@ if (isset($data['do_change_pass'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StepHub | Профіль</title>
+    <title>Профіль | StepHub</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 

@@ -12,7 +12,7 @@ include_once 'php/functions.php';
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StepHub | Про StepHub</title>
+    <title>Про Нас | StepHub</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 

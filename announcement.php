@@ -100,7 +100,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StepHub | <?= $announcement['title'] ?></title>
+    <title><?= $announcement['title'] ?> | StepHub</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 
