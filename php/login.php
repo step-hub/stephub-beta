@@ -10,7 +10,10 @@ if (isset($data['do_login'])) {
     $user = get_user_by_login($data['login']);
 
     if ($user) {
-        if (password_verify($data['password'], $user->password)) {
+        if ($user['token'] != null){
+            $errors[] = 'account is not activated';
+        }
+        elseif (password_verify($data['password'], $user->password)) {
             // login session
             $_SESSION['logged_user'] = $user;
             $user->is_online = 1;
