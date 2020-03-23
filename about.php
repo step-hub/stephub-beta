@@ -52,8 +52,11 @@ include_once 'php/functions.php';
                                 </nav>
                                 <a class="nav-link" href="#privacy">Політика конфіденційності</a>
                                 <nav class="nav nav-pills flex-column">
-                                    <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
-                                    <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
+                                    <a class="nav-link ml-3 my-1" href="#item-3-1">Визначення понять</a>
+                                    <a class="nav-link ml-3 my-1" href="#item-3-2">Загальні положення</a>
+                                    <a class="nav-link ml-3 my-1" href="#item-3-5">Повідомлення</a>
+                                    <a class="nav-link ml-3 my-1" href="#item-3-4">Зобов'язання</a>
+                                    <a class="nav-link ml-3 my-1" href="#item-3-5">Прикінцеві положення</a>
                                 </nav>
                             </nav>
                         </nav>
