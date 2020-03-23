@@ -173,7 +173,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <div class="card-body bg-light">
                         <?php if (count($ann_comments) > 0): ?>
                             <?php foreach ($ann_comments as $a): ?>
-                                <div class="card mt-3 announcement-card" id="comment<?= $a['id']?>">
+                                <div class="card mt-3 announcement-card anchor" id="comment<?= $a['id']?>">
                                     <div class="card-header my-bg-gray pb-0 pt-1">
                                         <div class="row">
                                             <div class="col-md-10">
@@ -236,7 +236,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                                 <?php foreach ($com_comments as $c): ?>
                                     <?php if ($c['parent_comment_id'] == $a['id']): ?>
-                                        <div class="row justify-content-end" id="comment<?= $c['id']?>">
+                                        <div class="row justify-content-end anchor" id="comment<?= $c['id']?>">
                                             <div class="col-md-10">
                                                 <div class="card mt-2 announcement-card">
                                                     <div class="card-header my-bg-gray pb-0 pt-1">

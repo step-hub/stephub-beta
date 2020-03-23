@@ -8,6 +8,11 @@ img.img-large-logo {
     max-height:100% !important;
 }
 
+.anchor {
+    padding-top: 60px;
+    margin-top: -60px;
+}
+
 /*background*/
 .my-bg-dark {
     background-color: #715142;
