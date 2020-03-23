@@ -283,9 +283,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                     </td>
                                     <td>
                                         <div class="row justify-content-center">
-                                            <button class=" btn btn-sm btn-warning mr-2">
+                                            <a href="mail.php?id=<?= $user['id']?>" target="_blank" class=" btn btn-sm btn-warning mr-2">
                                                 <i class="fas fa-envelope"></i>
-                                            </button>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -339,8 +339,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                             <a target="_blank" rel="noopener noreferrer"
                                                href="announcement.php?id=<?= $announcement['id'] ?>"
                                                class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
-                                            <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
-                                            </button>
+                                            <a href="mail.php?id=<?= $announcement['user_id']?>" target="_blank" class="btn btn-sm btn-warning mr-2">
+                                                <i class="fas fa-envelope"></i>
+                                            </a>
                                             <button class="btn btn-sm btn-danger mr-2" type="submit" name="do_delete_ann_complaint<?= $announcement['id'] ?>">
                                                 <i class="fas fa-trash-restore"></i>
                                             </button>
@@ -389,8 +390,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                         <a target="_blank" rel="noopener noreferrer"
                                            href="announcement.php?id=<?= $complaint['announcement_id']?>#comment<?= $complaint['id']?>"
                                            class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
-                                        <button class="btn btn-sm btn-warning mr-2"><i class="fas fa-envelope"></i>
-                                        </button>
+                                        <a href="mail.php?id=<?= $complaint['user_id']?>" target="_blank" class="btn btn-sm btn-warning mr-2">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
                                         <button class="btn btn-sm btn-danger mr-2" type="submit" name="do_delete_complaint<?= $complaint['id'] ?>">
                                             <i class="fas fa-trash-restore"></i>
                                         </button>
