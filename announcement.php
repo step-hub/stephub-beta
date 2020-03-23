@@ -5,6 +5,7 @@ include_once 'php/functions.php';
 if (array_key_exists('logged_user', $_SESSION)) {
     $data = $_POST;
     $errors = array();
+    $update_ann_errors = array();
 
     $announcement = get_announcement_by_id($_GET['id']);
     if ($announcement) {
@@ -45,9 +46,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 }
             }
 
-            if (isset($data['do_delete_comment'.$ann_comment['id']])){
-                foreach ($com_comments as $com_comment){
-                    if ($com_comment['parent_comment_id'] == $ann_comment['id']){
+            if (isset($data['do_delete_comment' . $ann_comment['id']])) {
+                foreach ($com_comments as $com_comment) {
+                    if ($com_comment['parent_comment_id'] == $ann_comment['id']) {
                         R::trash($com_comment);
                     }
                 }
@@ -55,23 +56,23 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 header("location: announcement.php?id=" . $announcement['id']);
             }
 
-            if (isset($data['do_ban_comment'.$ann_comment['id']])){
+            if (isset($data['do_ban_comment' . $ann_comment['id']])) {
                 $ann_comment['complaint'] = $user['id'];
                 R::store($ann_comment);
-                header("location: announcement.php?id=".$announcement['id']);
+                header("location: announcement.php?id=" . $announcement['id']);
             }
         }
 
-        foreach ($com_comments as $com_comment){
-            if (isset($data['do_delete_comment'.$com_comment['id']])){
+        foreach ($com_comments as $com_comment) {
+            if (isset($data['do_delete_comment' . $com_comment['id']])) {
                 R::trash($com_comment);
-                header("location: announcement.php?id=".$announcement['id']);
+                header("location: announcement.php?id=" . $announcement['id']);
             }
 
-            if (isset($data['do_ban_comment'.$com_comment['id']])){
+            if (isset($data['do_ban_comment' . $com_comment['id']])) {
                 $com_comment['complaint'] = $user['id'];
                 R::store($com_comment);
-                header("location: announcement.php?id=".$announcement['id']);
+                header("location: announcement.php?id=" . $announcement['id']);
             }
         }
 
@@ -85,8 +86,44 @@ if (array_key_exists('logged_user', $_SESSION)) {
             R::store($announcement);
             header("location: announcement.php?id=" . $announcement['id']);
         }
-    } else {
-        header("location: index.php");
+
+        if (isset($data['do_update_ann'])) {
+            if (trim($data['title']) == '') {
+                $update_ann_errors[] = 'заголовок не може бути порожнім';
+            }
+            if ($data['deadline'] == '') {
+                $update_ann_errors[] = 'повинен бути вказаний дедлайн';
+            }
+            if (strtotime($data['deadline']) < time()) {
+                $update_ann_errors[] = 'дедлайн не може бути попередньою датою';
+            }
+            if (trim($data['details']) == '') {
+                $update_ann_errors[] = 'деталі оголошення не можуть бути порожніми';
+            }
+
+            if (empty($update_ann_errors)) {
+                $announcement->title = $data['title'];
+                $announcement->details = nl2br($data['details']);
+                $announcement->deadline = strtotime($data['deadline']);
+                $announcement->announcement_status_id = 2;
+
+                // attach file
+//            if(isset($_FILES['userfile'])) {
+//                $uploadName = basename($_FILES['userfile']['name']);
+//                $uploadFile = get_upload_path() . $uploadName;
+//                echo "<script> alert(".$uploadName.");</script>";
+//                if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadFile)) {
+//                    $announcement->file = "".$uploadName;
+//                } else {
+//                    $errors[] = "file error";
+//                }
+//            }
+
+                R::store($announcement);
+
+                header('location: announcement.php?id=' . $announcement->id);
+            }
+        }
     }
 }
 ?>
@@ -120,41 +157,77 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <div class="container pt-5">
         <div class="row">
             <div class="col-md-9">
-                <div class="card shadow-sm">
-                    <div class="card-header my-bg-gray my-color-dark">
-                        <div class="container">
-                            <div class="row pt-2 pb-2">
-                                <div class="col-md-10">
-                                    <h3 class="card-title"><?= $announcement['title'] ?></h3>
+                <?php if ($user['id'] == $announcement['user_id']): ?>
+                    <div class="card shadow-sm">
+                        <form action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
+                            <div class="card-header my-bg-gray my-color-dark">
+                                <div class="row justify-content-center">
+                                    <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$update_ann_errors[0]; ?></>
                                 </div>
-                                <div class="col-md-2 pr-0">
-                                    <form action="announcement.php?id=<?= $announcement['id']?>" method="post">
-                                        <?php if ($user['id'] == $announcement['user_id']): ?>
+                                <div class="container">
+                                    <div class="row pt-2 pb-2">
+                                        <div class="col-md-10">
+                                            <input type="text" name="title" value="<?= $announcement['title']?>" class="form-control mb-2 mr-sm-2" placeholder="Заголовок">
+                                        </div>
+                                        <div class="col-md-2 pr-0">
                                             <button class="btn float-right my-color-dark" name="do_delete_ann" type="submit"><i class="fas fa-trash"></i></button>
-                                        <?php elseif (!$announcement['complaint']): ?>
-                                            <button class="btn float-right my-color-dark" name="do_ban_ann" type="submit"><i class="fas fa-ban"></i></button>
-                                        <?php endif; ?>
-                                    </form>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2 px-2">
+                                        <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
+                                        <p class="card-text text-muted small mx-2 mr-4"><i class="far fa-clock mr-2"></i><?= show_time($announcement['date']) ?></p>
+                                        <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i>
+                                            <input type="date" name="deadline" value="<?= date("Y-m-d", $announcement['deadline'])?>" class="form-control">
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row pt-2 px-2">
-                                <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
-                                <p class="card-text text-muted small mx-2 mr-4"><i class="far fa-clock mr-2"></i><?= show_time($announcement['date']) ?></p>
-                                <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i><?= show_date($announcement['deadline']) ?></p>
+                            <div class="card-body">
+                                <textarea name="details" cols="30" rows="10" class="form-control"><?= $announcement['details'] ?></textarea>
+                            </div>
+                            <?php if (isset($announcement['file'])): ?>
+                                <div class="card-footer">
+                                    <p><i class="fa fa-paperclip mr-2"></i><?= $announcement['file']?></p>
+                                    <button class="btn btn-secondary"><i class="fas fa-file-download mr-2"></i>Завантажити</button>
+                                </div>
+                            <?php endif; ?>
+                            <div class="row justify-content-center">
+                                <button name="do_update_ann" type="submit" class="btn btn-info">Оновити</button>
+                            </div>
+                        </form>
+                    </div>
+                <?php else: ?>
+                    <div class="card shadow-sm">
+                        <div class="card-header my-bg-gray my-color-dark">
+                            <div class="container">
+                                <div class="row pt-2 pb-2">
+                                    <div class="col-md-10">
+                                        <h3 class="card-title"><?= $announcement['title'] ?></h3>
+                                    </div>
+                                    <div class="col-md-2 pr-0">
+                                        <form action="announcement.php?id=<?= $announcement['id']?>" method="post">
+                                            <button class="btn float-right my-color-dark" name="do_ban_ann" type="submit"><i class="fas fa-ban"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row pt-2 px-2">
+                                    <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
+                                    <p class="card-text text-muted small mx-2 mr-4"><i class="far fa-clock mr-2"></i><?= show_time($announcement['date']) ?></p>
+                                    <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i><?= show_date($announcement['deadline']) ?></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <p><?= $announcement['details'] ?></p>
-                    </div>
-                    <?php if (isset($announcement['file'])): ?>
-                        <div class="card-footer">
-                            <p><i class="fa fa-paperclip mr-2"></i><?= $announcement['file']?></p>
-                            <button class="btn btn-secondary"><i class="fas fa-file-download mr-2"></i>Завантажити</button>
+                        <div class="card-body">
+                            <p><?= $announcement['details'] ?></p>
                         </div>
-                    <?php endif; ?>
-                </div>
-
+                        <?php if (isset($announcement['file'])): ?>
+                            <div class="card-footer">
+                                <p><i class="fa fa-paperclip mr-2"></i><?= $announcement['file']?></p>
+                                <button class="btn btn-secondary"><i class="fas fa-file-download mr-2"></i>Завантажити</button>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
                 <div class="card shadow-sm mt-5">
                     <div class="card-header">
                         <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
