@@ -5,9 +5,9 @@ html,body{
 body{
     margin: 0;
     
-    background: linear-gradient(45deg,#FDC830,#F37335);
+    background: linear-gradient(60deg,#FFFDE4,#005AA7);
     background-size: 200% 200%;
-    animation: gradient 10s ease infinite;
+    animation: gradient 150s ease infinite;
 }
 
 @keyframes gradient{
