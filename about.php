@@ -276,9 +276,9 @@ include_once 'php/functions.php';
 
                 <div class="mt-5 text-center">
                     <!--Email-->
-                    <a class="btn-floating btn-lg btn-email" type="button" role="button"><i class="fas fa-envelope"></i></a>
+                    <a class="btn-floating btn-lg btn-email" type="button" role="button" href="mailto:stephub.com@gmail.com"><i class="fas fa-envelope"></i></a>
                     <!--Github-->
-                    <a class="btn-floating btn-lg btn-git" type="button" role="button"><i class="fab fa-github"></i></a>
+                    <a class="btn-floating btn-lg btn-git" type="button" role="button" href="https://github.com/step-hub/stephub"><i class="fab fa-github"></i></a>
                 </div>
                 <p class="small text-muted text-center mb-3">Copyright © 2020 StepHub</p>
             </div>
