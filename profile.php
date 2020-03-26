@@ -101,10 +101,11 @@ if (isset($data['do_change_pass'])) {
     <?php if (array_key_exists('logged_user', $_SESSION)): ?>
         <div class="container">
             <div class="card mt-5">
-                <div class="row">
+                <div class="card-header my-bg-dark p-1"></div>
+                <div class="card-body shadow-sm">
+                    <div class="row">
+                        <div class="col-md-8">
 
-                    <div class="col-md-8">
-                        <div class="card-body shadow-sm">
                             <form class="form" action="profile.php" method="POST">
 
                                 <?php if ($errors): ?>
@@ -151,10 +152,10 @@ if (isset($data['do_change_pass'])) {
                                         <input name="status" class="form-control" type="text" id="inputReg" value="<?= show_date($user['reg_date']) ?>" readonly>
                                     </div>
                                     <?php if($user['banned_to']): ?>
-                                    <label class="col-sm-3 col-form-label text-right" for="inputBan">Забанено до</label>
-                                    <div class="col-sm-3">
-                                        <input name="status" class="form-control" type="text" id="inputBan" value="<?= show_date($user['banned_to']) ?>" readonly>
-                                    </div>
+                                        <label class="col-sm-3 col-form-label text-right" for="inputBan">Забанено до</label>
+                                        <div class="col-sm-3">
+                                            <input name="status" class="form-control" type="text" id="inputBan" value="<?= show_date($user['banned_to']) ?>" readonly>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                                 <div class="row">
@@ -202,10 +203,11 @@ if (isset($data['do_change_pass'])) {
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                    </div>
 
-                    <div class="col-md-4 p-0">
+                        </div>
+
+                        <div class="col-md-4 p-0">
+                        </div>
                     </div>
                 </div>
             </div>
