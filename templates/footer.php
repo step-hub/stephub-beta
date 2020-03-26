@@ -16,9 +16,19 @@
                 <div class="col-6 col-md">
                     <h5>Документи</h5>
                     <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="about.php#terms">Правила користування</a></li>
-                        <li><a class="text-muted" href="about.php#privacy">Політика конйіденційності</a></li>
-                        <li><a class="text-muted" href="#">Ліцензія</a></li>
+                        <li>
+                            <a type="button" class="text-muted" data-toggle="modal" data-target="#modalTerms">Правила</a>
+                            <?php include_once 'templates/modalTerms.php'; ?>
+                        </li>
+
+                        <li>
+                            <a type="button" class="text-muted" data-toggle="modal" data-target="#modalPrivacy">Конфіденційність</a>
+                            <?php include_once 'templates/modalPrivacy.php'; ?>
+                        </li>
+                        <li>
+                            <a type="button" class="text-muted" data-toggle="modal" data-target="#modalLicense">Ліцензія</a>
+                            <?php include_once 'templates/modalLicense.php'; ?>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-6 col-md">
@@ -33,3 +43,4 @@
         </footer>
     </div>
 </div>
+
