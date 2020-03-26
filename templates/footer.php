@@ -20,7 +20,6 @@
                             <a type="button" class="text-muted" data-toggle="modal" data-target="#modalTerms">Правила</a>
                             <?php include_once 'templates/modalTerms.php'; ?>
                         </li>
-
                         <li>
                             <a type="button" class="text-muted" data-toggle="modal" data-target="#modalPrivacy">Конфіденційність</a>
                             <?php include_once 'templates/modalPrivacy.php'; ?>
