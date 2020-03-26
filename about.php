@@ -34,35 +34,37 @@ include_once 'php/functions.php';
             <div class="card-header my-bg-dark p-1"></div>
             <div class="card-body shadow-sm">
                 <div class="row">
-                    <div class="col-4">
-                        <nav id="navbar_about" class="navbar bg-light shadow-sm">
-                            <nav class="nav nav-pills flex-column">
-                                <a class="nav-link my-color-blue" href="#about">Про Нас</a>
+                    <div class="col-3">
+                        <div class="sticky-top anchor">
+                            <nav id="navbar_about" class="navbar bg-light shadow-sm border small">
                                 <nav class="nav nav-pills flex-column">
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-1-1">Що ми робимо?</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-1-2">Наша команда</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-1-3">Наша місія</a>
-                                </nav>
-                                <a class="nav-link my-color-blue" href="#terms">Правила користування</a>
-                                <nav class="nav nav-pills flex-column">
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-1">Терміни та визначення</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-2">Основні положення</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-3">Права та обов'язки сторін</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-4">Порядок розгляду спорів та відповідальність сорін</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-5">Персональні дані</a>
-                                </nav>
-                                <a class="nav-link my-color-blue" href="#privacy">Політика конфіденційності</a>
-                                <nav class="nav nav-pills flex-column">
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-1">Визначення понять</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-2">Загальні положення</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-5">Повідомлення</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-4">Зобов'язання</a>
-                                    <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-5">Прикінцеві положення</a>
+                                    <a class="nav-link my-color-blue" href="#about">Про Нас</a>
+                                    <nav class="nav nav-pills flex-column">
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-1-1">Що ми робимо?</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-1-2">Наша команда</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-1-3">Наша місія</a>
+                                    </nav>
+                                    <a class="nav-link my-color-blue" href="#terms">Правила користування</a>
+                                    <nav class="nav nav-pills flex-column">
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-1">Терміни та визначення</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-2">Основні положення</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-3">Права та обов'язки сторін</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-4">Порядок розгляду спорів та відповідальність сорін</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-5">Персональні дані</a>
+                                    </nav>
+                                    <a class="nav-link my-color-blue" href="#privacy">Політика конфіденційності</a>
+                                    <nav class="nav nav-pills flex-column">
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-1">Визначення понять</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-2">Загальні положення</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-3">Повідомлення</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-4">Зобов'язання</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-5">Прикінцеві положення</a>
+                                    </nav>
                                 </nav>
                             </nav>
-                        </nav>
+                        </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-9">
                         <h3 id="about" class="anchor">Про Нас</h3>
                         <h4 id="item-1-1" class="anchor">Що ми робимо?</h4>
                         <p><strong>StepHub</strong> - онлайн сервіс анонімного пошуку допомоги для вирішення різноманітних задач. Майданчик об'єднує замовників послуг, яким необхідно допомогти з вирішенням завдання, і людей готових допомогти.</p>
