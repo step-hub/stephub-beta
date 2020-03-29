@@ -124,6 +124,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 header('location: announcement.php?id=' . $announcement->id);
             }
         }
+
+        if (isset($data['do_cancel_ann'])) {
+            header('location: announcement.php?id=' . $announcement->id);
+        }
     }
 }
 ?>
@@ -157,32 +161,26 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <div class="container pt-5">
         <div class="row">
             <div class="col-md-9">
-                <?php if ($user['id'] == $announcement['user_id']): ?>
+                <?php if (isset($data['do_edit_ann'])): ?>
                     <div class="card shadow-sm">
-                        <form action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
-                            <div class="card-header my-bg-gray my-color-dark">
+                        <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
+                            <div class="card-header my-bg-gray my-color-dark border-bottom-0">
                                 <div class="row justify-content-center">
                                     <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$update_ann_errors[0]; ?></>
                                 </div>
                                 <div class="container">
                                     <div class="row pt-2 pb-2">
-                                        <div class="col-md-10">
-                                            <input type="text" name="title" value="<?= $announcement['title']?>" class="form-control mb-2 mr-sm-2" placeholder="Заголовок">
-                                        </div>
-                                        <div class="col-md-2 pr-0">
-                                            <button class="btn float-right my-color-dark" name="do_delete_ann" type="submit"><i class="fas fa-trash"></i></button>
-                                        </div>
+                                        <input type="text" name="title" value="<?= $announcement['title']?>" class="form-control form-control-lg my-bg-light my-color-dark" placeholder="Заголовок">
                                     </div>
                                     <div class="row pt-2 px-2">
-                                        <p class="card-text text-muted small mx-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
-                                        <p class="card-text text-muted small mx-2 mr-4"><i class="far fa-clock mr-2"></i><?= show_time($announcement['date']) ?></p>
-                                        <p class="card-text text-muted small mx-2"><i class="far fa-calendar-times mr-2"></i>
-                                            <input type="date" name="deadline" value="<?= date("Y-m-d", $announcement['deadline'])?>" class="form-control">
-                                        </p>
+                                        <p class="card-text text-muted small mr-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
+                                        <p class="card-text text-muted small ml-2 mr-4"><i class="far fa-clock mr-2"></i><?= show_time($announcement['date']) ?></p>
+                                        <p class="card-text text-muted small ml-2"><i class="far fa-calendar-times mr-2"></i></p>
+                                        <p class="card-text text-muted small mb-2 mr-0"><input type="date" name="deadline" value="<?= date("Y-m-d", $announcement['deadline'])?>" class="form-control form-control-sm my-bg-light text-muted"></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body px-4 pt-4 pb-2">
                                 <textarea name="details" cols="30" rows="10" class="form-control"><?= $announcement['details'] ?></textarea>
                             </div>
                             <?php if (isset($announcement['file'])): ?>
@@ -191,23 +189,22 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <button class="btn btn-secondary"><i class="fas fa-file-download mr-2"></i>Завантажити</button>
                                 </div>
                             <?php endif; ?>
-                            <div class="row justify-content-center">
-                                <button name="do_update_ann" type="submit" class="btn btn-info">Оновити</button>
-                            </div>
                         </form>
                     </div>
                 <?php else: ?>
                     <div class="card shadow-sm">
-                        <div class="card-header my-bg-gray my-color-dark">
+                        <div class="card-header my-bg-gray my-color-dark border-bottom-0">
                             <div class="container">
                                 <div class="row pt-2 pb-2">
                                     <div class="col-md-10">
                                         <h3 class="card-title"><?= $announcement['title'] ?></h3>
                                     </div>
                                     <div class="col-md-2 pr-0">
-                                        <form action="announcement.php?id=<?= $announcement['id']?>" method="post">
-                                            <button class="btn float-right my-color-dark" name="do_ban_ann" type="submit"><i class="fas fa-ban"></i></button>
-                                        </form>
+                                        <?php if($user['id'] != $announcement['user_id']): ?>
+                                            <form action="announcement.php?id=<?= $announcement['id']?>" method="post">
+                                                <button class="btn float-right my-color-dark" name="do_ban_ann" type="submit"><i class="fas fa-ban"></i></button>
+                                            </form>
+                                        <? endif; ?>
                                     </div>
                                 </div>
                                 <div class="row pt-2 px-2">
@@ -323,11 +320,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                         <i class="far fa-clock mr-2"></i><?= show_time($c['date']) ?>
                                                                     </p>
                                                                     <?php if ($announcement['user_id'] == $c['user_id']): ?>
-                                                                        <span class="badge badge-success mx-2 mb-0"><i
-                                                                                    class="fas fa-user mr-2"></i>Автор оголошення</span>
+                                                                        <span class="badge badge-success mx-2 mb-0"><i class="fas fa-user mr-2"></i>Автор оголошення</span>
                                                                     <?php elseif ($user['id'] == $c['user_id']): ?>
-                                                                        <span class="badge badge-secondary mx-2 mb-0"><i
-                                                                                    class="fas fa-user mr-2"></i>Ваш коментар</span>
+                                                                        <span class="badge badge-secondary mx-2 mb-0"><i class="fas fa-user mr-2"></i>Ваш коментар</span>
                                                                     <?php endif; ?>
                                                                 </div>
                                                             </div>
@@ -361,13 +356,33 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     </div>
                 </div>
             </div>
-            <?php if($user['id'] != $announcement['user_id']): ?>
+
+            <?php if($user['id'] == $announcement['user_id']): ?>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body shadow-sm">
+                            <form action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
+                                <?php if (isset($data['do_edit_ann'])): ?>
+                                    <h5 class="card-title">Редагувати</h5>
+
+                                    <button class="btn btn-secondary btn-block mt-3" form="form_edit_ann" name="do_cancel_ann" type="submit"><i class="fas fa-redo mr-2"></i>Відмінити</button>
+                                    <button class="btn btn-success btn-block mt-3" form="form_edit_ann" name="do_update_ann" type="submit"><i class="fas fa-save mr-2"></i>Зберегти</button>
+                                <?php else: ?>
+                                    <h5 class="card-title">Ваше оголошення</h5>
+
+                                    <button class="btn btn-secondary btn-block mt-3" name="do_edit_ann" type="submit"><i class="fas fa-edit mr-2"></i>Редагувати</button>
+                                    <button class="btn btn-danger btn-block mt-3" name="do_delete_ann" type="submit"><i class="fas fa-trash mr-2"></i>Видалити</button>
+                                <?php endif; ?>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body shadow-sm">
                             <h5 class="card-title">Можеш допомогти?</h5>
-                            <a href="#" class="btn btn-secondary btn-block"><i class="fas fa-comments mr-2"></i>Написати
-                                автору</a>
+                            <a href="#" class="btn btn-secondary btn-block"><i class="fas fa-comments mr-2"></i>Написати автору</a>
                             <p class="text-center my-0">або</p>
                             <a href="#" class="btn btn-success btn-block"><i class="fas fa-hands-helping mr-2"></i>Допомогти</a>
                         </div>
