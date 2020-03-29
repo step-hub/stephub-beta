@@ -180,7 +180,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body px-4 pt-4 pb-2">
+                            <div class="card-body">
                                 <textarea name="details" cols="30" rows="10" class="form-control"><?= $announcement['details'] ?></textarea>
                             </div>
                             <?php if (isset($announcement['file'])): ?>
@@ -214,8 +214,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <p><?= $announcement['details'] ?></p>
+                        <div class="card-body px-4 pt-4 pb-2">
+                            <p class="lead"><?= $announcement['details'] ?></p>
                         </div>
                         <?php if (isset($announcement['file'])): ?>
                             <div class="card-footer">
