@@ -246,7 +246,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
                                 <div class="anchor" id="comment<?= $a['id']?>">
                                     <div class="card mt-3 announcement-card" >
-                                        <div class="card-header my-bg-gray pb-0 pt-1">
+                                        <div class="card-header my-bg-gray pb-0 pt-1 border-bottom-0">
                                             <div class="row">
                                                 <div class="col-md-10">
                                                     <div class="row">
@@ -312,7 +312,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         <div class="row justify-content-end anchor" id="comment<?= $c['id']?>">
                                             <div class="col-md-10">
                                                 <div class="card mt-2 announcement-card">
-                                                    <div class="card-header my-bg-gray pb-0 pt-1">
+                                                    <div class="card-header my-bg-gray pb-0 pt-1 border-bottom-0">
                                                         <div class="row">
                                                             <div class="col-md-10">
                                                                 <div class="row">
