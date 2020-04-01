@@ -172,13 +172,13 @@ if (!array_key_exists('logged_user',$_SESSION)) {
 
                     <div class="checkbox mt-3 mb-0">
                         <label>
-                            <input type="checkbox" value="remember-me" name="remember">
+                            <input type="checkbox" value="remember-me" name="remember" id="remember">
                             <small>Я підтверджую, що ознайомився(лась) із <a href="#" data-toggle="collapse" data-target="#collapseTwo">правилами користування</a> сайтом і <a href="#" data-toggle="collapse" data-target="#collapseThree">політикою конфіденційності</a></small>
                         </label>
                     </div>
 
                     <small class="mt-2 mx-3 float-left">Вже маєте зареєстрований акаунт? <a href="index.php">Ввійти</a></small>
-                    <button class="btn my-btn-blue float-right" type="submit" name="do_signup">Зареєструвати</button>
+                    <button class="btn my-btn-blue float-right" type="submit" name="do_signup" id="register">Зареєструвати</button>
                 </form>
             </div>
             <div class="col-md-5">
@@ -437,10 +437,7 @@ if (!array_key_exists('logged_user',$_SESSION)) {
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
-        $(function(){
-            $(".myPopover").popover();
-        });
-    </script>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
