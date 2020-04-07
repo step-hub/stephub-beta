@@ -14,8 +14,7 @@
         <?php if ($_SESSION['logged_user']['user_status'] != 4): ?>
             <div class="row pb-4">
                 <div class="col">
-                    <a class="btn btn-lg my-btn-dark shadow-sm" href="create-announcement.php"><i
-                                class="fas fa-plus mr-2"></i>Розмістити оголошення</a>
+                    <a class="btn btn-lg my-btn-dark shadow-sm" href="create-announcement.php"><i class="material-icons mr-2">post_add</i>Розмістити оголошення</a>
                 </div>
             </div>
         <?php endif; ?>

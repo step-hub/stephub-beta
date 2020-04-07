@@ -8,9 +8,21 @@ img.img-large-logo {
     max-height:100% !important;
 }
 
+.navbar-brand-sm:hover {
+    color: #715142;
+    text-decoration: none;
+}
+
 .anchor {
     padding-top: 60px;
     margin-top: -60px !important;
+}
+
+.material-icons {
+    vertical-align: middle;
+    line-height: 0 !important;
+    position: relative;
+    top: -3px;
 }
 
 /*background*/
