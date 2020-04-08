@@ -101,7 +101,7 @@ if (isset($data['do_change_pass'])) {
     <?php if (array_key_exists('logged_user', $_SESSION)): ?>
         <div class="container">
             <div class="card mt-5">
-                <div class="card-header my-bg-dark p-1"></div>
+                <div class="card-header my-bg-dark pt-1 pb-0"></div>
                 <div class="card-body shadow-sm">
                     <div class="row">
                         <div class="col-md-8">

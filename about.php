@@ -31,7 +31,7 @@ include_once 'php/functions.php';
     <!-- Page Content -->
     <div class="container">
         <div class="card mt-5">
-            <div class="card-header my-bg-dark p-1"></div>
+            <div class="card-header my-bg-dark pt-1 p-0"></div>
             <div class="card-body shadow-sm">
                 <div class="row">
                     <div class="col-3">

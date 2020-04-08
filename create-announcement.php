@@ -76,42 +76,55 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
 <!-- Page Content -->
 <?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['user_status'] != 4): ?>
     <div class="container pt-5">
-        <h2>Створити нове оголошення</h2>
         <div class="card mt-0">
-            <?php show_apache_owner(); if ($errors): ?>
+            <?php if ($errors): ?>
                 <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
             <?php endif; ?>
-            <div class="card-body shadow-sm">
-                <form enctype="multipart/form-data" class="form-group" action="create-announcement.php" method="POST" >
-                    <input type="text" name="title" value="<?= @$data['title']?>" class="form-control mb-2 mr-sm-2" placeholder="Заголовок">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="deadline_time">Потрібно до</label>
-                            <input class="form-control" type="date" id="deadline_time" name="deadline" value="<?= @$data['deadline']?>">
-                        </div>
-                        <div class="col-md-8">
-                            <textarea name="details" value="<?= @$data['details']?>" rows="10" class="form-control mb-2 mr-sm-2" placeholder="Деталі оголошення"></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <!-- Upload file -->
-                        <div class="input-group mt-2">
-                            <div class="custom-file">
-                                <input type="hidden" name="MAX_FILE_SIZE" value="3000000">
-                                <input type="file" name="userfile" class="custom-file-input" id="fileGroup" aria-describedby="fileAddon">
-                                <label class="custom-file-label" for="fileGroup">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-primary" type="submit" name="do_post" id="fileAddon">Upload<i class="ml-2 fas fa-upload"></i></button>
-                            </div>
-                        </div>
-                    </div>
+
+            <form enctype="multipart/form-data" class="form-group mb-0" action="create-announcement.php" method="POST">
+                <div class="card-header my-bg-gray my-color-dark border-bottom-0">
                     <div class="row justify-content-center">
-                        <button type="submit" name="do_post" class="btn btn-success mt-1 mb-2">Сворити оголошення
-                        </button>
+                        <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
                     </div>
-                </form>
-            </div>
+                    <div class="container">
+                        <div class="row pt-2 pb-2">
+                            <input type="text" name="title" value="<?= @$data['title']?>" class="form-control form-control-lg my-bg-light my-color-dark" placeholder="Заголовок">
+                        </div>
+                        <div class="row pt-2 px-2">
+                            <p class="card-text text-muted ml-2 mt-1"><i class="far fa-calendar-times mr-2"></i></p>
+                            <label class="card-text text-muted mr-2 mt-1" for="deadline_time">Потрібно до: </label>
+                            <p class="card-text text-muted small mb-2 mr-0"><input class="form-control form-control-sm my-bg-light text-muted" type="date" id="deadline_time" name="deadline" value="<?= @$data['deadline']?>"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <textarea name="details" cols="30" rows="10" class="form-control" value="<?= @$data['details']?>" placeholder="Деталі оголошення"></textarea>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Upload file -->
+                            <div class="input-group mt-2">
+                                <div class="custom-file">
+                                    <input type="hidden" name="MAX_FILE_SIZE" value="3000000">
+                                    <input type="file" name="userfile" class="custom-file-input" id="fileGroup" aria-describedby="fileAddon">
+                                    <label class="custom-file-label" for="fileGroup">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="submit" name="do_post" id="fileAddon">Upload<i class="ml-2 fas fa-upload"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <button type="submit" name="do_post" class="btn btn-success mt-1 mb-2 ml-auto mr-3">Сворити оголошення</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </form>
         </div>
     </div>
     <?php else:
