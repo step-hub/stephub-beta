@@ -29,7 +29,7 @@
                     </li>
                     <?php endif; ?>
                     <li class="nav-item">
-                        <a class="btn my-btn-dark ml-3 <?php if (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") { echo "btn-sm"; } ?>" href="php/logout.php">Вихід</a>
+                        <a type="button" data-toggle="modal" data-target="#exitModal" class="btn my-btn-dark ml-3 <?php if (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") { echo "btn-sm"; } ?>">Вихід</a>
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
@@ -40,3 +40,24 @@
         </div>
     </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="exitModal" tabindex="-1" role="dialog" aria-labelledby="exitModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exitModalLabel">Ви хочете вийти?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Ви дійсно хочете вийти із вашого облікового запису?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                <a type="button" class="btn btn-danger" href="php/logout.php">Вийти</a>
+            </div>
+        </div>
+    </div>
+</div>
