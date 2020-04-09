@@ -18,7 +18,11 @@ include_once 'php/functions.php';
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link href="vendor/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
+
     <!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
     <link href="css/about.css" rel="stylesheet">
