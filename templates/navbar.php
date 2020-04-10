@@ -41,7 +41,7 @@
     </div>
 </nav>
 
-<!-- Modal -->
+<!-- Modal Exit -->
 <div class="modal fade" id="exitModal" tabindex="-1" role="dialog" aria-labelledby="exitModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

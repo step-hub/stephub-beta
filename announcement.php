@@ -147,7 +147,11 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link href="vendor/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
+
     <!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
 </head>
@@ -364,7 +368,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body shadow-sm">
-                            <form action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
+                            <form id="form_manage" action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
                                 <?php if (isset($data['do_edit_ann'])): ?>
                                     <h5 class="card-title">Редагувати</h5>
 
@@ -374,7 +378,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <h5 class="card-title">Ваше оголошення</h5>
 
                                     <button class="btn btn-secondary btn-block mt-3" name="do_edit_ann" type="submit"><i class="fas fa-edit mr-2"></i>Редагувати</button>
-                                    <button class="btn btn-danger btn-block mt-3" name="do_delete_ann" type="submit"><i class="fas fa-trash mr-2"></i>Видалити</button>
+                                    <button class="btn btn-danger btn-block mt-3" data-toggle="modal" data-target="#removeAnnModal"><i class="fas fa-trash mr-2"></i>Видалити</button>
                                 <?php endif; ?>
                             </form>
                         </div>
@@ -400,6 +404,27 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
     <!-- Footer -->
     <?php include_once 'templates/footer.php'; ?>
+
+    <!-- Modal Remove Announcement -->
+    <div class="modal fade" id="removeAnnModal" tabindex="-1" role="dialog" aria-labelledby="removeAnnModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="removeAnnModalLabel">Ви хочете видалити оголошення?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Після видалення вашого оголошення його буде неможливо переглянути та повернути.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                    <button form="form_manage" class="btn btn-danger" name="do_delete_ann" type="submit">Видалити</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
