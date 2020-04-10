@@ -86,7 +86,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
             <?php endif; ?>
 
             <form enctype="multipart/form-data" class="form-group mb-0" action="create-announcement.php" method="POST">
-                <div class="card-header my-bg-gray my-color-dark border-bottom-0">
+                <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0">
                     <div class="row justify-content-center">
                         <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
                     </div>

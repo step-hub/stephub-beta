@@ -109,7 +109,7 @@ if (isset($data['do_change_pass'])) {
                 <div class="col-md-3 pr-0">
 
                     <div class="card mt-5 profile-left-menu">
-                        <div class="card-body my-bg-gray">
+                        <div class="card-body diagonal-gradient-gray-light">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <a class="nav-link my-1 active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true"><i class="material-icons mr-2">account_circle</i>Мій профіль</a>
                                 <a class="nav-link my-1" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password" role="tab" aria-controls="v-pills-password" aria-selected="false"><i class="material-icons mr-2">lock</i>Змінити пароль</a>

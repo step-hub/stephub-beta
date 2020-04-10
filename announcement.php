@@ -168,7 +168,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 <?php if (isset($data['do_edit_ann'])): ?>
                     <div class="card shadow-sm">
                         <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
-                            <div class="card-header my-bg-gray my-color-dark border-bottom-0">
+                            <div class="card-header diagonal-gradient-gray-light my-color-dark border-bottom-0">
                                 <div class="row justify-content-center">
                                     <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$update_ann_errors[0]; ?></>
                                 </div>
@@ -197,7 +197,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     </div>
                 <?php else: ?>
                     <div class="card shadow-sm">
-                        <div class="card-header my-bg-gray my-color-dark border-bottom-0">
+                        <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0">
                             <div class="container">
                                 <div class="row pt-2 pb-2">
                                     <div class="col-md-10">
@@ -250,7 +250,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
                                 <div class="anchor" id="comment<?= $a['id']?>">
                                     <div class="card mt-3 announcement-card" >
-                                        <div class="card-header my-bg-gray pb-0 pt-1 border-bottom-0">
+                                        <div class="card-header diagonal-gradient-gray pb-0 pt-1 border-bottom-0">
                                             <div class="row">
                                                 <div class="col-md-10">
                                                     <div class="row">
@@ -316,7 +316,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         <div class="row justify-content-end anchor" id="comment<?= $c['id']?>">
                                             <div class="col-md-10">
                                                 <div class="card mt-2 announcement-card">
-                                                    <div class="card-header my-bg-gray pb-0 pt-1 border-bottom-0">
+                                                    <div class="card-header diagonal-gradient-gray pb-0 pt-1 border-bottom-0">
                                                         <div class="row">
                                                             <div class="col-md-10">
                                                                 <div class="row">
