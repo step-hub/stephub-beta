@@ -95,7 +95,7 @@ if (isset($data['do_change_pass'])) {
 
     <!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
-    <link href="css/about.css" rel="stylesheet">
+    <link href="css/profile.css" rel="stylesheet">
 </head>
 
 <body class="">
@@ -105,21 +105,28 @@ if (isset($data['do_change_pass'])) {
     <!-- Page Content -->
     <?php if (array_key_exists('logged_user', $_SESSION)): ?>
         <div class="container">
-            <div class="card mt-5">
-                <div class="card-header my-bg-dark pt-1 pb-0"></div>
-                <div class="card-body shadow-sm">
-                    <div class="row">
+            <div class="row pb-5">
+                <div class="col-md-3 pr-0">
 
-                        <div class="col-md-3">
+                    <div class="card mt-5 profile-left-menu">
+                        <div class="card-body my-bg-gray">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link my-color-blue my-1 active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true"><i class="material-icons mr-2">account_circle</i>Мій профіль</a>
-                                <a class="nav-link my-color-blue my-1" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password" role="tab" aria-controls="v-pills-password" aria-selected="false"><i class="material-icons mr-2">lock</i>Змінити пароль</a>
-                                <a class="nav-link my-color-blue my-1" id="v-pills-announce-tab" data-toggle="pill" href="#v-pills-announce" role="tab" aria-controls="v-pills-announce" aria-selected="false"><i class="material-icons mr-2">list</i>Мої оголошення</a>
-                                <a class="nav-link my-color-blue my-1" id="v-pills-delete-tab" data-toggle="pill" href="#v-pills-delete" role="tab" aria-controls="v-pills-delete" aria-selected="false"><i class="material-icons mr-2">cancel</i>Видалити акаунт</a>
+                                <a class="nav-link my-1 active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true"><i class="material-icons mr-2">account_circle</i>Мій профіль</a>
+                                <a class="nav-link my-1" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password" role="tab" aria-controls="v-pills-password" aria-selected="false"><i class="material-icons mr-2">lock</i>Змінити пароль</a>
+                                <a class="nav-link my-1" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false"><i class="material-icons mr-2">notifications</i>Сповіщення</a>
+                                <a class="nav-link my-1" id="v-pills-announce-tab" data-toggle="pill" href="#v-pills-announce" role="tab" aria-controls="v-pills-announce" aria-selected="false"><i class="material-icons mr-2">list</i>Мої оголошення</a>
+                                <a class="nav-link my-1" id="v-pills-delete-tab" data-toggle="pill" href="#v-pills-delete" role="tab" aria-controls="v-pills-delete" aria-selected="false"><i class="material-icons mr-2">cancel</i>Видалити акаунт</a>
                             </div>
                         </div>
-                        <div class="col-md-9">
+                    </div>
+
+                </div>
+                <div class="col-md-9 pl-0">
+
+                    <div class="card mt-5 profile-right-menu">
+                        <div class="card-body">
                             <div class="tab-content" id="v-pills-tabContent">
+
                                 <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                     <form class="form" action="profile.php" method="POST">
                                         <?php if ($errors): ?>
@@ -182,6 +189,7 @@ if (isset($data['do_change_pass'])) {
                                         </div>
                                     </form>
                                 </div>
+
                                 <div class="tab-pane fade" id="v-pills-password" role="tabpanel" aria-labelledby="v-pills-password-tab">
                                     <form class="form" action="profile.php" method="post">
                                         <div class="form-group row px-3">
@@ -216,11 +224,16 @@ if (isset($data['do_change_pass'])) {
                                         </div>
                                     </form>
                                 </div>
+
+                                <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">...</div>
+
                                 <div class="tab-pane fade" id="v-pills-announce" role="tabpanel" aria-labelledby="v-pills-announce-tab">...</div>
+
                                 <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">...</div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
