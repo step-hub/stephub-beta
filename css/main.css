@@ -4,8 +4,8 @@ body {
 }
 
 img.img-large-logo {
-    max-width:100% !important;
-    max-height:100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
 }
 
 .navbar-brand-sm:hover {
@@ -18,6 +18,9 @@ img.img-large-logo {
     margin-top: -60px !important;
 }
 
+
+/* google material design icons */
+
 .material-icons {
     vertical-align: middle;
     line-height: 0 !important;
@@ -25,47 +28,103 @@ img.img-large-logo {
     top: -3px;
 }
 
+
+/* Rules for sizing the icon. */
+
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+
+/* Rules for using icons as black on a light background. */
+
+.material-icons.md-dark {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.material-icons.md-dark.md-inactive {
+    color: rgba(0, 0, 0, 0.26);
+}
+
+
+/* Rules for using icons as white on a dark background. */
+
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+}
+
+.material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+
 /*background*/
+
 .my-bg-dark {
     background-color: #715142;
 }
+
 .my-bg-blue {
     background-color: #1a5784;
 }
+
 .my-bg-gray {
     background-color: #DDDCD6;
 }
+
 .my-bg-light {
     background-color: #EEEDE8;
 }
 
+
 /*color*/
+
 .my-color-dark {
     color: #715142;
 }
+
 .my-color-blue {
     color: #1a5784;
 }
+
 .my-color-gray {
     color: #DDDCD6;
 }
+
 .my-color-light {
     color: #EEEDE8;
 }
 
+
 /*buttons*/
+
 .my-btn-dark {
     background-color: #715142;
     color: #ffffff !important;
 }
+
 .my-btn-dark:hover {
     background-color: #513a2f;
     color: #ffffff !important;
 }
+
 .my-btn-outline-dark {
     border-color: #715142;
     color: #715142 !important;
 }
+
 .my-btn-outline-dark:hover {
     background-color: #715142;
     color: white !important;
@@ -75,59 +134,88 @@ img.img-large-logo {
     background-color: #1a5784;
     color: #ffffff !important;
 }
+
 .my-btn-blue:hover {
     background-color: #123b59;
     color: #ffffff !important;
 }
+
 .my-btn-outline-blue {
     border-color: #1a5784;
     color: #1a5784 !important;
 }
+
 .my-btn-outline-blue:hover {
     background-color: #1a5784;
     color: white !important;
 }
 
 .my-linebreak {
-    height:10px;
+    height: 10px;
     color: #DDDCD6;
 }
 
+
 /*navbar*/
-.navbar, .intro {
+
+.navbar,
+.intro {
     background-color: #DDDCD6;
     color: #715142;
 }
+
 a.navbar-brand {
     color: #715142;
 }
+
 a.navbar-brand:hover {
     color: #513a2f;
 }
+
 .navbar-nav li a {
     color: #715142;
 }
+
 .navbar-nav li a:hover {
     color: #513a2f;
 }
+
+
 /*gradient*/
+
 .diagonal-gradient-gray {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e5e4df+0,ceccc3+100 */
-    background: #e5e4df; /* Old browsers */
-    background: -moz-linear-gradient(-45deg,  #e5e4df 0%, #ceccc3 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg,  #e5e4df 0%,#ceccc3 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg,  #e5e4df 0%,#ceccc3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e4df', endColorstr='#ceccc3',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-}
-.diagonal-gradient-gray-light {
-    background: #ecece9;
-    background: -moz-linear-gradient(-45deg,  #ecece9 0%, #ceccc3 100%);
-    background: -webkit-linear-gradient(-45deg,  #ecece9 0%,#ceccc3 100%);
-    background: linear-gradient(135deg,  #ecece9 0%,#ceccc3 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ecece9', endColorstr='#ceccc3',GradientType=1 );
+    background: #e5e4df;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #e5e4df 0%, #ceccc3 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #e5e4df 0%, #ceccc3 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #e5e4df 0%, #ceccc3 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#e5e4df', endColorstr='#ceccc3', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
 }
 
+.diagonal-gradient-gray-light {
+    background: #ecece9;
+    background: -moz-linear-gradient(-45deg, #ecece9 0%, #ceccc3 100%);
+    background: -webkit-linear-gradient(-45deg, #ecece9 0%, #ceccc3 100%);
+    background: linear-gradient(135deg, #ecece9 0%, #ceccc3 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ecece9', endColorstr='#ceccc3', GradientType=1);
+}
+
+
+/* border */
+
+.my-border-light {
+    border: 1;
+    border-color: #c6c4ba;
+}
+
+
 /*header*/
+
 .intro {
     background-size: cover;
 }

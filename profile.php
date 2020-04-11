@@ -21,7 +21,7 @@ if (isset($data['do_update'])) {
     $newTelegram = $data['telegram'];
     $newEmail = $data['email'];
 
-    if($newEmail != $user['email']) {
+    if ($newEmail != $user['email']) {
         if (trim($newEmail) == '') {
             $errors[] = 'email field is empty!!!';
         }
@@ -30,7 +30,7 @@ if (isset($data['do_update'])) {
         }
     }
 
-    if($newTelegram != $user['telegram_username']) {
+    if ($newTelegram != $user['telegram_username']) {
         if (trim($newTelegram) == '') {
             $errors[] = 'telegram field is empty!!!';
         }
@@ -103,7 +103,7 @@ if (isset($data['do_change_pass'])) {
     <?php include_once 'templates/navbar.php'; ?>
 
     <!-- Page Content -->
-    <?php if (array_key_exists('logged_user', $_SESSION)): ?>
+    <?php if (array_key_exists('logged_user', $_SESSION)) : ?>
         <div class="container">
             <div class="row pb-5">
                 <div class="col-md-3 pr-0">
@@ -129,64 +129,64 @@ if (isset($data['do_change_pass'])) {
 
                                 <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                     <form class="form" action="profile.php" method="POST">
-                                        <?php if ($errors): ?>
+                                        <?php if ($errors) : ?>
                                             <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
-                                        <?php endif; ?>
-
-                                        <div class="form-group row px-3">
-                                            <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ваше ім'я</label>
-                                            <div class="col-sm-9">
-                                                <input name="login" class="form-control" type="text" id="inputLogin" value="<?= $user['login']?>" required aria-describedby="loginHelp" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row px-3">
-                                            <label class="col-sm-3 col-form-label text-right" for="inputEmail">Ел. пошта</label>
-                                            <div class="col-sm-9">
-                                                <input name="email" class="form-control" type="email" id="inputEmail" value="<?= $user['email']?>" placeholder="example@gmail.com" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row px-3">
-                                            <label class="col-sm-3 col-form-label text-right" for="inputTelegram">Телеграм</label>
-                                            <div class="col-sm-9">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">@</div>
-                                                    </div>
-                                                    <input name="telegram" class="form-control" type="text" id="inputTelegram" value="<?= $user['telegram_username']?>" placeholder="example" required>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row px-3">
-                                            <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Студентський</label>
-                                            <div class="col-sm-3">
-                                                <input name="stud_num" class="form-control disabled" type="text" id="inputStudNum" value="<?= $studentid_num?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row px-3">
-                                            <label class="col-sm-3 col-form-label text-right" for="inputReg">Дата реєстрації</label>
-                                            <div class="col-sm-3">
-                                                <input name="status" class="form-control" type="text" id="inputReg" value="<?= show_date($user['reg_date']) ?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row px-3">
-                                            <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Статус профілю</label>
-                                            <div class="col-sm-3">
-                                                <input name="status" class="form-control" type="text" value="<?= $user_status?>" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row px-3">
-                                            <?php if($user['banned_to']): ?>
-                                                <label class="col-sm-3 col-form-label text-right" for="inputBan">Забанено до</label>
-                                                <div class="col-sm-3">
-                                                    <input name="status" class="form-control" type="text" id="inputBan" value="<?= show_date($user['banned_to']) ?>" readonly>
-                                                </div>
                                             <?php endif; ?>
-                                        </div>
 
-                                        <div class="row justify-content-center">
-                                            <button class="btn my-btn-blue mx-3 mb-3" type="submit" name="do_update">Зберегти зміни</button>
-                                        </div>
+                                            <div class="form-group row px-3">
+                                                <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ваше ім'я</label>
+                                                <div class="col-sm-9">
+                                                    <input name="login" class="form-control" type="text" id="inputLogin" value="<?= $user['login'] ?>" required aria-describedby="loginHelp" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row px-3">
+                                                <label class="col-sm-3 col-form-label text-right" for="inputEmail">Ел. пошта</label>
+                                                <div class="col-sm-9">
+                                                    <input name="email" class="form-control" type="email" id="inputEmail" value="<?= $user['email'] ?>" placeholder="example@gmail.com" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row px-3">
+                                                <label class="col-sm-3 col-form-label text-right" for="inputTelegram">Телеграм</label>
+                                                <div class="col-sm-9">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">@</div>
+                                                        </div>
+                                                        <input name="telegram" class="form-control" type="text" id="inputTelegram" value="<?= $user['telegram_username'] ?>" placeholder="example" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row px-3">
+                                                <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Студентський</label>
+                                                <div class="col-sm-3">
+                                                    <input name="stud_num" class="form-control disabled" type="text" id="inputStudNum" value="<?= $studentid_num ?>" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row px-3">
+                                                <label class="col-sm-3 col-form-label text-right" for="inputReg">Дата реєстрації</label>
+                                                <div class="col-sm-3">
+                                                    <input name="status" class="form-control" type="text" id="inputReg" value="<?= show_date($user['reg_date']) ?>" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row px-3">
+                                                <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Статус профілю</label>
+                                                <div class="col-sm-3">
+                                                    <input name="status" class="form-control" type="text" value="<?= $user_status ?>" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row px-3">
+                                                <?php if ($user['banned_to']) : ?>
+                                                    <label class="col-sm-3 col-form-label text-right" for="inputBan">Забанено до</label>
+                                                    <div class="col-sm-3">
+                                                        <input name="status" class="form-control" type="text" id="inputBan" value="<?= show_date($user['banned_to']) ?>" readonly>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+
+                                            <div class="row justify-content-center">
+                                                <button class="btn my-btn-blue mx-3 mb-3" type="submit" name="do_update">Зберегти зміни</button>
+                                            </div>
                                     </form>
                                 </div>
 
@@ -203,9 +203,9 @@ if (isset($data['do_change_pass'])) {
                                             <label class="col-sm-3 col-form-label text-right" for="inputPassword">Новий пароль</label>
                                             <div class="col-sm-9">
                                                 <input name="password_new" class="form-control" type="password" id="inputPasswordNew" placeholder="Введіть новий пароль" required aria-describedby="passHelp2">
-                                                <?php if($new_password_error): ?>
+                                                <?php if ($new_password_error) : ?>
                                                     <small id="passHelp1" class="form-text text-danger"><?= $new_password_error ?></small>
-                                                <?php else: ?>
+                                                <?php else : ?>
                                                     <small id="passHelp2" class="form-text text-muted">
                                                         Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
                                                     </small>
@@ -237,9 +237,9 @@ if (isset($data['do_change_pass'])) {
                 </div>
             </div>
         </div>
-    <?php else:
+    <?php else :
         header("location: index.php");
-    endif;?>
+    endif; ?>
     <!-- Footer -->
     <?php include_once 'templates/footer.php'; ?>
 
@@ -247,4 +247,5 @@ if (isset($data['do_change_pass'])) {
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -89,14 +89,16 @@ function get_announcements_with_filter($sort_by, $sort_asc, $start, $qty)
 }
 function get_announcements_with_limit($start, $num)
 {
-    return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT ". $start .", ". $num);
+    return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT " . $start . ", " . $num);
 }
 
 // SELECT comments
 function get_comments_by_announcement_id($id)
 {
-    return [R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NULL ORDER BY date DESC", array($id)),
-        R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NOT NULL ORDER BY date ASC", array($id))];
+    return [
+        R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NULL ORDER BY date DESC", array($id)),
+        R::findAll('comments', "announcement_id = ? AND parent_comment_id IS NOT NULL ORDER BY date ASC", array($id))
+    ];
 }
 
 // SELECT users
