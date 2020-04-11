@@ -333,7 +333,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                                 <label class="sr-only" for="comment_field">Написати коментар</label>
                                                                                 <textarea class="form-control-sm  mr-sm-2" style="min-width: 100%" type="text" name="comment_to_com<?= $a['id'] ?>" rows="1" id="comment_field" placeholder="Написати коментар"></textarea>
                                                                             </div>
-                                                                            <div class="col-md-auto pl-0">
+                                                                            <div class="col-md-auto ml-auto pl-0">
                                                                                 <button type="submit" name="do_comment_to_comment<?= $a['id'] ?>" class="btn btn-sm my-btn-blue">
                                                                                     <i class="fa fa-paper-plane mr-2"></i>Відправити
                                                                                 </button>

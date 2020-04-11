@@ -128,9 +128,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             <div class="tab-content" id="v-pills-tabContent">
 
                                 <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                    <form class="form" action="profile.php" method="POST">
+                                    <form id="form-update-profile" class="form" action="profile.php" method="POST">
                                         <?php if ($errors) : ?>
-                                            <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
+                                            <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></p>
                                             <?php endif; ?>
 
                                             <div class="form-group row px-3">
@@ -185,7 +185,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                             </div>
 
                                             <div class="row justify-content-center">
-                                                <button class="btn my-btn-blue mx-3 mb-3" type="submit" name="do_update">Зберегти зміни</button>
+                                                <a type="button" class="btn my-btn-blue mx-3 mb-3" data-toggle="modal" data-target="#updateModal">Зберегти зміни</a>
                                             </div>
                                     </form>
                                 </div>
@@ -225,17 +225,81 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     </form>
                                 </div>
 
-                                <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">...</div>
+                                <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
+                                    <div class="container text-center">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="alert alert-warning" role="alert">
+                                                    Функціонал сповіщень знаходиться на стадії розробки
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="tab-pane fade" id="v-pills-announce" role="tabpanel" aria-labelledby="v-pills-announce-tab">
 
                                 </div>
 
-                                <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">...</div>
+                                <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">
+                                    <div class="container text-center">
+                                        <div class="row">
+                                            <div class="col">
+                                            <h4 class="mb-5">Видалення облікового запису StepHub</h4>
+                                            <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col ">
+                                                <button data-toggle="modal" data-target="#deleteModal" class="btn my-btn-red shadow-sm">Видалити акаунт</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+        <!-- Modal Update Profile -->
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">Зберегти зміни</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Ви дійсно хочете оновити дані вашого акаунту?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                        <button class="btn my-btn-blue" type="submit" form="form-update-profile" name="do_update">Зберегти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Delete Account -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Видалити акаунт</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Ви дійсно хочете видалити ваш обліковий запис?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                        <a type="button" class="btn my-btn-red" href="php/logout.php">Видалити</a>
+                    </div>
                 </div>
             </div>
         </div>
