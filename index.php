@@ -3,16 +3,13 @@ require "php/db.php";
 include_once 'php/functions.php';
 
 $data = $_GET;
+$sort_values = array('date', 'deadline');
+$order_values = array('asc', 'desc');
+$qty_values = array('10', '20', '30');
 
-if (isset($data['s']) and isset($data['o']) and isset($data['q'])) {
-    $sort_by = $data['s'];
-    $order = $data['o'];
-    $quantity_per_page = $data['q'];
-} else {
-    $sort_by = 'date';
-    $order = 'desc';
-    $quantity_per_page = 10;
-}
+$sort_by = (isset($data['s']) and in_array($data['s'], $sort_values)) ? $data['s'] : 'date';
+$order = (isset($data['o']) and in_array($data['o'], $order_values)) ? $data['o'] : 'desc';
+$quantity_per_page = (isset($data['q']) and in_array($data['q'], $qty_values)) ? $data['q'] : 10;
 
 $request = '';
 foreach (array_keys($data) as $key){

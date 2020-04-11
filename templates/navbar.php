@@ -2,6 +2,7 @@
     <div class="container">
         <a class="navbar-brand<?php if (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") { echo "-sm my-color-dark"; } ?>" href="index.php">StepHub</a>
         <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse <?php if (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") { echo "small"; } ?>" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
