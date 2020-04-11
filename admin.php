@@ -236,9 +236,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 <div class="col-md-4">
                     <div class="text-right">
                         <?php if ($data_get['table'] == 'users') : ?>
-                            <button class="btn btn-sm my-btn-outline-blue float-right" type="submit" form="update" name="do_update_users"><span class="material-icons mr-1">refresh</span>Оновити</button>
+                            <button class="btn btn-sm my-btn-outline-blue" type="submit" form="update" name="do_update_users"><span class="material-icons mr-1">refresh</span>Оновити</button>
                         <?php elseif ($data_get['table'] == 'announcements') : ?>
-                            <button class="btn btn-sm btn-secondary" type="submit" form="update_ann" name="do_update_ann"><span class="material-icons mr-1">refresh</span>Оновити</button>
+                            <button class="btn btn-sm my-btn-outline-blue" type="submit" form="update_ann" name="do_update_ann"><span class="material-icons mr-1">refresh</span>Оновити</button>
                         <?php endif; ?>
                     </div>
                 </div>
