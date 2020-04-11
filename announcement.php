@@ -205,7 +205,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                 <h3 class="card-title"><?= $announcement['title'] ?></h3>
                                             </div>
                                             <div class="col-md-2 pr-0">
-                                                <?php if($user['id'] != $announcement['user_id']): ?>
+                                                <?php if($user['id'] != $announcement['user_id'] and !$announcement['complaint']): ?>
                                                     <form action="announcement.php?id=<?= $announcement['id']?>" method="post">
                                                         <button class="btn float-right my-color-dark" name="do_ban_ann" type="submit"><i class="fas fa-ban"></i></button>
                                                     </form>

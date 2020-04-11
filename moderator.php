@@ -6,18 +6,33 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     $data_post = $_POST;
     $data_get = $_GET;
 
-    if (!$data_get){
+    $tables = array('users', 'announcements', 'com_complaints');
+    $order_values = array('ASC', 'DESC');
+    $qty_values = array('10', '20', '30');
+    $users_sort_by = array('id', 'login', 'user_status', 'banned_to', 'is_online');
+    $ann_sort_by = array('id', 'user_id', 'announcement_status_id', 'title', 'date', 'deadline', 'complaint');
+    $com_compl_sort_by = array('id', 'user_id', 'complaint', 'date', 'announcement_id');
+
+    if (!isset($data_get['table']) or !in_array($data_get['table'], $tables))
         $data_get['table'] = 'users';
+    if (!isset($data_get['users_sort_by']) or !in_array($data_get['users_sort_by'], $users_sort_by))
         $data_get['users_sort_by'] = 'id';
+    if (!isset($data_get['users_sort_order']) or !in_array($data_get['users_sort_order'], $order_values))
         $data_get['users_sort_order'] = 'ASC';
+    if (!isset($data_get['users_qty']) or !in_array($data_get['users_qty'], $qty_values))
         $data_get['users_qty'] = 20;
-        $data_get['ann_sort_by'] = 'id';
-        $data_get['ann_sort_order'] = 'ASC';
+    if (!isset($data_get['ann_sort_by']) or !in_array($data_get['ann_sort_by'], $ann_sort_by))
+        $data_get['ann_sort_by'] = 'date';
+    if (!isset($data_get['ann_sort_order']) or !in_array($data_get['ann_sort_order'], $order_values))
+        $data_get['ann_sort_order'] = 'DESC';
+    if (!isset($data_get['anns_qty']) or !in_array($data_get['anns_qty'], $qty_values))
         $data_get['anns_qty'] = 20;
-        $data_get['com_compl_sort_by'] = "id";
-        $data_get['com_compl_order_by'] = "ASC";
+    if (!isset($data_get['com_compl_sort_by']) or !in_array($data_get['com_compl_sort_by'], $ann_sort_by))
+        $data_get['com_compl_sort_by'] = "date";
+    if (!isset($data_get['com_compl_order_by']) or !in_array($data_get['com_compl_order_by'], $order_values))
+        $data_get['com_compl_order_by'] = 'DESC';
+    if (!isset($data_get['com_compl_qty']) or !in_array($data_get['com_compl_qty'], $qty_values))
         $data_get['com_compl_qty'] = 20;
-    }
 
     $request = '';
     foreach (array_keys($data_get) as $key){
@@ -158,7 +173,6 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 <body class="text-center" style="padding-top: 46px !important;">
     <!-- Navigation -->
 <?php include_once 'templates/navbar.php'; ?>
-
     <!-- Page Content -->
 <div class="container-fluid">
     <?php if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status < 3): ?>
@@ -166,8 +180,8 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             <form name="filter" action="moderator.php" method="GET" class="form-inline">
                 <label for="select_table" class="small">таблиця</label>
                 <select name="table" id="select_table" onchange="this.form.submit()" class="form-control form-control-sm m-1">
-                    <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected'?>>users</option>
-                    <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>announcements</option>
+                    <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected'?>>користувачі</option>
+                    <option value="announcements" <?php if ($data_get['table'] == 'announcements') echo 'selected'?>>оголошення</option>
                     <option value="com_complaints" <?php if ($data_get['table'] == 'com_complaints') echo 'selected'?>>бани коментів</option>
                 </select>
                 <label for="select_users_sort_by" class="small ml-1" <?php if ($data_get['table'] != 'users') echo 'hidden'?>>сортувати за</label>
