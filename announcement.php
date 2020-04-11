@@ -209,7 +209,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                     <form action="announcement.php?id=<?= $announcement['id']?>" method="post">
                                                         <button class="btn float-right my-color-dark" name="do_ban_ann" type="submit"><i class="fas fa-ban"></i></button>
                                                     </form>
-                                                <? endif; ?>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         <div class="row pt-2 px-2">

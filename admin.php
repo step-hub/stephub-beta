@@ -422,6 +422,8 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 </table>
             </div>
         <?php endif; ?>
+
+        <!-- Pagination-->
         <nav aria-label="Page navigation">
             <ul class="pagination pagination-sm justify-content-center">
                 <?php if($page == 1): ?>
@@ -466,11 +468,11 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     <li class="page-item">
                         <a class="page-link" href="admin.php?page=<?= ($page+1).'&'.$request ?>">&raquo;</a>
                     </li>
-                <? else: ?>
+                <?php else: ?>
                     <li class="page-item disabled">
                         <span class="page-link">&raquo;</span>
                     </li>
-                <? endif; ?>
+                <?php endif; ?>
             </ul>
         </nav>
     <?php else:
