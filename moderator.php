@@ -89,7 +89,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             if (isset($data_post['do_delete_ann_complaint' . $a['id']])) {
                 $a['complaint'] = null;
                 R::store($a);
-                header("location: admin.php?" . $request);
+                header("location: moderator.php?" . $request);
             }
         }
 
@@ -121,12 +121,12 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             if (isset($data_post['do_delete_comment' . $c['id']])) {
                 R::hunt('comments', 'parent_comment_id = ?', array($c['id']));
                 R::trash($c);
-                header("location: admin.php?" . $request);
+                header("location: moderator.php?" . $request);
             }
             if (isset($data_post['do_delete_complaint' . $c['id']])) {
                 $c['complaint'] = null;
                 R::store($c);
-                header("location: admin.php?" . $request);
+                header("location: moderator.php?" . $request);
             }
         }
     }
@@ -181,18 +181,18 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                 </li>
                             <?php else : ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="admin.php?page=<?= ($page - 1) . '&' . $request ?>">&laquo;</a>
+                                    <a class="page-link" href="moderator.php?page=<?= ($page - 1) . '&' . $request ?>">&laquo;</a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="admin.php?page=1&<?= $request ?>">1</a></li>
+                                <li class="page-item"><a class="page-link" href="moderator.php?page=1&<?= $request ?>">1</a></li>
                                 <?php if ($page > 4) : ?>
                                     <li class="page-item disabled"><a class="page-link">...</a></li>
-                                    <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page - 3) . '&' . $request ?>"><?= $page - 3 ?></a></li>
+                                    <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page - 3) . '&' . $request ?>"><?= $page - 3 ?></a></li>
                                 <?php endif; ?>
                                 <?php if ($page > 3) : ?>
-                                    <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page - 2) . '&' . $request ?>"><?= $page - 2 ?></a></li>
+                                    <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page - 2) . '&' . $request ?>"><?= $page - 2 ?></a></li>
                                 <?php endif; ?>
                                 <?php if ($page > 2) : ?>
-                                    <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page - 1) . '&' . $request ?>"><?= $page - 1 ?></a></li>
+                                    <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page - 1) . '&' . $request ?>"><?= $page - 1 ?></a></li>
                                 <?php endif; ?>
                             <?php endif; ?>
                             <li class="page-item active">
@@ -200,22 +200,22 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                             </li>
                             <?php if ($page != $total) : ?>
                                 <?php if ($page + 1 < $total) : ?>
-                                    <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page + 1) . '&' . $request ?>"><?= $page + 1 ?></a></li>
+                                    <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page + 1) . '&' . $request ?>"><?= $page + 1 ?></a></li>
                                 <?php endif; ?>
                                 <?php if ($page + 2 < $total) : ?>
-                                    <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page + 2) . '&' . $request ?>"><?= $page + 2 ?></a></li>
+                                    <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page + 2) . '&' . $request ?>"><?= $page + 2 ?></a></li>
                                 <?php endif; ?>
                                 <?php if ($page + 3 < $total) : ?>
-                                    <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page + 3) . '&' . $request ?>"><?= $page + 3 ?></a></li>
+                                    <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page + 3) . '&' . $request ?>"><?= $page + 3 ?></a></li>
                                     <?php if ($page + 3 != $total - 1) : ?>
                                         <li class="page-item disabled"><a class="page-link">...</a></li>
                                     <?php endif; ?>
                                 <?php endif; ?>
 
-                                <li class="page-item"><a class="page-link" href="admin.php?page=<?= $total . '&' . $request ?>"><?= $total ?></a></li>
+                                <li class="page-item"><a class="page-link" href="moderator.php?page=<?= $total . '&' . $request ?>"><?= $total ?></a></li>
 
                                 <li class="page-item">
-                                    <a class="page-link" href="admin.php?page=<?= ($page + 1) . '&' . $request ?>">&raquo;</a>
+                                    <a class="page-link" href="moderator.php?page=<?= ($page + 1) . '&' . $request ?>">&raquo;</a>
                                 </li>
                             <?php else : ?>
                                 <li class="page-item disabled">
@@ -241,7 +241,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     <div class="" id="heading-filter"></div>
                     <div id="collapse-filter" class="collapse" aria-labelledby="heading-filter" data-parent="#idFilter">
                         <!-- Filter -->
-                        <form name="filter" action="admin.php" method="GET" class="form-inline">
+                        <form name="filter" action="moderator.php" method="GET" class="form-inline">
                             <label for="select_table" class="small ml-3">Таблиця</label>
                             <select name="table" id="select_table" onchange="this.form.submit()" class="form-control form-control-sm m-1">
                                 <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected' ?>>користувачі</option>
@@ -441,7 +441,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                 <th class="p-1"></th>
                             </tr>
                         </thead>
-                        <form id="update" action="admin.php?<?= $request ?>" method="POST">
+                        <form id="update" action="moderator.php?<?= $request ?>" method="POST">
                             <tbody>
                                 <?php foreach ($complaints as $complaint) : ?>
                                     <tr>
