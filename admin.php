@@ -6,18 +6,33 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     $data_get = $_GET;
     $data_post = $_POST;
 
-    if (!$data_get) {
+    $tables = array('users', 'announcements', 'com_complaints');
+    $order_values = array('ASC', 'DESC');
+    $qty_values = array('10', '20', '30');
+    $users_sort_by = array('id', 'login', 'user_status', 'banned_to', 'is_online');
+    $ann_sort_by = array('id', 'user_id', 'announcement_status_id', 'title', 'date', 'deadline', 'complaint');
+    $com_compl_sort_by = array('id', 'user_id', 'complaint', 'date', 'announcement_id');
+
+    if (!isset($data_get['table']) or !in_array($data_get['table'], $tables))
         $data_get['table'] = 'users';
+    if (!isset($data_get['users_sort_by']) or !in_array($data_get['users_sort_by'], $users_sort_by))
         $data_get['users_sort_by'] = 'id';
+    if (!isset($data_get['users_sort_order']) or !in_array($data_get['users_sort_order'], $order_values))
         $data_get['users_sort_order'] = 'ASC';
+    if (!isset($data_get['users_qty']) or !in_array($data_get['users_qty'], $qty_values))
         $data_get['users_qty'] = 20;
-        $data_get['ann_sort_by'] = 'id';
-        $data_get['ann_sort_order'] = 'ASC';
+    if (!isset($data_get['ann_sort_by']) or !in_array($data_get['ann_sort_by'], $ann_sort_by))
+        $data_get['ann_sort_by'] = 'date';
+    if (!isset($data_get['ann_sort_order']) or !in_array($data_get['ann_sort_order'], $order_values))
+        $data_get['ann_sort_order'] = 'DESC';
+    if (!isset($data_get['anns_qty']) or !in_array($data_get['anns_qty'], $qty_values))
         $data_get['anns_qty'] = 20;
-        $data_get['com_compl_sort_by'] = "id";
-        $data_get['com_compl_order_by'] = "ASC";
+    if (!isset($data_get['com_compl_sort_by']) or !in_array($data_get['com_compl_sort_by'], $ann_sort_by))
+        $data_get['com_compl_sort_by'] = "date";
+    if (!isset($data_get['com_compl_order_by']) or !in_array($data_get['com_compl_order_by'], $order_values))
+        $data_get['com_compl_order_by'] = 'DESC';
+    if (!isset($data_get['com_compl_qty']) or !in_array($data_get['com_compl_qty'], $qty_values))
         $data_get['com_compl_qty'] = 20;
-    }
 
     $request = '';
     foreach (array_keys($data_get) as $key) {
