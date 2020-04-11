@@ -177,11 +177,11 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                                         <li class="page-item">
                                             <a class="page-link" href="index.php?page=<?= ($page+1).'&'.$request ?>">&raquo;</a>
                                         </li>
-                                    <? else: ?>
+                                    <?php else: ?>
                                         <li class="page-item disabled">
                                             <span class="page-link">&raquo;</span>
                                         </li>
-                                    <? endif; ?>
+                                    <?php endif; ?>
                                 </ul>
                             </nav>
                         <?php else: ?>
