@@ -181,7 +181,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 <div class="col-md-4">
                     <!-- Pagination-->
                     <nav aria-label="Page navigation">
-                        <ul class="pagination pagination-sm justify-content-center">
+                        <ul class="pagination pagination-sm justify-content-center mb-0">
                             <?php if ($page == 1) : ?>
                                 <li class="page-item disabled">
                                     <span class="page-link">&laquo;</span>
@@ -236,7 +236,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 <div class="col-md-4">
                     <div class="text-right">
                         <?php if ($data_get['table'] == 'users') : ?>
-                            <button class="btn btn-sm btn-secondary float-right" type="submit" form="update" name="do_update_users"><span class="material-icons mr-1">refresh</span>Оновити</button>
+                            <button class="btn btn-sm my-btn-outline-blue float-right" type="submit" form="update" name="do_update_users"><span class="material-icons mr-1">refresh</span>Оновити</button>
                         <?php elseif ($data_get['table'] == 'announcements') : ?>
                             <button class="btn btn-sm btn-secondary" type="submit" form="update_ann" name="do_update_ann"><span class="material-icons mr-1">refresh</span>Оновити</button>
                         <?php endif; ?>
@@ -314,7 +314,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                 <option value="30" <?php if ($data_get['com_compl_qty'] == '30') echo 'selected' ?>>30</option>
                                 <option value="40" <?php if ($data_get['com_compl_qty'] == '40') echo 'selected' ?>>40</option>
                             </select>
-                            <button type="submit" name="do_filter" class="btn btn-sm btn-success ml-3">Фільтрувати</button>
+                            <button type="submit" name="do_filter" class="btn btn-sm my-btn-blue ml-3">Фільтрувати</button>
                         </form>
                     </div>
                 </div>
