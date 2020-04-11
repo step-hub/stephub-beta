@@ -2,73 +2,73 @@
 require "php/db.php";
 include_once 'php/functions.php';
 
-$_SESSION['logged_user'] = get_user_by_id($_SESSION['logged_user']['id']);
-$user = $_SESSION['logged_user'];
-
-$data = $_POST;
-$studentid_num = get_studentid_by_id($user['studentid_id'])['student_id_num'];
-$user_status = get_user_status_by_id($user['user_status'])['status'];
+if (array_key_exists('logged_user', $_SESSION)) {
+    $user = $_SESSION['logged_user'];
+    $data = $_POST;
+    $studentid_num = get_studentid_by_id($user['studentid_id'])['student_id_num'];
+    $user_status = get_user_status_by_id($user['user_status'])['status'];
 
 //errors
-$errors = array();
-$old_password_error = null;
-$new_password_error = null;
-$repeat_password_error = null;
+    $errors = array();
+    $old_password_error = null;
+    $new_password_error = null;
+    $repeat_password_error = null;
 
 // EDIT USER INFO
-if (isset($data['do_update'])) {
-    console_log($user);
-    $newTelegram = $data['telegram'];
-    $newEmail = $data['email'];
+    if (isset($data['do_update'])) {
+        console_log($user);
+        $newTelegram = $data['telegram'];
+        $newEmail = $data['email'];
 
-    if ($newEmail != $user['email']) {
-        if (trim($newEmail) == '') {
-            $errors[] = 'email field is empty!!!';
+        if ($newEmail != $user['email']) {
+            if (trim($newEmail) == '') {
+                $errors[] = 'email field is empty!!!';
+            }
+            if (count_users_by_email($newEmail) > 0) {
+                $errors[] = "user with such email already exist!!!";
+            }
         }
-        if (count_users_by_email($newEmail) > 0) {
-            $errors[] = "user with such email already exist!!!";
+
+        if ($newTelegram != $user['telegram_username']) {
+            if (trim($newTelegram) == '') {
+                $errors[] = 'telegram field is empty!!!';
+            }
+            if (count_users_by_telegram($newTelegram) > 0) {
+                $errors[] = "user with such telegram already exist!!!";
+            }
+        }
+
+        if (empty($errors)) {
+            update_email($user['id'], $newEmail);
+            update_telegram($user['id'], $newTelegram);
+
+            header("Refresh:0");
         }
     }
-
-    if ($newTelegram != $user['telegram_username']) {
-        if (trim($newTelegram) == '') {
-            $errors[] = 'telegram field is empty!!!';
-        }
-        if (count_users_by_telegram($newTelegram) > 0) {
-            $errors[] = "user with such telegram already exist!!!";
-        }
-    }
-
-    if (empty($errors)) {
-        update_email($user['id'], $newEmail);
-        update_telegram($user['id'], $newTelegram);
-
-        header("Refresh:0");
-    }
-}
 
 // CHANGE PASSWORD
-if (isset($data['do_change_pass'])) {
-    $curPass = $user['password'];
-    $oldPass = $data['password_old'];
-    $newPass = $data['password_new'];
-    $conPass = $data['password_confirmation'];
+    if (isset($data['do_change_pass'])) {
+        $curPass = $user['password'];
+        $oldPass = $data['password_old'];
+        $newPass = $data['password_new'];
+        $conPass = $data['password_confirmation'];
 
-    if (password_verify($oldPass, $curPass)) {
-        if ($newPass != null) {
-            if ($newPass == $conPass) {
-                $pass = password_hash($newPass, PASSWORD_DEFAULT);
-                console_log($pass);
-                update_password($user['id'], $pass);
-                $user['password'] = $pass;
+        if (password_verify($oldPass, $curPass)) {
+            if ($newPass != null) {
+                if ($newPass == $conPass) {
+                    $pass = password_hash($newPass, PASSWORD_DEFAULT);
+                    console_log($pass);
+                    update_password($user['id'], $pass);
+                    $user['password'] = $pass;
+                } else {
+                    $repeat_password_error = "Your password doesn't match.";
+                }
             } else {
-                $repeat_password_error = "Your password doesn't match.";
+                $new_password_error = "Empty password. Please enter your new password.";
             }
         } else {
-            $new_password_error = "Empty password. Please enter your new password.";
+            $old_password_error = "Wrong password!";
         }
-    } else {
-        $old_password_error = "Wrong password!";
     }
 }
 ?>
@@ -227,7 +227,9 @@ if (isset($data['do_change_pass'])) {
 
                                 <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">...</div>
 
-                                <div class="tab-pane fade" id="v-pills-announce" role="tabpanel" aria-labelledby="v-pills-announce-tab">...</div>
+                                <div class="tab-pane fade" id="v-pills-announce" role="tabpanel" aria-labelledby="v-pills-announce-tab">
+
+                                </div>
 
                                 <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">...</div>
                             </div>
