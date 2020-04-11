@@ -7,13 +7,18 @@ if (array_key_exists('logged_user', $_SESSION)) {
     $errors = array();
     $update_ann_errors = array();
 
+    $user_status = $_SESSION['logged_user']->user_status;
+    $user_id = $_SESSION['logged_user']->id;
+
     $announcement = get_announcement_by_id($_GET['id']);
     if ($announcement) {
         $visible = true;
+        if ($announcement['announcement_status_id'] == 3){
+            if (!($user_status <= 2 or $announcement['user_id'] == $user_id or $announcement['help_user_id'] == $user_id))
+                $visible = false;
+        }
         if ($announcement['announcement_status_id'] == 2){
-            $user_status = $_SESSION['logged_user']->user_status;
-            $user_id = $_SESSION['logged_user']->id;
-            if (!($user_status == 1 or $user_status == 2 or $announcement['user_id'] == $user_id or $announcement['help_user_id'] == $user_id))
+            if (!($user_status <= 2 or $announcement['user_id'] == $user_id))
                 $visible = false;
         }
         [$ann_comments, $com_comments] = get_comments_by_announcement_id($_GET['id']);
@@ -138,6 +143,20 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
         if (isset($data['do_help'])){
             $announcement['help_user_id'] = $_SESSION['logged_user']->id;
+            R::store($announcement);
+            header('location: announcement.php?id=' . $announcement['id']);
+        }
+
+        if (isset($data['do_apply_help'])){
+            $announcement['announcement_status_id'] = 3;
+            R::store($announcement);
+            header('location: announcement.php?id=' . $announcement['id']);
+        }
+
+        if (isset($data['do_cancel_help'])){
+            $announcement['announcement_status_id'] = 1;
+            $announcement['help_user_id'] = null;
+            $announcement['date'] = time();
             R::store($announcement);
             header('location: announcement.php?id=' . $announcement['id']);
         }
@@ -394,6 +413,13 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         <?php else : ?>
                                             <h5 class="card-title">Ваше оголошення</h5>
                                             <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
+                                                <?php if ($announcement['help_user_id']):?>
+                                                    <?php if ($announcement['announcement_status_id'] == 1):?>
+                                                        <button class="btn btn-success btn-block mt-3" name="do_apply_help" type="submit"><i class="fas fa-hands-helping mr-2"></i>Прийняти допомогу</button>
+                                                    <?php elseif ($announcement['announcement_status_id'] == 3): ?>
+                                                        <button class="btn btn-warning btn-block mt-3" name="do_cancel_help" type="submit"><i class="fas fa-hands-helping mr-2"></i>Відмовити допомогу</button>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
                                                 <button class="btn btn-secondary btn-block mt-3" name="do_edit_ann" type="submit"><i class="fas fa-edit mr-2"></i>Редагувати</button>
                                             </form>
                                             <button class="btn my-btn-red btn-block mt-3" data-toggle="modal" data-target="#removeAnnModal"><i class="fas fa-trash mr-2"></i>Видалити</button>
@@ -421,7 +447,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         <div class="card-body text-center">
                             <div class="card not-found-child diagonal-gradient-gray-light">
                                 <div class="card-body text-center my-color-dark py-5">
-                                    <h3 class="mb-5"><i class="fas fa-exclamation-circle mr-3"></i>Це оголошення є замороженим</h3>
+                                    <h3 class="mb-5"><i class="fas fa-exclamation-circle mr-3"></i>У вас нема можливості дивитися це оголошення</h3>
                                     <a href="index.php">Повернутись на головну</a>
                                 </div>
                             </div>
