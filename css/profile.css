@@ -5,6 +5,7 @@
     border-right: 0;
     min-height: 100%;
 }
+
 .profile-right-menu {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -17,6 +18,7 @@ a.nav-link {
     background-color: transparent;
     color: #6c757d;
 }
+
 a.nav-link:hover {
     background-color: transparent;
     color: #545b62;
@@ -26,6 +28,7 @@ a.nav-link.active {
     background-color: transparent !important;
     color: #715142 !important;
 }
+
 a.nav-link.active:hover {
     background-color: transparent !important;
     color: #513a2f !important;
