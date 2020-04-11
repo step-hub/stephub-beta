@@ -40,15 +40,15 @@ include_once 'php/functions.php';
                 <div class="row">
                     <div class="col-3">
                         <div class="sticky-top anchor">
-                            <nav id="navbar_about" class="navbar bg-light shadow-sm border small">
+                            <nav id="navbar_about" class="navbar bg-light shadow-sm border small px-1">
                                 <nav class="nav nav-pills flex-column">
-                                    <a class="nav-link my-color-blue" href="#about">Про Нас</a>
+                                    <a class="nav-link my-color-blue" href="#about"><span class="material-icons mr-2">group</span>Про Нас</a>
                                     <nav class="nav nav-pills flex-column">
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-1-1">Що ми робимо?</a>
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-1-2">Наша команда</a>
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-1-3">Наша місія</a>
                                     </nav>
-                                    <a class="nav-link my-color-blue" href="#terms">Правила користування</a>
+                                    <a class="nav-link my-color-blue" href="#terms"><span class="material-icons mr-2">gavel</span>Правила користування</a>
                                     <nav class="nav nav-pills flex-column">
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-1">Терміни та визначення</a>
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-2">Основні положення</a>
@@ -56,7 +56,7 @@ include_once 'php/functions.php';
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-4">Порядок розгляду спорів та відповідальність сорін</a>
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-5">Персональні дані</a>
                                     </nav>
-                                    <a class="nav-link my-color-blue" href="#privacy">Політика конфіденційності</a>
+                                    <a class="nav-link my-color-blue" href="#privacy"><span class="material-icons mr-2">security</span>Політика конфіденційності</a>
                                     <nav class="nav nav-pills flex-column">
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-1">Визначення понять</a>
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-3-2">Загальні положення</a>
