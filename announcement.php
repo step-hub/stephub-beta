@@ -368,19 +368,18 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body shadow-sm">
-                            <form id="form_manage" action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
-                                <?php if (isset($data['do_edit_ann'])): ?>
-                                    <h5 class="card-title">Редагувати</h5>
+                            <?php if (isset($data['do_edit_ann'])): ?>
+                                <h5 class="card-title">Редагувати</h5>
 
-                                    <button class="btn btn-secondary btn-block mt-3" form="form_edit_ann" name="do_cancel_ann" type="submit"><i class="fas fa-redo mr-2"></i>Відмінити</button>
-                                    <button class="btn btn-success btn-block mt-3" form="form_edit_ann" name="do_update_ann" type="submit"><i class="fas fa-save mr-2"></i>Зберегти</button>
-                                <?php else: ?>
-                                    <h5 class="card-title">Ваше оголошення</h5>
-
+                                <button class="btn btn-secondary btn-block mt-3" form="form_edit_ann" name="do_cancel_ann" type="submit"><i class="fas fa-redo mr-2"></i>Відмінити</button>
+                                <button class="btn btn-success btn-block mt-3" form="form_edit_ann" name="do_update_ann" type="submit"><i class="fas fa-save mr-2"></i>Зберегти</button>
+                            <?php else: ?>
+                                <h5 class="card-title">Ваше оголошення</h5>
+                                <form action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
                                     <button class="btn btn-secondary btn-block mt-3" name="do_edit_ann" type="submit"><i class="fas fa-edit mr-2"></i>Редагувати</button>
-                                    <button class="btn btn-danger btn-block mt-3" data-toggle="modal" data-target="#removeAnnModal"><i class="fas fa-trash mr-2"></i>Видалити</button>
-                                <?php endif; ?>
-                            </form>
+                                </form>
+                                <button class="btn btn-danger btn-block mt-3" data-toggle="modal" data-target="#removeAnnModal"><i class="fas fa-trash mr-2"></i>Видалити</button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -419,8 +418,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     Після видалення вашого оголошення його буде неможливо переглянути та повернути.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                    <button form="form_manage" class="btn btn-danger" name="do_delete_ann" type="submit">Видалити</button>
+                    <form action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                        <button class="btn btn-danger" name="do_delete_ann" type="submit">Видалити</button>
+                    </form>
                 </div>
             </div>
         </div>
