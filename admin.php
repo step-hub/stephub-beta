@@ -374,10 +374,10 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                     </td>
                                     <td>
                                         <div class="row justify-content-center">
-                                            <a href="mail.php?id=<?= $user['id'] ?>" target="_blank" class="btn btn-sm btn-warning border-radius-right-0 shadow-sm">
-                                                <span class="material-icons md-24">mail_outline</span>
+                                            <a class="btn btn-sm my-btn-orange border-radius-right-0 shadow-sm" href="mail.php?id=<?= $user['id'] ?>" target="_blank">
+                                                <span class="material-icons md-24">mail</span>
                                             </a>
-                                            <button class="btn btn-sm btn-danger border-radius-left-0 shadow-sm" type="submit" name="do_delete_user<?= $user['id'] ?>">
+                                            <button class="btn btn-sm my-btn-red border-radius-left-0 shadow-sm" type="submit" name="do_delete_user<?= $user['id'] ?>">
                                                 <span class="material-icons md-24">delete</span>
                                             </button>
                                         </div>
@@ -425,16 +425,16 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                         <td><?= $announcement['complaint'] ?></td>
                                         <td>
                                             <div class="row justify-content-center">
-                                                <a target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $announcement['id'] ?>" class="btn btn-sm btn-secondary border-radius-right-0 shadow-sm">
+                                                <a class="btn btn-sm btn-secondary border-radius-right-0 shadow-sm" target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $announcement['id'] ?>">
                                                     <span class="material-icons md-24">launch</span>
                                                 </a>
-                                                <a href="mail.php?id=<?= $announcement['user_id'] ?>" target="_blank" class="btn btn-sm btn-warning border-radius-0 shadow-sm">
-                                                    <span class="material-icons md-24">mail_outline</span>
+                                                <a class="btn btn-sm my-btn-orange border-radius-0 shadow-sm" href="mail.php?id=<?= $announcement['user_id'] ?>" target="_blank">
+                                                    <span class="material-icons md-24">mail</span>
                                                 </a>
                                                 <button class="btn btn-sm btn-success border-radius-0 shadow-sm" <?php if (!$announcement['complaint']) echo 'disabled' ?> type="submit" name="do_delete_ann_complaint<?= $announcement['id'] ?>">
-                                                    <span class="material-icons md-24">security</span>
+                                                    <span class="material-icons md-24">verified_user</span>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger border-radius-left-0 shadow-sm" type="submit" name="do_delete_ann<?= $announcement['id'] ?>">
+                                                <button class="btn btn-sm my-btn-red border-radius-left-0 shadow-sm" type="submit" name="do_delete_ann<?= $announcement['id'] ?>">
                                                     <span class="material-icons md-24">delete</span>
                                                 </button>
                                             </div>
@@ -475,16 +475,16 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                         <td><?= show_detailed_date($complaint['date']) ?></td>
                                         <td>
                                             <div class="row justify-content-center">
-                                                <a target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $complaint['announcement_id'] ?>#comment<?= $complaint['id'] ?>" class="btn btn-sm btn-secondary border-radius-right-0 shadow-sm">
+                                                <a class="btn btn-sm btn-secondary border-radius-right-0 shadow-sm" target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $complaint['announcement_id'] ?>#comment<?= $complaint['id'] ?>">
                                                     <span class="material-icons md-24">launch</span>
                                                 </a>
-                                                <a href="mail.php?id=<?= $complaint['user_id'] ?>" target="_blank" class="btn btn-sm btn-warning border-radius-0 shadow-sm">
-                                                    <span class="material-icons md-24">mail_outline</span>
+                                                <a class="btn btn-sm my-btn-orange border-radius-0 shadow-sm" href="mail.php?id=<?= $complaint['user_id'] ?>" target="_blank">
+                                                    <span class="material-icons md-24 light">mail</span>
                                                 </a>
                                                 <button class="btn btn-sm btn-success border-radius-0 shadow-sm" type="submit" name="do_delete_complaint<?= $complaint['id'] ?>">
-                                                    <span class="material-icons md-24">security</span>
+                                                    <span class="material-icons md-24">verified_user</span>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger border-radius-left-0 shadow-sm" type="submit" name="do_delete_comment<?= $complaint['id'] ?>">
+                                                <button class="btn btn-sm my-btn-red border-radius-left-0 shadow-sm" type="submit" name="do_delete_comment<?= $complaint['id'] ?>">
                                                     <span class="material-icons md-24">delete</span>
                                                 </button>
                                             </div>

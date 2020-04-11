@@ -154,7 +154,12 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?= $announcement['title'] ?> | StepHub</title>
+    <title>
+        <?php if ($announcement) {
+            echo $announcement['title'];
+        } else {
+            echo "Не знайдено оголошення";
+        } ?> | StepHub</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 
@@ -391,7 +396,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                             <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
                                                 <button class="btn btn-secondary btn-block mt-3" name="do_edit_ann" type="submit"><i class="fas fa-edit mr-2"></i>Редагувати</button>
                                             </form>
-                                            <button class="btn btn-danger btn-block mt-3" data-toggle="modal" data-target="#removeAnnModal"><i class="fas fa-trash mr-2"></i>Видалити</button>
+                                            <button class="btn my-btn-red btn-block mt-3" data-toggle="modal" data-target="#removeAnnModal"><i class="fas fa-trash mr-2"></i>Видалити</button>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -461,7 +466,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 <div class="modal-footer">
                     <form action="announcement.php?id=<?= $announcement['id']?>" method="post" class="form-group">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                        <button class="btn btn-danger" name="do_delete_ann" type="submit">Видалити</button>
+                        <button class="btn my-btn-red" name="do_delete_ann" type="submit">Видалити</button>
                     </form>
                 </div>
             </div>

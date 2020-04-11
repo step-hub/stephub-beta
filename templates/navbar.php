@@ -57,7 +57,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                <a type="button" class="btn btn-danger" href="php/logout.php">Вийти</a>
+                <a type="button" class="btn my-btn-red" href="php/logout.php">Вийти</a>
             </div>
         </div>
     </div>

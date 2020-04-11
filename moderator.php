@@ -244,9 +244,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 <div class="col-md-4">
                     <div class="text-right">
                         <?php if ($data_get['table'] == 'users') : ?>
-                            <button class="btn btn-sm my-btn-outline-blue float-right" type="submit" form="update" name="do_update_users"><span class="material-icons mr-1">refresh</span>Оновити</button>
+                            <button class="btn btn-sm my-btn-outline-blue" type="submit" form="update" name="do_update_users"><span class="material-icons mr-1">refresh</span>Оновити</button>
                         <?php elseif ($data_get['table'] == 'announcements') : ?>
-                            <button class="btn btn-sm btn-secondary" type="submit" form="update_ann" name="do_update_ann"><span class="material-icons mr-1">refresh</span>Оновити</button>
+                            <button class="btn btn-sm my-btn-outline-blue" type="submit" form="update_ann" name="do_update_ann"><span class="material-icons mr-1">refresh</span>Оновити</button>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -330,7 +330,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 
             <?php if ($data_get['table'] == 'users') : ?>
                 <div>
-                    <table class="table table-sm table-striped table-bordered table-hover">
+                    <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
                         <thead>
                             <tr class="thead-light">
                                 <th class="p-1"></th>
@@ -373,8 +373,8 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                         </td>
                                         <td>
                                             <div class="row justify-content-center">
-                                                <a href="mail.php?id=<?= $user['id'] ?>" target="_blank" class=" btn btn-sm btn-warning mr-2">
-                                                    <i class="fas fa-envelope"></i>
+                                                <a class="btn btn-sm my-btn-orange shadow-sm" href="mail.php?id=<?= $user['id'] ?>" target="_blank">
+                                                    <span class="material-icons md-24">mail</span>
                                                 </a>
                                             </div>
                                         </td>
@@ -386,7 +386,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 </div>
             <?php elseif ($data_get['table'] == 'announcements') : ?>
                 <div>
-                    <table class="table table-sm table-striped table-bordered">
+                    <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
                         <thead>
                             <tr class="thead-light">
                                 <th class="p-1"></th>
@@ -423,15 +423,17 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                         <td><?= $announcement['complaint'] ?></td>
                                         <td>
                                             <div class="row justify-content-center">
-                                                <a target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $announcement['id'] ?>" class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
-                                                <a href="mail.php?id=<?= $announcement['user_id'] ?>" target="_blank" class="btn btn-sm btn-warning mr-2">
-                                                    <i class="fas fa-envelope"></i>
+                                                <a class="btn btn-sm btn-secondary border-radius-right-0 shadow-sm" target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $announcement['id'] ?>">
+                                                    <span class="material-icons md-24">launch</span>
                                                 </a>
-                                                <button class="btn btn-sm btn-danger mr-2" type="submit" name="do_delete_ann_complaint<?= $announcement['id'] ?>">
-                                                    <i class="fas fa-trash-restore"></i>
+                                                <a class="btn btn-sm my-btn-orange border-radius-0 shadow-sm" href="mail.php?id=<?= $announcement['user_id'] ?>" target="_blank">
+                                                    <span class="material-icons md-24">mail_outline</span>
+                                                </a>
+                                                <button class="btn btn-sm btn-success border-radius-0 shadow-sm" <?php if (!$announcement['complaint']) echo 'disabled' ?> type="submit" name="do_delete_ann_complaint<?= $announcement['id'] ?>">
+                                                    <span class="material-icons md-24">verified_user</span>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger" type="submit" name="do_delete_ann<?= $announcement['id'] ?>" value="<?= $announcement['id'] ?>">
-                                                    <i class="fas fa-trash-alt"></i>
+                                                <button class="btn btn-sm my-btn-red border-radius-left-0 shadow-sm" type="submit" name="do_delete_ann<?= $announcement['id'] ?>" value="<?= $announcement['id'] ?>">
+                                                    <span class="material-icons md-24">delete</span>
                                                 </button>
                                             </div>
                                         </td>
@@ -443,7 +445,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 </div>
             <?php elseif ($data_get['table'] == 'com_complaints') : ?>
                 <div>
-                    <table class="table table-sm table-striped table-bordered">
+                    <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
                         <thead>
                             <tr class="thead-light">
                                 <th class="p-1"></th>
@@ -471,15 +473,17 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                         <td><?= show_detailed_date($complaint['date']) ?></td>
                                         <td>
                                             <div class="row justify-content-center">
-                                                <a target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $complaint['announcement_id'] ?>#comment<?= $complaint['id'] ?>" class="btn btn-sm btn-primary mr-2"><i class="fas fa-eye"></i></a>
-                                                <a href="mail.php?id=<?= $complaint['user_id'] ?>" target="_blank" class="btn btn-sm btn-warning mr-2">
-                                                    <i class="fas fa-envelope"></i>
+                                                <a class="btn btn-sm btn-secondary border-radius-right-0 shadow-sm" target="_blank" rel="noopener noreferrer" href="announcement.php?id=<?= $complaint['announcement_id'] ?>#comment<?= $complaint['id'] ?>">
+                                                    <span class="material-icons md-24">launch</span>
                                                 </a>
-                                                <button class="btn btn-sm btn-danger mr-2" type="submit" name="do_delete_complaint<?= $complaint['id'] ?>">
-                                                    <i class="fas fa-trash-restore"></i>
+                                                <a class="btn btn-sm my-btn-orange border-radius-0 shadow-sm" href="mail.php?id=<?= $complaint['user_id'] ?>" target="_blank">
+                                                    <span class="material-icons md-24">mail</span>
+                                                </a>
+                                                <button class="btn btn-sm btn-success border-radius-0 shadow-sm" type="submit" name="do_delete_complaint<?= $complaint['id'] ?>">
+                                                    <span class="material-icons md-24">verified_user</span>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger mr-2" type="submit" name="do_delete_comment<?= $complaint['id'] ?>">
-                                                    <i class="fas fa-trash-alt"></i>
+                                                <button class="btn btn-sm my-btn-red border-radius-left-0 shadow-sm" type="submit" name="do_delete_comment<?= $complaint['id'] ?>">
+                                                    <span class="material-icons md-24">delete</span>
                                                 </button>
                                             </div>
                                         </td>

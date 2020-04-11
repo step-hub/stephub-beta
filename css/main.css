@@ -88,6 +88,10 @@ img.img-large-logo {
     background-color: #EEEDE8;
 }
 
+.my-bg-orange {
+    background-color: #CE7902;
+}
+
 
 /*color*/
 
@@ -105,6 +109,10 @@ img.img-large-logo {
 
 .my-color-light {
     color: #EEEDE8;
+}
+
+.my-color-orange {
+    background-color: #CE7902;
 }
 
 
@@ -147,6 +155,46 @@ img.img-large-logo {
 
 .my-btn-outline-blue:hover {
     background-color: #1a5784;
+    color: white !important;
+}
+
+.my-btn-orange {
+    background-color: #f08d02;
+    color: white !important;
+}
+
+.my-btn-orange:hover {
+    background-color: #ce7902;
+    color: white !important;
+}
+
+.my-btn-outline-orange {
+    border-color: #f08d02;
+    color: #f08d02 !important;
+}
+
+.my-btn-outline-orange:hover {
+    background-color: #f08d02;
+    color: white !important;
+}
+
+.my-btn-red {
+    background-color: #c80c0b;
+    color: white !important;
+}
+
+.my-btn-red:hover {
+    background-color: #a80a09;
+    color: white !important;
+}
+
+.my-btn-outline-red {
+    border-color: #c80c0b;
+    color: #c80c0b !important;
+}
+
+.my-btn-outline-red:hover {
+    background-color: #c80c0b;
     color: white !important;
 }
 
