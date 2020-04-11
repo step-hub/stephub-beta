@@ -213,8 +213,30 @@ a.navbar-brand:hover {
     border-color: #c6c4ba;
 }
 
+.my-border-gray {
+    border: 1;
+    border-color: #6c757d;
+}
 
-/*header*/
+
+/* border-radius */
+
+.border-radius-right-0 {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.border-radius-left-0 {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.border-radius-0 {
+    border-radius: 0;
+}
+
+
+/* header */
 
 .intro {
     background-size: cover;
