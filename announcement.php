@@ -109,10 +109,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
             }
 
             if (empty($update_ann_errors)) {
-                $announcement->title = $data['title'];
-                $announcement->details = nl2br($data['details']);
-                $announcement->deadline = strtotime($data['deadline']);
-                $announcement->announcement_status_id = 2;
+                $announcement['title'] = $data['title'];
+                $announcement['details'] = nl2br($data['details']);
+                $announcement['deadline'] = strtotime($data['deadline']);
+                $announcement['announcement_status_id'] = 2;
 
                 // attach file
 //            if(isset($_FILES['userfile'])) {
@@ -128,12 +128,18 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
                 R::store($announcement);
 
-                header('location: announcement.php?id=' . $announcement->id);
+                header('location: announcement.php?id=' . $announcement['id']);
             }
         }
 
         if (isset($data['do_cancel_ann'])) {
-            header('location: announcement.php?id=' . $announcement->id);
+            header('location: announcement.php?id=' . $announcement['id']);
+        }
+
+        if (isset($data['do_help'])){
+            $announcement['help_user_id'] = $_SESSION['logged_user']->id;
+            R::store($announcement);
+            header('location: announcement.php?id=' . $announcement['id']);
         }
     }
 }
@@ -390,15 +396,15 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     </div>
                                 </div>
                             </div><!-- /Owner Menu -->
-                        <?php else : ?>
+                        <?php elseif (!$announcement['help_user_id']) : ?>
                             <!-- Others Menu -->
                             <div class="col-md-3">
                                 <div class="card">
                                     <div class="card-body shadow-sm">
                                         <h5 class="card-title">Можеш допомогти?</h5>
-                                        <a href="#" class="btn btn-secondary btn-block"><i class="fas fa-comments mr-2"></i>Написати автору</a>
-                                        <p class="text-center my-0">або</p>
-                                        <a href="#" class="btn btn-success btn-block"><i class="fas fa-hands-helping mr-2"></i>Допомогти</a>
+                                        <form id="help" action="announcement.php?id=<?= $announcement['id'] ?>" method="post">
+                                            <button type="submit" form="help" name="do_help" class="btn btn-success btn-block"><i class="fas fa-hands-helping mr-2"></i>Допомогти</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div><!-- Others Menu -->
