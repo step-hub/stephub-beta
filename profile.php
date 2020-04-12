@@ -8,13 +8,13 @@ if (array_key_exists('logged_user', $_SESSION)) {
     $studentid_num = get_studentid_by_id($user['studentid_id'])['student_id_num'];
     $user_status = get_user_status_by_id($user['user_status'])['status'];
 
-//errors
+    //errors
     $errors = array();
     $old_password_error = null;
     $new_password_error = null;
     $repeat_password_error = null;
 
-// EDIT USER INFO
+    // EDIT USER INFO
     if (isset($data['do_update'])) {
         console_log($user);
         $newTelegram = $data['telegram'];
@@ -46,7 +46,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
         }
     }
 
-// CHANGE PASSWORD
+    // CHANGE PASSWORD
     if (isset($data['do_change_pass'])) {
         $curPass = $user['password'];
         $oldPass = $data['password_old'];
@@ -130,63 +130,65 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                     <form id="form-update-profile" class="form" action="profile.php" method="POST">
                                         <?php if ($errors) : ?>
-                                            <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></p>
+                                            <div class="alert alert-danger" role="alert">
+                                                <?= @$errors[0]; ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <div class="form-group row px-3">
+                                            <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ваше ім'я</label>
+                                            <div class="col-sm-9">
+                                                <input name="login" class="form-control" type="text" id="inputLogin" value="<?= $user['login'] ?>" required aria-describedby="loginHelp" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-3">
+                                            <label class="col-sm-3 col-form-label text-right" for="inputEmail">Ел. пошта</label>
+                                            <div class="col-sm-9">
+                                                <input name="email" class="form-control" type="email" id="inputEmail" value="<?= $user['email'] ?>" placeholder="example@gmail.com" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-3">
+                                            <label class="col-sm-3 col-form-label text-right" for="inputTelegram">Телеграм</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">@</div>
+                                                    </div>
+                                                    <input name="telegram" class="form-control" type="text" id="inputTelegram" value="<?= $user['telegram_username'] ?>" placeholder="example" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row px-3">
+                                            <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Студентський</label>
+                                            <div class="col-sm-3">
+                                                <input name="stud_num" class="form-control disabled" type="text" id="inputStudNum" value="<?= $studentid_num ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-3">
+                                            <label class="col-sm-3 col-form-label text-right" for="inputReg">Дата реєстрації</label>
+                                            <div class="col-sm-3">
+                                                <input name="status" class="form-control" type="text" id="inputReg" value="<?= show_date($user['reg_date']) ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-3">
+                                            <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Статус профілю</label>
+                                            <div class="col-sm-3">
+                                                <input name="status" class="form-control" type="text" value="<?= $user_status ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-3">
+                                            <?php if ($user['banned_to']) : ?>
+                                                <label class="col-sm-3 col-form-label text-right" for="inputBan">Забанено до</label>
+                                                <div class="col-sm-3">
+                                                    <input name="status" class="form-control" type="text" id="inputBan" value="<?= show_date($user['banned_to']) ?>" readonly>
+                                                </div>
                                             <?php endif; ?>
+                                        </div>
 
-                                            <div class="form-group row px-3">
-                                                <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ваше ім'я</label>
-                                                <div class="col-sm-9">
-                                                    <input name="login" class="form-control" type="text" id="inputLogin" value="<?= $user['login'] ?>" required aria-describedby="loginHelp" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row px-3">
-                                                <label class="col-sm-3 col-form-label text-right" for="inputEmail">Ел. пошта</label>
-                                                <div class="col-sm-9">
-                                                    <input name="email" class="form-control" type="email" id="inputEmail" value="<?= $user['email'] ?>" placeholder="example@gmail.com" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row px-3">
-                                                <label class="col-sm-3 col-form-label text-right" for="inputTelegram">Телеграм</label>
-                                                <div class="col-sm-9">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">@</div>
-                                                        </div>
-                                                        <input name="telegram" class="form-control" type="text" id="inputTelegram" value="<?= $user['telegram_username'] ?>" placeholder="example" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row px-3">
-                                                <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Студентський</label>
-                                                <div class="col-sm-3">
-                                                    <input name="stud_num" class="form-control disabled" type="text" id="inputStudNum" value="<?= $studentid_num ?>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row px-3">
-                                                <label class="col-sm-3 col-form-label text-right" for="inputReg">Дата реєстрації</label>
-                                                <div class="col-sm-3">
-                                                    <input name="status" class="form-control" type="text" id="inputReg" value="<?= show_date($user['reg_date']) ?>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row px-3">
-                                                <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Статус профілю</label>
-                                                <div class="col-sm-3">
-                                                    <input name="status" class="form-control" type="text" value="<?= $user_status ?>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row px-3">
-                                                <?php if ($user['banned_to']) : ?>
-                                                    <label class="col-sm-3 col-form-label text-right" for="inputBan">Забанено до</label>
-                                                    <div class="col-sm-3">
-                                                        <input name="status" class="form-control" type="text" id="inputBan" value="<?= show_date($user['banned_to']) ?>" readonly>
-                                                    </div>
-                                                <?php endif; ?>
-                                            </div>
-
-                                            <div class="row justify-content-center">
-                                                <a type="button" class="btn my-btn-blue mx-3 mb-3" data-toggle="modal" data-target="#updateModal">Зберегти зміни</a>
-                                            </div>
+                                        <div class="row justify-content-center">
+                                            <a type="button" class="btn my-btn-blue mx-3 mb-3" data-toggle="modal" data-target="#updateModal">Зберегти зміни</a>
+                                        </div>
                                     </form>
                                 </div>
 
@@ -245,8 +247,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <div class="container text-center">
                                         <div class="row">
                                             <div class="col">
-                                            <h4 class="mb-5">Видалення облікового запису StepHub</h4>
-                                            <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
+                                                <h4 class="mb-5">Видалення облікового запису StepHub</h4>
+                                                <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
                                             </div>
                                         </div>
                                         <div class="row">

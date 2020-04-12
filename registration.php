@@ -103,83 +103,87 @@ if (!array_key_exists('logged_user', $_SESSION)) {
             <div class="row pt-3">
                 <div class="col-md-7">
                     <h1 class="h3 mb-3 font-weight-normal">Створити новий акаунт</h1>
-
                     <?php if ($errors) : ?>
-                        <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
-                        <?php endif; ?>
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <?= @$errors[0]; ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php endif; ?>
 
-                        <form class="form" action="registration.php" method="POST">
-                            <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label" for="inputLogin">Ім'я користувача</label>
-                                <div class="col-sm-9">
-                                    <input name="login" class="form-control" type="text" id="inputLogin" value="<?= @$data['login']; ?>" placeholder="Ім'я користувача" required autofocus aria-describedby="loginHelp">
-                                    <small id="loginHelp" class="form-text text-muted">
-                                        Ваш логін може складитись із латинських літер та цифр.
-                                    </small>
+                    <form class="form" action="registration.php" method="POST">
+                        <div class="form-group row px-3">
+                            <label class="col-sm-3 col-form-label" for="inputLogin">Ім'я користувача</label>
+                            <div class="col-sm-9">
+                                <input name="login" class="form-control" type="text" id="inputLogin" value="<?= @$data['login']; ?>" placeholder="Ім'я користувача" required autofocus aria-describedby="loginHelp">
+                                <small id="loginHelp" class="form-text text-muted">
+                                    Ваш логін може складитись із латинських літер та цифр.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group row px-3">
+                            <label class="col-sm-3 col-form-label" for="inputEmail">Ел. пошта</label>
+                            <div class="col-sm-9">
+                                <input name="email" class="form-control" type="email" id="inputEmail" value="<?= @$data['email']; ?>" placeholder="example@gmail.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group row px-3">
+                            <label class="col-sm-3 col-form-label" for="inputStudNum">Студентський</label>
+                            <div class="input-group col-sm-5" id="inputStudNum">
+                                <input name="stud_num_series" class="form-control col-3 mx-0" type="text" value="<?= @$data['stud_num_ser']; ?>" placeholder="АБ" required>
+                                <div class="input-group-text" style="border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0;">№</div>
+                                <input name="stud_num_number" class="form-control col-5 mx-0" type="text" value="<?= @$data['stud_num_num']; ?>" placeholder="12345678" required>
+                            </div>
+                            <div class="col-sm-4 pl-0">
+                                <button type="button" class="btn float-left myPopover" data-toggle="popover" data-placement="right" title="Де взяти номер студентського квитка?" data-trigger="hower" data-content="Серію і номер студентського квитка можна дізнатися на лицевій стороні вашого студентського квитка">
+                                    <i class="fa fa-info-circle text-muted"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group row px-3">
+                            <label class="col-sm-3 col-form-label" for="inputTelegram">Телеграм</label>
+                            <div class="col-sm-5">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">@</div>
+                                    </div>
+                                    <input name="telegram" class="form-control" type="text" id="inputTelegram" value="<?= @$data['telegram']; ?>" placeholder="example" required>
                                 </div>
                             </div>
-                            <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label" for="inputEmail">Ел. пошта</label>
-                                <div class="col-sm-9">
-                                    <input name="email" class="form-control" type="email" id="inputEmail" value="<?= @$data['email']; ?>" placeholder="example@gmail.com" required>
-                                </div>
-                            </div>
-                            <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label" for="inputStudNum">Студентський</label>
-                                <div class="input-group col-sm-5" id="inputStudNum">
-                                    <input name="stud_num_series" class="form-control col-3 mx-0" type="text" value="<?= @$data['stud_num_ser']; ?>" placeholder="АБ" required>
-                                    <div class="input-group-text" style="border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0;">№</div>
-                                    <input name="stud_num_number" class="form-control col-5 mx-0" type="text" value="<?= @$data['stud_num_num']; ?>" placeholder="12345678" required>
-                                </div>
-                                <div class="col-sm-4 pl-0">
-                                    <button type="button" class="btn float-left myPopover" data-toggle="popover" data-placement="right" title="Де взяти номер студентського квитка?" data-trigger="hower" data-content="Серію і номер студентського квитка можна дізнатися на лицевій стороні вашого студентського квитка">
-                                        <i class="fa fa-info-circle text-muted"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label" for="inputTelegram">Телеграм</label>
-                                <div class="col-sm-5">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">@</div>
-                                        </div>
-                                        <input name="telegram" class="form-control" type="text" id="inputTelegram" value="<?= @$data['telegram']; ?>" placeholder="example" required>
+                            <div class="col-sm-4"></div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body my-bg-light px-0">
+                                <div class="form-group row px-3">
+                                    <label class="col-sm-3 col-form-label" for="inputPassword">Пароль</label>
+                                    <div class="col-sm-9">
+                                        <input name="password" class="form-control" type="password" id="inputPassword" placeholder="Пароль" required aria-describedby="passHelp">
+                                        <small id="passHelp" class="form-text text-muted">
+                                            Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
+                                        </small>
                                     </div>
                                 </div>
-                                <div class="col-sm-4"></div>
-                            </div>
-
-                            <div class="card">
-                                <div class="card-body my-bg-light px-0">
-                                    <div class="form-group row px-3">
-                                        <label class="col-sm-3 col-form-label" for="inputPassword">Пароль</label>
-                                        <div class="col-sm-9">
-                                            <input name="password" class="form-control" type="password" id="inputPassword" placeholder="Пароль" required aria-describedby="passHelp">
-                                            <small id="passHelp" class="form-text text-muted">
-                                                Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
-                                            </small>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row px-3">
-                                        <label class="col-sm-3 col-form-label" for="inputPasswordConfirm">Підтвердження</label>
-                                        <div class="col-sm-9">
-                                            <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть пароль" required>
-                                        </div>
+                                <div class="form-group row px-3">
+                                    <label class="col-sm-3 col-form-label" for="inputPasswordConfirm">Підтвердження</label>
+                                    <div class="col-sm-9">
+                                        <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть пароль" required>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="checkbox mt-3 mb-0">
-                                <label>
-                                    <input type="checkbox" value="remember-me" name="remember" id="remember">
-                                    <small>Я підтверджую, що ознайомився(лась) із <a href="#" data-toggle="collapse" data-target="#collapseTwo">правилами користування</a> сайтом і <a href="#" data-toggle="collapse" data-target="#collapseThree">політикою конфіденційності</a></small>
-                                </label>
-                            </div>
+                        <div class="checkbox mt-3 mb-0">
+                            <label>
+                                <input type="checkbox" value="remember-me" name="remember" id="remember">
+                                <small>Я підтверджую, що ознайомився(лась) із <a href="#" data-toggle="collapse" data-target="#collapseTwo">правилами користування</a> сайтом і <a href="#" data-toggle="collapse" data-target="#collapseThree">політикою конфіденційності</a></small>
+                            </label>
+                        </div>
 
-                            <small class="mt-2 mx-3 float-left">Вже маєте зареєстрований акаунт? <a href="index.php">Ввійти</a></small>
-                            <button class="btn my-btn-blue float-right" type="submit" name="do_signup" id="register">Зареєструвати</button>
-                        </form>
+                        <small class="mt-2 mx-3 float-left">Вже маєте зареєстрований акаунт? <a href="index.php">Ввійти</a></small>
+                        <button class="btn my-btn-blue float-right" type="submit" name="do_signup" id="register">Зареєструвати</button>
+                    </form>
                 </div>
                 <div class="col-md-5">
 
