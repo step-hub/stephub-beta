@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row pb-2">
             <div class="col-md-3">
-                <img class="mx-auto d-block img-large-logo" src="img/logo.jpg" alt="big logo">
+                <img class="mx-auto d-block img-large-logo" src="img/logo.png" alt="big logo">
             </div>
             <div class="col-md-5 text-left">
                 <h2>Ласкаво просимо до StepHub!</h2>

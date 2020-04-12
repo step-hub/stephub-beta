@@ -1,8 +1,9 @@
 <?php
+date_default_timezone_set('Europe/Kiev');
 
-for ($i = 1; $i < 11; $i++){
+for ($i = 1; $i < 100; $i++){
     $announcement = R::dispense('announcements');
-    $announcement->user_id = $i;
+    $announcement->user_id = 25;
     $announcement->title = $i." title";
     $announcement->details = $i." announcement details";
     $announcement->date = time();

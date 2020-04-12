@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Kiev');
 
 for ($i = 1; $i < 51; $i++){
 

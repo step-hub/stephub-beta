@@ -1,0 +1,15 @@
+.announcement {
+    border: 1;
+    border-color: #c6c4ba;
+}
+
+.not-found-parent {
+    border: 1;
+    border-color: #c6c4ba;
+}
+
+.not-found-child {
+    background: transparent;
+    border: 1;
+    border-color: #715142;
+}

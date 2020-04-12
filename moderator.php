@@ -2,9 +2,9 @@
 require "php/db.php";
 include_once 'php/functions.php';
 
-if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status == 1) {
-    $data_get = $_GET;
+if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->user_status < 3) {
     $data_post = $_POST;
+    $data_get = $_GET;
 
     $tables = array('users', 'announcements', 'com_complaints');
     $order_values = array('ASC', 'DESC');
@@ -60,13 +60,6 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         $users = R::findAll('users', 'ORDER BY ' . $data_get['users_sort_by'] . ' ' . $data_get['users_sort_order'] . ' LIMIT ' . $start . ', ' . $data_get['users_qty']);
         $user_statuses = get_user_statuses();
 
-        foreach ($users as $u) {
-            if (isset($data_post['do_delete_user' . $u['id']])) {
-                R::trash($u);
-                header("location: admin.php?" . $request);
-            }
-        }
-
         if (isset($data_post['do_update_users'])) {
             foreach ($users as $u) {
                 if (array_key_exists('check_user' . $u['id'], $data_post)) {
@@ -83,7 +76,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     }
                 }
             }
-            header("location: admin.php?" . $request);
+            header("location: moderator.php?" . $request);
         }
     } elseif ($data_get['table'] == 'announcements') {
         $total = intval((R::count('announcements') - 1) / $data_get['users_qty']) + 1;
@@ -105,13 +98,13 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         foreach ($announcements as $a) {
             if (isset($data_post['do_delete_ann' . $a['id']])) {
                 R::trash($a);
-                header("location: admin.php?" . $request);
+                header("location: moderator.php?" . $request);
             }
 
             if (isset($data_post['do_delete_ann_complaint' . $a['id']])) {
                 $a['complaint'] = null;
                 R::store($a);
-                header("location: admin.php?" . $request);
+                header("location: moderator.php?" . $request);
             }
         }
 
@@ -120,9 +113,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 if (array_key_exists('check_ann' . $a['id'], $data_post)) {
                     $a['announcement_status_id'] = $data_post['sel_ann_status' . $a['id']];
                     R::store($a);
-                    header("location: admin.php?" . $request);
                 }
             }
+            header("location: moderator.php?" . $request);
         }
     } elseif ($data_get['table'] == 'com_complaints') {
         $total = intval((R::count('comments', 'WHERE complaint IS NOT NULL') - 1) / $data_get['com_compl_qty']) + 1;
@@ -143,12 +136,12 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             if (isset($data_post['do_delete_comment' . $c['id']])) {
                 R::hunt('comments', 'parent_comment_id = ?', array($c['id']));
                 R::trash($c);
-                header("location: admin.php?" . $request);
+                header("location: moderator.php?" . $request);
             }
             if (isset($data_post['do_delete_complaint' . $c['id']])) {
                 $c['complaint'] = null;
                 R::store($c);
-                header("location: admin.php?" . $request);
+                header("location: moderator.php?" . $request);
             }
         }
     }
@@ -166,7 +159,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Сторінка Адміністратора | StepHub</title>
+    <title>Сторінка Модератора | StepHub</title>
 
     <link rel="shortcut icon" href="favicon.ico">
 
@@ -181,13 +174,13 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     <link href="css/main.css" rel="stylesheet">
 </head>
 
-<body class="my-bg-light text-center" style="padding-top: 46px">
+<body class="text-center" style="padding-top: 46px !important;">
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
     <!-- Page Content -->
     <div class="container-fluid">
-        <div class="row mt-1 mb-0 mx-1 ">
+        <div class="row mt-1 mb-0 mx-1">
             <div class="col-md-4">
                 <div class="text-left">
                     <button class="btn btn-sm btn-secondary ml-0" data-toggle="collapse" data-target="#collapse-filter" aria-expanded="true" aria-controls="collapse-filter"><span class="material-icons mr-1">tune</span>Показати налаштування фільтра</button>
@@ -204,18 +197,18 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                             </li>
                         <?php else : ?>
                             <li class="page-item">
-                                <a class="page-link" href="admin.php?page=<?= ($page - 1) . '&' . $request ?>">&laquo;</a>
+                                <a class="page-link" href="moderator.php?page=<?= ($page - 1) . '&' . $request ?>">&laquo;</a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="admin.php?page=1&<?= $request ?>">1</a></li>
+                            <li class="page-item"><a class="page-link" href="moderator.php?page=1&<?= $request ?>">1</a></li>
                             <?php if ($page > 4) : ?>
                                 <li class="page-item disabled"><a class="page-link">...</a></li>
-                                <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page - 3) . '&' . $request ?>"><?= $page - 3 ?></a></li>
+                                <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page - 3) . '&' . $request ?>"><?= $page - 3 ?></a></li>
                             <?php endif; ?>
                             <?php if ($page > 3) : ?>
-                                <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page - 2) . '&' . $request ?>"><?= $page - 2 ?></a></li>
+                                <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page - 2) . '&' . $request ?>"><?= $page - 2 ?></a></li>
                             <?php endif; ?>
                             <?php if ($page > 2) : ?>
-                                <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page - 1) . '&' . $request ?>"><?= $page - 1 ?></a></li>
+                                <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page - 1) . '&' . $request ?>"><?= $page - 1 ?></a></li>
                             <?php endif; ?>
                         <?php endif; ?>
                         <li class="page-item active">
@@ -223,22 +216,22 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                         </li>
                         <?php if ($page != $total) : ?>
                             <?php if ($page + 1 < $total) : ?>
-                                <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page + 1) . '&' . $request ?>"><?= $page + 1 ?></a></li>
+                                <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page + 1) . '&' . $request ?>"><?= $page + 1 ?></a></li>
                             <?php endif; ?>
                             <?php if ($page + 2 < $total) : ?>
-                                <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page + 2) . '&' . $request ?>"><?= $page + 2 ?></a></li>
+                                <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page + 2) . '&' . $request ?>"><?= $page + 2 ?></a></li>
                             <?php endif; ?>
                             <?php if ($page + 3 < $total) : ?>
-                                <li class="page-item"><a class="page-link" href="admin.php?page=<?= ($page + 3) . '&' . $request ?>"><?= $page + 3 ?></a></li>
+                                <li class="page-item"><a class="page-link" href="moderator.php?page=<?= ($page + 3) . '&' . $request ?>"><?= $page + 3 ?></a></li>
                                 <?php if ($page + 3 != $total - 1) : ?>
                                     <li class="page-item disabled"><a class="page-link">...</a></li>
                                 <?php endif; ?>
                             <?php endif; ?>
 
-                            <li class="page-item"><a class="page-link" href="admin.php?page=<?= $total . '&' . $request ?>"><?= $total ?></a></li>
+                            <li class="page-item"><a class="page-link" href="moderator.php?page=<?= $total . '&' . $request ?>"><?= $total ?></a></li>
 
                             <li class="page-item">
-                                <a class="page-link" href="admin.php?page=<?= ($page + 1) . '&' . $request ?>">&raquo;</a>
+                                <a class="page-link" href="moderator.php?page=<?= ($page + 1) . '&' . $request ?>">&raquo;</a>
                             </li>
                         <?php else : ?>
                             <li class="page-item disabled">
@@ -264,7 +257,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 <div class="" id="heading-filter"></div>
                 <div id="collapse-filter" class="collapse" aria-labelledby="heading-filter" data-parent="#idFilter">
                     <!-- Filter -->
-                    <form name="filter" action="admin.php" method="GET" class="form-inline">
+                    <form name="filter" action="moderator.php" method="GET" class="form-inline">
                         <label for="select_table" class="small ml-3">Таблиця</label>
                         <select name="table" id="select_table" onchange="this.form.submit()" class="form-control form-control-sm m-1">
                             <option value="users" <?php if ($data_get['table'] == 'users') echo 'selected' ?>>користувачі</option>
@@ -337,57 +330,61 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         </div>
 
         <?php if ($data_get['table'] == 'users') : ?>
-            <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
-                <thead>
-                    <tr class="thead-light">
-                        <th class="p-1"></th>
-                        <th class="p-1">ID</th>
-                        <th class="p-1">Ім'я</th>
-                        <th class="p-1">Права</th>
-                        <th class="p-1">Забанений до</th>
-                        <th class="p-1">Статус</th>
-                        <th class="p-1"></th>
-                    </tr>
-                </thead>
-                <form id="update" action="admin.php?<?= $request ?>" method="POST">
-                    <tbody>
-                        <?php foreach ($users as $user) : ?>
-                            <tr>
-                                <td>
-                                    <div class="row justify-content-center"><input type="checkbox" name="check_user<?= $user['id'] ?>"></div>
-                                </td>
-                                <td><?= $user['id'] ?></td>
-                                <td><?= $user['login'] ?></td>
-                                <td>
-                                    <select class="form-control form-control-sm" name="sel_user_status<?= $user['id'] ?>">
-                                        <?php foreach ($user_statuses as $user_status) : ?>
-                                            <option value="<?= $user_status['id'] ?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected"; ?>><?= $user_status['status'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="date" name="ban_date<?= $user['id'] ?>" class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="' . date("Y-m-d", $user['banned_to']) . '"' ?>>
-                                </td>
-                                <td>
-                                    <div class="badge badge-<?= $user['is_online'] ? 'success' : 'danger' ?>">
-                                        <?= $user['is_online'] ? 'онлайн' : 'оффлайн' ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="row justify-content-center">
-                                        <a class="btn btn-sm my-btn-orange border-radius-right-0 shadow-sm" href="mail.php?id=<?= $user['id'] ?>" target="_blank">
-                                            <span class="material-icons md-24">mail</span>
-                                        </a>
-                                        <button class="btn btn-sm my-btn-red border-radius-left-0 shadow-sm" type="submit" name="do_delete_user<?= $user['id'] ?>">
-                                            <span class="material-icons md-24">delete</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </form>
-            </table>
+            <div>
+                <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
+                    <thead>
+                        <tr class="thead-light">
+                            <th class="p-1"></th>
+                            <th class="p-1">ID</th>
+                            <th class="p-1">Ім'я</th>
+                            <th class="p-1">Права</th>
+                            <th class="p-1">Забанений до</th>
+                            <th class="p-1">Статус</th>
+                            <th class="p-1"></th>
+                        </tr>
+                    </thead>
+                    <form id="update" action="moderator.php?<?= $request ?>" method="POST">
+                        <tbody>
+                            <?php foreach ($users as $user) : ?>
+                                <tr>
+                                    <td>
+                                        <?php if ($user['user_status'] > 2) : ?>
+                                            <div class="row justify-content-center">
+                                                <input type="checkbox" name="check_user<?= $user['id'] ?>">
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= $user['id'] ?></td>
+                                    <td><?= $user['login'] ?></td>
+                                    <td>
+                                        <select class="form-control form-control-sm" name="sel_user_status<?= $user['id'] ?>">
+                                            <?php foreach ($user_statuses as $user_status) : ?>
+                                                <option value="<?= $user_status['id'] ?>" <?php if ($user['user_status'] == $user_status['id']) echo "selected"; ?> <?php if ($user['user_status'] < 3 or $user_status['id'] < 3) echo "disabled" ?>>
+                                                    <?= $user_status['status'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="date" name="ban_date<?= $user['id'] ?>" class="form-control form-control-sm" <?php if ($user['banned_to']) echo 'value="' . date("Y-m-d", $user['banned_to']) . '"' ?> <?php if ($user['user_status'] < 3) echo "disabled" ?>>
+                                    </td>
+                                    <td>
+                                        <div class="badge badge-<?= $user['is_online'] ? 'success' : 'danger' ?>">
+                                            <?= $user['is_online'] ? 'онлайн' : 'оффлайн' ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row justify-content-center">
+                                            <a class="btn btn-sm my-btn-orange shadow-sm" href="mail.php?id=<?= $user['id'] ?>" target="_blank">
+                                                <span class="material-icons md-24">mail</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </form>
+                </table>
+            </div>
         <?php elseif ($data_get['table'] == 'announcements') : ?>
             <div>
                 <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
@@ -404,7 +401,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                             <th class="p-1"></th>
                         </tr>
                     </thead>
-                    <form id="update_ann" action="admin.php?<?= $request ?>" method="POST">
+                    <form id="update_ann" action="moderator.php?<?= $request ?>" method="POST">
                         <tbody>
                             <?php foreach ($announcements as $announcement) : ?>
                                 <tr>
@@ -416,7 +413,8 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                     <td>
                                         <select class="form-control form-control-sm" name="sel_ann_status<?= $announcement['id'] ?>">
                                             <?php foreach ($announcement_statuses as $announcement_status) : ?>
-                                                <option value="<?= $announcement_status['id'] ?>" <?php if ($announcement['announcement_status_id'] == $announcement_status['id']) echo "selected"; ?>><?= $announcement_status['status'] ?></option>
+                                                <option value="<?= $announcement_status['id'] ?>" <?php if ($announcement['announcement_status_id'] == $announcement_status['id']) echo "selected"; ?>>
+                                                    <?= $announcement_status['status'] ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </td>
@@ -430,12 +428,12 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                                 <span class="material-icons md-24">launch</span>
                                             </a>
                                             <a class="btn btn-sm my-btn-orange border-radius-0 shadow-sm" href="mail.php?id=<?= $announcement['user_id'] ?>" target="_blank">
-                                                <span class="material-icons md-24">mail</span>
+                                                <span class="material-icons md-24">mail_outline</span>
                                             </a>
                                             <button class="btn btn-sm btn-success border-radius-0 shadow-sm" <?php if (!$announcement['complaint']) echo 'disabled' ?> type="submit" name="do_delete_ann_complaint<?= $announcement['id'] ?>">
                                                 <span class="material-icons md-24">verified_user</span>
                                             </button>
-                                            <button class="btn btn-sm my-btn-red border-radius-left-0 shadow-sm" type="submit" name="do_delete_ann<?= $announcement['id'] ?>">
+                                            <button class="btn btn-sm my-btn-red border-radius-left-0 shadow-sm" type="submit" name="do_delete_ann<?= $announcement['id'] ?>" value="<?= $announcement['id'] ?>">
                                                 <span class="material-icons md-24">delete</span>
                                             </button>
                                         </div>
@@ -461,7 +459,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                             <th class="p-1"></th>
                         </tr>
                     </thead>
-                    <form id="update" action="admin.php?<?= $request ?>" method="POST">
+                    <form id="update" action="moderator.php?<?= $request ?>" method="POST">
                         <tbody>
                             <?php foreach ($complaints as $complaint) : ?>
                                 <tr>
@@ -480,7 +478,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                                                 <span class="material-icons md-24">launch</span>
                                             </a>
                                             <a class="btn btn-sm my-btn-orange border-radius-0 shadow-sm" href="mail.php?id=<?= $complaint['user_id'] ?>" target="_blank">
-                                                <span class="material-icons md-24 light">mail</span>
+                                                <span class="material-icons md-24">mail</span>
                                             </a>
                                             <button class="btn btn-sm btn-success border-radius-0 shadow-sm" type="submit" name="do_delete_complaint<?= $complaint['id'] ?>">
                                                 <span class="material-icons md-24">verified_user</span>
