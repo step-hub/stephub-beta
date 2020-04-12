@@ -28,20 +28,28 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
             $announcement->deadline = strtotime($data['deadline']);
             $announcement->announcement_status_id = 2;
             $announcement->date = time();
+            R::store($announcement);
 
-            //attach file
+            // Attach file
             if (isset($_FILES['userfile'])) {
+                $location = get_upload_path($announcement->id);
+                console_log($location);
+
+                // Create directory if it does not exist
+                if (!is_dir($location)) {
+                    mkdir($location,  0755);
+                }
+
                 $uploadName = basename($_FILES['userfile']['name']);
-                $uploadFile = get_upload_path() . $uploadName;
-                echo "<script> alert(" . $uploadName . ");</script>";
+                $uploadFile = $location . $uploadName;
+                console_log($uploadName);
+
                 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadFile)) {
-                    $announcement->file = "" . $uploadName;
+                    update_file($announcement->id, $uploadName);
                 } else {
                     $errors[] = "file error";
                 }
             }
-
-            R::store($announcement);
 
             header('location: announcement.php?id=' . $announcement->id);
         }

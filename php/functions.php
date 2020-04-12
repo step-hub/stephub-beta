@@ -58,11 +58,15 @@ function generate_random_string($length)
     return $randomString;
 }
 
-function get_upload_path()
+function get_upload_root_path()
 {
     return "uploads/";
 }
 
+function get_upload_path($announcement_id)
+{
+    return "uploads/" . $announcement_id . "/";
+}
 
 // ==============================================================
 //
@@ -213,4 +217,10 @@ function update_email($user_id, $new_email)
     R::exec("UPDATE `users`
                 SET `email` = '$new_email'
                 WHERE id = '$user_id'");
+}
+function update_file($announcement_id, $new_file)
+{
+    R::exec("UPDATE `announcements`
+                SET `file` = '$new_file'
+                WHERE id = '$announcement_id'");
 }
