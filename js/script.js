@@ -1,17 +1,14 @@
-$(function(){
+$(function() {
     $(".myPopover").popover();
 });
 
-$(document).ready(function(){
+$(document).ready(function() {
     $('#register').prop('disabled', true);
 
-    $('#remember').click(function(){
-        if($(this).is(':checked'))
-        {
+    $('#remember').click(function() {
+        if ($(this).is(':checked')) {
             $('#register').prop('disabled', false);
-        }
-        else
-        {
+        } else {
             $('#register').prop('disabled', true);
         }
     });
