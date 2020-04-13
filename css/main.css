@@ -124,7 +124,7 @@ img.img-large-logo {
 }
 
 .my-btn-dark:hover {
-    background-color: #513a2f;
+    background-color: #5c4235;
     color: #ffffff !important;
 }
 
@@ -144,7 +144,7 @@ img.img-large-logo {
 }
 
 .my-btn-blue:hover {
-    background-color: #123b59;
+    background-color: #144468;
     color: #ffffff !important;
 }
 
@@ -226,6 +226,36 @@ a.navbar-brand:hover {
 
 .navbar-nav li a:hover {
     color: #513a2f;
+}
+
+
+/* pagination */
+
+.pagination>li>a {
+    background-color: white;
+    color: #1a5784;
+    border-color: #d4dadf;
+}
+
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+    color: #1a5784;
+    background-color: #e8eaed;
+    border-color: #d4dadf;
+}
+
+.pagination>.disabled>a,
+.pagination>.disabled>span {
+    background-color: #dee2e6 !important;
+    border-color: #d4dadf !important;
+}
+
+.pagination>.active>span {
+    color: white;
+    background-color: #1a5784 !important;
+    border: solid 1px #1a5784 !important;
 }
 
 
