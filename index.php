@@ -145,9 +145,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
-                                <div class="spinner-border" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
+                                
                                 <!-- Pagination-->
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-center">
