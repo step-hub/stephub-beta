@@ -84,6 +84,19 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
 </head>
 
 <body class="text-center">
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="row h-100">
+            <div class="col-sm-12 my-auto">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border my-color-blue" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
