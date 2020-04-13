@@ -110,7 +110,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
         <div class="row pb-5">
             <div class="col-md-3 pr-0">
 
-                <div class="card mt-5 profile-left-menu">
+                <div class="card mt-5 profile-left-menu shadow">
                     <div class="card-body diagonal-gradient-gray-light">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link my-1 active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true"><i class="material-icons mr-2">account_circle</i>Мій профіль</a>
@@ -125,14 +125,14 @@ if (array_key_exists('logged_user', $_SESSION)) {
             </div>
             <div class="col-md-9 pl-0">
 
-                <div class="card mt-5 profile-right-menu">
+                <div class="card mt-5 profile-right-menu shadow">
                     <div class="card-body">
                         <div class="tab-content" id="v-pills-tabContent">
 
                             <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <form id="form-update-profile" class="form" action="profile.php" method="POST">
                                     <?php if ($errors) : ?>
-                                        <div class="alert alert-danger" role="alert">
+                                        <div class="alert alert-danger shadow-sm" role="alert">
                                             <?= @$errors[0]; ?>
                                         </div>
                                     <?php endif; ?>
@@ -233,7 +233,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <div class="container text-center">
                                     <div class="row">
                                         <div class="col">
-                                            <div class="alert alert-warning" role="alert">
+                                            <div class="alert alert-warning shadow-sm" role="alert">
                                                 Функціонал сповіщень знаходиться на стадії розробки
                                             </div>
                                         </div>

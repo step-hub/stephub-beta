@@ -1,4 +1,4 @@
-<div class="intro">
+<div class="intro intro-shadow">
     <div class="container">
         <div class="row pb-2">
             <div class="col-md-3">
@@ -13,7 +13,7 @@
             <div class="col-md-4 px-4 pt-2 pb-4">
                 <?php include_once "php/login.php"; ?>
                 <div class="card">
-                    <div class="card-body shadow-sm">
+                    <div class="card-body shadow">
                         <?php if($errors): ?>
                             <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
                         <?php endif; ?>

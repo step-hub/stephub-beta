@@ -331,7 +331,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 
         <?php if ($data_get['table'] == 'users') : ?>
             <div>
-                <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
+                <table class="table table-sm table-striped table-bordered table-hover table-shadow">
                     <thead>
                         <tr class="thead-light">
                             <th class="p-1"></th>
@@ -387,7 +387,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             </div>
         <?php elseif ($data_get['table'] == 'announcements') : ?>
             <div>
-                <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
+                <table class="table table-sm table-striped table-bordered table-hover table-shadow">
                     <thead>
                         <tr class="thead-light">
                             <th class="p-1"></th>
@@ -446,7 +446,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             </div>
         <?php elseif ($data_get['table'] == 'com_complaints') : ?>
             <div>
-                <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
+                <table class="table table-sm table-striped table-bordered table-hover table-shadow">
                     <thead>
                         <tr class="thead-light">
                             <th class="p-1"></th>

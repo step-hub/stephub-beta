@@ -100,7 +100,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                         </form>
                     </div>
                     <div class="card">
-                        <div class="card-body shadow-sm bg-light pb-0">
+                        <div class="card-body shadow bg-light pb-0">
                             <?php if ($announcements) :
                                 foreach ($announcements as $announcement) : ?>
                                     <div class="card text-left mb-3 announcement-card">

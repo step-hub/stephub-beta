@@ -193,6 +193,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
     <!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
+    <link href="css/announcement.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -208,7 +210,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         <!-- Announcement -->
                         <?php if (isset($data['do_edit_ann'])) : ?>
                             <!-- Edit Announcement -->
-                            <div class="card announcement shadow-sm">
+                            <div class="card announcement shadow">
                                 <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
                                     <div class="card-header diagonal-gradient-gray-light my-color-dark border-bottom-0">
                                         <div class="row justify-content-center">
@@ -239,7 +241,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             </div><!-- /Edit Announcement -->
                         <?php else : ?>
                             <!-- Show Announcement -->
-                            <div class="card announcement shadow-sm">
+                            <div class="card announcement shadow">
                                 <div class="card-header diagonal-gradient-gray-light announcement-block-header my-color-dark">
                                     <div class="container">
                                         <div class="row pt-2 pb-2">
@@ -275,7 +277,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         <!-- /Announcement -->
 
                         <!-- Comments -->
-                        <div class="card shadow-sm mt-5">
+                        <div class="card shadow mt-5">
                             <div class="card-header">
                                 <!-- Leave New Comment -->
                                 <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
@@ -405,7 +407,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <?php if ($user['id'] == $announcement['user_id']) : ?>
                         <!-- Owner Menu -->
                         <div class="col-md-3">
-                            <div class="card shadow-sm">
+                            <div class="card shadow">
                                 <div class="card-body">
                                     <?php if (isset($data['do_edit_ann'])) : ?>
                                         <h5 class="card-title">Редагувати</h5>
@@ -432,7 +434,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         <!-- Others Menu -->
                         <div class="col-md-3">
                             <div class="card">
-                                <div class="card-body shadow-sm">
+                                <div class="card-body shadow">
                                     <h5 class="card-title">Можеш допомогти?</h5>
                                     <form id="help" action="announcement.php?id=<?= $announcement['id'] ?>" method="post">
                                         <button type="submit" form="help" name="do_help" class="btn btn-success btn-block"><i class="fas fa-hands-helping mr-2"></i>Допомогти</button>
@@ -444,7 +446,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 </div>
             <?php else : ?>
                 <!-- Frozen Announcement -->
-                <div class="card not-found-parent diagonal-gradient-gray-light shadow-sm">
+                <div class="card not-found-parent diagonal-gradient-gray-light shadow">
                     <div class="card-body text-center">
                         <div class="card not-found-child diagonal-gradient-gray-light">
                             <div class="card-body text-center my-color-dark py-5">
@@ -457,7 +459,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
             <?php endif; ?>
         <?php else : ?>
             <!-- Not Found Announcement -->
-            <div class="card not-found-parent diagonal-gradient-gray-light shadow-sm">
+            <div class="card not-found-parent diagonal-gradient-gray-light shadow">
                 <div class="card-body text-center">
                     <div class="card not-found-child diagonal-gradient-gray-light">
                         <div class="card-body text-center my-color-dark py-5">

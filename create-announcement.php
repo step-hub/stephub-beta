@@ -92,7 +92,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
         <?php if ($errors) : ?>
             <div class="row">
                 <div class="col">
-                    <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
                         <?= @$errors[0]; ?>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -101,7 +101,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                 </div>
             </div>
         <?php endif; ?>
-        <div class="card mt-0">
+        <div class="card mt-0 shadow">
             <form enctype="multipart/form-data" class="form-group mb-0" action="create-announcement.php" method="POST">
                 <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0">
                     <div class="container">
@@ -132,7 +132,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <button type="submit" name="do_post" class="btn my-btn-dark mt-1 mb-2 ml-auto mr-3">Сворити оголошення</button>
+                                <button type="submit" name="do_post" class="btn my-btn-dark shadow-sm mt-1 mb-2 ml-auto mr-3">Сворити оголошення</button>
                             </div>
                         </div>
                     </div>

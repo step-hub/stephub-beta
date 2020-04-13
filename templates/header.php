@@ -1,4 +1,4 @@
-<div class="intro">
+<div class="intro intro-shadow">
     <div class="container">
         <div class="row pb-2">
             <div class="col-md-3">

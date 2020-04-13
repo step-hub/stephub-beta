@@ -229,6 +229,21 @@ a.navbar-brand:hover {
 }
 
 
+/* shadow */
+
+.navbar-shadow {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .25)!important
+}
+
+.intro-shadow {
+    box-shadow: 0 .2rem 1rem rgba(0, 0, 0, .25)!important
+}
+
+.table-shadow {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .25)!important
+}
+
+
 /* pagination */
 
 .pagination>li>a {

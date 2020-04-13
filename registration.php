@@ -104,7 +104,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
             <div class="col-md-7">
                 <h1 class="h3 mb-3 font-weight-normal">Створити новий акаунт</h1>
                 <?php if ($errors) : ?>
-                    <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
                         <?= @$errors[0]; ?>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
