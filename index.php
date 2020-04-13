@@ -62,6 +62,9 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
 </head>
 
 <body class="text-center">
+    <!-- Back to top button -->
+    <a id="back-to-top-button"></a>
+
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
@@ -205,9 +208,12 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Sctipt -->
-    <script src="js/script.js"></script>
+    <!-- Navbar scroll animation -->
     <script src="js/navbar.js"></script>
+    <!-- Main sctipt -->
+    <script src="js/script.js"></script>
+    <!-- Back to top button -->
+    <script src="js/top.js"></script>
 </body>
 
 </html>

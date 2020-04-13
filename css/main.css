@@ -19,6 +19,48 @@ img.img-large-logo {
 }
 
 
+/* back to top button */
+
+#back-to-top-button {
+    display: inline-block;
+    background-color: #715142;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+#back-to-top-button::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f106";
+    font-weight: 900;
+    font-size: 2em;
+    line-height: 50px;
+    color: white;
+}
+
+#back-to-top-button:hover {
+    cursor: pointer;
+    background-color: #5c4235;
+}
+
+#back-to-top-button:active {
+    background-color: #555;
+}
+
+#back-to-top-button.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
 /* google material design icons */
 
 .material-icons {
@@ -341,21 +383,6 @@ a.navbar-brand:hover {
 
 .announcement-card:hover {
     box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .25)!important
-}
-
-.deco-none {
-    color: inherit;
-    text-decoration: inherit;
-}
-
-.deco-none:link {
-    color: inherit;
-    text-decoration: inherit;
-}
-
-.deco-none:hover {
-    color: inherit;
-    text-decoration: inherit;
 }
 
 .clickable {

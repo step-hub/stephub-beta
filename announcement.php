@@ -198,6 +198,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
 </head>
 
 <body>
+    <!-- Back to top button -->
+    <a id="back-to-top-button"></a>
+    
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
@@ -501,6 +504,11 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main sctipt -->
+    <script src="js/script.js"></script>
+    <!-- Back to top button -->
+    <script src="js/top.js"></script>
 </body>
 
 </html>

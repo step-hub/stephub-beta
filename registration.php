@@ -94,9 +94,11 @@ if (!array_key_exists('logged_user', $_SESSION)) {
 </head>
 
 <body class="text-center">
+    <!-- Back to top button -->
+    <a id="back-to-top-button"></a>
+
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
-
 
     <!-- Page Content -->
     <div class="container">
@@ -442,7 +444,12 @@ if (!array_key_exists('logged_user', $_SESSION)) {
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Main sctipt -->
     <script src="js/script.js"></script>
+    <!-- Main sctipt -->
+    <script src="js/registraion.js"></script>
+    <!-- Back to top button -->
+    <script src="js/top.js"></script>
 </body>
 
 </html>

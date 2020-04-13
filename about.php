@@ -29,6 +29,9 @@ include_once 'php/functions.php';
 </head>
 
 <body data-spy="scroll" data-target="#navbar_about" data-offset="0">
+    <!-- Back to top button -->
+    <a id="back-to-top-button"></a>
+    
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
@@ -296,6 +299,11 @@ include_once 'php/functions.php';
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main sctipt -->
+    <script src="js/script.js"></script>
+    <!-- Back to top button -->
+    <script src="js/top.js"></script>
 </body>
 
 </html>
