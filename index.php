@@ -103,7 +103,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                         <div class="card-body shadow bg-light pb-0">
                             <?php if ($announcements) :
                                 foreach ($announcements as $announcement) : ?>
-                                    <div class="card text-left mb-3 announcement-card">
+                                    <div class="card text-left mb-3 clickable announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
                                         <div class="card-body shadow-sm">
                                             <h5 class="card-title"><?= $announcement['title'] ?></h5>
                                             <p class="card-text mb-4"><?= $announcement['details'] ?></p>
