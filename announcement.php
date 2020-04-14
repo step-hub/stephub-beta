@@ -312,7 +312,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <?php foreach ($ann_comments as $a) : ?>
                                         <!-- Comment 1st lvl -->
                                         <div class="anchor" id="comment<?= $a['id'] ?>">
-                                            <div class="card mt-3 announcement-card">
+                                            <div class="card mt-3 bg-white">
                                                 <div class="card-header diagonal-gradient-gray pb-0 pt-1 border-bottom-0">
                                                     <div class="row">
                                                         <div class="col-md-10">
@@ -370,7 +370,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                 <!-- Comment 2nd lvl -->
                                                 <div class="row justify-content-end anchor" id="comment<?= $c['id'] ?>">
                                                     <div class="col-md-10">
-                                                        <div class="card mt-2 announcement-card">
+                                                        <div class="card mt-2 bg-white">
                                                             <div class="card-header diagonal-gradient-gray pb-0 pt-1 border-bottom-0">
                                                                 <div class="row">
                                                                     <div class="col-md-10">
@@ -410,7 +410,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <?php endforeach; ?>
                                 <?php else : ?>
                                     <!-- Comments Not Found -->
-                                    <div class="card mt-3 announcement-card" id="commentsNotFound">
+                                    <div class="card mt-3 bg-white" id="commentsNotFound">
                                         <div class="card-body">
                                             <p class="card-text text-center text-muted mb-2 mx-2"><i class="fas fa-exclamation-circle mr-3"></i>Коментарів цього оголошення не знайдено</p>
                                         </div>

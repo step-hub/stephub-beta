@@ -3,20 +3,17 @@ body {
     background-color: #EEEDE8;
 }
 
-img.img-large-logo {
-    max-width: 100% !important;
-    max-height: 100% !important;
-}
-
-.navbar-brand-sm:hover {
-    color: #715142;
-    text-decoration: none;
-}
-
 .anchor {
     padding-top: 60px;
     margin-top: -60px !important;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+
+/* preloader */
 
 .preloader {
     position: fixed;
@@ -26,6 +23,26 @@ img.img-large-logo {
     bottom: 0;
     background: #DDDCD6;
     z-index: 10000;
+}
+
+
+/* navbar */
+
+.navbar-brand-sm:hover {
+    color: #715142;
+    text-decoration: none;
+}
+
+
+/* header */
+
+.intro {
+    background-size: cover;
+}
+
+img.img-large-logo {
+    max-width: 100% !important;
+    max-height: 100% !important;
 }
 
 
@@ -380,21 +397,6 @@ a.navbar-brand:hover {
     border-radius: 0;
 }
 
-
-/* header */
-
-.intro {
-    background-size: cover;
-}
-
-.announcement-card {
-    background-color: white;
-}
-
 .announcement-card:hover {
     box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .25)!important
-}
-
-.clickable {
-    cursor: pointer;
 }
