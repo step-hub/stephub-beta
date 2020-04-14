@@ -10,6 +10,10 @@ function show_apache_owner()
     echo exec('whoami');
 }
 
+function script($script)
+{
+    echo "<script>" . $script . "</script>";
+}
 function console_log($data)
 {
     echo '<script>';

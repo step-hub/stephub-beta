@@ -34,7 +34,6 @@ if (isset($data['page']) and $data['page'] > 0) {
 
 $start = ($page - 1) * $quantity_per_page;
 $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, $quantity_per_page);
-
 ?>
 
 <!DOCTYPE html>
@@ -80,6 +79,9 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
 
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
+
+    <!-- Toasts -->
+    <?php include_once 'templates/toasts.php'; ?>
 
     <!-- Header-->
     <?php if (!array_key_exists('logged_user', $_SESSION)) :
@@ -145,7 +147,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
-                                
+
                                 <!-- Pagination-->
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-center">
@@ -227,6 +229,12 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
     <script src="js/script.js"></script>
     <!-- Back to top button -->
     <script src="js/top.js"></script>
+
+    <!-- Activate toasts -->
+    <?php (isset($data['activate']) and $data['activate'] == 'true') {
+        script("$('#activate').toast('show');")
+    } ?>
+
 </body>
 
 </html>
