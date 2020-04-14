@@ -43,15 +43,18 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                 $uploadName = basename($_FILES['userfile']['name']);
                 $uploadFile = $location . $uploadName;
                 console_log($uploadName);
+                console_log($uploadFile);
+                console_log($_FILES['userfile']['tmp_name']);
 
                 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadFile)) {
                     update_file($announcement->id, $uploadName);
+                    header('location: announcement.php?id=' . $announcement->id);
                 } else {
-                    $errors[] = "file error";
+                    $errors[] = "Не вдалось завантажити файл";
                 }
+            } else {
+                header('location: announcement.php?id=' . $announcement->id);
             }
-
-            header('location: announcement.php?id=' . $announcement->id);
         }
     }
 } else {
@@ -86,7 +89,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
 <body class="text-center">
     <!-- Preloader -->
     <?php include_once 'templates/preloader.html'; ?>
-    
+
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
@@ -119,28 +122,25 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                     </div>
                 </div>
                 <div class="card-body">
-                    <textarea name="details" cols="30" rows="10" class="form-control" value="<?= @$data['details'] ?>" placeholder="Деталі оголошення"></textarea>
-                </div>
-                <div class="card-footer">
+                    <textarea name="details" cols="30" rows="10" class="form-control mb-2" value="<?= @$data['details'] ?>" placeholder="Деталі оголошення"></textarea>
                     <div class="row">
-                        <div class="col-md-6">
-                            <!-- Upload file -->
-                            <div class="input-group mt-2">
-                                <div class="custom-file">
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="3000000">
-                                    <input type="file" name="userfile" class="custom-file-input" id="fileGroup" aria-describedby="fileAddon">
-                                    <label class="custom-file-label" for="fileGroup">Оберіть файл</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <button type="submit" name="do_post" class="btn my-btn-dark shadow-sm mt-1 mb-2 ml-auto mr-3">Сворити оголошення</button>
-                            </div>
+                        <div class="col">
+
                         </div>
                     </div>
 
+                </div>
+                <div class="card-footer">
 
+
+                    <div class="row px-3 pt-1">
+                        <!-- Upload file -->
+                        <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable shadow-sm">
+                            <i class="material-icons mr-2">attach_file</i>Прикріпити файл
+                            <input id="fileUpload" type="file" name="userfile">
+                        </label>
+                        <button type="submit" name="do_post" class="btn my-btn-dark shadow-sm mb-auto ml-auto">Сворити оголошення</button>
+                    </div>
                 </div>
             </form>
         </div>

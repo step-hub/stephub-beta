@@ -13,6 +13,13 @@ body {
 }
 
 
+/* file upload */
+
+.file-upload input[type='file'] {
+    display: none;
+}
+
+
 /* toasts */
 
 .toast {
