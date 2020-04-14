@@ -14,6 +14,13 @@ if (array_key_exists('logged_user', $_SESSION)) {
     $new_password_error = null;
     $repeat_password_error = null;
 
+    // tabs
+    if(!isset($_GET['tab'])) {
+        $tab = "profile";
+    } else {
+        $tab = $_GET['tab'];
+    }
+
     // EDIT USER INFO
     if (isset($data['do_update'])) {
         console_log($user);
@@ -121,11 +128,14 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 <div class="card mt-5 profile-left-menu shadow">
                     <div class="card-body diagonal-gradient-gray-light">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link my-1 active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true"><i class="material-icons mr-2">account_circle</i>Мій профіль</a>
-                            <a class="nav-link my-1" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password" role="tab" aria-controls="v-pills-password" aria-selected="false"><i class="material-icons mr-2">lock</i>Змінити пароль</a>
-                            <a class="nav-link my-1" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false"><i class="material-icons mr-2">notifications</i>Сповіщення</a>
-                            <a class="nav-link my-1" id="v-pills-announce-tab" data-toggle="pill" href="#v-pills-announce" role="tab" aria-controls="v-pills-announce" aria-selected="false"><i class="material-icons mr-2">list</i>Мої оголошення</a>
-                            <a class="nav-link my-1" id="v-pills-delete-tab" data-toggle="pill" href="#v-pills-delete" role="tab" aria-controls="v-pills-delete" aria-selected="false"><i class="material-icons mr-2">cancel</i>Видалити акаунт</a>
+                            <a class="nav-link my-1 active" id="profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="true"><i class="material-icons mr-2">account_circle</i>Мій профіль</a>
+                            <a class="nav-link my-1" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false"><i class="material-icons mr-2">lock</i>Змінити пароль</a>
+                            <a class="nav-link my-1" id="alerts-tab" data-toggle="pill" href="#alerts" role="tab" aria-controls="alerts" aria-selected="false"><i class="material-icons mr-2">notifications</i>Сповіщення<span class="badge badge-secondary ml-2">1</span></a>
+                            <a class="nav-link my-1" id="announcements-tab" data-toggle="pill" href="#announcements" role="tab" aria-controls="announcements" aria-selected="false"><i class="material-icons mr-2">list</i>Мої оголошення<?php
+                                                                                                                                                                                                                        if($user_announcements){
+                                                                                                                                                                                                                            echo '<span class="badge badge-secondary ml-2">' . count($user_announcements) . '</span>';
+                                                                                                                                                                                                                        } ?></a>
+                            <a class="nav-link my-1" id="delete-tab" data-toggle="pill" href="#delete" role="tab" aria-controls="delete" aria-selected="false"><i class="material-icons mr-2">cancel</i>Видалити акаунт</a>
                         </div>
                     </div>
                 </div>
@@ -137,7 +147,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <div class="card-body">
                         <div class="tab-content" id="v-pills-tabContent">
 
-                            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <form id="form-update-profile" class="form" action="profile.php" method="POST">
                                     <?php if ($errors) : ?>
                                         <div class="alert alert-danger shadow-sm" role="alert">
@@ -202,7 +212,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </form>
                             </div>
 
-                            <div class="tab-pane fade" id="v-pills-password" role="tabpanel" aria-labelledby="v-pills-password-tab">
+                            <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                                 <form class="form" action="profile.php" method="post">
                                     <div class="form-group row px-3">
                                         <label class="col-sm-3 col-form-label text-right" for="inputPassword">Старий пароль</label>
@@ -237,7 +247,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </form>
                             </div>
 
-                            <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
+                            <div class="tab-pane fade" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
                                 <div class="container text-center">
                                     <div class="row">
                                         <div class="col">
@@ -249,7 +259,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="v-pills-announce" role="tabpanel" aria-labelledby="v-pills-announce-tab">
+                            <div class="tab-pane fade" id="announcements" role="tabpanel" aria-labelledby="announcements-tab">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col">
@@ -282,7 +292,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">
+                            <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">
                                 <div class="container text-center">
                                     <h4 class="mb-4">Видалення облікового запису StepHub</h4>
                                     <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
@@ -346,6 +356,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
     <!-- Main sctipt -->
     <script src="js/script.js"></script>
+    <!-- Enable link to tab -->
+    <script src="js/profile.js"></script>
 </body>
 
 </html>

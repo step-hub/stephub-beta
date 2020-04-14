@@ -222,7 +222,9 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
 
     <!-- Activate toasts -->
     <?php if(isset($data['activate']) and $data['activate'] == 'true') {
-        script("$('#activate').toast('show');");
+        script("$(window).on('load', function() {
+            $('#activate').toast('show');
+        });");
     } ?>
 
 </body>
