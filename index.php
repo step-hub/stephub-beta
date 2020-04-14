@@ -231,8 +231,8 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
     <script src="js/top.js"></script>
 
     <!-- Activate toasts -->
-    <?php (isset($data['activate']) and $data['activate'] == 'true') {
-        script("$('#activate').toast('show');")
+    <?php if(isset($data['activate']) and $data['activate'] == 'true') {
+        script("$('#activate').toast('show');");
     } ?>
 
 </body>
