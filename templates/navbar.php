@@ -25,12 +25,17 @@
                                         } ?>">
                         <a class="nav-link" href="profile.php">Профіль</a>
                     </li>
-                <?php endif; ?>
-                <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "about.php") {
+                <?php endif; ?> 
+                <li class="nav-item dropdown <?php if (basename($_SERVER['PHP_SELF']) == "about.php") {
                                         echo "active font-weight-bold";
                                     } ?>">
-                    <a class="nav-link" href="about.php">Про нас</a>
-                </li>
+				    <a class="nav-link dropdown-toggle" href="about.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Про нас</a>
+				    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="about.php">Про нас</a>
+                        <a class="dropdown-item" href="about.php#terms">Правила користування</a>
+				        <a class="dropdown-item" href="about.php#privacy">Політика конфіденційності</a>
+				    </div>
+			    </li>
                 <?php if (isset($_SESSION['logged_user'])) :
                     if ($_SESSION['logged_user']->user_status == 1) : ?>
                         <li class="nav-item <?php if (basename($_SERVER['PHP_SELF']) == "admin.php") {
@@ -58,7 +63,11 @@
                     </li>
                 <?php else : ?>
                     <li class="nav-item">
-                        <a class="btn my-btn-dark ml-3" href="registration.php">Реєстрація</a>
+                        <?php if(basename($_SERVER['PHP_SELF']) == 'registration.php'): ?>
+                            <a class="btn my-btn-dark ml-3" href="index.php">Вхід</a>
+                        <?php else: ?>
+                            <a class="btn my-btn-dark ml-3" href="registration.php">Реєстрація</a>
+                        <?php endif; ?>
                     </li>
                 <?php endif; ?>
             </ul>

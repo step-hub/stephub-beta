@@ -17,15 +17,15 @@
                     <h5>Документи</h5>
                     <ul class="list-unstyled text-small">
                         <li>
-                            <a type="button" class="text-muted" data-toggle="modal" data-target="#modalTerms">Правила</a>
+                            <a type="button" href="" class="text-muted" data-toggle="modal" data-target="#modalTerms">Правила</a>
                             <?php include_once 'templates/modalTerms.php'; ?>
                         </li>
                         <li>
-                            <a type="button" class="text-muted" data-toggle="modal" data-target="#modalPrivacy">Конфіденційність</a>
+                            <a type="button" href="" class="text-muted" data-toggle="modal" data-target="#modalPrivacy">Конфіденційність</a>
                             <?php include_once 'templates/modalPrivacy.php'; ?>
                         </li>
                         <li>
-                            <a type="button" class="text-muted" data-toggle="modal" data-target="#modalLicense">Ліцензія</a>
+                            <a type="button" href="" class="text-muted" data-toggle="modal" data-target="#modalLicense">Ліцензія</a>
                             <?php include_once 'templates/modalLicense.php'; ?>
                         </li>
                     </ul>
@@ -42,4 +42,3 @@
         </footer>
     </div>
 </div>
-
