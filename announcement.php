@@ -285,7 +285,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <?php if (isset($announcement['file'])) : ?>
                                     <div class="card-footer">
                                         <p><i class="fa fa-paperclip mr-2"></i><?= $announcement['file'] ?></p>
-                                        <button class="btn btn-secondary"><i class="fas fa-file-download mr-2"></i>Завантажити</button>
+                                        <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary" download><i class="fas fa-file-download mr-2"></i>Завантажити</a>
                                     </div>
                                 <?php endif; ?>
                             </div><!-- /Show Announcement -->
