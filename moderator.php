@@ -175,9 +175,12 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 </head>
 
 <body class="text-center" style="padding-top: 46px !important;">
+    <!-- Preloader -->
+    <?php include_once 'templates/preloader.html'; ?>
+
     <!-- Back to top button -->
     <a id="back-to-top-button"></a>
-    
+
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 

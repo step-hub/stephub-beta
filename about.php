@@ -30,17 +30,7 @@ include_once 'php/functions.php';
 
 <body data-spy="scroll" data-target="#navbar_about" data-offset="0">
     <!-- Preloader -->
-    <div class="preloader">
-        <div class="row h-100">
-            <div class="col-sm-12 my-auto">
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border my-color-blue" style="width: 3rem; height: 3rem;" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include_once 'templates/preloader.html'; ?>
     
     <!-- Back to top button -->
     <a id="back-to-top-button"></a>
