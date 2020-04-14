@@ -70,6 +70,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
             $old_password_error = "Wrong password!";
         }
     }
+
+    $user_announcements = get_user_annoncements($user['id']);
 } else {
     header("location: index.php");
 }
@@ -103,7 +105,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
 <body>
     <!-- Preloader -->
     <?php include_once 'templates/preloader.html'; ?>
-    
+
     <!-- Back to top button -->
     <a id="back-to-top-button"></a>
 
@@ -248,22 +250,43 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             </div>
 
                             <div class="tab-pane fade" id="v-pills-announce" role="tabpanel" aria-labelledby="v-pills-announce-tab">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <?php if ($user_announcements) :
+                                                foreach ($user_announcements as $announcement) : ?>
+                                                    <div class="card text-left mb-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
+                                                        <div class="card-body shadow-sm">
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <h5 class="card-title"><?= $announcement['title'] ?></h5>
+                                                                    <p class="card-text"><?= $announcement['details'] ?></p>
+                                                                </div>
+                                                                <div class="col-md-4 align-self-end">
+                                                                    <a href="announcement.php?id=<?= $announcement['id'] ?>" class="btn my-btn-blue float-right">Детальніше</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
 
+                                            <?php else : ?>
+                                                <div class="container text-center">
+                                                    <h4 class="mb-4">Не знайдено ваших оголошень</h4>
+                                                    <p>Ваші розміщенні оголошення будуть відображатись тут. Хочете створити оголошення зараз?</p>
+                                                    <a class="btn btn-lg my-btn-dark shadow-sm mt-5" href="create-announcement.php"><i class="material-icons mr-2">post_add</i>Розмістити оголошення</a>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">
                                 <div class="container text-center">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h4 class="mb-5">Видалення облікового запису StepHub</h4>
-                                            <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col ">
-                                            <button data-toggle="modal" data-target="#deleteModal" class="btn my-btn-red shadow-sm">Видалити акаунт</button>
-                                        </div>
-                                    </div>
+                                    <h4 class="mb-4">Видалення облікового запису StepHub</h4>
+                                    <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
+                                    <button data-toggle="modal" data-target="#deleteModal" class="btn my-btn-red shadow-sm mt-5">Видалити акаунт</button>
                                 </div>
                             </div>
                         </div>

@@ -99,6 +99,14 @@ function get_announcements_with_limit($start, $num)
 {
     return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT " . $start . ", " . $num);
 }
+function get_user_annoncements($user_id)
+{
+    return R::getAll("SELECT * FROM announcements WHERE user_id = " . $user_id . " ORDER BY date DESC");
+}
+function get_user_announcements_with_limit($start, $num)
+{
+    return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT " . $start . ", " . $num);
+}
 
 // SELECT comments
 function get_comments_by_announcement_id($id)
