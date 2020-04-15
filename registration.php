@@ -8,44 +8,44 @@ if (!array_key_exists('logged_user', $_SESSION)) {
 
     if (isset($data['do_signup'])) {
         if (trim($data['login']) == '') {
-            $errors[] = 'login field is empty!!!';
+            $errors[] = 'Поле логіну не можу бути порожнім';
         }
         if (trim($data['email']) == '') {
-            $errors[] = 'email field is empty!!!';
+            $errors[] = 'Поле електронної адреси не можу бути порожнім';
         }
         if (trim($data['stud_num_series']) == '') {
-            $errors[] = 'stud_num_ser field is empty!!!';
+            $errors[] = 'Вкажіть серію студентсього квитка';
         }
         if (trim($data['stud_num_number']) == '') {
-            $errors[] = 'stud_num_num field is empty!!!';
+            $errors[] = 'Вкажіть номер студентсього квитка';
         }
         if (trim($data['telegram']) == '') {
-            $errors[] = 'telegram field is empty!!!';
+            $errors[] = 'Вкажіть логін телеграму';
         }
         if ($data['password'] == '') {
-            $errors[] = 'password field is empty!!!';
+            $errors[] = 'Поле паролю не може бути порожнім';
         }
 
         if ($data['password_confirmation'] != $data['password']) {
-            $errors[] = "password does doesn't confirm!!!";
+            $errors[] = "Ваші паролі не співпадають, спробуйте ввести ще раз";
         }
 
         if (count_users_by_login($data['login']) > 0) {
-            $errors[] = "user with such login already exist!!!";
+            $errors[] = "Користувач з логіном ".$data['login']." вже існує, введіть інше ім'я";
         }
         if (count_users_by_email($data['email']) > 0) {
-            $errors[] = "user with such email already exist!!!";
+            $errors[] = "Електронна адреса ".$data['email']." вже зареєстрована, хочете ввійти в свій акаунт?";
         }
         if (count_users_by_telegram($data['telegram']) > 0) {
-            $errors[] = "user with such telegram already exist!!!";
+            $errors[] = "Користувач з таким телеграм логіном ".$data['telegram']." вже існує, хочете ввійти в свій акаунт?";
         }
 
         if (count_studentid_by_num($data['stud_num_series'] . $data['stud_num_number']) == 0) {
-            $errors[] = "user with such student num can't register!!!";
+            $errors[] = "Введіть номер та серію вашого студентсього квитка";
         } else {
             $studentid = find_studentid_by_num($data['stud_num_series'] . $data['stud_num_number']);
             if (count_users_by_student_id($studentid->id) > 0) {
-                $errors[] = "user with such student num has already registered!!!";
+                $errors[] = "Схоже, ви не є студентом приватного навчального закладу IT STEP University";
             }
         }
 

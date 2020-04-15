@@ -26,7 +26,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
         if (isset($data['do_comment'])) {
             if (trim($data['comment_to_ann']) == '') {
-                $errors[] = 'коментар не може бути пустим';
+                $errors[] = 'Ваш коментар не може бути порожнім';
             }
 
             if (empty($errors)) {
@@ -43,7 +43,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
         foreach ($ann_comments as $ann_comment) {
             if (isset($data['do_comment_to_comment' . $ann_comment['id']])) {
                 if (trim($data['comment_to_com' . $ann_comment['id']]) == '') {
-                    $errors[] = 'коментар не може бути пустим';
+                    $errors[] = 'Ваш коментар не може бути порожнім';
                 }
 
                 if (empty($errors)) {
@@ -101,16 +101,16 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
         if (isset($data['do_update_ann'])) {
             if (trim($data['title']) == '') {
-                $update_ann_errors[] = 'заголовок не може бути порожнім';
+                $update_ann_errors[] = 'Вкажіть загловок оголошення';
             }
             if ($data['deadline'] == '') {
-                $update_ann_errors[] = 'повинен бути вказаний дедлайн';
+                $update_ann_errors[] = 'Встановіть дедлайн оголошення';
             }
             if (strtotime($data['deadline']) < time()) {
-                $update_ann_errors[] = 'дедлайн не може бути попередньою датою';
+                $update_ann_errors[] = 'Дедлайн не може бути попередньою датою';
             }
             if (trim($data['details']) == '') {
-                $update_ann_errors[] = 'деталі оголошення не можуть бути порожніми';
+                $update_ann_errors[] = 'Вкажіть деталі оголошення';
             }
 
             if (empty($update_ann_errors)) {
@@ -207,9 +207,18 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             <div class="card announcement shadow">
                                 <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
                                     <div class="card-header diagonal-gradient-gray-light my-color-dark border-bottom-0">
-                                        <div class="row justify-content-center">
-                                            <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$update_ann_errors[0]; ?></>
-                                        </div>
+                                        <?php if (@$update_ann_errors) : ?>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
+                                                        <?= @$update_ann_errors[0]; ?>
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
                                         <div class="container">
                                             <div class="row pt-2 pb-2">
                                                 <input type="text" name="title" value="<?= $announcement['title'] ?>" class="form-control form-control-lg my-bg-light my-color-dark" placeholder="Заголовок">
@@ -276,8 +285,16 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <!-- Leave New Comment -->
                                 <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
                                     <?php if ($errors) : ?>
-                                        <div class="row justify-content-center">
-                                            <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
+                                                    <?= @$errors[0]; ?>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     <?php endif; ?>
                                     <label class="sr-only" for="comment_field">Написати коментар</label>
@@ -291,8 +308,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         <!-- Comment 1st lvl -->
                                         <div class="anchor" id="comment<?= $a['id'] ?>">
                                             <div class="card mt-3 bg-white shadow <?php if ($a['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
-                                                                                echo 'border-danger';
-                                                                            } ?>">
+                                                                                        echo 'border-danger';
+                                                                                    } ?>">
                                                 <div class="card-header diagonal-gradient-gray pb-0 pt-1 border-bottom-0">
                                                     <div class="row">
                                                         <div class="col-md-10">
@@ -363,8 +380,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                 <div class="row justify-content-end anchor" id="comment<?= $c['id'] ?>">
                                                     <div class="col-md-10">
                                                         <div class="card mt-2 bg-white shadow <?php if ($c['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
-                                                                                            echo 'border-danger';
-                                                                                        } ?>">
+                                                                                                    echo 'border-danger';
+                                                                                                } ?>">
                                                             <div class="card-header diagonal-gradient-gray pb-0 pt-1 border-bottom-0">
                                                                 <div class="row">
                                                                     <div class="col-md-10">

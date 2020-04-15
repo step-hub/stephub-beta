@@ -8,16 +8,16 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
 
     if (isset($data['do_post'])) {
         if (trim($data['title']) == '') {
-            $errors[] = 'заголовок не може бути порожнім';
+            $errors[] = 'Вкажіть загловок оголошення';
         }
         if ($data['deadline'] == '') {
-            $errors[] = 'повинен бути вказаний дедлайн';
+            $errors[] = 'Встановіть дедлайн оголошення';
         }
         if (strtotime($data['deadline']) < time()) {
-            $errors[] = 'дедлайн не може бути попередньою датою';
+            $errors[] = 'Дедлайн не може бути попередньою датою';
         }
         if (trim($data['details']) == '') {
-            $errors[] = 'деталі оголошення не можуть бути порожніми';
+            $errors[] = 'Вкажіть деталі оголошення';
         }
 
         if (empty($errors)) {
