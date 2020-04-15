@@ -83,7 +83,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
         <div class="container">
             <div class="row mx-5">
                 <div class="col">
-                    <div class="row my-2 mx-0">
+                    <div class="row my-3 mx-0">
                         <form class="form-inline small float-right ml-auto" action="index.php" method="GET">
                             <div class="form-group mr-2">
                                 <label for="sort_by">Сортування</label>
@@ -104,7 +104,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                                     <option value="30" <?php if (isset($data['q']) and (isset($data['q']) and $data['q'] == '30')) echo "selected" ?>>30</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary shadow-sm"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
                         </form>
                     </div>
                     <div class="card">
