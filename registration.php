@@ -31,21 +31,21 @@ if (!array_key_exists('logged_user', $_SESSION)) {
         }
 
         if (count_users_by_login($data['login']) > 0) {
-            $errors[] = "Користувач з логіном ".$data['login']." вже існує, введіть інше ім'я";
+            $errors[] = "Користувач з логіном <strong>" . $data['login'] . "</strong> вже існує, введіть інше ім'я";
         }
         if (count_users_by_email($data['email']) > 0) {
-            $errors[] = "Електронна адреса ".$data['email']." вже зареєстрована, хочете ввійти в свій акаунт?";
+            $errors[] = "Електронна адреса <strong>" . $data['email'] . "</strong> вже зареєстрована, хочете ввійти в свій акаунт?";
         }
         if (count_users_by_telegram($data['telegram']) > 0) {
-            $errors[] = "Користувач з таким телеграм логіном ".$data['telegram']." вже існує, хочете ввійти в свій акаунт?";
+            $errors[] = "Користувач з таким телеграм логіном <strong>" . $data['telegram'] . "</strong> вже існує, хочете ввійти в свій акаунт?";
         }
 
         if (count_studentid_by_num($data['stud_num_series'] . $data['stud_num_number']) == 0) {
-            $errors[] = "Введіть номер та серію вашого студентсього квитка";
+            $errors[] = "Схоже, ви не є студентом приватного навчального закладу <strong>IT STEP University</strong>, і не можете користуватись сервісом <strong>StepHub</strong>. Перевірте дані вашого квитка";
         } else {
             $studentid = find_studentid_by_num($data['stud_num_series'] . $data['stud_num_number']);
             if (count_users_by_student_id($studentid->id) > 0) {
-                $errors[] = "Схоже, ви не є студентом приватного навчального закладу IT STEP University";
+                $errors[] = "Схоже, ви не є студентом приватного навчального закладу <strong>IT STEP University</strong>, і не можете користуватись сервісом <strong>StepHub</strong>. Перевірте дані вашого квитка";
             }
         }
 
@@ -96,7 +96,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
 <body class="text-center">
     <!-- Preloader -->
     <?php include_once 'templates/preloader.html'; ?>
-    
+
     <!-- Back to top button -->
     <a id="back-to-top-button"></a>
 
@@ -119,7 +119,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
 
                 <form class="form" action="registration.php" method="POST">
                     <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label" for="inputLogin">Ім'я користувача</label>
+                        <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ім'я користувача</label>
                         <div class="col-sm-9">
                             <input name="login" class="form-control" type="text" id="inputLogin" value="<?= @$data['login']; ?>" placeholder="Ім'я користувача" required autofocus aria-describedby="loginHelp">
                             <small id="loginHelp" class="form-text text-muted">
@@ -128,26 +128,26 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                         </div>
                     </div>
                     <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label" for="inputEmail">Ел. пошта</label>
+                        <label class="col-sm-3 col-form-label text-right" for="inputEmail">Ел. пошта</label>
                         <div class="col-sm-9">
                             <input name="email" class="form-control" type="email" id="inputEmail" value="<?= @$data['email']; ?>" placeholder="example@gmail.com" required>
                         </div>
                     </div>
                     <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label" for="inputStudNum">Студентський</label>
+                        <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Студентський</label>
                         <div class="input-group col-sm-5" id="inputStudNum">
-                            <input name="stud_num_series" class="form-control col-3 mx-0" type="text" value="<?= @$data['stud_num_ser']; ?>" placeholder="АБ" required>
-                            <div class="input-group-text" style="border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0;">№</div>
-                            <input name="stud_num_number" class="form-control col-5 mx-0" type="text" value="<?= @$data['stud_num_num']; ?>" placeholder="12345678" required>
-                        </div>
-                        <div class="col-sm-4 pl-0">
-                            <button type="button" class="btn float-left myPopover" data-toggle="popover" data-placement="right" title="Де взяти номер студентського квитка?" data-trigger="hower" data-content="Серію і номер студентського квитка можна дізнатися на лицевій стороні вашого студентського квитка">
+                            <input name="stud_num_series" class="form-control col-2 px-2 mx-0" type="text" maxlength="2" value="<?= @$data['stud_num_ser']; ?>" placeholder="АБ" required>
+                            <div class="input-group-text border-radius-0" style="border-right: 0; border-left: 0;">№</div>
+                            <input name="stud_num_number" class="form-control ml-0" style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem" type="text" maxlength="8" value="<?= @$data['stud_num_num']; ?>" placeholder="12345678" required>
+                            
+                            <button type="button" class="btn float-left myPopover ml-1 mr-2" data-toggle="popover" data-placement="right" title="Де взяти номер студентського квитка?" data-trigger="hower" data-content="Серію і номер студентського квитка можна дізнатися на лицевій стороні вашого студентського квитка">
                                 <i class="fa fa-info-circle text-muted"></i>
                             </button>
                         </div>
+                        <div class="col-sm-4"></div>
                     </div>
                     <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label" for="inputTelegram">Телеграм</label>
+                        <label class="col-sm-3 col-form-label text-right" for="inputTelegram">Телеграм</label>
                         <div class="col-sm-5">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -162,7 +162,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                     <div class="card">
                         <div class="card-body my-bg-light px-0">
                             <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label" for="inputPassword">Пароль</label>
+                                <label class="col-sm-3 col-form-label text-right" for="inputPassword">Пароль</label>
                                 <div class="col-sm-9">
                                     <input name="password" class="form-control" type="password" id="inputPassword" placeholder="Пароль" required aria-describedby="passHelp">
                                     <small id="passHelp" class="form-text text-muted">
@@ -171,7 +171,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                             </div>
                             <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label" for="inputPasswordConfirm">Підтвердження</label>
+                                <label class="col-sm-3 col-form-label text-right" for="inputPasswordConfirm">Підтвердження</label>
                                 <div class="col-sm-9">
                                     <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть пароль" required>
                                 </div>
@@ -192,7 +192,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
             </div>
             <div class="col-md-5">
 
-                <div class="accordion" id="idAccordion">
+                <div class="accordion shadow-sm" id="idAccordion">
                     <div class="card ">
                         <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
@@ -449,7 +449,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
 
     <!-- Main sctipt -->
     <script src="js/script.js"></script>
-    <!-- Main sctipt -->
+    <!-- Registration sctipt -->
     <script src="js/registraion.js"></script>
     <!-- Back to top button -->
     <script src="js/top.js"></script>
