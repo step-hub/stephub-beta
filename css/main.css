@@ -411,6 +411,14 @@ a.navbar-brand:hover {
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ecece9', endColorstr='#ceccc3', GradientType=1);
 }
 
+.diagonal-gradient-red-light {
+    background: #fee5e5;
+    background: -moz-linear-gradient(-45deg, #fee5e5 0%, #faa5a5 100%);
+    background: -webkit-linear-gradient(-45deg, #fee5e5 0%, #faa5a5 100%);
+    background: linear-gradient(135deg, #fee5e5 0%, #faa5a5 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fee5e5', endColorstr='#faa5a5', GradientType=1);
+}
+
 
 /* border */
 
