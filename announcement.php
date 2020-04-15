@@ -119,18 +119,6 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 $announcement['deadline'] = strtotime($data['deadline']);
                 $announcement['announcement_status_id'] = 2;
 
-                // attach file
-                //            if(isset($_FILES['userfile'])) {
-                //                $uploadName = basename($_FILES['userfile']['name']);
-                //                $uploadFile = get_upload_path() . $uploadName;
-                //                echo "<script> alert(".$uploadName.");</script>";
-                //                if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadFile)) {
-                //                    $announcement->file = "".$uploadName;
-                //                } else {
-                //                    $errors[] = "file error";
-                //                }
-                //            }
-
                 R::store($announcement);
 
                 header('location: announcement.php?id=' . $announcement['id']);
@@ -200,7 +188,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
 <body>
     <!-- Preloader -->
     <?php include_once 'templates/preloader.html'; ?>
-    
+
     <!-- Back to top button -->
     <a id="back-to-top-button"></a>
 
@@ -239,8 +227,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     </div>
                                     <?php if (isset($announcement['file'])) : ?>
                                         <div class="card-footer">
-                                        <p><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
-                                        <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
+                                            <p><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                            <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
                                         </div>
                                     <?php endif; ?>
                                 </form>
@@ -257,7 +245,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                             <div class="col-md-2 pr-0">
                                                 <?php if ($user['id'] != $announcement['user_id']) : ?>
                                                     <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post">
-                                                        <button class="btn float-right my-color-dark" name="do_ban_ann" type="submit"><i class="fas fa-ban"></i></button>
+                                                        <button class="btn float-right announcement-option" name="do_ban_ann" type="submit"><i class="fas fa-ban"></i></button>
                                                     </form>
                                                 <?php endif; ?>
                                             </div>
@@ -302,26 +290,40 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <?php foreach ($ann_comments as $a) : ?>
                                         <!-- Comment 1st lvl -->
                                         <div class="anchor" id="comment<?= $a['id'] ?>">
-                                            <div class="card mt-3 bg-white">
+                                            <div class="card mt-3 bg-white shadow <?php if ($a['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
+                                                                                echo 'border-danger';
+                                                                            } ?>">
                                                 <div class="card-header diagonal-gradient-gray pb-0 pt-1 border-bottom-0">
                                                     <div class="row">
                                                         <div class="col-md-10">
                                                             <div class="row">
                                                                 <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($a['date']) ?></p>
                                                                 <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-clock mr-2"></i><?= show_time($a['date']) ?></p>
-                                                                <?php if ($announcement['user_id'] == $a['user_id']) : ?>
-                                                                    <span class="badge badge-success mx-2 mb-0"><i class="fas fa-user mr-2"></i>Автор оголошення</span>
-                                                                <?php elseif ($user['id'] == $a['user_id']) : ?>
-                                                                    <span class="badge badge-secondary mx-2 mb-0"><i class="fas fa-user mr-2"></i>Ваш коментар</span>
+                                                                <?php if ($user['id'] == $a['user_id']) : ?>
+                                                                    <span class="badge badge-primary my-bg-blue ml-2 mb-0"><i class="fas fa-user mr-2"></i>Ваш коментар</span>
+                                                                <?php elseif ($announcement['user_id'] == $a['user_id']) : ?>
+                                                                    <span class="badge badge-success ml-2 mb-0"><i class="far fa-star mr-2"></i>Автор оголошення</span>
+                                                                <?php endif; ?>
+
+                                                                <?php if (get_user_by_id($a['user_id'])['user_status'] == 1) : ?>
+                                                                    <span class="badge badge-secondary ml-2 mb-0"><i class="fas fa-shield-alt mr-2"></i>Адміністратор</span>
+                                                                <?php elseif (get_user_by_id($a['user_id'])['user_status'] == 2) : ?>
+                                                                    <span class="badge badge-secondary ml-2 mb-0"><i class="far fa-shield-al mr-2"></i>Модератор</span>
                                                                 <?php endif; ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2 pr-1">
                                                             <form action="announcement.php?id=<?= $announcement['id'] ?>" method="POST">
                                                                 <?php if ($user['id'] == $a['user_id']) : ?>
-                                                                    <button name="do_delete_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-trash"></i></button>
+                                                                    <button name="do_delete_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-trash"></i></button>
                                                                 <?php elseif (!$a['complaint']) : ?>
-                                                                    <button name="do_ban_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
+                                                                    <button name="do_ban_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
+                                                                <?php elseif ($a['complaint']) : ?>
+                                                                    <?php if ($user['user_status'] == 1 or $user['user_status'] == 2) : ?>
+                                                                        <button name="do_delete_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option-admin p-0"><i class="fas fa-trash"></i></button>
+                                                                    <?php else : ?>
+                                                                        <button class="btn btn-sm float-right text-muted p-0" disabled><i class="fas fa-ban"></i></button>
+                                                                    <?php endif; ?>
                                                                 <?php endif; ?>
                                                             </form>
                                                         </div>
@@ -342,7 +344,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                             <label class="sr-only" for="comment_field">Написати коментар</label>
                                                                             <textarea class="form-control-sm  mr-sm-2" style="min-width: 100%" type="text" name="comment_to_com<?= $a['id'] ?>" rows="1" id="comment_field" placeholder="Написати коментар"></textarea>
                                                                         </div>
-                                                                        <div class="col-md-auto ml-auto pl-0">
+                                                                        <div class="col-md-auto ml-auto pl-0 pr-1">
                                                                             <button type="submit" name="do_comment_to_comment<?= $a['id'] ?>" class="btn btn-sm my-btn-blue">
                                                                                 <i class="fa fa-paper-plane mr-2"></i>Відправити
                                                                             </button>
@@ -360,7 +362,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                 <!-- Comment 2nd lvl -->
                                                 <div class="row justify-content-end anchor" id="comment<?= $c['id'] ?>">
                                                     <div class="col-md-10">
-                                                        <div class="card mt-2 bg-white">
+                                                        <div class="card mt-2 bg-white shadow <?php if ($c['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
+                                                                                            echo 'border-danger';
+                                                                                        } ?>">
                                                             <div class="card-header diagonal-gradient-gray pb-0 pt-1 border-bottom-0">
                                                                 <div class="row">
                                                                     <div class="col-md-10">
@@ -371,19 +375,31 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                             <p class="card-text text-muted small mx-2 mb-0">
                                                                                 <i class="far fa-clock mr-2"></i><?= show_time($c['date']) ?>
                                                                             </p>
-                                                                            <?php if ($announcement['user_id'] == $c['user_id']) : ?>
-                                                                                <span class="badge badge-success mx-2 mb-0"><i class="fas fa-user mr-2"></i>Автор оголошення</span>
-                                                                            <?php elseif ($user['id'] == $c['user_id']) : ?>
-                                                                                <span class="badge badge-secondary mx-2 mb-0"><i class="fas fa-user mr-2"></i>Ваш коментар</span>
+                                                                            <?php if ($user['id'] == $c['user_id']) : ?>
+                                                                                <span class="badge badge-primary my-bg-blue ml-2 mb-0"><i class="fas fa-user mr-2"></i>Ваш коментар</span>
+                                                                            <?php elseif ($announcement['user_id'] == $c['user_id']) : ?>
+                                                                                <span class="badge badge-success ml-2 mb-0"><i class="far fa-star mr-2"></i>Автор оголошення</span>
+                                                                            <?php endif; ?>
+
+                                                                            <?php if (get_user_by_id($c['user_id'])['user_status'] == 1) : ?>
+                                                                                <span class="badge badge-secondary ml-2 mb-0"><i class="fas fa-shield-alt mr-2"></i>Адміністратор</span>
+                                                                            <?php elseif (get_user_by_id($c['user_id'])['user_status'] == 2) : ?>
+                                                                                <span class="badge badge-secondary ml-2 mb-0"><i class="far fa-shield-al mr-2"></i>Модератор</span>
                                                                             <?php endif; ?>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-2 pr-1">
                                                                         <form action="announcement.php?id=<?= $announcement['id'] ?>" method="POST">
                                                                             <?php if ($user['id'] == $c['user_id']) : ?>
-                                                                                <button name="do_delete_comment<?= $c['id'] ?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-trash"></i></button>
+                                                                                <button name="do_delete_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-trash"></i></button>
                                                                             <?php elseif (!$c['complaint']) : ?>
-                                                                                <button name="do_ban_comment<?= $c['id'] ?>" type="submit" class="btn btn-sm float-right text-muted p-0"><i class="fas fa-ban"></i></button>
+                                                                                <button name="do_ban_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
+                                                                            <?php elseif ($c['complaint']) : ?>
+                                                                                <?php if ($user['user_status'] == 1 or $user['user_status'] == 2) : ?>
+                                                                                    <button name="do_delete_comment<?= $c['id'] ?>" type="submit" class="btn btn-sm float-right comment-option-admin p-0"><i class="fas fa-trash"></i></button>
+                                                                                <?php else : ?>
+                                                                                    <button class="btn btn-sm float-right text-muted p-0" disabled><i class="fas fa-ban"></i></button>
+                                                                                <?php endif; ?>
                                                                             <?php endif; ?>
                                                                         </form>
                                                                     </div>
