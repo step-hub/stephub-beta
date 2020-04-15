@@ -290,6 +290,33 @@ img.img-large-logo {
 }
 
 
+/*announcement button options */
+
+.announcement-option {
+    color: #715142;
+}
+
+.announcement-option:hover {
+    color: #c80c0b;
+}
+
+.comment-option {
+    color: #6c757d;
+}
+
+.comment-option:hover {
+    color: #c80c0b;
+}
+
+.comment-option-admin {
+    color: #c80c0b;
+}
+
+.comment-option-admin:hover {
+    color: #a80a09;
+}
+
+
 /*navbar*/
 
 .navbar,
