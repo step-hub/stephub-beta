@@ -123,16 +123,8 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                 </div>
                 <div class="card-body">
                     <textarea name="details" cols="30" rows="10" class="form-control mb-2" value="<?= @$data['details'] ?>" placeholder="Деталі оголошення"></textarea>
-                    <div class="row">
-                        <div class="col">
-
-                        </div>
-                    </div>
-
                 </div>
                 <div class="card-footer">
-
-
                     <div class="row px-3 pt-1">
                         <!-- Upload file -->
                         <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable shadow-sm">

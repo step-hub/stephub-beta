@@ -236,8 +236,18 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     </div>
                                     <?php if (isset($announcement['file'])) : ?>
                                         <div class="card-footer">
-                                            <p><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
-                                            <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
+                                            <div class="row pt-2">
+                                                <button class="btn my-btn-red shadow-sm ml-3"><i class="material-icons mr-2">cancel</i>Відкріпити файл</button>
+                                                <p class="ml-2 my-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                            </div>
+                                        </div>
+                                    <?php else : ?>
+                                        <div class="card-footer">
+                                            <!-- Upload file -->
+                                            <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable shadow-sm">
+                                                <i class="material-icons mr-2">attach_file</i>Прикріпити файл
+                                                <input id="fileUpload" type="file" name="userfile">
+                                            </label>
                                         </div>
                                     <?php endif; ?>
                                 </form>
@@ -277,8 +287,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                                 <?php if (isset($announcement['file'])) : ?>
                                     <div class="card-footer">
-                                        <p><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
-                                        <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
+                                        <div class="row pt-2">
+                                            <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary shadow-sm ml-3" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
+                                            <p class="ml-2 my-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                        </div>
                                     </div>
                                 <?php endif; ?>
                             </div><!-- /Show Announcement -->
