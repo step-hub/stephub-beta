@@ -393,12 +393,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                     <div class="row">
                                                                         <div class="col-md-10">
                                                                             <div class="row">
-                                                                                <p class="card-text text-muted small mx-2 mb-0">
-                                                                                    <i class="far fa-calendar mr-2"></i><?= show_date($c['date']) ?>
-                                                                                </p>
-                                                                                <p class="card-text text-muted small mx-2 mb-0">
-                                                                                    <i class="far fa-clock mr-2"></i><?= show_time($c['date']) ?>
-                                                                                </p>
+                                                                                <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($c['date']) ?></p>
+                                                                                <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-clock mr-2"></i><?= show_time($c['date']) ?></p>
                                                                                 <?php if ($user['id'] == $c['user_id']) : ?>
                                                                                     <span class="badge badge-primary my-bg-blue ml-2 mb-0"><i class="fas fa-user mr-2"></i>Ваш коментар</span>
                                                                                 <?php elseif ($announcement['user_id'] == $c['user_id']) : ?>
@@ -529,18 +525,18 @@ if (array_key_exists('logged_user', $_SESSION)) {
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="removeAnnModalLabel">Ви хочете видалити оголошення?</h5>
+                    <h5 class="modal-title" id="removeAnnModalLabel">Видалити оголошення</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Після видалення вашого оголошення його буде неможливо переглянути та повернути.
+                    Після видалення оголошення його буде неможливо переглянути та повернути. Ви дійсно хочете видалити оголошення?
                 </div>
                 <div class="modal-footer">
                     <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                        <button class="btn my-btn-red" name="do_ban_ann" type="submit">Видалити</button>
+                        <button class="btn my-btn-red" name="do_remove_ann" type="submit">Видалити</button>
                     </form>
                 </div>
             </div>
@@ -563,7 +559,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 <div class="modal-footer">
                     <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                        <button class="btn my-btn-red" name="do_delete_ann" type="submit">Поскаржитись</button>
+                        <button class="btn my-btn-red" name="do_ban_ann" type="submit">Поскаржитись</button>
                     </form>
                 </div>
             </div>
