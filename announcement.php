@@ -317,7 +317,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         <button type="submit" name="do_comment" class="btn my-btn-blue mt-1 mb-2"><i class="fas fa-comment mr-2"></i>Коментувати</button>
                                     </form><!-- /Leave New Comment -->
                                 </div>
-                                <div class="card-body bg-light">
+                                <div class="card-body bg-light pt-2">
                                     <?php if (count($ann_comments) > 0) : ?>
                                         <?php foreach ($ann_comments as $a) : ?>
                                             <!-- Comment 1st lvl -->
@@ -354,10 +354,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                     <?php if ($user['id'] == $a['user_id']) : ?>
                                                                         <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-trash"></i></button>
                                                                     <?php else : ?>
-                                                                        <?php if ($a['complaint']) : ?>
+                                                                        <?php if ($a['complaint'] or get_user_by_id($a['user_id'])['user_status'] < 3) : ?>
                                                                             <button class="btn btn-sm float-right text-muted p-0" disabled><i class="fas fa-ban"></i></button>
                                                                         <?php else : ?>
-                                                                            <button name="do_ban_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
+                                                                            <button data-toggle="modal" data-target="#banComm1Modal" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
                                                                         <?php endif; ?>
                                                                     <?php endif; ?>
                                                                 <?php endif; ?>
@@ -379,6 +379,29 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                                 <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
                                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
                                                                                     <button class="btn my-btn-red" name="do_delete_comment<?= $a['id'] ?>" type="submit">Видалити</button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Modal Ban Comment 1 -->
+                                                                <div class="modal fade" id="banComm1Modal" tabindex="-1" role="dialog" aria-labelledby="banComm1ModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="banComm1ModalLabel">Поскаржитись на коментар</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                Якщо коментар порушує правила користування сервісом, то його буде видалено назавжди. Відправити запит на розглядання цього оголошення модераторами?
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
+                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                                                                                    <button class="btn my-btn-red" name="do_ban_comment<?= $a['id'] ?>" type="submit">Поскаржитись</button>
                                                                                 </form>
                                                                             </div>
                                                                         </div>
@@ -451,10 +474,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                                 <?php if ($user['id'] == $c['user_id']) : ?>
                                                                                     <button data-toggle="modal" data-target="#removeComm2Modal" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-trash"></i></button>
                                                                                 <?php else : ?>
-                                                                                    <?php if ($c['complaint']) : ?>
+                                                                                    <?php if ($c['complaint'] or get_user_by_id($c['user_id'])['user_status'] < 3) : ?>
                                                                                         <button class="btn btn-sm float-right text-muted p-0" disabled><i class="fas fa-ban"></i></button>
                                                                                     <?php else : ?>
-                                                                                        <button name="do_ban_comment<?= $c['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
+                                                                                        <button data-toggle="modal" data-target="#banComm2Modal" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
                                                                                     <?php endif; ?>
                                                                                 <?php endif; ?>
                                                                             <?php endif; ?>
@@ -476,6 +499,29 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                                             <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
                                                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
                                                                                                 <button class="btn my-btn-red" name="do_delete_comment<?= $c['id'] ?>" type="submit">Видалити</button>
+                                                                                            </form>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <!-- Modal Ban Comment 2 -->
+                                                                            <div class="modal fade" id="banComm2Modal" tabindex="-1" role="dialog" aria-labelledby="banComm2ModalLabel" aria-hidden="true">
+                                                                                <div class="modal-dialog" role="document">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h5 class="modal-title" id="banComm2ModalLabel">Поскаржитись на коментар</h5>
+                                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                                <span aria-hidden="true">&times;</span>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                        <div class="modal-body">
+                                                                                            Якщо коментар порушує правила користування сервісом, то його буде видалено назавжди. Відправити запит на розглядання цього оголошення модераторами?
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
+                                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                                                                                                <button class="btn my-btn-red" name="do_ban_comment<?= $c['id'] ?>" type="submit">Поскаржитись</button>
                                                                                             </form>
                                                                                         </div>
                                                                                     </div>
