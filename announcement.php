@@ -322,12 +322,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         <?php foreach ($ann_comments as $a) : ?>
                                             <!-- Comment 1st lvl -->
                                             <div class="anchor" id="comment<?= $a['id'] ?>">
-                                                <div class="card mt-3 bg-white shadow <?php if ($a['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
-                                                                                            echo 'border-danger';
-                                                                                        } ?>">
-                                                    <div class="card-header pb-0 pt-1 border-bottom-0 diagonal-gradient-gray <?php if ($a['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
-                                                                                                                                    echo 'diagonal-gradient-red-light';
-                                                                                                                                } ?>">
+                                                <div class="card mt-3 bg-white shadow <?= ($a['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
+                                                    <div class="card-header pb-0 pt-1 border-bottom-0 diagonal-gradient-gray <?= ($a['complaint'] and ($user['user_status'] < 2)) ? 'diagonal-gradient-red-light' : "" ?>">
                                                         <div class="row">
                                                             <div class="col-md-10">
                                                                 <div class="row">
@@ -374,14 +370,12 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                 <form class="form-inline" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
                                                                     <div class="container">
                                                                         <div class="row">
-                                                                            <div class="col-md-9 pl-0">
+                                                                            <div class="col-md-10 px-0">
                                                                                 <label class="sr-only" for="comment_field">Написати коментар</label>
-                                                                                <textarea class="form-control-sm  mr-sm-2" style="min-width: 100%" type="text" name="comment_to_com<?= $a['id'] ?>" rows="1" id="comment_field" placeholder="Написати коментар"></textarea>
+                                                                                <textarea class="form-control-sm w-100 mr-sm-2" style="min-width: 100%" type="text" name="comment_to_com<?= $a['id'] ?>" rows="1" id="comment_field" placeholder="Написати коментар"></textarea>
                                                                             </div>
                                                                             <div class="col-md-auto ml-auto pl-0 pr-1">
-                                                                                <button type="submit" name="do_comment_to_comment<?= $a['id'] ?>" class="btn btn-sm my-btn-blue">
-                                                                                    <i class="fa fa-paper-plane mr-2"></i>Відправити
-                                                                                </button>
+                                                                                <button type="submit" name="do_comment_to_comment<?= $a['id'] ?>" class="btn btn-sm my-btn-blue w-100"><i class="fa fa-paper-plane mr-2"></i>Відправити</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -396,12 +390,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                     <!-- Comment 2nd lvl -->
                                                     <div class="row justify-content-end anchor" id="comment<?= $c['id'] ?>">
                                                         <div class="col-md-10">
-                                                            <div class="card mt-2 bg-white shadow <?php if ($c['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
-                                                                                                        echo 'border-danger';
-                                                                                                    } ?>">
-                                                                <div class="card-header pb-0 pt-1 border-bottom-0 diagonal-gradient-gray <?php if ($c['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
-                                                                                                                                                echo 'diagonal-gradient-red-light';
-                                                                                                                                            } ?>">
+                                                            <div class="card mt-2 bg-white shadow <?= ($c['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
+                                                                <div class="card-header pb-0 pt-1 border-bottom-0 diagonal-gradient-gray <?= ($c['complaint'] and ($user['user_status'] < 3)) ? 'diagonal-gradient-red-light' : "" ?>">
                                                                     <div class="row">
                                                                         <div class="col-md-10">
                                                                             <div class="row">
