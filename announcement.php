@@ -423,9 +423,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                         <div class="col-md-2 pr-1">
                                                                             <form action="announcement.php?id=<?= $announcement['id'] ?>" method="POST">
                                                                                 <?php if ($user['id'] == $c['user_id']) : ?>
-                                                                                    <button name="do_delete_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-trash"></i></button>
+                                                                                    <button name="do_delete_comment<?= $c['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-trash"></i></button>
                                                                                 <?php elseif (!$c['complaint']) : ?>
-                                                                                    <button name="do_ban_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
+                                                                                    <button name="do_ban_comment<?= $c['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
                                                                                 <?php elseif ($c['complaint']) : ?>
                                                                                     <?php if ($user['user_status'] == 1 or $user['user_status'] == 2) : ?>
                                                                                         <button name="do_delete_comment<?= $c['id'] ?>" type="submit" class="btn btn-sm float-right comment-option-admin p-0"><i class="fas fa-trash"></i></button>
