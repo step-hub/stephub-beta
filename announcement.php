@@ -343,19 +343,47 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-2 pr-1">
-                                                                <form action="announcement.php?id=<?= $announcement['id'] ?>" method="POST">
+                                                                <!-- Button -->
+                                                                <?php if ($user['user_status'] < 2) : ?>
+                                                                    <?php if ($a['complaint']) : ?>
+                                                                        <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option-admin p-0"><i class="fas fa-trash"></i></button>
+                                                                    <?php else : ?>
+                                                                        <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-trash"></i></button>
+                                                                    <?php endif; ?>
+                                                                <?php else : ?>
                                                                     <?php if ($user['id'] == $a['user_id']) : ?>
-                                                                        <button name="do_delete_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-trash"></i></button>
-                                                                    <?php elseif (!$a['complaint']) : ?>
-                                                                        <button name="do_ban_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
-                                                                    <?php elseif ($a['complaint']) : ?>
-                                                                        <?php if ($user['user_status'] == 1 or $user['user_status'] == 2) : ?>
-                                                                            <button name="do_delete_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option-admin p-0"><i class="fas fa-trash"></i></button>
-                                                                        <?php else : ?>
+                                                                        <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-trash"></i></button>
+                                                                    <?php else : ?>
+                                                                        <?php if ($a['complaint']) : ?>
                                                                             <button class="btn btn-sm float-right text-muted p-0" disabled><i class="fas fa-ban"></i></button>
+                                                                        <?php else : ?>
+                                                                            <button name="do_ban_comment<?= $a['id'] ?>" type="submit" class="btn btn-sm float-right comment-option p-0"><i class="fas fa-ban"></i></button>
                                                                         <?php endif; ?>
                                                                     <?php endif; ?>
-                                                                </form>
+                                                                <?php endif; ?>
+
+                                                                <!-- Modal Remove Comment  -->
+                                                                <div class="modal fade" id="removeComm1Modal" tabindex="-1" role="dialog" aria-labelledby="removeComm1ModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="removeComm1ModalLabel">Видалити коментар</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                Після видалення коментаря його буде неможливо переглянути та повернути. Ви дійсно хочете видалити оголошення?
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
+                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                                                                                    <button class="btn my-btn-red" name="do_delete_comment<?= $a['id'] ?>" type="submit">Видалити</button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
