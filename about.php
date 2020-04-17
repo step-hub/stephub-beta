@@ -59,7 +59,7 @@ include_once 'php/functions.php';
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-1">Терміни та визначення</a>
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-2">Основні положення</a>
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-3">Права та обов'язки сторін</a>
-                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-4">Порядок розгляду спорів та відповідальність сорін</a>
+                                        <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-4">Порядок розгляду спорів та відповідальність сторін</a>
                                         <a class="nav-link my-color-blue ml-3 my-1" href="#item-2-5">Персональні дані</a>
                                     </nav>
                                     <a class="nav-link my-color-blue" href="#privacy"><span class="material-icons mr-2">security</span>Політика конфіденційності</a>

@@ -50,6 +50,11 @@ body {
     text-decoration: none;
 }
 
+a.dropdown-item:active {
+    background-color: #715142;
+    color: white !important;
+}
+
 
 /* header */
 
