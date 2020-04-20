@@ -10,6 +10,10 @@ function show_apache_owner()
     echo exec('whoami');
 }
 
+function script($script)
+{
+    echo "<script>" . $script . "</script>";
+}
 function console_log($data)
 {
     echo '<script>';
@@ -92,6 +96,14 @@ function get_announcements_with_filter($sort_by, $sort_asc, $start, $qty)
     return R::getAll("SELECT * FROM announcements ORDER BY " . $sort_by . " " . $sort_asc . " LIMIT " . $start . ", " . $qty);
 }
 function get_announcements_with_limit($start, $num)
+{
+    return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT " . $start . ", " . $num);
+}
+function get_user_annoncements($user_id)
+{
+    return R::getAll("SELECT * FROM announcements WHERE user_id = " . $user_id . " ORDER BY date DESC");
+}
+function get_user_announcements_with_limit($start, $num)
 {
     return R::getAll("SELECT * FROM announcements ORDER BY date DESC LIMIT " . $start . ", " . $num);
 }

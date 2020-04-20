@@ -8,7 +8,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 
     $tables = array('users', 'announcements', 'com_complaints');
     $order_values = array('ASC', 'DESC');
-    $qty_values = array('10', '20', '30');
+    $qty_values = array('20', '30', '40');
     $users_sort_by = array('id', 'login', 'user_status', 'banned_to', 'is_online');
     $ann_sort_by = array('id', 'user_id', 'announcement_status_id', 'title', 'date', 'deadline', 'complaint');
     $com_compl_sort_by = array('id', 'user_id', 'complaint', 'date', 'announcement_id');
@@ -175,6 +175,12 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 </head>
 
 <body class="text-center" style="padding-top: 46px !important;">
+    <!-- Preloader -->
+    <?php include_once 'templates/preloader.html'; ?>
+
+    <!-- Back to top button -->
+    <a id="back-to-top-button"></a>
+
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
@@ -331,7 +337,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 
         <?php if ($data_get['table'] == 'users') : ?>
             <div>
-                <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
+                <table class="table table-sm table-striped table-bordered table-hover table-shadow">
                     <thead>
                         <tr class="thead-light">
                             <th class="p-1"></th>
@@ -387,7 +393,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             </div>
         <?php elseif ($data_get['table'] == 'announcements') : ?>
             <div>
-                <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
+                <table class="table table-sm table-striped table-bordered table-hover table-shadow">
                     <thead>
                         <tr class="thead-light">
                             <th class="p-1"></th>
@@ -446,7 +452,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             </div>
         <?php elseif ($data_get['table'] == 'com_complaints') : ?>
             <div>
-                <table class="table table-sm table-striped table-bordered table-hover shadow-sm">
+                <table class="table table-sm table-striped table-bordered table-hover table-shadow">
                     <thead>
                         <tr class="thead-light">
                             <th class="p-1"></th>
@@ -499,6 +505,11 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main sctipt -->
+    <script src="js/script.js"></script>
+    <!-- Back to top button -->
+    <script src="js/top.js"></script>
 </body>
 
 </html>

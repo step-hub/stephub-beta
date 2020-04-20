@@ -8,16 +8,16 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
 
     if (isset($data['do_post'])) {
         if (trim($data['title']) == '') {
-            $errors[] = 'заголовок не може бути порожнім';
+            $errors[] = 'Вкажіть загловок оголошення';
         }
         if ($data['deadline'] == '') {
-            $errors[] = 'повинен бути вказаний дедлайн';
+            $errors[] = 'Встановіть дедлайн оголошення';
         }
         if (strtotime($data['deadline']) < time()) {
-            $errors[] = 'дедлайн не може бути попередньою датою';
+            $errors[] = 'Дедлайн не може бути попередньою датою';
         }
         if (trim($data['details']) == '') {
-            $errors[] = 'деталі оголошення не можуть бути порожніми';
+            $errors[] = 'Вкажіть деталі оголошення';
         }
 
         if (empty($errors)) {
@@ -43,15 +43,18 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                 $uploadName = basename($_FILES['userfile']['name']);
                 $uploadFile = $location . $uploadName;
                 console_log($uploadName);
+                console_log($uploadFile);
+                console_log($_FILES['userfile']['tmp_name']);
 
                 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadFile)) {
                     update_file($announcement->id, $uploadName);
+                    header('location: announcement.php?id=' . $announcement->id);
                 } else {
-                    $errors[] = "file error";
+                    $errors[] = "Не вдалось завантажити файл";
                 }
+            } else {
+                header('location: announcement.php?id=' . $announcement->id);
             }
-
-            header('location: announcement.php?id=' . $announcement->id);
         }
     }
 } else {
@@ -84,6 +87,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
 </head>
 
 <body class="text-center">
+    <!-- Preloader -->
+    <?php include_once 'templates/preloader.html'; ?>
+
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
@@ -92,7 +98,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
         <?php if ($errors) : ?>
             <div class="row">
                 <div class="col">
-                    <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
                         <?= @$errors[0]; ?>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -101,7 +107,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                 </div>
             </div>
         <?php endif; ?>
-        <div class="card mt-0">
+        <div class="card mt-0 shadow">
             <form enctype="multipart/form-data" class="form-group mb-0" action="create-announcement.php" method="POST">
                 <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0">
                     <div class="container">
@@ -116,28 +122,17 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                     </div>
                 </div>
                 <div class="card-body">
-                    <textarea name="details" cols="30" rows="10" class="form-control" value="<?= @$data['details'] ?>" placeholder="Деталі оголошення"></textarea>
+                    <textarea name="details" cols="30" rows="10" class="form-control mb-2" value="<?= @$data['details'] ?>" placeholder="Деталі оголошення"></textarea>
                 </div>
                 <div class="card-footer">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <!-- Upload file -->
-                            <div class="input-group mt-2">
-                                <div class="custom-file">
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="3000000">
-                                    <input type="file" name="userfile" class="custom-file-input" id="fileGroup" aria-describedby="fileAddon">
-                                    <label class="custom-file-label" for="fileGroup">Оберіть файл</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <button type="submit" name="do_post" class="btn my-btn-dark mt-1 mb-2 ml-auto mr-3">Сворити оголошення</button>
-                            </div>
-                        </div>
+                    <div class="row px-3 pt-1">
+                        <!-- Upload file -->
+                        <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable shadow-sm">
+                            <i class="material-icons mr-2">attach_file</i>Прикріпити файл
+                            <input id="fileUpload" type="file" name="userfile">
+                        </label>
+                        <button type="submit" name="do_post" class="btn my-btn-dark shadow-sm mb-auto ml-auto">Сворити оголошення</button>
                     </div>
-
-
                 </div>
             </form>
         </div>
@@ -149,6 +144,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main sctipt -->
+    <script src="js/script.js"></script>
 </body>
 
 </html>

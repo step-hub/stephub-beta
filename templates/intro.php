@@ -1,4 +1,4 @@
-<div class="intro">
+<div class="intro intro-shadow linear-gradient-gray">
     <div class="container">
         <div class="row pb-2">
             <div class="col-md-3">
@@ -12,9 +12,10 @@
             </div>
             <div class="col-md-4 px-4 pt-2 pb-4">
                 <?php include_once "php/login.php"; ?>
+
                 <div class="card">
-                    <div class="card-body shadow-sm">
-                        <?php if($errors): ?>
+                    <div class="card-body shadow">
+                        <?php if ($errors) : ?>
                             <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
                         <?php endif; ?>
 
@@ -26,13 +27,12 @@
                             <input type="password" id="inputPassword" name="password" class="form-control bg-light mb-2" placeholder="Пароль" required>
 
                             <div class="checkbox mb-2">
-                                <label>
-                                    <input type="checkbox" value="remember-me" name="remember"> Запам'ятати мене
-                                </label>
+                                <input type="checkbox" value="remember-me" name="remember" style="color: black;">
+                                <label for="remember" style="color: black;">Запам'ятати мене</label>
                             </div>
 
-                            <button class="btn btn-lg my-btn-blue btn-block" type="submit" name="do_login">Вхід</button>
-                            <p class="mt-3 mb-0">Не маєте акаунту? <a href="registration.php">Зареєструвати</a></p>
+                            <button class="btn btn-lg my-btn-blue btn-block shadow-sm" type="submit" name="do_login">Вхід</button>
+                            <p class="mt-3 mb-0" style="color: black;">Не маєте акаунту? <a href="registration.php">Зареєструвати</a></p>
                         </form>
                     </div>
                 </div>

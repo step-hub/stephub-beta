@@ -34,7 +34,6 @@ if (isset($data['page']) and $data['page'] > 0) {
 
 $start = ($page - 1) * $quantity_per_page;
 $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, $quantity_per_page);
-
 ?>
 
 <!DOCTYPE html>
@@ -62,8 +61,17 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
 </head>
 
 <body class="text-center">
+    <!-- Preloader -->
+    <?php include_once 'templates/preloader.html'; ?>
+
+    <!-- Back to top button -->
+    <a id="back-to-top-button"></a>
+
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
+
+    <!-- Toasts -->
+    <?php include_once 'templates/toasts.php'; ?>
 
     <!-- Header-->
     <?php if (!array_key_exists('logged_user', $_SESSION)) :
@@ -75,7 +83,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
         <div class="container">
             <div class="row mx-5">
                 <div class="col">
-                    <div class="row my-2 mx-0">
+                    <div class="row my-3 mx-0">
                         <form class="form-inline small float-right ml-auto" action="index.php" method="GET">
                             <div class="form-group mr-2">
                                 <label for="sort_by">Сортування</label>
@@ -96,14 +104,14 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                                     <option value="30" <?php if (isset($data['q']) and (isset($data['q']) and $data['q'] == '30')) echo "selected" ?>>30</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary shadow-sm"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
                         </form>
                     </div>
                     <div class="card">
-                        <div class="card-body shadow-sm bg-light pb-0">
+                        <div class="card-body shadow bg-light pb-0">
                             <?php if ($announcements) :
                                 foreach ($announcements as $announcement) : ?>
-                                    <div class="card text-left mb-3 announcement-card">
+                                    <div class="card text-left mb-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
                                         <div class="card-body shadow-sm">
                                             <h5 class="card-title"><?= $announcement['title'] ?></h5>
                                             <p class="card-text mb-4"><?= $announcement['details'] ?></p>
@@ -204,6 +212,21 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Navbar scroll animation -->
+    <script src="js/navbar.js"></script>
+    <!-- Main sctipt -->
+    <script src="js/script.js"></script>
+    <!-- Back to top button -->
+    <script src="js/top.js"></script>
+
+    <!-- Activate toasts -->
+    <?php if(isset($data['activate']) and $data['activate'] == 'true') {
+        script("$(window).on('load', function() {
+            $('#activate').toast('show');
+        });");
+    } ?>
+
 </body>
 
 </html>
