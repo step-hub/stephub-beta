@@ -341,7 +341,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                    <a type="button" class="btn my-btn-red" href="php/logout.php">Видалити</a>
+                    <a type="button" class="btn my-btn-red" href="php/delete-account.php">Видалити</a>
                 </div>
             </div>
         </div>
