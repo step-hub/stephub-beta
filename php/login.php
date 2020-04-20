@@ -33,7 +33,7 @@ if (isset($data['do_login'])) {
 //                R::exec("UPDATE `users` SET token = '$user_token' WHERE login = '$login'");
 //            }
 
-            header("location: index.php");
+            echo '<script type="text/javascript">location.reload(true);</script>';
         } else {
             $errors[] = "password is incorrect";
         }
