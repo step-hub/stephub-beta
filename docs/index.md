@@ -1,37 +1,12 @@
-## Welcome to GitHub Pages
+### Опис проекту
 
-You can use the [editor on GitHub](https://github.com/povstenko/github-pages-sandbox/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+#### Що ми робимо
+**StepHub** - онлайн сервіс анонімного пошуку допомоги для вирішення різноманітних задач. Майданчик об'єднує замовників послуг, яким необхідно допомогти з вирішенням завдання, і людей готових допомогти. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+#### Наша Команда
+Над проектом **StepHub** працює молода та амбіційна команда. Всі ми - різні. Кожен з нас займається своєю роботою. Ми любимо різну піцу і дивимося різні фільми. Ми виросли в різних містах і в різний час, але все стикалися з однією і тією ж проблемою - де анонімно знайти допомогу. Нас всіх об'єднує бажання виправити цю ситуацію. Щоб ніхто не засуджував людей за те, що вони чогось не знають.
 
-### Markdown
+#### Наша Місія
+Ми хочемо допомогти вирішити будь-яке завдання і зробити це анонімно. Ми хочемо навчити людей допомагати і просити допомоги. Це наша головна місія і думка, з якою ми прокидаємося щоранку.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/povstenko/github-pages-sandbox/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Якщо ви також поділяєте ці цінності і підтримуєте наше прагнення зробити наш університет кращим - приєднуйтесь до нашої дружної сім'ї однодумців.
