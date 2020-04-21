@@ -1,9 +1,17 @@
-# StepHub
-Проектна робота (веб-урядування)
+<p align="center">
+  <a href="https://stephub.000webhostapp.com/">
+    <img src="img/logo.png" alt="Stephub logo" width="256" height="256">
+  </a>
+</p>
+
+<h3 align="center">Проектна робота (веб-урядування)</h3>
+
 
 [stephub.000webhostapp.com](https://stephub.000webhostapp.com/)
 
 [step-hub.github.io/stephub](https://step-hub.github.io/stephub/)
+
+---
 
 ### Опис проекту
 
@@ -17,5 +25,3 @@
 Ми хочемо допомогти вирішити будь-яке завдання і зробити це анонімно. Ми хочемо навчити людей допомагати і просити допомоги. Це наша головна місія і думка, з якою ми прокидаємося щоранку.
 
 Якщо ви також поділяєте ці цінності і підтримуєте наше прагнення зробити наш університет кращим - приєднуйтесь до нашої дружної сім'ї однодумців.
-### Logo
-![logo](img/logo.png)
