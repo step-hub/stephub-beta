@@ -3,6 +3,8 @@
 
 [stephub.000webhostapp.com](https://stephub.000webhostapp.com/)
 
+[step-hub.github.io/stephub](https://step-hub.github.io/stephub/)
+
 ### Опис проекту
 
 #### Що ми робимо
