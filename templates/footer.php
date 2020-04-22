@@ -1,8 +1,8 @@
 <div class="">
     <div class="container">
-        <footer class="md-5 pt-md-5 pb-5 mt-5 border-top">
+        <footer class="md-5 pt-md-5 pb-5 mt-0 mt-md-5 border-top">
             <div class="row">
-                <div class="col-12 col-md">
+                <div class="col-12 my-3 col-md my-md-0">
                     <img class="mb-2" src="img/favicon-32x32.png" alt="Logo" width="24" height="24">
                     <small class="d-block mb-3 text-muted">© 2020 StepHub</small>
                 </div>

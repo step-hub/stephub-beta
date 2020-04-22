@@ -6,15 +6,15 @@
         </button>
         <div class="collapse navbar-collapse <?= (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") ? "small" : "" ?>" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) == "index.php") ? "active font-weight-bold" : "" ?>">
+                <li class="nav-item my-2 my-lg-0 <?= (basename($_SERVER['PHP_SELF']) == "index.php") ? "active font-weight-bold" : "" ?>">
                     <a class="nav-link" href="index.php">Головна</a>
                 </li>
                 <?php if (isset($_SESSION['logged_user'])) : ?>
-                    <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) == "profile.php") ? "active font-weight-bold" : "" ?>">
+                    <li class="nav-item my-2 my-lg-0 <?= (basename($_SERVER['PHP_SELF']) == "profile.php") ? "active font-weight-bold" : "" ?>">
                         <a class="nav-link" href="profile.php">Профіль</a>
                     </li>
                 <?php endif; ?>
-                <li class="nav-item dropdown <?= (basename($_SERVER['PHP_SELF']) == "about.php") ? "active font-weight-bold" : "" ?>">
+                <li class="nav-item dropdown my-2 my-lg-0 <?= (basename($_SERVER['PHP_SELF']) == "about.php") ? "active font-weight-bold" : "" ?>">
                     <a class="nav-link dropdown-toggle" href="about.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Про нас</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="about.php">Про нас</a>
@@ -24,25 +24,25 @@
                 </li>
                 <?php if (isset($_SESSION['logged_user'])) :
                     if ($_SESSION['logged_user']->user_status == 1) : ?>
-                        <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) == "admin.php") ? "active font-weight-bold" : "" ?>">
-                            <a class="btn my-btn-outline-dark ml-3 shadow-sm <?= (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") ? "btn-sm" : "" ?>" href="admin.php">Адміністратор</a>
+                        <li class="nav-item my-2 my-lg-0 ml-lg-3 <?= (basename($_SERVER['PHP_SELF']) == "admin.php") ? "active font-weight-bold" : "" ?>">
+                            <a class="btn my-btn-outline-dark shadow-sm <?= (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") ? "btn-sm" : "" ?>" href="admin.php">Адміністратор</a>
                         </li>
                     <?php endif; ?>
 
                     <?php if ($_SESSION['logged_user']->user_status <= 2) : ?>
-                        <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) == "moderator.php") ? "active font-weight-bold" : "" ?>">
-                            <a class="btn my-btn-outline-dark ml-3 shadow-sm <?= (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") ? "btn-sm" : "" ?>" href="moderator.php">Модератор</a>
+                        <li class="nav-item my-2 my-lg-0 ml-lg-3 <?= (basename($_SERVER['PHP_SELF']) == "moderator.php") ? "active font-weight-bold" : "" ?>">
+                            <a class="btn my-btn-outline-dark shadow-sm <?= (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") ? "btn-sm" : "" ?>" href="moderator.php">Модератор</a>
                         </li>
                     <?php endif; ?>
-                    <li class="nav-item">
-                        <a type="button" data-toggle="modal" data-target="#exitModal" class="btn my-btn-dark ml-3 shadow-sm <?= (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") ? "btn-sm" : "" ?>">Вихід</a>
+                    <li class="nav-item my-2 my-lg-0 ml-lg-3">
+                        <a type="button" data-toggle="modal" data-target="#exitModal" class="btn my-btn-dark shadow-sm <?= (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") ? "btn-sm" : "" ?>">Вихід</a>
                     </li>
                 <?php else : ?>
-                    <li class="nav-item">
+                    <li class="nav-item my-2 my-lg-0 ml-lg-3">
                         <?php if (basename($_SERVER['PHP_SELF']) == 'registration.php') : ?>
-                            <a class="btn my-btn-dark shadow-sm ml-3" href="index.php">Вхід</a>
+                            <a class="btn my-btn-dark shadow-sm" href="index.php">Вхід</a>
                         <?php else : ?>
-                            <a class="btn my-btn-dark shadow-sm ml-3" href="registration.php">Реєстрація</a>
+                            <a class="btn my-btn-dark shadow-sm" href="registration.php">Реєстрація</a>
                         <?php endif; ?>
                     </li>
                 <?php endif; ?>
