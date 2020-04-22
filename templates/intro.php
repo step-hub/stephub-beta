@@ -1,19 +1,19 @@
 <div class="intro intro-shadow linear-gradient-gray">
     <div class="container">
-        <div class="row pb-2">
-            <div class="col-md-3">
+        <div class="row pb-0 pb-md-2">
+            <div class="col-sm-12 col-md-4 col-lg-3">
                 <img class="mx-auto d-block img-large-logo" src="img/logo.png" alt="big logo">
             </div>
-            <div class="col-md-5 text-left">
+            <div class="col-sm-12 col-md-8 col-lg-5 text-left">
                 <h2>Ласкаво просимо до StepHub!</h2>
                 <h5>Lorem ipsum dolor sit amet, consectetur</h5>
                 <br>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur culpa fugiat laudantium, nihil perferendis recusandae. </p>
             </div>
-            <div class="col-md-4 px-4 pt-2 pb-4">
+            <div class="col-sm-12 col-md-12 col-lg-4 px-sm-5 px-lg-0 px-0 px-lg-4 pt-2 pb-0 pb-md-4">
                 <?php include_once "php/login.php"; ?>
 
-                <div class="card">
+                <div class="card mx-xs-0 mx-sm-5 mx-lg-0">
                     <div class="card-body shadow">
                         <?php if ($errors) : ?>
                             <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>
