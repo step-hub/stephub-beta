@@ -27,7 +27,7 @@
 Якщо ви також поділяєте ці цінності і підтримуєте наше прагнення зробити наш університет кращим - приєднуйтесь до нашої дружної сім'ї однодумців.
 
 ### Server upload
-List of files which are neccesery on web host server.
+List of files which are not neccesery on web host server.
 
 Before upload remove these files:
 
