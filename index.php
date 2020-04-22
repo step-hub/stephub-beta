@@ -80,9 +80,9 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
         include_once 'templates/header.php'; ?>
 
         <!-- Page Content -->
-        <div class="container">
-            <div class="row mx-5">
-                <div class="col">
+        <div class="container px-0 px-md-3">
+            <div class="row mx-0 mx-md-5">
+                <div class="col px-0 px-md-2">
                     <div class="row my-3 mx-0">
                         <form class="form-inline small float-right ml-auto" action="index.php" method="GET">
                             <div class="form-group mr-2">
@@ -108,10 +108,10 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                         </form>
                     </div>
                     <div class="card">
-                        <div class="card-body shadow bg-light pb-0">
+                        <div class="card-body shadow bg-light pb-0 pt-2 pt-md-3 px-2 px-md-3">
                             <?php if ($announcements) :
                                 foreach ($announcements as $announcement) : ?>
-                                    <div class="card text-left mb-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
+                                    <div class="card text-left mb-2 mb-md-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
                                         <div class="card-body shadow-sm">
                                             <h5 class="card-title"><?= $announcement['title'] ?></h5>
                                             <p class="card-text mb-4"><?= $announcement['details'] ?></p>
@@ -140,7 +140,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
 
                                 <!-- Pagination-->
                                 <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
+                                    <ul class="pagination justify-content-center mt-3 mt-md-0 mb-3">
                                         <?php if ($page == 1) : ?>
                                             <li class="page-item disabled">
                                                 <span class="page-link">&laquo;</span>
