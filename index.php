@@ -83,8 +83,8 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
         <div class="container px-0 px-md-3">
             <div class="row mx-0 mx-md-5">
                 <div class="col px-0 px-md-2">
-                    <div class="row my-3 mx-0">
-                        <form class="form-inline small float-right ml-auto" action="index.php" method="GET">
+                    <div class="row my-3 mx-0 d-none d-md-flex">
+                        <form class="form-inline small float-right ml-md-auto" action="index.php" method="GET">
                             <div class="form-group mr-2">
                                 <label for="sort_by">Сортування</label>
                                 <select class="form-control-sm ml-2" name="s" id="sort_by">
