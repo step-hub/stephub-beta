@@ -1,5 +1,5 @@
 <nav id="navbar" class="navbar navbar-expand-lg fixed-top linear-gradient-gray <?= (basename($_SERVER['PHP_SELF']) != "index.php") ? "navbar-shadow" : "" ?> <?= (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") ? "py-1" : "" ?>">
-    <div class="container">
+    <div class="container text-center">
         <a class="navbar-brand<?= (basename($_SERVER['PHP_SELF']) == "admin.php" or basename($_SERVER['PHP_SELF']) == "moderator.php") ? "-sm my-color-dark" : "" ?>" href="index.php">StepHub</a>
         <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
