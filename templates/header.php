@@ -5,10 +5,12 @@
                 <img class="mx-auto d-block img-large-logo" src="img/logo.png" alt="big logo">
             </div>
             <div class="col-md-9 text-left">
-                <h2>Вітаємо, <?= $_SESSION['logged_user']['login'] ?>!</h2>
-                <h5>Lorem ipsum dolor sit amet, consectetur</h5>
+                <h2 class="d-none d-md-flex">Вітаємо, <?= $_SESSION['logged_user']['login'] ?>!</h2>
+                <h3 class="mt-3 d-sm-flex d-md-none">Вітаємо, <?= $_SESSION['logged_user']['login'] ?>!</h3> <!-- SM -->
+                <h5 class="d-none d-md-flex">Lorem ipsum dolor sit amet, consectetur</h5>
+                <h6 class="d-sm-flex d-md-none">Lorem ipsum dolor sit amet, consectetur</h6> <!-- SM -->
                 <br>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur culpa fugiat laudantium, nihil perferendis recusandae.</p>
+                <p class="d-none d-md-flex">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur culpa fugiat laudantium, nihil perferendis recusandae.</p>
             </div>
         </div>
         <?php if ($_SESSION['logged_user']['user_status'] != 4) : ?>
