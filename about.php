@@ -41,7 +41,7 @@ include_once 'php/functions.php';
     <!-- Page Content -->
     <div class="container-fluid p-3">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-lg-2 mb-3">
                 <div class="sticky-top anchor">
                     <nav id="navbar_about" class="navbar bg-light shadow-sm border small px-1">
                         <nav class="nav nav-pills flex-column">
@@ -71,7 +71,7 @@ include_once 'php/functions.php';
                     </nav>
                 </div>
             </div>
-            <div class="col-md-10 pl-1">
+            <div class="col-lg-10">
                 <div class="card mb-5">
                     <div class="card-header text-center">
                         <h3 id="about" class="anchor">Про Нас</h3>
