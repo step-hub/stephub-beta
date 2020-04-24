@@ -296,7 +296,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             </div><!-- /Show Announcement -->
 
                             <!-- Comments -->
-                            <div class="card shadow mt-sm-5 border-xs-0">
+                            <div class="card shadow mt-4 mt-sm-5 border-xs-0">
                                 <div class="card-header p-2 p-sm-3 pt-4 pt-sm-3">
                                     <!-- Leave New Comment -->
                                     <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
