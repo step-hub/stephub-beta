@@ -1,6 +1,6 @@
 <div class="">
     <div class="container text-center">
-        <footer class="pt-md-5 pb-5 mt-0 mt-md-5 border-top">
+        <footer class="pt-md-5 pb-5 mt-0 mt-md-5 border-top border-sm-0">
             <div class="row">
                 <div class="col-12 my-3 col-md my-md-0">
                     <img class="mb-2" src="img/favicon-32x32.png" alt="Logo" width="24" height="24">

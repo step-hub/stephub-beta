@@ -13,7 +13,7 @@
             <div class="col-sm-12 col-md-12 col-lg-4 px-sm-5 px-lg-0 px-0 px-lg-4 pt-2 pb-0 pb-md-4">
                 <?php include_once "php/login.php"; ?>
 
-                <div class="card mx-xs-0 mx-sm-5 mx-lg-0">
+                <div class="card mx-xs-0 mx-sm-5 mx-lg-0 border-xs-0">
                     <div class="card-body shadow">
                         <?php if ($errors) : ?>
                             <p class="mt-0 mb-0 font-weight-bold text-danger"><?= @$errors[0]; ?></>

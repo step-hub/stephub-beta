@@ -107,9 +107,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                 </div>
             </div>
         <?php endif; ?>
-        <div class="card mt-0 shadow">
+        <div class="card mt-0 shadow border-xs-0">
             <form enctype="multipart/form-data" class="form-group mb-0" action="create-announcement.php" method="POST">
-                <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0 px-2 px-md-3">
+                <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0 border-xs-0 px-2 px-md-3">
                     <div class="container">
                         <div class="row pb-2 pt-sm-2">
                             <input type="text" name="title" value="<?= @$data['title'] ?>" class="form-control form-control-lg my-bg-light my-color-dark" placeholder="Заголовок">

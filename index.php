@@ -107,12 +107,12 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                             <button type="submit" class="btn btn-sm btn-outline-secondary shadow-sm"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
                         </form>
                     </div>
-                    <div class="card">
+                    <div class="card border-xs-0">
                         <div class="card-body shadow bg-light pb-0 pt-2 pt-md-3 px-2 px-md-3">
                             <?php if ($announcements) :
                                 foreach ($announcements as $announcement) : ?>
                                     <div class="card text-left mb-2 mb-md-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
-                                        <div class="card-body shadow-sm">
+                                        <div class="card-body shadow-sm p-2 p-md-3">
                                             <h5 class="card-title"><?= $announcement['title'] ?></h5>
                                             <p class="card-text mb-4"><?= $announcement['details'] ?></p>
                                             <div class="row">
