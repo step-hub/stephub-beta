@@ -109,11 +109,11 @@ if (!array_key_exists('logged_user', $_SESSION)) {
     <!-- Page Content -->
     <div class="container">
         <div class="row pt-3">
-            <div class="col-md-7">
-                <h1 class="h3 mb-3 font-weight-normal">Створити новий акаунт</h1>
+            <div class="col-12 col-lg-7 px-0 px-md-3">
+                <h1 class="h3 mb-3 font-weight-normal d-none d-md-block">Створити новий акаунт</h1>
                 <form class="form" action="registration.php" method="POST">
-                    <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ім'я користувача</label>
+                    <div class="form-group row mb-0 mb-md-3 px-3">
+                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputLogin">Ім'я користувача</label>
                         <div class="col-sm-9">
                             <input name="login" class="form-control" type="text" id="inputLogin" value="<?= @$data['login']; ?>" placeholder="Ім'я користувача" required autofocus aria-describedby="loginHelp">
                             <small id="loginHelp" class="form-text text-muted">
@@ -121,14 +121,14 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                             </small>
                         </div>
                     </div>
-                    <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label text-right" for="inputEmail">Ел. пошта</label>
+                    <div class="form-group row mb-0 mb-md-3 px-3">
+                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputEmail">Ел. пошта</label>
                         <div class="col-sm-9">
                             <input name="email" class="form-control" type="email" id="inputEmail" value="<?= @$data['email']; ?>" placeholder="example@gmail.com" required>
                         </div>
                     </div>
-                    <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Студентський</label>
+                    <div class="form-group row mb-0 mb-md-3 px-3">
+                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputStudNum">Студентський</label>
                         <div class="input-group col-sm-5" id="inputStudNum">
                             <input name="stud_num_series" class="form-control col-2 px-2 mx-0" type="text" maxlength="2" value="<?= @$data['stud_num_ser']; ?>" placeholder="АБ" required>
                             <div class="input-group-text border-radius-0" style="border-right: 0; border-left: 0;">№</div>
@@ -141,7 +141,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                         <div class="col-sm-4"></div>
                     </div>
                     <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label text-right" for="inputTelegram">Телеграм</label>
+                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputTelegram">Телеграм</label>
                         <div class="col-sm-5">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -154,9 +154,9 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                     </div>
 
                     <div class="card">
-                        <div class="card-body my-bg-light px-0">
-                            <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label text-right" for="inputPassword">Пароль</label>
+                        <div class="card-body my-bg-light pt-0 pt-md-3 px-0">
+                            <div class="form-group row mb-0 mb-md-3 px-3">
+                                <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPassword">Пароль</label>
                                 <div class="col-sm-9">
                                     <input name="password" class="form-control" type="password" id="inputPassword" placeholder="Пароль" required aria-describedby="passHelp">
                                     <small id="passHelp" class="form-text text-muted">
@@ -164,8 +164,8 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                                     </small>
                                 </div>
                             </div>
-                            <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label text-right" for="inputPasswordConfirm">Підтвердження</label>
+                            <div class="form-group row mb-0 mb-md-3 px-3">
+                                <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPasswordConfirm">Підтвердження</label>
                                 <div class="col-sm-9">
                                     <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть пароль" required>
                                 </div>
@@ -180,11 +180,11 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                         </label>
                     </div>
 
-                    <small class="mt-2 mx-3 float-left">Вже маєте зареєстрований акаунт? <a href="index.php">Ввійти</a></small>
-                    <button class="btn my-btn-blue float-right" type="submit" name="do_signup" id="register">Зареєструвати</button>
+                    <small class="mt-2 mx-3 float-left d-none d-sm-inline">Вже маєте зареєстрований акаунт? <a href="index.php">Ввійти</a></small>
+                    <button class="btn my-btn-blue float-md-right mt-3 mt-md-0" type="submit" name="do_signup" id="register">Зареєструвати</button>
                 </form>
             </div>
-            <div class="col-md-5">
+            <div class="col col-lg-5 mt-3 mt-lg-0 d-none d-sm-block">
 
                 <div class="accordion shadow-sm" id="idAccordion">
                     <div class="card ">
