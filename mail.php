@@ -16,7 +16,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
         if (!$errors) {
             $user = R::findOne('users', 'id = ?', array($data_post['to']));
             mail($user['email'], $data_post['subject'], $data_post['message'], 'From: stephub.com@gmail.com');
-            //            echo "<script>window.close()</script>>";
+            echo "<script>window.close()</script>>";
         }
     } elseif (!array_key_exists('id', $data_get)) {
         header("location: index.php");

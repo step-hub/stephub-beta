@@ -38,7 +38,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     foreach (array_keys($data_get) as $key) {
         if ($key != 'page') {
             $request .= $key . '=' . $data_get[$key];
-            if (array_key_last($data_get) != $key)
+            if (key(array_slice($data_get, -1, 1, true)) != $key)
                 $request .= '&';
         }
     }

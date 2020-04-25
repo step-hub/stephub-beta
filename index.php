@@ -15,7 +15,7 @@ $request = '';
 foreach (array_keys($data) as $key) {
     if ($key != 'page') {
         $request .= $key . '=' . $data[$key];
-        if (array_key_last($data) != $key)
+        if (key(array_slice($data, -1, 1, true)) != $key)
             $request .= '&';
     }
 }
