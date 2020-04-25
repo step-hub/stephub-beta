@@ -70,14 +70,14 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
-    <!-- Toasts -->
-    <?php include_once 'templates/toasts.php'; ?>
-
     <!-- Header-->
     <?php if (!array_key_exists('logged_user', $_SESSION)) :
         include_once 'templates/intro.php'; ?>
     <?php else :
         include_once 'templates/header.php'; ?>
+
+        <!-- Toasts -->
+        <?php include_once 'templates/toasts.php'; ?>
 
         <!-- Page Content -->
         <div class="container px-0 px-md-3">
@@ -221,7 +221,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
     <script src="js/top.js"></script>
 
     <!-- Activate toasts -->
-    <?php if(isset($data['activate']) and $data['activate'] == 'true') {
+    <?php if (isset($data['activate']) and $data['activate'] == 'true') {
         script("$(window).on('load', function() {
             $('#activate').toast('show');
         });");

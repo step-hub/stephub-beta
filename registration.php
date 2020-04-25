@@ -103,20 +103,14 @@ if (!array_key_exists('logged_user', $_SESSION)) {
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
+    <!-- Errors -->
+    <?php include_once "templates/errors.php"; ?>
+
     <!-- Page Content -->
     <div class="container">
         <div class="row pt-3">
             <div class="col-md-7">
                 <h1 class="h3 mb-3 font-weight-normal">Створити новий акаунт</h1>
-                <?php if ($errors) : ?>
-                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
-                        <?= @$errors[0]; ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                <?php endif; ?>
-
                 <form class="form" action="registration.php" method="POST">
                     <div class="form-group row px-3">
                         <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ім'я користувача</label>

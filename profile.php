@@ -119,8 +119,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
-    <!-- Page Content -->
+    <!-- Errors -->
+    <?php include_once "templates/errors.php"; ?>
 
+    <!-- Page Content -->
     <div class="container">
         <div class="row pb-5">
             <div class="col-md-3 pr-0">
@@ -149,12 +151,6 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
                             <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <form id="form-update-profile" class="form" action="profile.php" method="POST">
-                                    <?php if ($errors) : ?>
-                                        <div class="alert alert-danger shadow-sm" role="alert">
-                                            <?= @$errors[0]; ?>
-                                        </div>
-                                    <?php endif; ?>
-
                                     <div class="form-group row px-3">
                                         <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ваше ім'я</label>
                                         <div class="col-sm-9">

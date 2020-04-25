@@ -195,6 +195,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
+    <!-- Errors -->
+    <?php include_once "templates/errors.php"; ?>
+
     <!-- Page Content -->
     <div class="container pt-sm-5">
         <?php if ($announcement) : ?>
@@ -300,18 +303,6 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <div class="card-header p-2 p-sm-3 pt-4 pt-sm-3">
                                     <!-- Leave New Comment -->
                                     <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
-                                        <?php if ($errors) : ?>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
-                                                        <?= @$errors[0]; ?>
-                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
                                         <label class="sr-only" for="comment_field">Написати коментар</label>
                                         <textarea type="text" name="comment_to_ann" rows="3" class="form-control mb-2 mr-sm-2" id="comment_field" placeholder="Написати коментар"></textarea>
                                         <button type="submit" name="do_comment" class="btn my-btn-blue mt-sm-1"><i class="fas fa-comment mr-2"></i>Коментувати</button>
