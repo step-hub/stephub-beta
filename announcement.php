@@ -286,238 +286,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <?php endif; ?>
                             </div><!-- /Show Announcement -->
 
-                            <!-- Comments -->
-                            <div class="card shadow mt-4 mt-sm-5 border-xs-0">
-                                <div class="card-header p-2 p-sm-3 pt-4 pt-sm-3">
-                                    <!-- Leave New Comment -->
-                                    <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
-                                        <label class="sr-only" for="comment_field">Написати коментар</label>
-                                        <textarea type="text" name="comment_to_ann" rows="3" class="form-control mb-2 mr-sm-2" id="comment_field" placeholder="Написати коментар"></textarea>
-                                        <button type="submit" name="do_comment" class="btn my-btn-blue mt-sm-1"><i class="fas fa-comment mr-2"></i>Коментувати</button>
-                                    </form><!-- /Leave New Comment -->
-                                </div>
-                                <div class="card-body bg-light pt-2 px-2 px-sm-3">
-                                    <?php if (count($ann_comments) > 0) : ?>
-                                        <?php foreach ($ann_comments as $a) : ?>
-                                            <!-- Comment 1st lvl -->
-                                            <div class="anchor" id="comment<?= $a['id'] ?>">
-                                                <div class="card mt-3 bg-white shadow <?= ($a['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
-                                                    <div class="card-header py-1 border-bottom-0 diagonal-gradient-gray <?= ($a['complaint'] and ($user['user_status'] < 2)) ? 'diagonal-gradient-red-light' : "" ?>">
-                                                        <div class="row">
-                                                            <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($a['date']) ?></p>
-                                                            <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-clock mr-2"></i><?= show_time($a['date']) ?></p>
-                                                            <?php if ($user['id'] == $a['user_id']) : ?>
-                                                                <span class="badge badge-primary my-bg-blue ml-2 my-auto"><i class="fas fa-user mr-lg-2"></i><span class="d-none d-lg-inline">Ваш коментар</span></span>
-                                                            <?php elseif ($announcement['user_id'] == $a['user_id']) : ?>
-                                                                <span class="badge badge-success ml-2 my-auto"><i class="far fa-star mr-lg-2"></i><span class="d-none d-lg-inline">Автор оголошення</span></span>
-                                                            <?php endif; ?>
 
-                                                            <?php if (get_user_by_id($a['user_id'])['user_status'] == 1) : ?>
-                                                                <span class="badge badge-secondary ml-2 my-auto"><i class="fas fa-shield-alt mr-lg-2"></i><span class="d-none d-lg-inline">Адміністратор</span></span>
-                                                            <?php elseif (get_user_by_id($a['user_id'])['user_status'] == 2) : ?>
-                                                                <span class="badge badge-secondary ml-2 my-auto"><i class="far fa-shield-al mr-lg-2"></i><span class="d-none d-lg-inline">Модератор</span></span>
-                                                            <?php endif; ?>
-
-                                                            <!-- Button -->
-                                                            <?php if ($user['user_status'] < 2) : ?>
-                                                                <?php if ($a['complaint']) : ?>
-                                                                    <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option-admin p-0 ml-auto"><i class="fas fa-trash"></i></button>
-                                                                <?php else : ?>
-                                                                    <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-trash"></i></button>
-                                                                <?php endif; ?>
-                                                            <?php else : ?>
-                                                                <?php if ($user['id'] == $a['user_id']) : ?>
-                                                                    <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-trash"></i></button>
-                                                                <?php else : ?>
-                                                                    <?php if ($a['complaint'] or get_user_by_id($a['user_id'])['user_status'] < 3) : ?>
-                                                                        <button class="btn btn-sm float-right text-muted p-0" disabled><i class="fas fa-ban"></i></button>
-                                                                    <?php else : ?>
-                                                                        <button data-toggle="modal" data-target="#banComm1Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-ban"></i></button>
-                                                                    <?php endif; ?>
-                                                                <?php endif; ?>
-                                                            <?php endif; ?>
-
-                                                            <!-- Modal Remove Comment 1 -->
-                                                            <div class="modal fade" id="removeComm1Modal" tabindex="-1" role="dialog" aria-labelledby="removeComm1ModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="removeComm1ModalLabel">Видалити коментар</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            Після видалення коментаря його буде неможливо переглянути та повернути. Ви дійсно хочете видалити оголошення?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
-                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                                                                                <button class="btn my-btn-red" name="do_delete_comment<?= $a['id'] ?>" type="submit">Видалити</button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <!-- Modal Ban Comment 1 -->
-                                                            <div class="modal fade" id="banComm1Modal" tabindex="-1" role="dialog" aria-labelledby="banComm1ModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="banComm1ModalLabel">Поскаржитись на коментар</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            Якщо коментар порушує правила користування сервісом, то його буде видалено назавжди. Відправити запит на розглядання цього оголошення модераторами?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
-                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                                                                                <button class="btn my-btn-red" name="do_ban_comment<?= $a['id'] ?>" type="submit">Поскаржитись</button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body pb-1 px-1 pt-2">
-                                                        <p class="card-text mb-2 mx-2"> <?= $a['message'] ?></p>
-                                                        <span class="badge btn mb-0" type="button" data-toggle="collapse" data-target="#collapse<?= $a['id'] ?>" aria-expanded="true" aria-controls="collapse<?= $a['id'] ?>"><i class="fas fa-reply mr-2"></i>Відповісти</span>
-                                                    </div>
-                                                    <div class="accordion" id="idReply<?= $a['id'] ?>">
-                                                        <div class="" id="heading<?= $a['id'] ?>"></div>
-                                                        <div id="collapse<?= $a['id'] ?>" class="collapse" aria-labelledby="heading<?= $a['id'] ?>" data-parent="#idReply<?= $a['id'] ?>">
-                                                            <div class="card-footer px-2 pb-1">
-                                                                <form class="form-inline" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-10 px-0">
-                                                                                <label class="sr-only" for="comment_field">Написати коментар</label>
-                                                                                <textarea class="form-control-sm w-100 mr-sm-2" style="min-width: 100%" type="text" name="comment_to_com<?= $a['id'] ?>" rows="1" id="comment_field" placeholder="Написати коментар"></textarea>
-                                                                            </div>
-                                                                            <div class="col-md-auto ml-auto pl-0 pr-1">
-                                                                                <button type="submit" name="do_comment_to_comment<?= $a['id'] ?>" class="btn btn-sm my-btn-blue w-100"><i class="fa fa-paper-plane mr-2"></i>Відправити</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- /Comment 1st lvl -->
-                                            <?php foreach ($com_comments as $c) : ?>
-                                                <?php if ($c['parent_comment_id'] == $a['id']) : ?>
-                                                    <!-- Comment 2nd lvl -->
-                                                    <div class="row justify-content-end anchor" id="comment<?= $c['id'] ?>">
-                                                        <div class="col-1 col-md-2"></div>
-                                                        <div class="col-11 col-md-10">
-                                                            <div class="card mt-2 bg-white shadow <?= ($c['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
-                                                                <div class="card-header pb-0 pt-1 border-bottom-0 diagonal-gradient-gray <?= ($c['complaint'] and ($user['user_status'] < 3)) ? 'diagonal-gradient-red-light' : "" ?>">
-                                                                    <div class="row">
-                                                                        <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($c['date']) ?></p>
-                                                                        <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-clock mr-2"></i><?= show_time($c['date']) ?></p>
-                                                                        <?php if ($user['id'] == $c['user_id']) : ?>
-                                                                            <span class="badge badge-primary my-bg-blue ml-2 my-auto"><i class="fas fa-user mr-lg-2"></i><span class="d-none d-lg-inline">Ваш коментар</span></span>
-                                                                        <?php elseif ($announcement['user_id'] == $c['user_id']) : ?>
-                                                                            <span class="badge badge-success ml-2 my-auto"><i class="far fa-star mr-lg-2"></i><span class="d-none d-lg-inline">Автор оголошення</span></span>
-                                                                        <?php endif; ?>
-
-                                                                        <?php if (get_user_by_id($c['user_id'])['user_status'] == 1) : ?>
-                                                                            <span class="badge badge-secondary ml-2 my-auto"><i class="fas fa-shield-alt mr-lg-2"></i><span class="d-none d-lg-inline">Адміністратор</span></span>
-                                                                        <?php elseif (get_user_by_id($c['user_id'])['user_status'] == 2) : ?>
-                                                                            <span class="badge badge-secondary ml-2 my-auto"><i class="far fa-shield-al mr-lg-2"></i><span class="d-none d-lg-inline">Модератор</span></span>
-                                                                        <?php endif; ?>
-
-                                                                        <!-- Button -->
-                                                                        <?php if ($user['user_status'] < 2) : ?>
-                                                                            <?php if ($c['complaint']) : ?>
-                                                                                <button data-toggle="modal" data-target="#removeComm2Modal" class="btn btn-sm float-right comment-option-admin p-0 ml-auto"><i class="fas fa-trash"></i></button>
-                                                                            <?php else : ?>
-                                                                                <button data-toggle="modal" data-target="#removeComm2Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-trash"></i></button>
-                                                                            <?php endif; ?>
-                                                                        <?php else : ?>
-                                                                            <?php if ($user['id'] == $c['user_id']) : ?>
-                                                                                <button data-toggle="modal" data-target="#removeComm2Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-trash"></i></button>
-                                                                            <?php else : ?>
-                                                                                <?php if ($c['complaint'] or get_user_by_id($c['user_id'])['user_status'] < 3) : ?>
-                                                                                    <button class="btn btn-sm float-right text-muted p-0" disabled><i class="fas fa-ban"></i></button>
-                                                                                <?php else : ?>
-                                                                                    <button data-toggle="modal" data-target="#banComm2Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-ban"></i></button>
-                                                                                <?php endif; ?>
-                                                                            <?php endif; ?>
-                                                                        <?php endif; ?>
-
-                                                                        <!-- Modal Remove Comment 2 -->
-                                                                        <div class="modal fade" id="removeComm2Modal" tabindex="-1" role="dialog" aria-labelledby="removeComm2ModalLabel" aria-hidden="true">
-                                                                            <div class="modal-dialog" role="document">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title" id="removeComm2ModalLabel">Видалити коментар</h5>
-                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                            <span aria-hidden="true">&times;</span>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        Після видалення коментаря його буде неможливо переглянути та повернути. Ви дійсно хочете видалити оголошення?
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
-                                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                                                                                            <button class="btn my-btn-red" name="do_delete_comment<?= $c['id'] ?>" type="submit">Видалити</button>
-                                                                                        </form>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!-- Modal Ban Comment 2 -->
-                                                                        <div class="modal fade" id="banComm2Modal" tabindex="-1" role="dialog" aria-labelledby="banComm2ModalLabel" aria-hidden="true">
-                                                                            <div class="modal-dialog" role="document">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title" id="banComm2ModalLabel">Поскаржитись на коментар</h5>
-                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                            <span aria-hidden="true">&times;</span>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        Якщо коментар порушує правила користування сервісом, то його буде видалено назавжди. Відправити запит на розглядання цього оголошення модераторами?
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
-                                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                                                                                            <button class="btn my-btn-red" name="do_ban_comment<?= $c['id'] ?>" type="submit">Поскаржитись</button>
-                                                                                        </form>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card-body p-2 shadow-sm">
-                                                                    <p class="card-text"><?= $c['message'] ?></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- /Comment 2nd lvl -->
-                                                <?php endif; ?>
-                                            <?php endforeach; ?>
-                                        <?php endforeach; ?>
-                                    <?php else : ?>
-                                        <!-- Comments Not Found -->
-                                        <div class="card mt-3 bg-white" id="commentsNotFound">
-                                            <div class="card-body">
-                                                <p class="card-text text-center text-muted mb-2 mx-2"><i class="fas fa-exclamation-circle mr-3"></i>Коментарів цього оголошення не знайдено</p>
-                                            </div>
-                                        </div><!-- /Comments Not Found -->
-                                    <?php endif; ?>
-                                </div>
-                            </div><!-- /Comments -->
 
                         <?php endif; ?>
                         <!-- /Announcement -->
@@ -525,8 +294,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
                     <?php if ($user['id'] == $announcement['user_id']) : ?>
                         <!-- Owner Menu -->
-                        <div class="col-md-3">
-                            <div class="card shadow">
+                        <div class="col-md-3 px-0 px-md-3">
+                            <div class="card border-xs-0 shadow">
                                 <div class="card-body">
                                     <?php if (isset($data['do_edit_ann'])) : ?>
                                         <h5 class="card-title">Редагувати</h5>
@@ -551,8 +320,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         </div><!-- /Owner Menu -->
                     <?php elseif (!$announcement['help_user_id']) : ?>
                         <!-- Others Menu -->
-                        <div class="col-md-3">
-                            <div class="card">
+                        <div class="col-md-3 px-0 px-md-3">
+                            <div class="card border-xs-0">
                                 <div class="card-body shadow">
                                     <h5 class="card-title">Можеш допомогти?</h5>
                                     <form id="help" action="announcement.php?id=<?= $announcement['id'] ?>" method="post">
@@ -562,6 +331,242 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             </div>
                         </div><!-- Others Menu -->
                     <?php endif; ?>
+                </div>
+                <div class="row">
+                    <div class="col-md-9 px-0 px-md-3">
+                        <!-- Comments -->
+                        <div class="card shadow mt-4 mt-sm-5 border-xs-0">
+                            <div class="card-header p-2 p-sm-3 pt-4 pt-sm-3">
+                                <!-- Leave New Comment -->
+                                <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
+                                    <label class="sr-only" for="comment_field">Написати коментар</label>
+                                    <textarea type="text" name="comment_to_ann" rows="3" class="form-control mb-2 mr-sm-2" id="comment_field" placeholder="Написати коментар"></textarea>
+                                    <button type="submit" name="do_comment" class="btn my-btn-blue mt-sm-1"><i class="fas fa-comment mr-2"></i>Коментувати</button>
+                                </form><!-- /Leave New Comment -->
+                            </div>
+                            <div class="card-body bg-light pt-2 px-2 px-sm-3">
+                                <?php if (count($ann_comments) > 0) : ?>
+                                    <?php foreach ($ann_comments as $a) : ?>
+                                        <!-- Comment 1st lvl -->
+                                        <div class="anchor" id="comment<?= $a['id'] ?>">
+                                            <div class="card mt-3 bg-white shadow <?= ($a['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
+                                                <div class="card-header py-1 border-bottom-0 diagonal-gradient-gray <?= ($a['complaint'] and ($user['user_status'] < 2)) ? 'diagonal-gradient-red-light' : "" ?>">
+                                                    <div class="row">
+                                                        <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($a['date']) ?></p>
+                                                        <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-clock mr-2"></i><?= show_time($a['date']) ?></p>
+                                                        <?php if ($user['id'] == $a['user_id']) : ?>
+                                                            <span class="badge badge-primary my-bg-blue ml-2 my-auto"><i class="fas fa-user mr-lg-2"></i><span class="d-none d-lg-inline">Ваш коментар</span></span>
+                                                        <?php elseif ($announcement['user_id'] == $a['user_id']) : ?>
+                                                            <span class="badge badge-success ml-2 my-auto"><i class="far fa-star mr-lg-2"></i><span class="d-none d-lg-inline">Автор оголошення</span></span>
+                                                        <?php endif; ?>
+
+                                                        <?php if (get_user_by_id($a['user_id'])['user_status'] == 1) : ?>
+                                                            <span class="badge badge-secondary ml-2 my-auto"><i class="fas fa-shield-alt mr-lg-2"></i><span class="d-none d-lg-inline">Адміністратор</span></span>
+                                                        <?php elseif (get_user_by_id($a['user_id'])['user_status'] == 2) : ?>
+                                                            <span class="badge badge-secondary ml-2 my-auto"><i class="far fa-shield-al mr-lg-2"></i><span class="d-none d-lg-inline">Модератор</span></span>
+                                                        <?php endif; ?>
+
+                                                        <!-- Button -->
+                                                        <?php if ($user['user_status'] < 2) : ?>
+                                                            <?php if ($a['complaint']) : ?>
+                                                                <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option-admin p-0 ml-auto"><i class="fas fa-trash"></i></button>
+                                                            <?php else : ?>
+                                                                <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-trash"></i></button>
+                                                            <?php endif; ?>
+                                                        <?php else : ?>
+                                                            <?php if ($user['id'] == $a['user_id']) : ?>
+                                                                <button data-toggle="modal" data-target="#removeComm1Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-trash"></i></button>
+                                                            <?php else : ?>
+                                                                <?php if ($a['complaint'] or get_user_by_id($a['user_id'])['user_status'] < 3) : ?>
+                                                                    <button class="btn btn-sm float-right text-muted p-0" disabled><i class="fas fa-ban"></i></button>
+                                                                <?php else : ?>
+                                                                    <button data-toggle="modal" data-target="#banComm1Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-ban"></i></button>
+                                                                <?php endif; ?>
+                                                            <?php endif; ?>
+                                                        <?php endif; ?>
+
+                                                        <!-- Modal Remove Comment 1 -->
+                                                        <div class="modal fade" id="removeComm1Modal" tabindex="-1" role="dialog" aria-labelledby="removeComm1ModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="removeComm1ModalLabel">Видалити коментар</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Після видалення коментаря його буде неможливо переглянути та повернути. Ви дійсно хочете видалити оголошення?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                                                                            <button class="btn my-btn-red" name="do_delete_comment<?= $a['id'] ?>" type="submit">Видалити</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Modal Ban Comment 1 -->
+                                                        <div class="modal fade" id="banComm1Modal" tabindex="-1" role="dialog" aria-labelledby="banComm1ModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="banComm1ModalLabel">Поскаржитись на коментар</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Якщо коментар порушує правила користування сервісом, то його буде видалено назавжди. Відправити запит на розглядання цього оголошення модераторами?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                                                                            <button class="btn my-btn-red" name="do_ban_comment<?= $a['id'] ?>" type="submit">Поскаржитись</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body pb-1 px-1 pt-2">
+                                                    <p class="card-text mb-2 mx-2"> <?= $a['message'] ?></p>
+                                                    <span class="badge btn mb-0" type="button" data-toggle="collapse" data-target="#collapse<?= $a['id'] ?>" aria-expanded="true" aria-controls="collapse<?= $a['id'] ?>"><i class="fas fa-reply mr-2"></i>Відповісти</span>
+                                                </div>
+                                                <div class="accordion" id="idReply<?= $a['id'] ?>">
+                                                    <div class="" id="heading<?= $a['id'] ?>"></div>
+                                                    <div id="collapse<?= $a['id'] ?>" class="collapse" aria-labelledby="heading<?= $a['id'] ?>" data-parent="#idReply<?= $a['id'] ?>">
+                                                        <div class="card-footer px-2 pb-1">
+                                                            <form class="form-inline" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col-md-10 px-0">
+                                                                            <label class="sr-only" for="comment_field">Написати коментар</label>
+                                                                            <textarea class="form-control-sm w-100 mr-sm-2" style="min-width: 100%" type="text" name="comment_to_com<?= $a['id'] ?>" rows="1" id="comment_field" placeholder="Написати коментар"></textarea>
+                                                                        </div>
+                                                                        <div class="col-md-auto ml-auto pl-0 pr-1">
+                                                                            <button type="submit" name="do_comment_to_comment<?= $a['id'] ?>" class="btn btn-sm my-btn-blue w-100"><i class="fa fa-paper-plane mr-2"></i>Відправити</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /Comment 1st lvl -->
+                                        <?php foreach ($com_comments as $c) : ?>
+                                            <?php if ($c['parent_comment_id'] == $a['id']) : ?>
+                                                <!-- Comment 2nd lvl -->
+                                                <div class="row justify-content-end anchor" id="comment<?= $c['id'] ?>">
+                                                    <div class="col-1 col-md-2"></div>
+                                                    <div class="col-11 col-md-10">
+                                                        <div class="card mt-2 bg-white shadow <?= ($c['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
+                                                            <div class="card-header pb-0 pt-1 border-bottom-0 diagonal-gradient-gray <?= ($c['complaint'] and ($user['user_status'] < 3)) ? 'diagonal-gradient-red-light' : "" ?>">
+                                                                <div class="row">
+                                                                    <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($c['date']) ?></p>
+                                                                    <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-clock mr-2"></i><?= show_time($c['date']) ?></p>
+                                                                    <?php if ($user['id'] == $c['user_id']) : ?>
+                                                                        <span class="badge badge-primary my-bg-blue ml-2 my-auto"><i class="fas fa-user mr-lg-2"></i><span class="d-none d-lg-inline">Ваш коментар</span></span>
+                                                                    <?php elseif ($announcement['user_id'] == $c['user_id']) : ?>
+                                                                        <span class="badge badge-success ml-2 my-auto"><i class="far fa-star mr-lg-2"></i><span class="d-none d-lg-inline">Автор оголошення</span></span>
+                                                                    <?php endif; ?>
+
+                                                                    <?php if (get_user_by_id($c['user_id'])['user_status'] == 1) : ?>
+                                                                        <span class="badge badge-secondary ml-2 my-auto"><i class="fas fa-shield-alt mr-lg-2"></i><span class="d-none d-lg-inline">Адміністратор</span></span>
+                                                                    <?php elseif (get_user_by_id($c['user_id'])['user_status'] == 2) : ?>
+                                                                        <span class="badge badge-secondary ml-2 my-auto"><i class="far fa-shield-al mr-lg-2"></i><span class="d-none d-lg-inline">Модератор</span></span>
+                                                                    <?php endif; ?>
+
+                                                                    <!-- Button -->
+                                                                    <?php if ($user['user_status'] < 2) : ?>
+                                                                        <?php if ($c['complaint']) : ?>
+                                                                            <button data-toggle="modal" data-target="#removeComm2Modal" class="btn btn-sm float-right comment-option-admin p-0 ml-auto"><i class="fas fa-trash"></i></button>
+                                                                        <?php else : ?>
+                                                                            <button data-toggle="modal" data-target="#removeComm2Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-trash"></i></button>
+                                                                        <?php endif; ?>
+                                                                    <?php else : ?>
+                                                                        <?php if ($user['id'] == $c['user_id']) : ?>
+                                                                            <button data-toggle="modal" data-target="#removeComm2Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-trash"></i></button>
+                                                                        <?php else : ?>
+                                                                            <?php if ($c['complaint'] or get_user_by_id($c['user_id'])['user_status'] < 3) : ?>
+                                                                                <button class="btn btn-sm float-right text-muted p-0" disabled><i class="fas fa-ban"></i></button>
+                                                                            <?php else : ?>
+                                                                                <button data-toggle="modal" data-target="#banComm2Modal" class="btn btn-sm float-right comment-option p-0 ml-auto"><i class="fas fa-ban"></i></button>
+                                                                            <?php endif; ?>
+                                                                        <?php endif; ?>
+                                                                    <?php endif; ?>
+
+                                                                    <!-- Modal Remove Comment 2 -->
+                                                                    <div class="modal fade" id="removeComm2Modal" tabindex="-1" role="dialog" aria-labelledby="removeComm2ModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="removeComm2ModalLabel">Видалити коментар</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    Після видалення коментаря його буде неможливо переглянути та повернути. Ви дійсно хочете видалити оголошення?
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
+                                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                                                                                        <button class="btn my-btn-red" name="do_delete_comment<?= $c['id'] ?>" type="submit">Видалити</button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Modal Ban Comment 2 -->
+                                                                    <div class="modal fade" id="banComm2Modal" tabindex="-1" role="dialog" aria-labelledby="banComm2ModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="banComm2ModalLabel">Поскаржитись на коментар</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    Якщо коментар порушує правила користування сервісом, то його буде видалено назавжди. Відправити запит на розглядання цього оголошення модераторами?
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0">
+                                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
+                                                                                        <button class="btn my-btn-red" name="do_ban_comment<?= $c['id'] ?>" type="submit">Поскаржитись</button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body p-2 shadow-sm">
+                                                                <p class="card-text"><?= $c['message'] ?></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /Comment 2nd lvl -->
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <!-- Comments Not Found -->
+                                    <div class="card mt-3 bg-white" id="commentsNotFound">
+                                        <div class="card-body">
+                                            <p class="card-text text-center text-muted mb-2 mx-2"><i class="fas fa-exclamation-circle mr-3"></i>Коментарів цього оголошення не знайдено</p>
+                                        </div>
+                                    </div><!-- /Comments Not Found -->
+                                <?php endif; ?>
+                            </div>
+                        </div><!-- /Comments -->
+                    </div>
                 </div>
             <?php else : ?>
                 <!-- Frozen Announcement -->
