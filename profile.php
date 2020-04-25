@@ -29,19 +29,19 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
         if ($newEmail != $user['email']) {
             if (trim($newEmail) == '') {
-                $errors[] = 'email field is empty!!!';
+                $errors[] = 'Введіть електронну адресу.';
             }
             if (count_users_by_email($newEmail) > 0) {
-                $errors[] = "user with such email already exist!!!";
+                $errors[] = "Електронна адреса вже використовується.";
             }
         }
 
         if ($newTelegram != $user['telegram_username']) {
             if (trim($newTelegram) == '') {
-                $errors[] = 'telegram field is empty!!!';
+                $errors[] = 'Введіть телеграм логін.';
             }
             if (count_users_by_telegram($newTelegram) > 0) {
-                $errors[] = "user with such telegram already exist!!!";
+                $errors[] = "Телеграм логін вже використовується";
             }
         }
 
@@ -49,7 +49,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
             update_email($user['id'], $newEmail);
             update_telegram($user['id'], $newTelegram);
 
-            header("Refresh:0");
+            header("location: profile.php#".$tab);
         }
     }
 
@@ -67,14 +67,19 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     console_log($pass);
                     update_password($user['id'], $pass);
                     $user['password'] = $pass;
+                    //header("location: profile.php#password");
                 } else {
                     $repeat_password_error = "Your password doesn't match.";
+                    //header("location: profile.php#password");
                 }
             } else {
                 $new_password_error = "Empty password. Please enter your new password.";
+                //header("location: profile.php#password");
             }
         } else {
+            
             $old_password_error = "Wrong password!";
+           // header("location: profile.php#password");
         }
     }
 

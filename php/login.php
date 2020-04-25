@@ -1,6 +1,4 @@
 <?php
-//require_once "db.php";
-//include_once "functions.php";
 date_default_timezone_set('Europe/Kiev');
 
 $data = $_POST;
@@ -11,7 +9,7 @@ if (isset($data['do_login'])) {
 
     if ($user) {
         if ($user['token'] != null){
-            $errors[] = 'account is not activated';
+            $errors[] = 'Ваш акаунт не активовано. Перевірте вашу електронну пошту.';
         }
         elseif (password_verify($data['password'], $user->password)) {
             // login session
@@ -35,9 +33,9 @@ if (isset($data['do_login'])) {
 
             echo '<script type="text/javascript">location.reload(true);</script>';
         } else {
-            $errors[] = "password is incorrect";
+            $errors[] = "Не правильний пароль.";
         }
     } else {
-        $errors[] = "user with such login doesn`t exist";
+        $errors[] = "Не правильний логін.";
     }
 }

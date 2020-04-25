@@ -210,18 +210,6 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             <div class="card announcement shadow">
                                 <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
                                     <div class="card-header diagonal-gradient-gray-light my-color-dark border-bottom-0">
-                                        <?php if (@$update_ann_errors) : ?>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
-                                                        <?= @$update_ann_errors[0]; ?>
-                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
                                         <div class="container">
                                             <div class="row pt-2 pb-2">
                                                 <input type="text" name="title" value="<?= $announcement['title'] ?>" class="form-control form-control-lg my-bg-light my-color-dark" placeholder="Заголовок">
