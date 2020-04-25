@@ -64,7 +64,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
 
             R::store($user);
             $link = 'https://stephub.000webhostapp.com/php/activate.php?token=' . $user_token;
-            mail($data['email'], 'Account activation', 'Для активації перейдіть за посиланням ' . $link, 'From: stephub.com@gmail.com');
+            mail($data['email'], 'Account activation', 'Activate account ' . $link, 'From: stephub.com@gmail.com');
             header('location: index.php');
         }
     }

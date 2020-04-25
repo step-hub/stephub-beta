@@ -11,6 +11,11 @@ $sort_by = (isset($data['s']) and in_array($data['s'], $sort_values)) ? $data['s
 $order = (isset($data['o']) and in_array($data['o'], $order_values)) ? $data['o'] : 'desc';
 $quantity_per_page = (isset($data['q']) and in_array($data['q'], $qty_values)) ? $data['q'] : 10;
 
+if (array_key_exists('activate', $data)){
+//    check activation
+    unset($data['activate']);
+}
+
 $request = '';
 foreach (array_keys($data) as $key) {
     if ($key != 'page') {
