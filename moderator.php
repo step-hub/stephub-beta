@@ -185,7 +185,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     <?php include_once 'templates/navbar.php'; ?>
 
     <!-- Page Content -->
-    <div class="container-fluid">
+    <div class="container-fluid d-none d-md-block">
         <div class="row mt-1 mb-0 mx-1">
             <div class="col-md-4">
                 <div class="text-left">
@@ -502,6 +502,15 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             </div>
         <?php endif; ?>
     </div>
+
+    <!-- Mobile Does not Suppported -->
+    <div class="container-fluid d-md-none p-3">
+        <div class="alert alert-danger shadow-sm" role="alert">
+            <p>Сторінка Модератора не доступна в мобільній версії сайту.</p>
+            <a href="index.php"> Повернутись на головну сторінку</a>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
