@@ -131,18 +131,26 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
         if (isset($data['do_help'])) {
             $announcement['help_user_id'] = $_SESSION['logged_user']->id;
+            $mail = R::findOne('users', 'id = '.$announcement['user_id'])['email'];
+            mail($mail, 'Someone want to help', 'Please, check your "'.$announcement['title'].'"', 'From: stephub.com@gmail.com');
             R::store($announcement);
             header('location: announcement.php?id=' . $announcement['id']);
         }
 
         if (isset($data['do_apply_help'])) {
             $announcement['announcement_status_id'] = 3;
+            $user_mail = $_SESSION['logged_user']['email'];
+            $help_user = R::findOne('users', 'id = '.$announcement['help_user_id']);
+            mail($help_user['email'], 'Help', 'Please, contact with '.$_SESSION['logged_user']['telegram_username'], 'From: stephub.com@gmail.com');
+            mail($user_mail, 'Help', 'Please, contact with '.$help_user['telegram_username'], 'From: stephub.com@gmail.com');
             R::store($announcement);
             header('location: announcement.php?id=' . $announcement['id']);
         }
 
         if (isset($data['do_cancel_help'])) {
             $announcement['announcement_status_id'] = 1;
+            $help_user = R::findOne('users', 'id = '.$announcement['help_user_id']);
+            mail($help_user['email'], 'Help', 'Owner of "'.$announcement['title'].'" has canceled your application', 'From: stephub.com@gmail.com');
             $announcement['help_user_id'] = null;
             $announcement['date'] = time();
             R::store($announcement);
