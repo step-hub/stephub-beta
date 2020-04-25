@@ -65,7 +65,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                     <button name="do_send" type="submit" class="btn btn-info">Відправити</button>
                 </form>
         </div>
-    <? endif; ?>
+    <?php endif; ?>
 
     <!-- Footer -->
     <?php include_once 'templates/footer.php'; ?>
