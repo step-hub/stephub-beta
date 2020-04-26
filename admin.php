@@ -62,6 +62,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 
         foreach ($users as $u) {
             if (isset($data_post['do_delete_user' . $u['id']])) {
+                mail($u['email'], 'Deleted account', 'Your account was deleted', 'From: stephub.com@gmail.com');
                 R::trash($u);
                 header("location: admin.php?" . $request);
             }
