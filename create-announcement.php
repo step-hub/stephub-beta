@@ -31,7 +31,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
             R::store($announcement);
 
             // Attach file
-            if (isset($_FILES['userfile'])) {
+            if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
                 $location = get_upload_path($announcement->id);
                 console_log($location);
 
