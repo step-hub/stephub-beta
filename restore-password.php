@@ -11,13 +11,13 @@ if (isset($data_get['token'])){
 }
 
 if (isset($data_post['do_send_token'])){
-    if ($data_post['email'] == ''){
+    if ($data_post['email'] != null){
         $user = R::findOne('users', 'email = ?', array($data_post['email']));
         if (!empty($user)){
             if ($user['token'] == null){
                 $user_token = generate_random_string(80);
                 $user['token'] = $user_token;
-                $link = 'https://stephub.000webhostapp.com/php/restore-password.php?token=' . $user_token;
+                $link = 'https://stephub.000webhostapp.com/restore-password.php?token=' . $user_token;
                 mail($user['email'], 'Restore password', 'Restore password '.$link, 'From: stephub.com@gmail.com');
 //               show message that email is sent and redirect to main page
                 R::store($user);
@@ -40,6 +40,7 @@ if (isset($data_post['do_restore'])){
     if (!empty($user)){
         if ($data_post['password'] == $data_post['password_confirmation']){
             $user['password'] = password_hash($data_post['password'], PASSWORD_DEFAULT);
+            $user['token'] = null;
             R::store($user);
         }
         else {
@@ -92,7 +93,7 @@ if (isset($data_post['do_restore'])){
                 <label for="password">Новий пароль</label>
                 <input type="password" id="password" name="password" class="form-control">
                 <label for="password-confirmation">Підтвердження паролю</label>
-                <input type="password" id="password-confirmation" name="password-confirmation" class="form-control">
+                <input type="password" id="password-confirmation" name="password_confirmation" class="form-control">
                 <button class="btn btn-lg my-btn-blue shadow-sm" type="submit" name="do_restore">Відновити пароль</button>
             </form>
         <?php endif; ?>
