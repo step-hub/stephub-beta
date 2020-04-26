@@ -209,7 +209,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <?php include_once "templates/errors.php"; ?>
 
     <!-- Page Content -->
-    <div class="container p-0 p-md-3 pt-sm-5">
+    <div class="container p-0 p-md-3 pt-sm-5 pt-md-5">
         <?php if ($announcement) : ?>
             <?php if ($visible) : ?>
                 <div class="row">
@@ -258,7 +258,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             <div class="card announcement shadow <?php if ($announcement['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
                                                                         echo 'border-danger';
                                                                     } ?>">
-                                <div class="card-header announcement-block-header my-color-dark diagonal-gradient-gray-light <?php if ($announcement['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
+                                <div class="card-header announcement-block-header my-color-dark diagonal-gradient-gray-light px-2 px-md-3 <?php if ($announcement['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
                                                                                                                                     echo 'diagonal-gradient-red-light';
                                                                                                                                 } ?>">
                                     <div class="container">
@@ -283,14 +283,15 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body px-4 pt-4 pb-2 announcement-block-body">
-                                    <p class="lead"><?= $announcement['details'] ?></p>
+                                <div class="card-body px-3 px-md-4 pt-4 pb-4 pb-md-2 announcement-block-body">
+                                    <p class="lead d-none d-md-inline"><?= $announcement['details'] ?></p>
+                                    <p class="d-inline d-md-none"><?= $announcement['details'] ?></p>
                                 </div>
                                 <?php if (isset($announcement['file'])) : ?>
                                     <div class="card-footer">
                                         <div class="row pt-2">
                                             <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary shadow-sm ml-3" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
-                                            <p class="ml-2 my-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                            <p class="ml-3 ml-md-2 my-2 my-md-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
                                         </div>
                                     </div>
                                 <?php endif; ?>
@@ -302,9 +303,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
                     <?php if ($user['id'] == $announcement['user_id']) : ?>
                         <!-- Owner Menu -->
-                        <div class="col-md-3 px-0 px-md-3">
+                        <div class="col-md-3">
                             <div class="card border-xs-0 shadow">
-                                <div class="card-body">
+                                <div class="card-body px-3 py-4 py-md-3">
                                     <?php if (isset($data['do_edit_ann'])) : ?>
                                         <h5 class="card-title">Редагувати</h5>
                                         <button class="btn btn-secondary btn-block mt-3" form="form_edit_ann" name="do_cancel_ann" type="submit"><i class="fas fa-redo mr-2"></i>Відмінити</button>
@@ -319,9 +320,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                     <button class="btn btn-warning btn-block mt-3" name="do_cancel_help" type="submit"><i class="fas fa-hands-helping mr-2"></i>Відмовити допомогу</button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                            <button class="btn btn-secondary btn-block mt-3" name="do_edit_ann" type="submit"><i class="fas fa-edit mr-2"></i>Редагувати</button>
+                                            <button class="btn btn-secondary btn-block mt-md-3" name="do_edit_ann" type="submit"><i class="fas fa-edit mr-2"></i>Редагувати</button>
                                         </form>
-                                        <button class="btn my-btn-red btn-block mt-3" data-toggle="modal" data-target="#removeAnnModal"><i class="fas fa-trash mr-2"></i>Видалити</button>
+                                        <button class="btn my-btn-red btn-block mt-md-3" data-toggle="modal" data-target="#removeAnnModal"><i class="fas fa-trash mr-2"></i>Видалити</button>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -329,8 +330,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <?php elseif (!$announcement['help_user_id']) : ?>
                         <!-- Others Menu -->
                         <div class="col-md-3">
-                            <div class="card border-xs-0">
-                                <div class="card-body shadow">
+                            <div class="card border-xs-0 shadow">
+                                <div class="card-body px-3 py-4 py-md-3">
                                     <h5 class="card-title">Можеш допомогти?</h5>
                                     <form id="help" action="announcement.php?id=<?= $announcement['id'] ?>" method="post">
                                         <button type="submit" form="help" name="do_help" class="btn btn-success btn-block"><i class="fas fa-hands-helping mr-2"></i>Допомогти</button>
