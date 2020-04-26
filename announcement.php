@@ -625,7 +625,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 <div class="modal-footer">
                     <form action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Скасувати</button>
-                        <button class="btn my-btn-red" name="do_remove_ann" type="submit">Видалити</button>
+                        <button class="btn my-btn-red" name="do_delete_ann" type="submit">Видалити</button>
                     </form>
                 </div>
             </div>
