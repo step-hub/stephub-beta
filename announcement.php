@@ -131,8 +131,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
         if (isset($data['do_help'])) {
             $announcement['help_user_id'] = $_SESSION['logged_user']->id;
-            $mail = R::findOne('users', 'id = '.$announcement['user_id'])['email'];
-            mail($mail, 'Someone want to help', 'Please, check your "'.$announcement['title'].'"', 'From: stephub.com@gmail.com');
+            $mail = R::findOne('users', 'id = ' . $announcement['user_id'])['email'];
+            mail($mail, 'Someone want to help', 'Please, check your "' . $announcement['title'] . '"', 'From: stephub.com@gmail.com');
             R::store($announcement);
             header('location: announcement.php?id=' . $announcement['id']);
         }
@@ -140,17 +140,17 @@ if (array_key_exists('logged_user', $_SESSION)) {
         if (isset($data['do_apply_help'])) {
             $announcement['announcement_status_id'] = 3;
             $user_mail = $_SESSION['logged_user']['email'];
-            $help_user = R::findOne('users', 'id = '.$announcement['help_user_id']);
-            mail($help_user['email'], 'Help', 'Please, contact with '.$_SESSION['logged_user']['telegram_username'], 'From: stephub.com@gmail.com');
-            mail($user_mail, 'Help', 'Please, contact with '.$help_user['telegram_username'], 'From: stephub.com@gmail.com');
+            $help_user = R::findOne('users', 'id = ' . $announcement['help_user_id']);
+            mail($help_user['email'], 'Help', 'Please, contact with ' . $_SESSION['logged_user']['telegram_username'], 'From: stephub.com@gmail.com');
+            mail($user_mail, 'Help', 'Please, contact with ' . $help_user['telegram_username'], 'From: stephub.com@gmail.com');
             R::store($announcement);
             header('location: announcement.php?id=' . $announcement['id']);
         }
 
         if (isset($data['do_cancel_help'])) {
             $announcement['announcement_status_id'] = 1;
-            $help_user = R::findOne('users', 'id = '.$announcement['help_user_id']);
-            mail($help_user['email'], 'Help', 'Owner of "'.$announcement['title'].'" has canceled your application', 'From: stephub.com@gmail.com');
+            $help_user = R::findOne('users', 'id = ' . $announcement['help_user_id']);
+            mail($help_user['email'], 'Help', 'Owner of "' . $announcement['title'] . '" has canceled your application', 'From: stephub.com@gmail.com');
             $announcement['help_user_id'] = null;
             $announcement['date'] = time();
             R::store($announcement);
@@ -207,11 +207,11 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <?php include_once "templates/errors.php"; ?>
 
     <!-- Page Content -->
-    <div class="container pt-sm-5">
+    <div class="container p-0 p-md-3 pt-sm-5">
         <?php if ($announcement) : ?>
             <?php if ($visible) : ?>
                 <div class="row">
-                    <div class="col-md-9 px-0 px-sm-3">
+                    <div class="col-md-9">
                         <!-- Announcement -->
                         <?php if (isset($data['do_edit_ann'])) : ?>
                             <!-- Edit Announcement -->
@@ -294,8 +294,6 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <?php endif; ?>
                             </div><!-- /Show Announcement -->
 
-
-
                         <?php endif; ?>
                         <!-- /Announcement -->
                     </div>
@@ -328,7 +326,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         </div><!-- /Owner Menu -->
                     <?php elseif (!$announcement['help_user_id']) : ?>
                         <!-- Others Menu -->
-                        <div class="col-md-3 px-0 px-md-3">
+                        <div class="col-md-3">
                             <div class="card border-xs-0">
                                 <div class="card-body shadow">
                                     <h5 class="card-title">Можеш допомогти?</h5>
@@ -341,7 +339,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <?php endif; ?>
                 </div>
                 <div class="row">
-                    <div class="col-md-9 px-0 px-md-3">
+                    <div class="col-md-9">
                         <!-- Comments -->
                         <div class="card shadow mt-4 mt-sm-5 border-xs-0">
                             <div class="card-header p-2 p-sm-3 pt-4 pt-sm-3">
@@ -578,12 +576,13 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 </div>
             <?php else : ?>
                 <!-- Frozen Announcement -->
-                <div class="card not-found-parent diagonal-gradient-gray-light shadow">
-                    <div class="card-body text-center">
-                        <div class="card not-found-child diagonal-gradient-gray-light">
+                <div class="card not-found-parent diagonal-gradient-gray-light shadow border-xs-0">
+                    <div class="card-body text-center p-0 p-md-3">
+                        <div class="card not-found-child diagonal-gradient-gray-light border-xs-0">
                             <div class="card-body text-center my-color-dark py-5">
-                                <h3 class="mb-5"><i class="fas fa-exclamation-circle mr-3"></i>У вас нема можливості переглядати це оголошення</h3>
-                                <a href="index.php">Повернутись на головну</a>
+                                <h1><span class="material-icons md-48">info</span></h1>
+                                <h3 class="mb-5"><i class="fas fa-exclamation-circle"></i>У вас нема можливості переглядати це оголошення</h3>
+                                <a href="index.php" class="btn my-btn-outline-dark">Повернутись на головну</a>
                             </div>
                         </div>
                     </div>
@@ -591,12 +590,13 @@ if (array_key_exists('logged_user', $_SESSION)) {
             <?php endif; ?>
         <?php else : ?>
             <!-- Not Found Announcement -->
-            <div class="card not-found-parent diagonal-gradient-gray-light shadow">
-                <div class="card-body text-center">
-                    <div class="card not-found-child diagonal-gradient-gray-light">
+            <div class="card not-found-parent diagonal-gradient-gray-light shadow border-xs-0">
+                <div class="card-body text-center p-0 p-md-3">
+                    <div class="card not-found-child diagonal-gradient-gray-light border-xs-0">
                         <div class="card-body text-center my-color-dark py-5">
-                            <h3 class="mb-5"><i class="fas fa-exclamation-circle mr-3"></i>Вибачте, сторінку оголошення не знайдено</h3>
-                            <a href="index.php">Повернутись на головну</a>
+                            <h1><span class="material-icons md-48">info</span></h1>
+                            <h3 class="mb-5">Вибачте, сторінку оголошення не знайдено</h3>
+                            <a href="index.php" class="btn my-btn-outline-dark">Повернутись на головну</a>
                         </div>
                     </div>
                 </div>
