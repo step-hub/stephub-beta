@@ -89,6 +89,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
         }
 
         if (isset($data['do_delete_ann'])) {
+            $path = 'uploads/'.$announcement['id'].'/';
+            delete_files($path);
             R::trash($announcement);
             header("location: index.php");
         }

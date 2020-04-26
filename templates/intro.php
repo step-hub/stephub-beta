@@ -32,7 +32,7 @@
                             </div>
 
                             <button class="btn btn-lg my-btn-blue btn-block shadow-sm" type="submit" name="do_login">Вхід</button>
-                            <p class="mt-3 mb-0" style="color: black;">Не маєте акаунту? <a href="registration.php">Зареєструвати</a></p>
+                            <p class="mt-3 mb-0" style="color: black;">Забули пароль? <a href="../restore-password.php">Відновити</a></p>
                         </form>
                     </div>
                 </div>
