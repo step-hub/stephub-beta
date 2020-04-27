@@ -26,6 +26,12 @@ if (!array_key_exists('logged_user', $_SESSION)) {
             $errors[] = 'Поле паролю не може бути порожнім';
         }
 
+        if (!empty(preg_match('/[^a-zA-Z0-9]/', $data['password'])) or strlen($data['password']) < 8
+            or strlen($data['password']) > 20 or empty(preg_match("/[a-z]/", $data['password']))
+            or empty(preg_match("/[A-Z]/", $data['password'])) or empty(preg_match("/[0-9]/", $data['password']))){
+            $errors[] = 'Пароль не відповідає вимогам';
+        }
+
         if ($data['password_confirmation'] != $data['password']) {
             $errors[] = "Ваші паролі не співпадають, спробуйте ввести ще раз";
         }
