@@ -295,10 +295,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             </div>
 
                             <div class="tab-pane fade <?= ($tab == "delete")? "active show" : "" ?>" id="delete" role="tabpanel" aria-labelledby="delete-tab">
-                                <div class="container text-center">
+                                <div class="container px-0 px-md-3 text-center">
                                     <h4 class="mb-4">Видалення облікового запису StepHub</h4>
                                     <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
-                                    <button data-toggle="modal" data-target="#deleteModal" class="btn my-btn-red shadow-sm mt-5">Видалити акаунт</button>
+                                    <button data-toggle="modal" data-target="#deleteModal" class="btn my-btn-red shadow-sm mt-5 mb-3">Видалити акаунт</button>
                                 </div>
                             </div>
                         </div>
