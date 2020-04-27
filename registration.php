@@ -112,7 +112,11 @@ if (!array_key_exists('logged_user', $_SESSION)) {
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link href="vendor/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
+    
     <!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
 </head>
@@ -157,7 +161,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                             <input name="stud_num_series" class="form-control col-2 px-2 mx-0" type="text" maxlength="2" value="<?= @$data['stud_num_ser']; ?>" placeholder="АБ" required>
                             <div class="input-group-text border-radius-0" style="border-right: 0; border-left: 0;">№</div>
                             <input name="stud_num_number" class="form-control ml-0" style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem" type="text" maxlength="8" value="<?= @$data['stud_num_num']; ?>" placeholder="12345678" required>
-                            
+
                             <button type="button" class="btn float-left myPopover ml-1 mr-2" data-toggle="popover" data-placement="right" title="Де взяти номер студентського квитка?" data-trigger="hower" data-content="Серію і номер студентського квитка можна дізнатися на лицевій стороні вашого студентського квитка">
                                 <i class="fa fa-info-circle text-muted"></i>
                             </button>
@@ -184,7 +188,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                                 <div class="col-sm-9">
                                     <input name="password" class="form-control" type="password" id="inputPassword" placeholder="Пароль" required aria-describedby="passHelp">
                                     <small id="passHelp" class="form-text text-muted">
-                                        Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
+                                        Ваш пароль має бути довжиною 8-20 символів, має містити цифри та літери, одна з яких велика, і не може містити пробіли, спеціальні символи, або емоджі.
                                     </small>
                                 </div>
                             </div>
@@ -468,7 +472,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
     <!-- Main sctipt -->
     <script src="js/script.js"></script>
     <!-- Registration sctipt -->
-    <script src="js/registraion.js"></script>
+    <script src="js/registration.js"></script>
     <!-- Back to top button -->
     <script src="js/top.js"></script>
 </body>
