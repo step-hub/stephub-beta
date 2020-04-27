@@ -234,11 +234,11 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <?php include_once "templates/errors.php"; ?>
 
     <!-- Page Content -->
-    <div class="container p-0 p-md-3 pt-sm-5 pt-md-5">
+    <div class="container pt-sm-5 pt-md-5">
         <?php if ($announcement) : ?>
             <?php if ($visible) : ?>
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-9 px-0 px-md-3">
                         <!-- Announcement -->
                         <?php if (isset($data['do_edit_ann'])) : ?>
                             <!-- Edit Announcement -->
@@ -328,7 +328,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
                     <?php if ($user['id'] == $announcement['user_id']) : ?>
                         <!-- Owner Menu -->
-                        <div class="col-md-3">
+                        <div class="col-md-3 px-0 px-md-3">
                             <div class="card border-xs-0 shadow">
                                 <div class="card-body px-3 py-4 py-md-3">
                                     <?php if (isset($data['do_edit_ann'])) : ?>
@@ -354,7 +354,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         </div><!-- /Owner Menu -->
                     <?php elseif (!$announcement['help_user_id']) : ?>
                         <!-- Others Menu -->
-                        <div class="col-md-3">
+                        <div class="col-md-3 px-0 px-md-3">
                             <div class="card border-xs-0 shadow">
                                 <div class="card-body px-3 py-4 py-md-3">
                                     <h5 class="card-title">Можеш допомогти?</h5>
@@ -367,7 +367,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <?php endif; ?>
                 </div>
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-9 px-0 px-md-3">
                         <!-- Comments -->
                         <div class="card shadow mt-4 mt-sm-5 border-xs-0">
                             <div class="card-header p-2 p-sm-3 pt-4 pt-sm-3">
