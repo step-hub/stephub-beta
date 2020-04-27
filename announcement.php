@@ -115,6 +115,24 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 $update_ann_errors[] = 'Вкажіть деталі оголошення';
             }
 
+            if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+                $location = get_upload_path($announcement->id);
+
+                // Create directory if it does not exist
+                if (!is_dir($location)) {
+                    mkdir($location,  0755);
+                }
+
+                $uploadName = basename($_FILES['userfile']['name']);
+                $uploadFile = $location . $uploadName;
+
+                if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadFile)) {
+                    $announcement['file'] = $uploadName;
+                } else {
+                    $update_ann_errors[] = "Не вдалось завантажити файл";
+                }
+            }
+
             if (empty($update_ann_errors)) {
                 $announcement['title'] = $data['title'];
                 $announcement['details'] = nl2br($data['details']);
@@ -122,7 +140,6 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 $announcement['announcement_status_id'] = 2;
 
                 R::store($announcement);
-
                 header('location: announcement.php?id=' . $announcement['id']);
             }
         }
@@ -226,7 +243,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         <?php if (isset($data['do_edit_ann'])) : ?>
                             <!-- Edit Announcement -->
                             <div class="card announcement shadow">
-                                <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group">
+                                <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group" enctype="multipart/form-data">
                                     <div class="card-header diagonal-gradient-gray-light my-color-dark border-bottom-0">
                                         <div class="container">
                                             <div class="row pt-2 pb-2">
