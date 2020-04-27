@@ -250,10 +250,10 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             </div>
 
                             <div class="tab-pane fade <?= ($tab == "alerts")? "active show" : "" ?>" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
-                                <div class="container text-center">
+                                <div class="container px-0 px-md-3 text-center">
                                     <div class="row">
                                         <div class="col">
-                                            <div class="alert alert-warning shadow-sm" role="alert">
+                                            <div class="alert alert-warning shadow-sm mb-0" role="alert">
                                                 Функціонал сповіщень знаходиться на стадії розробки
                                             </div>
                                         </div>
