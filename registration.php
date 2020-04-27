@@ -7,35 +7,53 @@ if (!array_key_exists('logged_user', $_SESSION)) {
     $errors = array();
 
     if (isset($data['do_signup'])) {
-        if (trim($data['login']) == '') {
+        $login = trim($data['login']);
+        $email = trim($data['email']);
+        $stud_num_series = trim($data['stud_num_series']);
+        $stud_num_number = trim($data['stud_num_number']);
+        $telegram = trim($data['telegram']);
+        if ($login == '') {
             $errors[] = 'Поле логіну не можу бути порожнім';
         }
-        if (trim($data['email']) == '') {
+        if (!empty(preg_match('/[^a-zA-Z0-9]/', $login)) or strlen($login) < 3
+            or strlen($login) > 20){
+            $errors[] = 'Логін не відповідає вимогам';
+        }
+        if ($email == '') {
             $errors[] = 'Поле електронної адреси не можу бути порожнім';
         }
-        if (trim($data['stud_num_series']) == '') {
+        if (!empty(preg_match('/[^a-zA-Z0-9]/', $email))) {
+            $errors[] = 'Адреса електронної пошти не відповідає вимогам';
+        }
+        if ($stud_num_series == '') {
             $errors[] = 'Вкажіть серію студентсього квитка';
         }
-        if (trim($data['stud_num_number']) == '') {
+        if (empty(preg_match('/[А-Я][А-Я]/', $stud_num_series))) {
+            $errors[] = 'Серія студентського квитка не відповідає вимогам';
+        }
+        if ($stud_num_number == '') {
             $errors[] = 'Вкажіть номер студентсього квитка';
         }
-        if (trim($data['telegram']) == '') {
+        if (empty(preg_match('/\d{8}/', $stud_num_number))) {
+            $errors[] = 'Номер студентського квитка не відповідає вимогам';
+        }
+        if ($telegram == '') {
             $errors[] = 'Вкажіть логін телеграму';
+        }
+        if (!empty(preg_match('/[^a-zA-Z0-9]/', $telegram))) {
+            $errors[] = 'telegram нікнейм не відповідає вимогам';
         }
         if ($data['password'] == '') {
             $errors[] = 'Поле паролю не може бути порожнім';
         }
-
         if (!empty(preg_match('/[^a-zA-Z0-9]/', $data['password'])) or strlen($data['password']) < 8
             or strlen($data['password']) > 20 or empty(preg_match("/[a-z]/", $data['password']))
             or empty(preg_match("/[A-Z]/", $data['password'])) or empty(preg_match("/[0-9]/", $data['password']))){
             $errors[] = 'Пароль не відповідає вимогам';
         }
-
         if ($data['password_confirmation'] != $data['password']) {
             $errors[] = "Ваші паролі не співпадають, спробуйте ввести ще раз";
         }
-
         if (count_users_by_login($data['login']) > 0) {
             $errors[] = "Користувач з логіном <strong>" . $data['login'] . "</strong> вже існує, введіть інше ім'я";
         }
