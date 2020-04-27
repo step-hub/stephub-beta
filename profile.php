@@ -216,15 +216,15 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
                             <div class="tab-pane fade <?= ($tab == "password")? "active show" : "" ?>" id="password" role="tabpanel" aria-labelledby="password-tab">
                                 <form class="form" action="profile.php" method="post">
-                                    <div class="form-group row px-3">
-                                        <label class="col-sm-3 col-form-label text-right" for="inputPassword">Старий пароль</label>
+                                    <div class="form-group row px-md-3">
+                                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPassword">Старий пароль</label>
                                         <div class="col-sm-9">
                                             <input name="password_old" class="form-control" type="password" id="inputPasswordOld" placeholder="Введіть ваш пароль" required aria-describedby="passHelp1">
                                             <small id="passHelp1" class="form-text text-danger"><?= $old_password_error ?></small>
                                         </div>
                                     </div>
-                                    <div class="form-group row px-3">
-                                        <label class="col-sm-3 col-form-label text-right" for="inputPassword">Новий пароль</label>
+                                    <div class="form-group row px-md-3">
+                                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPassword">Новий пароль</label>
                                         <div class="col-sm-9">
                                             <input name="password_new" class="form-control" type="password" id="inputPasswordNew" placeholder="Введіть новий пароль" required aria-describedby="passHelp2">
                                             <?php if ($new_password_error) : ?>
@@ -236,15 +236,15 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                             <?php endif; ?>
                                         </div>
                                     </div>
-                                    <div class="form-group row px-3">
-                                        <label class="col-sm-3 col-form-label text-right" for="inputPasswordConfirm">Підтвердження</label>
+                                    <div class="form-group row px-md-3">
+                                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPasswordConfirm">Підтвердження</label>
                                         <div class="col-sm-9">
                                             <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть новий пароль" required aria-describedby="passHelp3">
                                             <small id="passHelp3" class="form-text text-danger"><?= $repeat_password_error ?></small>
                                         </div>
                                     </div>
                                     <div class="row justify-content-center">
-                                        <button class="btn my-btn-blue float-right mr-3" type="submit" name="do_change_pass">Змінити пароль</button>
+                                        <button class="btn my-btn-blue float-right mr-3 mt-3 mb-3" type="submit" name="do_change_pass">Змінити пароль</button>
                                     </div>
                                 </form>
                             </div>
