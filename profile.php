@@ -250,9 +250,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             </div>
 
                             <div class="tab-pane fade <?= ($tab == "alerts")? "active show" : "" ?>" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
-                                <div class="container px-0 px-md-3 text-center">
+                                <div class="container text-center">
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0 px-md-3">
                                             <div class="alert alert-warning shadow-sm mb-0" role="alert">
                                                 Функціонал сповіщень знаходиться на стадії розробки
                                             </div>
@@ -264,11 +264,11 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             <div class="tab-pane fade <?= ($tab == "announcements")? "active show" : "" ?>" id="announcements" role="tabpanel" aria-labelledby="announcements-tab">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0 px-md-3">
                                             <?php if ($user_announcements) :
                                                 foreach ($user_announcements as $announcement) : ?>
                                                     <div class="card text-left mb-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
-                                                        <div class="card-body shadow-sm">
+                                                        <div class="card-body shadow-sm p-2 p-md-3">
                                                             <div class="row">
                                                                 <div class="col-md-8">
                                                                     <h5 class="card-title"><?= $announcement['title'] ?></h5>
