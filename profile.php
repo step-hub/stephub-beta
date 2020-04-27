@@ -130,9 +130,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <!-- Page Content -->
     <div class="container">
         <div class="row pb-5">
-            <div class="col-md-3 pr-0">
+            <div class="col-md-3 px-0 pl-md-3 pr-md-0">
 
-                <div class="card mt-5 profile-left-menu shadow">
+                <div class="card mt-md-5 profile-left-menu shadow border-xs-0">
                     <div class="card-body diagonal-gradient-gray-light">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link my-1 active" id="profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="true"><i class="material-icons mr-2">account_circle</i>Мій профіль</a>
@@ -148,9 +148,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 </div>
 
             </div>
-            <div class="col-md-9 pl-0">
+            <div class="col-md-9 px-0 pl-md-0 pr-md-3">
 
-                <div class="card mt-5 profile-right-menu shadow">
+                <div class="card mt-md-5 profile-right-menu shadow border-xs-0">
                     <div class="card-body">
                         <div class="tab-content" id="v-pills-tabContent">
 
