@@ -127,6 +127,14 @@ if (array_key_exists('logged_user', $_SESSION)) {
             }
         }
 
+        if (isset($data['do_unpin_file'])) {
+            $path = 'uploads/'.$announcement['id'].'/';
+            delete_files($path);
+            $announcement['file'] = null;
+            R::store($announcement);
+            header('location: announcement.php?id=' . $announcement['id']);
+        }
+
         if (isset($data['do_cancel_ann'])) {
             header('location: announcement.php?id=' . $announcement['id']);
         }
@@ -238,7 +246,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <?php if (isset($announcement['file'])) : ?>
                                         <div class="card-footer">
                                             <div class="row pt-2">
-                                                <button class="btn my-btn-red shadow-sm ml-3"><i class="material-icons mr-2">cancel</i>Відкріпити файл</button>
+                                                <button class="btn my-btn-red shadow-sm ml-3" type="submit" name="do_unpin_file"><i class="material-icons mr-2">cancel</i>Відкріпити файл</button>
                                                 <p class="ml-2 my-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
                                             </div>
                                         </div>
