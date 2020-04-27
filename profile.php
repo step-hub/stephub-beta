@@ -67,19 +67,20 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     console_log($pass);
                     update_password($user['id'], $pass);
                     $user['password'] = $pass;
-                    //header("location: profile.php#password");
+
+                    header("location: profile.php#password");
                 } else {
+                    header("location: profile.php#password");
                     $repeat_password_error = "Your password doesn't match.";
-                    //header("location: profile.php#password");
+                    
                 }
             } else {
+                header("location: profile.php#password");
                 $new_password_error = "Empty password. Please enter your new password.";
-                //header("location: profile.php#password");
             }
         } else {
-            
             $old_password_error = "Wrong password!";
-           // header("location: profile.php#password");
+            header("location: profile.php#password");
         }
     }
 
@@ -154,7 +155,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <div class="card-body px-2 px-md-3 py-4 py-md-3">
                         <div class="tab-content" id="v-pills-tabContent">
 
-                            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="tab-pane fade <?= ($tab == "profile")? "active show" : "" ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <form id="form-update-profile" class="form" action="profile.php" method="POST">
                                     <div class="form-group row px-md-3">
                                         <label class="col-md-3 col-form-label text-left text-md-right" for="inputLogin">Ваше ім'я</label>
@@ -213,7 +214,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </form>
                             </div>
 
-                            <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                            <div class="tab-pane fade <?= ($tab == "password")? "active show" : "" ?>" id="password" role="tabpanel" aria-labelledby="password-tab">
                                 <form class="form" action="profile.php" method="post">
                                     <div class="form-group row px-3">
                                         <label class="col-sm-3 col-form-label text-right" for="inputPassword">Старий пароль</label>
@@ -248,7 +249,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </form>
                             </div>
 
-                            <div class="tab-pane fade" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
+                            <div class="tab-pane fade <?= ($tab == "alerts")? "active show" : "" ?>" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
                                 <div class="container text-center">
                                     <div class="row">
                                         <div class="col">
@@ -260,7 +261,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="announcements" role="tabpanel" aria-labelledby="announcements-tab">
+                            <div class="tab-pane fade <?= ($tab == "announcements")? "active show" : "" ?>" id="announcements" role="tabpanel" aria-labelledby="announcements-tab">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col">
@@ -293,7 +294,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+                            <div class="tab-pane fade <?= ($tab == "delete")? "active show" : "" ?>" id="delete" role="tabpanel" aria-labelledby="delete-tab">
                                 <div class="container text-center">
                                     <h4 class="mb-4">Видалення облікового запису StepHub</h4>
                                     <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
