@@ -170,7 +170,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                 <input name="email" class="form-control" type="email" id="inputEmail" value="<?= $user['email'] ?>" placeholder="example@gmail.com" required>
                                             </div>
                                         </div>
-                                        <div class="form-group row px-md-3">
+                                        <div class="form-group row">
                                             <label class="col-12 col-md-3 col-form-label text-left text-md-right" for="inputTelegram">Телеграм</label>
                                             <div class="col-12 col-md-9">
                                                 <div class="input-group">
@@ -182,25 +182,25 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                             </div>
                                         </div>
 
-                                        <div class="form-group row px-md-3">
+                                        <div class="form-group row ">
                                             <label class="col col-md-3 col-form-label text-right" for="inputStudNum">Студентський</label>
                                             <div class="col col-md-3">
                                                 <input name="stud_num" class="form-control disabled" type="text" id="inputStudNum" value="<?= $studentid_num ?>" readonly>
                                             </div>
                                         </div>
-                                        <div class="form-group row px-md-3">
+                                        <div class="form-group row">
                                             <label class="col col-md-3 col-form-label text-right" for="inputReg">Дата реєстрації</label>
                                             <div class="col col-md-3">
                                                 <input name="status" class="form-control" type="text" id="inputReg" value="<?= show_date($user['reg_date']) ?>" readonly>
                                             </div>
                                         </div>
-                                        <div class="form-group row px-md-3">
+                                        <div class="form-group row">
                                             <label class="col col-md-3 col-form-label text-right" for="inputStudNum">Статус профілю</label>
                                             <div class="col col-md-3">
                                                 <input name="status" class="form-control" type="text" value="<?= $user_status ?>" readonly>
                                             </div>
                                         </div>
-                                        <div class="form-group row px-md-3">
+                                        <div class="form-group row">
                                             <?php if ($user['banned_to']) : ?>
                                                 <label class="col col-md-3 col-form-label text-right" for="inputBan">Забанено до</label>
                                                 <div class="col col-md-3">
