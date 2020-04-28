@@ -25,14 +25,21 @@
 
                             <label for="inputPassword" class="sr-only">Пароль</label>
                             <input type="password" id="inputPassword" name="password" class="form-control bg-light mb-2" placeholder="Пароль" required>
+                            
+                            <div class="small text-left mb-3">
+                                <a href="restore-password.php">Забули пароль?</a>
+                            </div>
+                            
+                            <button class="btn my-btn-blue btn-block shadow-sm" type="submit" name="do_login">Вхід</button>
 
-                            <div class="checkbox mb-2">
-                                <input type="checkbox" value="remember-me" name="remember" style="color: black;">
-                                <label for="remember" style="color: black;">Запам'ятати мене</label>
+                            <div class="checkbox text-left mt-2">
+                                <input type="checkbox" value="remember-me" name="remember" disabled>
+                                <label for="remember" style="color: black;" class="small">Запам'ятати мене</label>
                             </div>
 
-                            <button class="btn btn-lg my-btn-blue btn-block shadow-sm" type="submit" name="do_login">Вхід</button>
-                            <p class="mt-3 mb-0" style="color: black;">Забули пароль? <a href="../restore-password.php">Відновити</a></p>
+                            <div class="small text-left mt-2 d-block d-md-none">
+                                <a href="registration.php">Створити новий акаунт</a>
+                            </div>
                         </form>
                     </div>
                 </div>

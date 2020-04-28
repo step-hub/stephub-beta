@@ -478,4 +478,8 @@ a.navbar-brand:hover {
         border: 0 !important;
         border-radius: 0 !important;
     }
+    .btn-xs-block {
+        width: 100%;
+        display: block;
+    }
 }
