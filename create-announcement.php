@@ -92,7 +92,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
 
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
-    
+
     <!-- Errors -->
     <?php include_once "templates/errors.php"; ?>
 
@@ -116,14 +116,17 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                     <textarea name="details" cols="30" rows="10" class="form-control" value="<?= @$data['details'] ?>" placeholder="Деталі оголошення"></textarea>
                 </div>
                 <div class="card-footer p-2 p-md-3">
-                    <div class="row px-3 pt-1">
-                        <!-- Upload file -->
-                        <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable shadow-sm">
-                            <i class="material-icons mr-2">attach_file</i>Прикріпити файл
-                            <input id="fileUpload" type="file" name="userfile">
-                        </label>
-                        <button type="submit" name="do_post" class="btn my-btn-dark shadow-sm mb-auto ml-sm-auto">Сворити оголошення</button>
+                    <div class="container">
+                        <div class="row">
+                            <!-- Upload file -->
+                            <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable shadow-sm">
+                                <i class="material-icons mr-2">attach_file</i>Прикріпити файл
+                                <input id="fileUpload" type="file" name="userfile">
+                            </label>
+                            <button type="submit" name="do_post" class="btn my-btn-dark shadow-sm mb-auto ml-sm-auto">Сворити оголошення</button>
+                        </div>
                     </div>
+
                 </div>
             </form>
         </div>
