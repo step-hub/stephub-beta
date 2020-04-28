@@ -15,7 +15,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
     $repeat_password_error = null;
 
     // tabs
-    if(!isset($_GET['tab'])) {
+    if (!isset($_GET['tab'])) {
         $tab = "profile";
     } else {
         $tab = $_GET['tab'];
@@ -49,7 +49,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
             update_email($user['id'], $newEmail);
             update_telegram($user['id'], $newTelegram);
 
-            header("location: profile.php#".$tab);
+            header("location: profile.php#" . $tab);
         }
     }
 
@@ -72,7 +72,6 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 } else {
                     header("location: profile.php#password");
                     $repeat_password_error = "Your password doesn't match.";
-                    
                 }
             } else {
                 header("location: profile.php#password");
@@ -139,10 +138,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             <a class="nav-link my-1 active" id="profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="true"><i class="material-icons mr-2">account_circle</i>Мій профіль</a>
                             <a class="nav-link my-1" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false"><i class="material-icons mr-2">lock</i>Змінити пароль</a>
                             <a class="nav-link my-1" id="alerts-tab" data-toggle="pill" href="#alerts" role="tab" aria-controls="alerts" aria-selected="false"><i class="material-icons mr-2">notifications</i>Сповіщення<span class="badge badge-secondary ml-2">1</span></a>
-                            <a class="nav-link my-1" id="announcements-tab" data-toggle="pill" href="#announcements" role="tab" aria-controls="announcements" aria-selected="false"><i class="material-icons mr-2">list</i>Мої оголошення<?php
-                                                                                                                                                                                                                        if($user_announcements){
-                                                                                                                                                                                                                            echo '<span class="badge badge-secondary ml-2">' . count($user_announcements) . '</span>';
-                                                                                                                                                                                                                        } ?></a>
+                            <a class="nav-link my-1" id="announcements-tab" data-toggle="pill" href="#announcements" role="tab" aria-controls="announcements" aria-selected="false"><i class="material-icons mr-2">list</i>Мої оголошення<?= ($user_announcements) ? "<span class='badge badge-secondary ml-2'>" . count($user_announcements) . "</span>" : "" ?></a>
                             <a class="nav-link my-1" id="delete-tab" data-toggle="pill" href="#delete" role="tab" aria-controls="delete" aria-selected="false"><i class="material-icons mr-2">cancel</i>Видалити акаунт</a>
                         </div>
                     </div>
@@ -155,101 +151,105 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <div class="card-body px-2 px-md-3 py-4 py-md-3">
                         <div class="tab-content" id="v-pills-tabContent">
 
-                            <div class="tab-pane fade <?= ($tab == "profile")? "active show" : "" ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <form id="form-update-profile" class="form" action="profile.php" method="POST">
-                                    <div class="form-group row px-md-3">
-                                        <label class="col-md-3 col-form-label text-left text-md-right" for="inputLogin">Ваше ім'я</label>
-                                        <div class="col-md-9">
-                                            <input name="login" class="form-control" type="text" id="inputLogin" value="<?= $user['login'] ?>" required aria-describedby="loginHelp" readonly>
+                            <div class="tab-pane fade <?= ($tab == "profile") ? "active show" : "" ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="container">
+                                    <form id="form-update-profile" class="form" action="profile.php" method="POST">
+                                        <div class="form-group row">
+                                            <label class="col-12 col-md-3 col-form-label text-left text-md-right" for="inputLogin">Ваше ім'я</label>
+                                            <div class="col-12 col-md-9">
+                                                <input name="login" class="form-control" type="text" id="inputLogin" value="<?= $user['login'] ?>" required aria-describedby="loginHelp" readonly>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row px-md-3">
-                                        <label class="col-md-3 col-form-label text-left text-md-right" for="inputEmail">Ел. пошта</label>
-                                        <div class="col-md-9">
-                                            <input name="email" class="form-control" type="email" id="inputEmail" value="<?= $user['email'] ?>" placeholder="example@gmail.com" required>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-md-3 col-form-label text-left text-md-right" for="inputEmail">Ел. пошта</label>
+                                            <div class="col-12 col-md-9">
+                                                <input name="email" class="form-control" type="email" id="inputEmail" value="<?= $user['email'] ?>" placeholder="example@gmail.com" required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row px-md-3">
-                                        <label class="col-md-3 col-form-label text-left text-md-right" for="inputTelegram">Телеграм</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text">@</div>
+                                        <div class="form-group row px-md-3">
+                                            <label class="col-12 col-md-3 col-form-label text-left text-md-right" for="inputTelegram">Телеграм</label>
+                                            <div class="col-12 col-md-9">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">@</div>
+                                                    </div>
+                                                    <input name="telegram" class="form-control" type="text" id="inputTelegram" value="<?= $user['telegram_username'] ?>" placeholder="example" required>
                                                 </div>
-                                                <input name="telegram" class="form-control" type="text" id="inputTelegram" value="<?= $user['telegram_username'] ?>" placeholder="example" required>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group row px-md-3">
-                                        <label class="col col-md-3 col-form-label text-right" for="inputStudNum">Студентський</label>
-                                        <div class="col col-md-3">
-                                            <input name="stud_num" class="form-control disabled" type="text" id="inputStudNum" value="<?= $studentid_num ?>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row px-md-3">
-                                        <label class="col col-md-3 col-form-label text-right" for="inputReg">Дата реєстрації</label>
-                                        <div class="col col-md-3">
-                                            <input name="status" class="form-control" type="text" id="inputReg" value="<?= show_date($user['reg_date']) ?>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row px-md-3">
-                                        <label class="col col-md-3 col-form-label text-right" for="inputStudNum">Статус профілю</label>
-                                        <div class="col col-md-3">
-                                            <input name="status" class="form-control" type="text" value="<?= $user_status ?>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row px-md-3">
-                                        <?php if ($user['banned_to']) : ?>
-                                            <label class="col col-md-3 col-form-label text-right" for="inputBan">Забанено до</label>
+                                        <div class="form-group row px-md-3">
+                                            <label class="col col-md-3 col-form-label text-right" for="inputStudNum">Студентський</label>
                                             <div class="col col-md-3">
-                                                <input name="status" class="form-control" type="text" id="inputBan" value="<?= show_date($user['banned_to']) ?>" readonly>
+                                                <input name="stud_num" class="form-control disabled" type="text" id="inputStudNum" value="<?= $studentid_num ?>" readonly>
                                             </div>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <div class="row justify-content-center">
-                                        <a type="button" class="btn my-btn-blue mx-3 mb-3" data-toggle="modal" data-target="#updateModal">Зберегти зміни</a>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <div class="tab-pane fade <?= ($tab == "password")? "active show" : "" ?>" id="password" role="tabpanel" aria-labelledby="password-tab">
-                                <form class="form" action="profile.php" method="post">
-                                    <div class="form-group row px-md-3">
-                                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPassword">Старий пароль</label>
-                                        <div class="col-sm-9">
-                                            <input name="password_old" class="form-control" type="password" id="inputPasswordOld" placeholder="Введіть ваш пароль" required aria-describedby="passHelp1">
-                                            <small id="passHelp1" class="form-text text-danger"><?= $old_password_error ?></small>
                                         </div>
-                                    </div>
-                                    <div class="form-group row px-md-3">
-                                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPassword">Новий пароль</label>
-                                        <div class="col-sm-9">
-                                            <input name="password_new" class="form-control" type="password" id="inputPasswordNew" placeholder="Введіть новий пароль" required aria-describedby="passHelp2">
-                                            <?php if ($new_password_error) : ?>
-                                                <small id="passHelp1" class="form-text text-danger"><?= $new_password_error ?></small>
-                                            <?php else : ?>
-                                                <small id="passHelp2" class="form-text text-muted">
-                                                    Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
-                                                </small>
+                                        <div class="form-group row px-md-3">
+                                            <label class="col col-md-3 col-form-label text-right" for="inputReg">Дата реєстрації</label>
+                                            <div class="col col-md-3">
+                                                <input name="status" class="form-control" type="text" id="inputReg" value="<?= show_date($user['reg_date']) ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-md-3">
+                                            <label class="col col-md-3 col-form-label text-right" for="inputStudNum">Статус профілю</label>
+                                            <div class="col col-md-3">
+                                                <input name="status" class="form-control" type="text" value="<?= $user_status ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-md-3">
+                                            <?php if ($user['banned_to']) : ?>
+                                                <label class="col col-md-3 col-form-label text-right" for="inputBan">Забанено до</label>
+                                                <div class="col col-md-3">
+                                                    <input name="status" class="form-control" type="text" id="inputBan" value="<?= show_date($user['banned_to']) ?>" readonly>
+                                                </div>
                                             <?php endif; ?>
                                         </div>
-                                    </div>
-                                    <div class="form-group row px-md-3">
-                                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPasswordConfirm">Підтвердження</label>
-                                        <div class="col-sm-9">
-                                            <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть новий пароль" required aria-describedby="passHelp3">
-                                            <small id="passHelp3" class="form-text text-danger"><?= $repeat_password_error ?></small>
+
+                                        <div class="row justify-content-center">
+                                            <a type="button" class="btn my-btn-blue mx-3 mb-3" data-toggle="modal" data-target="#updateModal">Зберегти зміни</a>
                                         </div>
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <button class="btn my-btn-blue float-right mr-3 mt-3 mb-3" type="submit" name="do_change_pass">Змінити пароль</button>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
 
-                            <div class="tab-pane fade <?= ($tab == "alerts")? "active show" : "" ?>" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
+                            <div class="tab-pane fade <?= ($tab == "password") ? "active show" : "" ?>" id="password" role="tabpanel" aria-labelledby="password-tab">
+                                <div class="container">
+                                    <form class="form" action="profile.php" method="post">
+                                        <div class="form-group row px-md-3">
+                                            <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPassword">Старий пароль</label>
+                                            <div class="col-sm-9">
+                                                <input name="password_old" class="form-control" type="password" id="inputPasswordOld" placeholder="Введіть ваш пароль" required aria-describedby="passHelp1">
+                                                <small id="passHelp1" class="form-text text-danger"><?= $old_password_error ?></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-md-3">
+                                            <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPassword">Новий пароль</label>
+                                            <div class="col-sm-9">
+                                                <input name="password_new" class="form-control" type="password" id="inputPasswordNew" placeholder="Введіть новий пароль" required aria-describedby="passHelp2">
+                                                <?php if ($new_password_error) : ?>
+                                                    <small id="passHelp1" class="form-text text-danger"><?= $new_password_error ?></small>
+                                                <?php else : ?>
+                                                    <small id="passHelp2" class="form-text text-muted">
+                                                        Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
+                                                    </small>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row px-md-3">
+                                            <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPasswordConfirm">Підтвердження</label>
+                                            <div class="col-sm-9">
+                                                <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть новий пароль" required aria-describedby="passHelp3">
+                                                <small id="passHelp3" class="form-text text-danger"><?= $repeat_password_error ?></small>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <button class="btn my-btn-blue float-right mr-3 mt-3 mb-3" type="submit" name="do_change_pass">Змінити пароль</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade <?= ($tab == "alerts") ? "active show" : "" ?>" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
                                 <div class="container text-center">
                                     <div class="row">
                                         <div class="col px-0 px-md-3">
@@ -261,7 +261,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade <?= ($tab == "announcements")? "active show" : "" ?>" id="announcements" role="tabpanel" aria-labelledby="announcements-tab">
+                            <div class="tab-pane fade <?= ($tab == "announcements") ? "active show" : "" ?>" id="announcements" role="tabpanel" aria-labelledby="announcements-tab">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col px-0 px-md-3">
@@ -294,7 +294,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade <?= ($tab == "delete")? "active show" : "" ?>" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+                            <div class="tab-pane fade <?= ($tab == "delete") ? "active show" : "" ?>" id="delete" role="tabpanel" aria-labelledby="delete-tab">
                                 <div class="container px-0 px-md-3 text-center">
                                     <h4 class="mb-4">Видалення облікового запису StepHub</h4>
                                     <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
@@ -358,6 +358,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
 
     <!-- Main sctipt -->
     <script src="js/script.js"></script>
+    <!-- Back to top button -->
+    <script src="js/top.js"></script>
     <!-- Enable link to tab -->
     <script src="js/profile.js"></script>
 </body>
