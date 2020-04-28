@@ -89,7 +89,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
         }
 
         if (isset($data['do_delete_ann'])) {
-            $path = 'uploads/'.$announcement['id'].'/';
+            $path = 'uploads/' . $announcement['id'] . '/';
             delete_files($path);
             R::trash($announcement);
             header("location: index.php");
@@ -145,7 +145,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
         }
 
         if (isset($data['do_unpin_file'])) {
-            $path = 'uploads/'.$announcement['id'].'/';
+            $path = 'uploads/' . $announcement['id'] . '/';
             delete_files($path);
             $announcement['file'] = null;
             R::store($announcement);
@@ -242,38 +242,46 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         <!-- Announcement -->
                         <?php if (isset($data['do_edit_ann'])) : ?>
                             <!-- Edit Announcement -->
-                            <div class="card announcement shadow">
-                                <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group" enctype="multipart/form-data">
-                                    <div class="card-header diagonal-gradient-gray-light my-color-dark border-bottom-0">
+                            <div class="card announcement shadow border-xs-0">
+                                <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0" enctype="multipart/form-data">
+                                    <div class="card-header diagonal-gradient-gray-light my-color-dark border-bottom-0 border-xs-0 px-2 px-md-3">
                                         <div class="container">
-                                            <div class="row pt-2 pb-2">
+                                            <div class="row pb-2 pt-sm-2">
                                                 <input type="text" name="title" value="<?= $announcement['title'] ?>" class="form-control form-control-lg my-bg-light my-color-dark" placeholder="Заголовок">
                                             </div>
                                             <div class="row pt-2 px-2">
-                                                <p class="card-text text-muted small mr-2"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
-                                                <p class="card-text text-muted small ml-2 mr-4"><i class="far fa-clock mr-2"></i><?= show_time($announcement['date']) ?></p>
+                                                <p class="card-text text-muted small mr-2 d-none d-md-inline"><i class="far fa-calendar mr-2"></i><?= show_date($announcement['date']) ?></p>
+                                                <p class="card-text text-muted small ml-2 mr-4 d-none d-md-inline"><i class="far fa-clock mr-2"></i><?= show_time($announcement['date']) ?></p>
                                                 <p class="card-text text-muted small ml-2"><i class="far fa-calendar-times mr-2"></i></p>
                                                 <p class="card-text text-muted small mb-2 mr-0"><input type="date" name="deadline" value="<?= date("Y-m-d", $announcement['deadline']) ?>" class="form-control form-control-sm my-bg-light text-muted"></p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body p-2 p-md-3">
                                         <textarea name="details" cols="30" rows="10" class="form-control"><?= $announcement['details'] ?></textarea>
                                     </div>
                                     <?php if (isset($announcement['file'])) : ?>
-                                        <div class="card-footer">
-                                            <div class="row pt-2">
-                                                <button class="btn my-btn-red shadow-sm ml-3" type="submit" name="do_unpin_file"><i class="material-icons mr-2">cancel</i>Відкріпити файл</button>
-                                                <p class="ml-2 my-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                        <div class="card-footer p-2 p-md-3">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <button class="btn my-btn-red shadow-sm" type="submit" name="do_unpin_file"><i class="material-icons mr-2">cancel</i>Відкріпити файл</button>
+                                                    <p class="ml-2 my-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                                </div>
                                             </div>
+
                                         </div>
                                     <?php else : ?>
-                                        <div class="card-footer">
-                                            <!-- Upload file -->
-                                            <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable shadow-sm">
-                                                <i class="material-icons mr-2">attach_file</i>Прикріпити файл
-                                                <input id="fileUpload" type="file" name="userfile">
-                                            </label>
+                                        <div class="card-footer p-2 p-md-3">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <!-- Upload file -->
+                                                    <label for="fileUpload" class="file-upload btn my-btn-blue mb-0 clickable shadow-sm">
+                                                        <i class="material-icons mr-2">attach_file</i>Прикріпити файл
+                                                        <input id="fileUpload" type="file" name="userfile">
+                                                    </label>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     <?php endif; ?>
                                 </form>
@@ -284,8 +292,8 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                                         echo 'border-danger';
                                                                     } ?>">
                                 <div class="card-header announcement-block-header my-color-dark diagonal-gradient-gray-light px-2 px-md-3 <?php if ($announcement['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
-                                                                                                                                    echo 'diagonal-gradient-red-light';
-                                                                                                                                } ?>">
+                                                                                                                                                echo 'diagonal-gradient-red-light';
+                                                                                                                                            } ?>">
                                     <div class="container">
                                         <div class="row pt-2 pb-2">
                                             <div class="col-md-10">
