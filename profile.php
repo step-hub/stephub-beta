@@ -61,24 +61,28 @@ if (array_key_exists('logged_user', $_SESSION)) {
         $conPass = $data['password_confirmation'];
 
         if (password_verify($oldPass, $curPass)) {
-            if ($newPass != null) {
-                if ($newPass == $conPass) {
-                    $pass = password_hash($newPass, PASSWORD_DEFAULT);
-                    console_log($pass);
-                    update_password($user['id'], $pass);
-                    $user['password'] = $pass;
-
-                    header("location: profile.php#password");
-                } else {
-                    header("location: profile.php#password");
-                    $repeat_password_error = "Your password doesn't match.";
-                }
-            } else {
+            if ($newPass == '') {
                 header("location: profile.php#password");
-                $new_password_error = "Empty password. Please enter your new password.";
+                $new_password_error = 'Поле нового паролю не може бути порожнім';
+            }
+            if (!empty(preg_match('/[^a-zA-Z0-9]/', $newPass)) or strlen($newPass) < 8
+                or strlen($newPass) > 20 or empty(preg_match("/[a-z]/", $newPass))
+                or empty(preg_match("/[A-Z]/", $newPass)) or empty(preg_match("/[0-9]/", $newPass))){
+                header("location: profile.php#password");
+                $new_password_error = 'Новий пароль не відповідає вимогам';
+            }
+            if ($newPass != $conPass) {
+                header("location: profile.php#password");
+                $repeat_password_error = "Підтвердження нового паролю не співпадає";
+            }
+            if (!($new_password_error or $repeat_password_error)) {
+                $pass = password_hash($newPass, PASSWORD_DEFAULT);
+                update_password($user['id'], $pass);
+                $user['password'] = $pass;
+                header("location: profile.php#password");
             }
         } else {
-            $old_password_error = "Wrong password!";
+            $old_password_error = "Неправильний пароль";
             header("location: profile.php#password");
         }
     }
