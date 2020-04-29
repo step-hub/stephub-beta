@@ -65,9 +65,11 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 header("location: profile.php#password");
                 $new_password_error = 'Поле нового паролю не може бути порожнім';
             }
-            if (!empty(preg_match('/[^a-zA-Z0-9]/', $newPass)) or strlen($newPass) < 8
+            if (
+                !empty(preg_match('/[^a-zA-Z0-9]/', $newPass)) or strlen($newPass) < 8
                 or strlen($newPass) > 20 or empty(preg_match("/[a-z]/", $newPass))
-                or empty(preg_match("/[A-Z]/", $newPass)) or empty(preg_match("/[0-9]/", $newPass))){
+                or empty(preg_match("/[A-Z]/", $newPass)) or empty(preg_match("/[0-9]/", $newPass))
+            ) {
                 header("location: profile.php#password");
                 $new_password_error = 'Новий пароль не відповідає вимогам';
             }
@@ -136,7 +138,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
         <div class="row pb-5">
             <div class="col-md-3 px-0 pl-md-3 pr-md-0">
 
-                <div class="card mt-md-5 profile-left-menu shadow border-xs-0">
+                <div class="card mt-md-5 profile-left-menu shadow-sm border-xs-0">
                     <div class="card-body diagonal-gradient-gray-light">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link my-1 active" id="profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="true"><i class="material-icons mr-2">account_circle</i>Мій профіль</a>
@@ -151,7 +153,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
             </div>
             <div class="col-md-9 px-0 pl-md-0 pr-md-3">
 
-                <div class="card mt-md-5 profile-right-menu shadow border-xs-0">
+                <div class="card mt-md-5 profile-right-menu shadow-sm border-xs-0">
                     <div class="card-body px-2 px-md-3 py-4 py-md-3">
                         <div class="tab-content" id="v-pills-tabContent">
 
@@ -210,7 +212,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         </div>
 
                                         <div class="row justify-content-center">
-                                            <a type="button" class="btn my-btn-blue mx-3 mb-3" data-toggle="modal" data-target="#updateModal">Зберегти зміни</a>
+                                            <a type="button" class="btn btn-xs-block my-btn-blue mx-3 mb-3" data-toggle="modal" data-target="#updateModal">Зберегти зміни</a>
                                         </div>
                                     </form>
                                 </div>
@@ -247,7 +249,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                             </div>
                                         </div>
                                         <div class="row justify-content-center">
-                                            <button class="btn my-btn-blue float-right mr-3 mt-3 mb-3" type="submit" name="do_change_pass">Змінити пароль</button>
+                                            <button class="btn btn-xs-block my-btn-blue float-right mx-3 mt-3 mb-3" type="submit" name="do_change_pass">Змінити пароль</button>
                                         </div>
                                     </form>
                                 </div>
@@ -257,7 +259,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <div class="container text-center">
                                     <div class="row">
                                         <div class="col px-0 px-md-3">
-                                            <div class="alert alert-warning shadow-sm mb-0" role="alert">
+                                            <div class="alert alert-warning mb-0" role="alert">
                                                 Функціонал сповіщень знаходиться на стадії розробки
                                             </div>
                                         </div>
@@ -272,7 +274,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                             <?php if ($user_announcements) :
                                                 foreach ($user_announcements as $announcement) : ?>
                                                     <div class="card text-left mb-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
-                                                        <div class="card-body shadow-sm p-2 p-md-3">
+                                                        <div class="card-body p-2 p-md-3">
                                                             <div class="row">
                                                                 <div class="col-md-8">
                                                                     <h5 class="card-title"><?= $announcement['title'] ?></h5>
@@ -290,7 +292,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                 <div class="container text-center">
                                                     <h4 class="mb-4">Не знайдено ваших оголошень</h4>
                                                     <p>Ваші розміщенні оголошення будуть відображатись тут. Хочете створити оголошення зараз?</p>
-                                                    <a class="btn btn-lg my-btn-dark shadow-sm mt-5" href="create-announcement.php"><i class="material-icons mr-2">post_add</i>Розмістити оголошення</a>
+                                                    <a class="btn btn-xs-block my-btn-dark mt-5" href="create-announcement.php"><i class="material-icons mr-2">post_add</i>Розмістити оголошення</a>
                                                 </div>
                                             <?php endif; ?>
                                         </div>
@@ -299,10 +301,14 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             </div>
 
                             <div class="tab-pane fade <?= ($tab == "delete") ? "active show" : "" ?>" id="delete" role="tabpanel" aria-labelledby="delete-tab">
-                                <div class="container px-0 px-md-3 text-center">
-                                    <h4 class="mb-4">Видалення облікового запису StepHub</h4>
-                                    <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
-                                    <button data-toggle="modal" data-target="#deleteModal" class="btn my-btn-red shadow-sm mt-5 mb-3">Видалити акаунт</button>
+                                <div class="container text-center">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 class="mb-4">Видалення облікового запису StepHub</h4>
+                                            <p>Видаливши ваш акаунт, ви втратите все ваші дані назавжди, відмінити цю дію не можливо.</p>
+                                            <button data-toggle="modal" data-target="#deleteModal" class="btn btn-xs-block my-btn-red mt-5 mb-3">Видалити акаунт</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

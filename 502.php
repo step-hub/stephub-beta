@@ -32,7 +32,7 @@
 
 <!-- Page Content -->
 <div class="container p-0 p-md-3 pt-md-5 ">
-    <div class="card not-found-parent diagonal-gradient-gray-light shadow border-xs-0">
+    <div class="card not-found-parent diagonal-gradient-gray-light shadow-sm border-xs-0">
         <div class="card-body text-center p-0 p-md-3">
             <div class="card not-found-child diagonal-gradient-gray-light border-xs-0">
                 <div class="card-body text-center my-color-dark py-5">

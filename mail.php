@@ -62,7 +62,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 
     <!-- Page Content -->
     <div class="container pt-5 d-none d-md-block">
-        <div class="card mt-0 shadow">
+        <div class="card mt-0 shadow-sm">
             <form action="mail.php" method="POST" class="form-group mb-0">
                 <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0">
                     <div class="container">
@@ -77,7 +77,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
                 </div>
                 <div class="card-footer p-3">
                     <div class="row px-3">
-                        <button type="submit" name="do_send" class="btn my-btn-dark shadow-sm ml-auto">Відправити</button>
+                        <button type="submit" name="do_send" class="btn my-btn-dark ml-auto">Відправити</button>
                     </div>
                 </div>
             </form>

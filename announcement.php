@@ -242,7 +242,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                         <!-- Announcement -->
                         <?php if (isset($data['do_edit_ann'])) : ?>
                             <!-- Edit Announcement -->
-                            <div class="card announcement shadow border-xs-0">
+                            <div class="card announcement shadow-sm border-xs-0">
                                 <form id="form_edit_ann" action="announcement.php?id=<?= $announcement['id'] ?>" method="post" class="form-group mb-0" enctype="multipart/form-data">
                                     <div class="card-header diagonal-gradient-gray-light my-color-dark border-bottom-0 border-xs-0 px-2 px-md-3">
                                         <div class="container">
@@ -264,7 +264,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         <div class="card-footer p-2 p-md-3">
                                             <div class="container">
                                                 <div class="row">
-                                                    <button class="btn my-btn-red shadow-sm" type="submit" name="do_unpin_file"><i class="material-icons mr-2">cancel</i>Відкріпити файл</button>
+                                                    <button class="btn my-btn-red" type="submit" name="do_unpin_file"><i class="material-icons mr-2">cancel</i>Відкріпити файл</button>
                                                     <p class="ml-2 my-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
                                                 </div>
                                             </div>
@@ -275,7 +275,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                             <div class="container">
                                                 <div class="row">
                                                     <!-- Upload file -->
-                                                    <label for="fileUpload" class="file-upload btn my-btn-blue mb-0 clickable shadow-sm">
+                                                    <label for="fileUpload" class="file-upload btn my-btn-blue mb-0 clickable">
                                                         <i class="material-icons mr-2">attach_file</i>Прикріпити файл
                                                         <input id="fileUpload" type="file" name="userfile">
                                                     </label>
@@ -288,7 +288,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                             </div><!-- /Edit Announcement -->
                         <?php else : ?>
                             <!-- Show Announcement -->
-                            <div class="card announcement shadow <?php if ($announcement['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
+                            <div class="card announcement shadow-sm <?php if ($announcement['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
                                                                         echo 'border-danger';
                                                                     } ?>">
                                 <div class="card-header announcement-block-header my-color-dark diagonal-gradient-gray-light px-2 px-md-3 <?php if ($announcement['complaint'] and ($user['user_status'] == 1 or $user['user_status'] == 2)) {
@@ -323,7 +323,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <?php if (isset($announcement['file'])) : ?>
                                     <div class="card-footer">
                                         <div class="row pt-2">
-                                            <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary shadow-sm ml-3" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
+                                            <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary ml-3" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
                                             <p class="ml-3 ml-md-2 my-2 my-md-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
                                         </div>
                                     </div>
@@ -337,7 +337,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <?php if ($user['id'] == $announcement['user_id']) : ?>
                         <!-- Owner Menu -->
                         <div class="col-md-3 px-0 px-md-3">
-                            <div class="card border-xs-0 shadow">
+                            <div class="card border-xs-0 shadow-sm">
                                 <div class="card-body px-3 py-4 py-md-3">
                                     <?php if (isset($data['do_edit_ann'])) : ?>
                                         <h5 class="card-title">Редагувати</h5>
@@ -363,7 +363,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                     <?php elseif (!$announcement['help_user_id']) : ?>
                         <!-- Others Menu -->
                         <div class="col-md-3 px-0 px-md-3">
-                            <div class="card border-xs-0 shadow">
+                            <div class="card border-xs-0 shadow-sm">
                                 <div class="card-body px-3 py-4 py-md-3">
                                     <h5 class="card-title">Можеш допомогти?</h5>
                                     <form id="help" action="announcement.php?id=<?= $announcement['id'] ?>" method="post">
@@ -377,7 +377,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 <div class="row">
                     <div class="col-md-9 px-0 px-md-3">
                         <!-- Comments -->
-                        <div class="card shadow mt-4 mt-sm-5 border-xs-0">
+                        <div class="card shadow-sm mt-4 mt-sm-5 border-xs-0">
                             <div class="card-header p-2 p-sm-3 pt-4 pt-sm-3">
                                 <!-- Leave New Comment -->
                                 <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
@@ -391,7 +391,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                     <?php foreach ($ann_comments as $a) : ?>
                                         <!-- Comment 1st lvl -->
                                         <div class="anchor" id="comment<?= $a['id'] ?>">
-                                            <div class="card mt-3 bg-white shadow <?= ($a['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
+                                            <div class="card mt-3 bg-white shadow-sm <?= ($a['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
                                                 <div class="card-header py-1 border-bottom-0 diagonal-gradient-gray <?= ($a['complaint'] and ($user['user_status'] < 2)) ? 'diagonal-gradient-red-light' : "" ?>">
                                                     <div class="row">
                                                         <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($a['date']) ?></p>
@@ -506,7 +506,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                                 <div class="row justify-content-end anchor" id="comment<?= $c['id'] ?>">
                                                     <div class="col-1 col-md-2"></div>
                                                     <div class="col-11 col-md-10">
-                                                        <div class="card mt-2 bg-white shadow <?= ($c['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
+                                                        <div class="card mt-2 bg-white shadow-sm <?= ($c['complaint'] and ($user['user_status'] < 3)) ? 'border-danger' : "" ?>">
                                                             <div class="card-header pb-0 pt-1 border-bottom-0 diagonal-gradient-gray <?= ($c['complaint'] and ($user['user_status'] < 3)) ? 'diagonal-gradient-red-light' : "" ?>">
                                                                 <div class="row">
                                                                     <p class="card-text text-muted small mx-2 mb-0"><i class="far fa-calendar mr-2"></i><?= show_date($c['date']) ?></p>
@@ -612,7 +612,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                 </div>
             <?php else : ?>
                 <!-- Frozen Announcement -->
-                <div class="card not-found-parent diagonal-gradient-gray-light shadow border-xs-0">
+                <div class="card not-found-parent diagonal-gradient-gray-light shadow-sm border-xs-0">
                     <div class="card-body text-center p-0 p-md-3">
                         <div class="card not-found-child diagonal-gradient-gray-light border-xs-0">
                             <div class="card-body text-center my-color-dark py-5">
@@ -626,7 +626,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
             <?php endif; ?>
         <?php else : ?>
             <!-- Not Found Announcement -->
-            <div class="card not-found-parent diagonal-gradient-gray-light shadow border-xs-0">
+            <div class="card not-found-parent diagonal-gradient-gray-light shadow-sm border-xs-0">
                 <div class="card-body text-center p-0 p-md-3">
                     <div class="card not-found-child diagonal-gradient-gray-light border-xs-0">
                         <div class="card-body text-center my-color-dark py-5">

@@ -98,7 +98,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
 
     <!-- Page Content -->
     <div class="container pt-0 pt-md-5 px-0 px-md-3">
-        <div class="card mt-0 shadow border-xs-0">
+        <div class="card mt-0 shadow-sm border-xs-0">
             <form enctype="multipart/form-data" class="form-group mb-0" action="create-announcement.php" method="POST">
                 <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0 border-xs-0 px-2 px-md-3">
                     <div class="container">
@@ -119,11 +119,11 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                     <div class="container">
                         <div class="row">
                             <!-- Upload file -->
-                            <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable shadow-sm">
+                            <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable">
                                 <i class="material-icons mr-2">attach_file</i>Прикріпити файл
                                 <input id="fileUpload" type="file" name="userfile">
                             </label>
-                            <button type="submit" name="do_post" class="btn my-btn-dark shadow-sm mb-auto ml-sm-auto">Сворити оголошення</button>
+                            <button type="submit" name="do_post" class="btn my-btn-dark mb-auto ml-sm-auto">Сворити оголошення</button>
                         </div>
                     </div>
 

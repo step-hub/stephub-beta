@@ -106,7 +106,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                                     <option value="30" <?php if (isset($data['q']) and (isset($data['q']) and $data['q'] == '30')) echo "selected" ?>>30</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-sm btn-outline-secondary shadow-sm"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
                         </form>
                     </div>
                     <div class="card border-xs-0">
@@ -114,7 +114,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                             <?php if ($announcements) :
                                 foreach ($announcements as $announcement) : ?>
                                     <div class="card text-left mb-2 mb-md-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
-                                        <div class="card-body shadow-sm p-2 p-md-3">
+                                        <div class="card-body p-2 p-md-3">
                                             <h5 class="card-title"><?= $announcement['title'] ?></h5>
                                             <p class="card-text mb-4"><?= $announcement['details'] ?></p>
                                             <div class="row">
