@@ -80,31 +80,51 @@ if (isset($data_post['do_restore'])) {
     <!-- Errors -->
     <?php include_once "templates/errors.php"; ?>
 
-    <div class="container pt-0 pt-md-5 px-0 px-md-3">
-        <div class="card shadow-sm border-xs-0">
-            <div class="card-header">
-                <i class="fas fa-key mr-2"></i>Відновелення паролю
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col px-3 px-md-5">
+    <!-- Page Content -->
+    <div class="container pt-0 pt-md-5">
+        <div class="row justify-content-md-center">
+            <div class="col col-md-6 px-0 px-md-3">
+                <div class="card shadow-sm border-xs-0">
+                    <div class="card-header">
+                        <i class="fas fa-key mr-2"></i>Відновелення паролю
+                    </div>
+                    <div class="card-body">
                         <?php if (isset($data_post['do_restore'])) : ?>
-                            <!--    Show message that password was restored  -->
+                            <!--  Show message that password was restored  -->
+                            <h1><i class="fas fa-check-circle display-2 text-success"></i></h1>
+                            <h3>Ваш пароль успішно змінено!</h3>
+                            <a href="index.php" class="btn btn-outline-success mt-5">На головну</a>
                         <?php elseif (empty($user_to_restore)) : ?>
-                            <form class="form-group" action="restore-password.php" method="POST">
+                            <!--  Send mail  -->
+                            <form class="form-group mb-0" action="restore-password.php" method="POST">
                                 <p>Будь ласка, введіть електронну адресу, яку ви використовували для входу на сайт.</p>
                                 <input type="email" id="email" name="email" class="form-control" placeholder="example@mail.com">
-                                <button class="btn btn-xs-block my-btn-blue shadow-sm mt-3 float-right" type="submit" name="do_send_token">Відправити</button>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 order-12 order-md-1 pt-3">
+                                        <a href="index.php" class="btn btn-xs-block btn-outline-secondary float-left"><i class="fas fa-chevron-left mr-2"></i>Назад</a>
+                                    </div>
+                                    <div class="col-12 col-md-6 order-1 order-md-12 pt-3">
+                                        <button class="btn btn-xs-block my-btn-blue float-right" type="submit" name="do_send_token">Відправити</button>
+                                    </div>
+                                </div>
                             </form>
                         <?php else : ?>
-                            <form class="form-group" action="restore-password.php" method="POST">
+                            <!--  Change password  -->
+                            <form class="form-group mb-0" action="restore-password.php" method="POST">
                                 <input type="hidden" value="<?= $user_to_restore['id'] ?>" name="user_id">
                                 <input type="password" id="password" name="password" class="form-control" placeholder="Новий пароль">
                                 <small id="passHelp" class="form-text text-muted">
                                     Ваш пароль має бути довжиною 8-20 символів, має містити цифри та літери, одна з яких велика, і не може містити пробіли, спеціальні символи, або емоджі.
                                 </small>
                                 <input type="password" id="password-confirmation" name="password_confirmation" class="form-control mt-3" placeholder="Підтвердження паролю">
-                                <button class="btn btn-xs-block my-btn-blue shadow-sm mt-3 float-right" type="submit" name="do_restore">Відновити пароль</button>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 order-12 order-md-1 pt-3">
+                                        <a href="index.php" class="btn btn-xs-block btn-outline-secondary float-left"><i class="fas fa-chevron-left mr-2"></i>Назад</a>
+                                    </div>
+                                    <div class="col-12 col-md-6 order-1 order-md-12 pt-3">
+                                        <button class="btn btn-xs-block my-btn-blue float-right" type="submit" name="do_restore">Відновити пароль</button>
+                                    </div>
+                                </div>
                             </form>
                         <?php endif; ?>
                     </div>

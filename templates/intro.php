@@ -18,7 +18,7 @@
             </div>
             <div class="col-sm-12 col-md-12 col-lg-4 px-sm-5 px-lg-0 px-0 px-lg-4 pt-2 pb-0 pb-md-4">
                 <div class="card mx-xs-0 mx-sm-5 mx-lg-0 border-xs-0">
-                    <div class="card-body shadow">
+                    <div class="card-body shadow-sm">
                         <form class="form-login" action="index.php" method="POST">
                             <label for="inputLogin" class="sr-only">Ім'я користувача</label>
                             <input type="text" id="inputLogin" name="login" value="<?= @$data['login']; ?>" class="form-control bg-light mb-2" placeholder="Логін або email" required autofocus>

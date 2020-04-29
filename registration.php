@@ -214,7 +214,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
             </div>
             <div class="col col-lg-5 mt-3 mt-lg-0 d-none d-sm-block">
 
-                <div class="accordion shadow-sm" id="idAccordion">
+                <div class="accordion" id="idAccordion">
                     <div class="card ">
                         <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
