@@ -466,6 +466,16 @@ a.navbar-brand:hover {
 
 /* responsive */
 
+textarea,
+input.text,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+.input-checkbox {
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
 @media (max-width: 768px) {
     .border-sm-0 {
         border: 0 !important;
