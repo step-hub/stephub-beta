@@ -460,5 +460,36 @@ a.navbar-brand:hover {
 }
 
 .announcement-card:hover {
-    box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .25)!important
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .15)!important
+}
+
+
+/* responsive */
+
+textarea,
+input.text,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+.input-checkbox {
+    -webkit-appearance: none;
+    border-radius: .25rem;
+}
+
+@media (max-width: 768px) {
+    .border-sm-0 {
+        border: 0 !important;
+        border-radius: 0 !important;
+    }
+}
+
+@media (max-width: 425px) {
+    .border-xs-0 {
+        border: 0 !important;
+        border-radius: 0 !important;
+    }
+    .btn-xs-block {
+        width: 100%;
+        display: block;
+    }
 }

@@ -31,7 +31,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
             R::store($announcement);
 
             // Attach file
-            if (isset($_FILES['userfile'])) {
+            if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
                 $location = get_upload_path($announcement->id);
                 console_log($location);
 
@@ -93,25 +93,16 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
+    <!-- Errors -->
+    <?php include_once "templates/errors.php"; ?>
+
     <!-- Page Content -->
-    <div class="container pt-5">
-        <?php if ($errors) : ?>
-            <div class="row">
-                <div class="col">
-                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
-                        <?= @$errors[0]; ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-        <div class="card mt-0 shadow">
+    <div class="container pt-0 pt-md-5 px-0 px-md-3">
+        <div class="card mt-0 shadow-sm border-xs-0">
             <form enctype="multipart/form-data" class="form-group mb-0" action="create-announcement.php" method="POST">
-                <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0">
+                <div class="card-header diagonal-gradient-gray my-color-dark border-bottom-0 border-xs-0 px-2 px-md-3">
                     <div class="container">
-                        <div class="row pt-2 pb-2">
+                        <div class="row pb-2 pt-sm-2">
                             <input type="text" name="title" value="<?= @$data['title'] ?>" class="form-control form-control-lg my-bg-light my-color-dark" placeholder="Заголовок">
                         </div>
                         <div class="row pt-2 px-2">
@@ -121,18 +112,21 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <textarea name="details" cols="30" rows="10" class="form-control mb-2" value="<?= @$data['details'] ?>" placeholder="Деталі оголошення"></textarea>
+                <div class="card-body p-2 p-md-3">
+                    <textarea name="details" cols="30" rows="10" class="form-control" value="<?= @$data['details'] ?>" placeholder="Деталі оголошення"></textarea>
                 </div>
-                <div class="card-footer">
-                    <div class="row px-3 pt-1">
-                        <!-- Upload file -->
-                        <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable shadow-sm">
-                            <i class="material-icons mr-2">attach_file</i>Прикріпити файл
-                            <input id="fileUpload" type="file" name="userfile">
-                        </label>
-                        <button type="submit" name="do_post" class="btn my-btn-dark shadow-sm mb-auto ml-auto">Сворити оголошення</button>
+                <div class="card-footer p-2 p-md-3">
+                    <div class="container">
+                        <div class="row">
+                            <!-- Upload file -->
+                            <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable">
+                                <i class="material-icons mr-2">attach_file</i>Прикріпити файл
+                                <input id="fileUpload" type="file" name="userfile">
+                            </label>
+                            <button type="submit" name="do_post" class="btn my-btn-dark mb-auto ml-sm-auto">Сворити оголошення</button>
+                        </div>
                     </div>
+
                 </div>
             </form>
         </div>

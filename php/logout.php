@@ -1,6 +1,10 @@
 <?php
 require_once "../vendor/redbeanphp/rb-mysql.php";
-R::setup('mysql:host=den1.mysql5.gear.host;dbname=stephub', 'stephub', 'Px475-2v?U41');
+require "functions.php";
+
+$db = get_db_connection();
+R::setup("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'], $db['username'], $db['password']);
+
 session_start();
 
 $user = $_SESSION['logged_user'];

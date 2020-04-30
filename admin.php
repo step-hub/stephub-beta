@@ -38,7 +38,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     foreach (array_keys($data_get) as $key) {
         if ($key != 'page') {
             $request .= $key . '=' . $data_get[$key];
-            if (array_key_last($data_get) != $key)
+            if (key(array_slice($data_get, -1, 1, true)) != $key)
                 $request .= '&';
         }
     }
@@ -62,6 +62,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
 
         foreach ($users as $u) {
             if (isset($data_post['do_delete_user' . $u['id']])) {
+                mail($u['email'], 'Deleted account', 'Your account was deleted', 'From: stephub.com@gmail.com');
                 R::trash($u);
                 header("location: admin.php?" . $request);
             }
@@ -192,7 +193,7 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
     <?php include_once 'templates/navbar.php'; ?>
 
     <!-- Page Content -->
-    <div class="container-fluid">
+    <div class="container-fluid d-none d-md-block">
         <div class="row mt-1 mb-0 mx-1 ">
             <div class="col-md-4">
                 <div class="text-left">
@@ -504,6 +505,15 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']->use
             </div>
         <?php endif; ?>
     </div>
+
+    <!-- Mobile Does not Suppported -->
+    <div class="container-fluid d-md-none p-3">
+        <div class="alert alert-danger shadow-sm" role="alert">
+            <p>Сторінка Адміністратора не доступна в мобільній версії сайту.</p>
+            <a href="index.php"> Повернутись на головну сторінку</a>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

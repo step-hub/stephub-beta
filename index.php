@@ -15,7 +15,7 @@ $request = '';
 foreach (array_keys($data) as $key) {
     if ($key != 'page') {
         $request .= $key . '=' . $data[$key];
-        if (array_key_last($data) != $key)
+        if (key(array_slice($data, -1, 1, true)) != $key)
             $request .= '&';
     }
 }
@@ -69,9 +69,11 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
 
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
-
+    
     <!-- Toasts -->
-    <?php include_once 'templates/toasts.php'; ?>
+    <?php if (isset($data['activate']) and $data['activate'] == 'true') {
+        include_once 'templates/toasts.php';
+    }; ?>
 
     <!-- Header-->
     <?php if (!array_key_exists('logged_user', $_SESSION)) :
@@ -80,11 +82,11 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
         include_once 'templates/header.php'; ?>
 
         <!-- Page Content -->
-        <div class="container">
-            <div class="row mx-5">
-                <div class="col">
-                    <div class="row my-3 mx-0">
-                        <form class="form-inline small float-right ml-auto" action="index.php" method="GET">
+        <div class="container px-0 px-md-3">
+            <div class="row mx-0 mx-md-5">
+                <div class="col px-0 px-md-2">
+                    <div class="row my-3 mx-0 d-none d-md-flex">
+                        <form class="form-inline small float-right ml-md-auto" action="index.php" method="GET">
                             <div class="form-group mr-2">
                                 <label for="sort_by">Сортування</label>
                                 <select class="form-control-sm ml-2" name="s" id="sort_by">
@@ -104,15 +106,15 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                                     <option value="30" <?php if (isset($data['q']) and (isset($data['q']) and $data['q'] == '30')) echo "selected" ?>>30</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-sm btn-outline-secondary shadow-sm"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fas fa-filter mr-2"></i>Фільтрувати</button>
                         </form>
                     </div>
-                    <div class="card">
-                        <div class="card-body shadow bg-light pb-0">
+                    <div class="card border-xs-0">
+                        <div class="card-body shadow bg-light pb-0 pt-4 pt-md-3 px-2 px-md-3">
                             <?php if ($announcements) :
                                 foreach ($announcements as $announcement) : ?>
-                                    <div class="card text-left mb-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
-                                        <div class="card-body shadow-sm">
+                                    <div class="card text-left mb-2 mb-md-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
+                                        <div class="card-body p-2 p-md-3">
                                             <h5 class="card-title"><?= $announcement['title'] ?></h5>
                                             <p class="card-text mb-4"><?= $announcement['details'] ?></p>
                                             <div class="row">
@@ -140,7 +142,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
 
                                 <!-- Pagination-->
                                 <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
+                                    <ul class="pagination justify-content-center mt-3 mt-md-0 mb-3">
                                         <?php if ($page == 1) : ?>
                                             <li class="page-item disabled">
                                                 <span class="page-link">&laquo;</span>
@@ -221,12 +223,12 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
     <script src="js/top.js"></script>
 
     <!-- Activate toasts -->
-    <?php if(isset($data['activate']) and $data['activate'] == 'true') {
-        script("$(window).on('load', function() {
+    <script>
+        $(window).on('load', function() {
             $('#activate').toast('show');
-        });");
-    } ?>
-
+        });
+    </script>
+    
 </body>
 
 </html>

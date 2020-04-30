@@ -7,29 +7,53 @@ if (!array_key_exists('logged_user', $_SESSION)) {
     $errors = array();
 
     if (isset($data['do_signup'])) {
-        if (trim($data['login']) == '') {
+        $login = trim($data['login']);
+        $email = trim($data['email']);
+        $stud_num_series = trim($data['stud_num_series']);
+        $stud_num_number = trim($data['stud_num_number']);
+        $telegram = trim($data['telegram']);
+        if ($login == '') {
             $errors[] = 'Поле логіну не можу бути порожнім';
         }
-        if (trim($data['email']) == '') {
+        if (!empty(preg_match('/[^a-zA-Z0-9]/', $login)) or strlen($login) < 3
+            or strlen($login) > 20){
+            $errors[] = 'Логін не відповідає вимогам';
+        }
+        if ($email == '') {
             $errors[] = 'Поле електронної адреси не можу бути порожнім';
         }
-        if (trim($data['stud_num_series']) == '') {
+        if (!empty(preg_match('/[^a-zA-Z0-9]/', $email))) {
+            $errors[] = 'Адреса електронної пошти не відповідає вимогам';
+        }
+        if ($stud_num_series == '') {
             $errors[] = 'Вкажіть серію студентсього квитка';
         }
-        if (trim($data['stud_num_number']) == '') {
+        if (empty(preg_match('/[А-Я][А-Я]/', $stud_num_series))) {
+            $errors[] = 'Серія студентського квитка не відповідає вимогам';
+        }
+        if ($stud_num_number == '') {
             $errors[] = 'Вкажіть номер студентсього квитка';
         }
-        if (trim($data['telegram']) == '') {
+        if (empty(preg_match('/\d{8}/', $stud_num_number))) {
+            $errors[] = 'Номер студентського квитка не відповідає вимогам';
+        }
+        if ($telegram == '') {
             $errors[] = 'Вкажіть логін телеграму';
+        }
+        if (!empty(preg_match('/[^a-zA-Z0-9]/', $telegram))) {
+            $errors[] = 'telegram нікнейм не відповідає вимогам';
         }
         if ($data['password'] == '') {
             $errors[] = 'Поле паролю не може бути порожнім';
         }
-
+        if (!empty(preg_match('/[^a-zA-Z0-9]/', $data['password'])) or strlen($data['password']) < 8
+            or strlen($data['password']) > 20 or empty(preg_match("/[a-z]/", $data['password']))
+            or empty(preg_match("/[A-Z]/", $data['password'])) or empty(preg_match("/[0-9]/", $data['password']))){
+            $errors[] = 'Пароль не відповідає вимогам';
+        }
         if ($data['password_confirmation'] != $data['password']) {
             $errors[] = "Ваші паролі не співпадають, спробуйте ввести ще раз";
         }
-
         if (count_users_by_login($data['login']) > 0) {
             $errors[] = "Користувач з логіном <strong>" . $data['login'] . "</strong> вже існує, введіть інше ім'я";
         }
@@ -63,8 +87,8 @@ if (!array_key_exists('logged_user', $_SESSION)) {
             $user->reg_date = time();
 
             R::store($user);
-            $link = 'http://localhost/stephub/php/activate.php?token=' . $user_token;
-            mail($data['email'], 'Account activation', 'Для активації перейдіть за посиланням ' . $link, 'From: stephub.com@gmail.com');
+            $link = 'https://stephub.000webhostapp.com/php/activate.php?token=' . $user_token;
+            mail($data['email'], 'Account activation', 'Activate account ' . $link, 'From: stephub.com@gmail.com');
             header('location: index.php');
         }
     }
@@ -88,7 +112,11 @@ if (!array_key_exists('logged_user', $_SESSION)) {
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link href="vendor/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">
+    
     <!--load all styles -->
     <link href="css/main.css" rel="stylesheet">
 </head>
@@ -103,23 +131,17 @@ if (!array_key_exists('logged_user', $_SESSION)) {
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
 
+    <!-- Errors -->
+    <?php include_once "templates/errors.php"; ?>
+
     <!-- Page Content -->
     <div class="container">
         <div class="row pt-3">
-            <div class="col-md-7">
-                <h1 class="h3 mb-3 font-weight-normal">Створити новий акаунт</h1>
-                <?php if ($errors) : ?>
-                    <div class="alert alert-danger alert-dismissible shadow-sm" role="alert">
-                        <?= @$errors[0]; ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                <?php endif; ?>
-
+            <div class="col-12 col-lg-7 px-0 px-md-3">
+                <h1 class="h3 mb-3 font-weight-normal d-none d-md-block">Створити новий акаунт</h1>
                 <form class="form" action="registration.php" method="POST">
-                    <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label text-right" for="inputLogin">Ім'я користувача</label>
+                    <div class="form-group row mb-0 mb-md-3 px-3">
+                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputLogin">Ім'я користувача</label>
                         <div class="col-sm-9">
                             <input name="login" class="form-control" type="text" id="inputLogin" value="<?= @$data['login']; ?>" placeholder="Ім'я користувача" required autofocus aria-describedby="loginHelp">
                             <small id="loginHelp" class="form-text text-muted">
@@ -127,19 +149,19 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                             </small>
                         </div>
                     </div>
-                    <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label text-right" for="inputEmail">Ел. пошта</label>
+                    <div class="form-group row mb-0 mb-md-3 px-3">
+                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputEmail">Ел. пошта</label>
                         <div class="col-sm-9">
                             <input name="email" class="form-control" type="email" id="inputEmail" value="<?= @$data['email']; ?>" placeholder="example@gmail.com" required>
                         </div>
                     </div>
-                    <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label text-right" for="inputStudNum">Студентський</label>
+                    <div class="form-group row mb-0 mb-md-3 px-3">
+                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputStudNum">Студентський</label>
                         <div class="input-group col-sm-5" id="inputStudNum">
                             <input name="stud_num_series" class="form-control col-2 px-2 mx-0" type="text" maxlength="2" value="<?= @$data['stud_num_ser']; ?>" placeholder="АБ" required>
                             <div class="input-group-text border-radius-0" style="border-right: 0; border-left: 0;">№</div>
                             <input name="stud_num_number" class="form-control ml-0" style="border-top-right-radius: .25rem; border-bottom-right-radius: .25rem" type="text" maxlength="8" value="<?= @$data['stud_num_num']; ?>" placeholder="12345678" required>
-                            
+
                             <button type="button" class="btn float-left myPopover ml-1 mr-2" data-toggle="popover" data-placement="right" title="Де взяти номер студентського квитка?" data-trigger="hower" data-content="Серію і номер студентського квитка можна дізнатися на лицевій стороні вашого студентського квитка">
                                 <i class="fa fa-info-circle text-muted"></i>
                             </button>
@@ -147,7 +169,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                         <div class="col-sm-4"></div>
                     </div>
                     <div class="form-group row px-3">
-                        <label class="col-sm-3 col-form-label text-right" for="inputTelegram">Телеграм</label>
+                        <label class="col-sm-3 col-form-label text-left text-md-right" for="inputTelegram">Телеграм</label>
                         <div class="col-sm-5">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -160,18 +182,18 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                     </div>
 
                     <div class="card">
-                        <div class="card-body my-bg-light px-0">
-                            <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label text-right" for="inputPassword">Пароль</label>
+                        <div class="card-body my-bg-light pt-0 pt-md-3 px-0">
+                            <div class="form-group row mb-0 mb-md-3 px-3">
+                                <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPassword">Пароль</label>
                                 <div class="col-sm-9">
                                     <input name="password" class="form-control" type="password" id="inputPassword" placeholder="Пароль" required aria-describedby="passHelp">
                                     <small id="passHelp" class="form-text text-muted">
-                                        Ваш пароль має бути довжиною 8-20 символів, може містити літери та цифри, і не може містити пробіли, спеціальні символи, або емоджі.
+                                        Ваш пароль має бути довжиною 8-20 символів, має містити цифри та літери, одна з яких велика, і не може містити пробіли, спеціальні символи, або емоджі.
                                     </small>
                                 </div>
                             </div>
-                            <div class="form-group row px-3">
-                                <label class="col-sm-3 col-form-label text-right" for="inputPasswordConfirm">Підтвердження</label>
+                            <div class="form-group row mb-0 mb-md-3 px-3">
+                                <label class="col-sm-3 col-form-label text-left text-md-right" for="inputPasswordConfirm">Підтвердження</label>
                                 <div class="col-sm-9">
                                     <input name="password_confirmation" class="form-control" type="password" id="inputPasswordConfirm" placeholder="Повторіть пароль" required>
                                 </div>
@@ -186,13 +208,13 @@ if (!array_key_exists('logged_user', $_SESSION)) {
                         </label>
                     </div>
 
-                    <small class="mt-2 mx-3 float-left">Вже маєте зареєстрований акаунт? <a href="index.php">Ввійти</a></small>
-                    <button class="btn my-btn-blue float-right" type="submit" name="do_signup" id="register">Зареєструвати</button>
+                    <small class="mt-2 mx-3 float-left d-none d-sm-inline">Вже маєте зареєстрований акаунт? <a href="index.php">Ввійти</a></small>
+                    <button class="btn my-btn-blue float-md-right mt-3 mt-md-0" type="submit" name="do_signup" id="register">Зареєструвати</button>
                 </form>
             </div>
-            <div class="col-md-5">
+            <div class="col col-lg-5 mt-3 mt-lg-0 d-none d-sm-block">
 
-                <div class="accordion shadow-sm" id="idAccordion">
+                <div class="accordion" id="idAccordion">
                     <div class="card ">
                         <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
@@ -450,7 +472,7 @@ if (!array_key_exists('logged_user', $_SESSION)) {
     <!-- Main sctipt -->
     <script src="js/script.js"></script>
     <!-- Registration sctipt -->
-    <script src="js/registraion.js"></script>
+    <script src="js/registration.js"></script>
     <!-- Back to top button -->
     <script src="js/top.js"></script>
 </body>
