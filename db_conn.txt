@@ -1,4 +1,0 @@
-den1.mysql5.gear.host
-stephub
-[username]
-[password]
