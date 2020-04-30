@@ -1,7 +1,13 @@
 <?php
 date_default_timezone_set('Europe/Kiev');
 
-// Show errors
+
+// ==============================================================
+//
+// DEBUG
+//
+// ==============================================================
+
 ini_set("display_errors", 1);
 error_reporting(-1);
 
@@ -34,6 +40,12 @@ function show_array($a)
     echo "</pre>";
 }
 
+// ==============================================================
+//
+// FUNCTIONS
+//
+// ==============================================================
+
 function show_date($numberofsecs)
 {
     return date('d.m.Y', $numberofsecs);
@@ -47,6 +59,20 @@ function show_detailed_date($numberofsecs)
 function show_time($numberofsecs)
 {
     return date('H:i', $numberofsecs);
+}
+
+function get_db_connection()
+{
+    $file_arr = file("db_conn.txt");
+
+    $db_conn['host'] = str_replace(PHP_EOL, '', $file_arr[0]);
+    $db_conn['dbname'] = str_replace(PHP_EOL, '', $file_arr[1]);
+    $db_conn['username'] = str_replace(PHP_EOL, '', $file_arr[2]);
+    $db_conn['password'] = str_replace(PHP_EOL, '', $file_arr[3]);
+
+    console_log($db_conn);
+
+    return $db_conn;
 }
 
 function generate_random_string($length)
@@ -72,17 +98,18 @@ function get_upload_path($announcement_id)
     return "uploads/" . $announcement_id . "/";
 }
 
-function delete_files($target) {
-    if(is_dir($target)){
-        $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+function delete_files($target)
+{
+    if (is_dir($target)) {
+        $files = glob($target . '*', GLOB_MARK); //GLOB_MARK adds a slash to directories returned
 
-        foreach( $files as $file ){
-            delete_files( $file );
+        foreach ($files as $file) {
+            delete_files($file);
         }
 
-        rmdir( $target );
-    } elseif(is_file($target)) {
-        unlink( $target );
+        rmdir($target);
+    } elseif (is_file($target)) {
+        unlink($target);
     }
 }
 
