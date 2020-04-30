@@ -70,8 +70,6 @@ function get_db_connection()
     $db_conn['username'] = str_replace(PHP_EOL, '', $file_arr[2]);
     $db_conn['password'] = str_replace(PHP_EOL, '', $file_arr[3]);
 
-    console_log($db_conn);
-
     return $db_conn;
 }
 

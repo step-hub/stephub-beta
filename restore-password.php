@@ -86,7 +86,7 @@ if (isset($data_post['do_restore'])) {
             <div class="col col-md-6 px-0 px-md-3">
                 <div class="card shadow-sm border-xs-0">
                     <div class="card-header">
-                        <i class="fas fa-key mr-2"></i>Відновелення паролю
+                        <i class="fas fa-key mr-2"></i>Відновлення паролю
                     </div>
                     <div class="card-body">
                         <?php if (isset($data_post['do_restore'])) : ?>
