@@ -5,36 +5,32 @@ $data = $_POST;
 $errors = array();
 
 if (isset($data['do_login'])) {
-    $user = get_user_by_login($data['login']);
+    $user_login = get_user_by_login($data['login']);
+    $user_email = get_user_by_email($data['login']);
+
+    if ($user_login) {
+        $user = $user_login;
+    } elseif ($user_email) {
+        $user = $user_email;
+    } else {
+        $user = null;
+    }
 
     if ($user) {
-        if ($user['token'] != null) {
-            $errors[] = 'Ваш акаунт не активовано. Перевірте вашу електронну пошту. ' . $user['token'];
-        } elseif (password_verify($data['password'], $user->password)) {
-            // login session
-            $_SESSION['logged_user'] = $user;
-            $user->is_online = 1;
-            R::store($user);
-
-            // login cookie
-            //            if ($data['remember']) {
-            //                if (isset($_COOKIE['user_token']))
-            //                    setcookie('user_token', '', 0, "/");
-            //
-            //                $user_token = generate_random_string(80);
-            //                $time = 31536000;
-            //                setcookie('user_token', $user_token, time() + $time, "/");
-            //
-            //                $login = $data['login'];
-            //
-            //                R::exec("UPDATE `users` SET token = '$user_token' WHERE login = '$login'");
-            //            }
-
-            echo '<script type="text/javascript">location.reload(true);</script>';
+        if (password_verify($data['password'], $user->password)) {
+            if ($user['token'] == null) {
+                $_SESSION['logged_user'] = $user;
+                $user->is_online = 1;
+                R::store($user);
+                
+                echo '<script type="text/javascript">location.reload(true);</script>';
+            } else {
+                $errors[] = "Ваш акаунт не активовано. Перевірте вашу електронну пошту.";
+            }
         } else {
-            $errors[] = "Не правильний пароль.";
+            $errors[] = "Ви ввели неправильний пароль.";
         }
     } else {
-        $errors[] = "Не правильний логін.";
+        $errors[] = "Ви ввели неправильний логін або email.";
     }
 }

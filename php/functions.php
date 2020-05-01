@@ -164,6 +164,10 @@ function get_user_by_login($login)
 {
     return R::findOne('users', 'login = ?', array($login));
 }
+function get_user_by_email($email)
+{
+    return R::findOne('users', 'email = ?', array($email));
+}
 function get_user_by_token($token)
 {
     return R::findOne('users', 'token = ?', array($token));
