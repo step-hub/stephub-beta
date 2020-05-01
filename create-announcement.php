@@ -119,11 +119,11 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                     <div class="container">
                         <div class="row">
                             <!-- Upload file -->
-                            <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable">
+                            <label for="fileUpload" class="file-upload btn btn-xs-block my-btn-blue mb-3 mb-sm-0 clickable">
                                 <i class="material-icons mr-2">attach_file</i>Прикріпити файл
                                 <input id="fileUpload" type="file" name="userfile">
                             </label>
-                            <button type="submit" name="do_post" class="btn my-btn-dark mb-auto ml-sm-auto">Сворити оголошення</button>
+                            <button type="submit" name="do_post" class="btn btn-xs-block my-3 my-sm-0 my-btn-dark ml-sm-auto">Сворити оголошення</button>
                         </div>
                     </div>
 
