@@ -324,7 +324,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         <div class="container">
                                             <div class="row">
                                                 <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-xs-block btn-secondary order-12 order-md-1" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
-                                                <p class="small ml-2 my-auto order-1 order-md-12"><i class="material-icons md-18 mr-1">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                                <p class="announcementFileLabel small ml-2 my-auto order-1 order-md-12"><i class="announcementFileIcon mr-1 fas"></i><?= $announcement['file'] ?></p>
                                             </div>
                                         </div>
                                     </div>
