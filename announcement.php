@@ -264,24 +264,23 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         <div class="card-footer p-2 p-md-3">
                                             <div class="container">
                                                 <div class="row">
-                                                    <button class="btn my-btn-red" type="submit" name="do_unpin_file"><i class="material-icons mr-2">cancel</i>Відкріпити файл</button>
-                                                    <p class="ml-2 my-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                                    <button class="btn btn-xs-block my-btn-red order-12 order-md-1" type="submit" name="do_unpin_file"><i class="material-icons mr-2">cancel</i>Відкріпити файл</button>
+                                                    <p class="small ml-2 my-auto order-1 order-md-12"><i class="material-icons md-18 mr-1">insert_drive_file</i><?= $announcement['file'] ?></p>
                                                 </div>
                                             </div>
-
                                         </div>
                                     <?php else : ?>
                                         <div class="card-footer p-2 p-md-3">
                                             <div class="container">
                                                 <div class="row">
                                                     <!-- Upload file -->
-                                                    <label for="fileUpload" class="file-upload btn my-btn-blue mb-0 clickable">
+                                                    <label for="fileUpload" class="file-upload btn btn-xs-block my-btn-blue mb-0 clickable order-12 order-md-1">
                                                         <i class="material-icons mr-2">attach_file</i>Прикріпити файл
                                                         <input id="fileUpload" type="file" name="userfile">
                                                     </label>
+                                                    <label for="fileUpload" class="fileUploadName small my-auto ml-0 ml-md-3 mx-auto order-1 order-md-12"></label>
                                                 </div>
                                             </div>
-
                                         </div>
                                     <?php endif; ?>
                                 </form>
@@ -316,15 +315,17 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body px-3 px-md-4 pt-4 pb-4 pb-md-2 announcement-block-body">
+                                <div class="card-body px-3 px-md-4 pt-4 announcement-block-body">
                                     <p class="lead d-none d-md-inline"><?= $announcement['details'] ?></p>
                                     <p class="d-inline d-md-none"><?= $announcement['details'] ?></p>
                                 </div>
                                 <?php if (isset($announcement['file'])) : ?>
-                                    <div class="card-footer">
-                                        <div class="row pt-2">
-                                            <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-secondary ml-3" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
-                                            <p class="ml-3 ml-md-2 my-2 my-md-1"><i class="material-icons mr-2">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                    <div class="card-footer p-2 p-md-3">
+                                        <div class="container">
+                                            <div class="row">
+                                                <a href="uploads/<?= $announcement['id'] ?>/<?= $announcement['file'] ?>" class="btn btn-xs-block btn-secondary order-12 order-md-1" download><i class="material-icons mr-2">get_app</i>Завантажити</a>
+                                                <p class="small ml-2 my-auto order-1 order-md-12"><i class="material-icons md-18 mr-1">insert_drive_file</i><?= $announcement['file'] ?></p>
+                                            </div>
                                         </div>
                                     </div>
                                 <?php endif; ?>
@@ -697,6 +698,9 @@ if (array_key_exists('logged_user', $_SESSION)) {
     <script src="js/script.js"></script>
     <!-- Back to top button -->
     <script src="js/top.js"></script>
+    <!-- Upload file sctipt -->
+    <script src="js/file.js"></script>
+
 </body>
 
 </html>
