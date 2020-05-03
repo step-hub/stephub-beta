@@ -69,7 +69,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
 
     <!-- Navigation -->
     <?php include_once 'templates/navbar.php'; ?>
-    
+
     <!-- Toasts -->
     <?php if (isset($data['activate']) and $data['activate'] == 'true') {
         include_once 'templates/toasts.php';
@@ -78,6 +78,12 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
     <!-- Header-->
     <?php if (!array_key_exists('logged_user', $_SESSION)) :
         include_once 'templates/intro.php'; ?>
+
+        <!-- Video -->
+        <div class="container px-0 px-md-3 mt-5">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/HBDIfVjiGeY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        
     <?php else :
         include_once 'templates/header.php'; ?>
 
@@ -110,7 +116,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
                         </form>
                     </div>
                     <div class="card border-xs-0">
-                        <div class="card-body shadow bg-light pb-0 pt-4 pt-md-3 px-2 px-md-3">
+                        <div class="card-body shadow-sm bg-light pb-0 pt-4 pt-md-3 px-2 px-md-3">
                             <?php if ($announcements) :
                                 foreach ($announcements as $announcement) : ?>
                                     <div class="card text-left mb-2 mb-md-3 clickable bg-white announcement-card" onclick="location.href='announcement.php?id=<?= $announcement['id'] ?>'">
@@ -228,7 +234,7 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
             $('#activate').toast('show');
         });
     </script>
-    
+
 </body>
 
 </html>
