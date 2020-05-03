@@ -12,9 +12,10 @@
             </div>
             <div class="col-sm-12 col-md-8 col-lg-5 text-left">
                 <h2>Ласкаво просимо до StepHub!</h2>
-                <h5>Lorem ipsum dolor sit amet, consectetur</h5>
+                <h5>Будь ласка, авторизуйтесь на сайті</h5>
                 <br>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur culpa fugiat laudantium, nihil perferendis recusandae. </p>
+                <p>Для подальшого використання всіх можливостей сервісу необхідно авторизуватись в свій анонімний акаунт StepHub.</p>
+                <p>Сервіс доступний лише студентам вищого навчального закладу <strong>IT Step University</strong>.</p>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-4 px-sm-5 px-lg-0 px-0 px-lg-4 pt-2 pb-0 pb-md-4">
                 <div class="card mx-xs-0 mx-sm-5 mx-lg-0 border-xs-0">
