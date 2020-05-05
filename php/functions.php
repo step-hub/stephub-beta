@@ -61,10 +61,9 @@ function show_time($numberofsecs)
     return date('H:i', $numberofsecs);
 }
 
-function get_db_connection()
+function get_db_connection($file)
 {
-    $file_arr = file("db_conn.txt");
-
+    $file_arr = file($file);
     $db_conn['host'] = str_replace(PHP_EOL, '', $file_arr[0]);
     $db_conn['dbname'] = str_replace(PHP_EOL, '', $file_arr[1]);
     $db_conn['username'] = str_replace(PHP_EOL, '', $file_arr[2]);
@@ -164,6 +163,10 @@ function get_user_by_id($id)
 function get_user_by_login($login)
 {
     return R::findOne('users', 'login = ?', array($login));
+}
+function get_user_by_email($email)
+{
+    return R::findOne('users', 'email = ?', array($email));
 }
 function get_user_by_token($token)
 {

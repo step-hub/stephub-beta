@@ -119,11 +119,12 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
                     <div class="container">
                         <div class="row">
                             <!-- Upload file -->
-                            <label for="fileUpload" class="file-upload btn my-btn-blue btn-block w-auto clickable">
+                            <label for="fileUpload" class="file-upload btn btn-xs-block my-btn-blue mb-3 mb-sm-0 clickable">
                                 <i class="material-icons mr-2">attach_file</i>Прикріпити файл
                                 <input id="fileUpload" type="file" name="userfile">
                             </label>
-                            <button type="submit" name="do_post" class="btn my-btn-dark mb-auto ml-sm-auto">Сворити оголошення</button>
+                            <label for="fileUpload" class="fileUploadName small my-auto ml-0 ml-md-3 mx-auto">Файл не вибрано</label>
+                            <button type="submit" name="do_post" class="btn btn-xs-block my-3 my-sm-0 my-btn-dark ml-sm-auto">Сворити оголошення</button>
                         </div>
                     </div>
 
@@ -141,6 +142,9 @@ if (array_key_exists('logged_user', $_SESSION) and $_SESSION['logged_user']['use
 
     <!-- Main sctipt -->
     <script src="js/script.js"></script>
+    <!-- Upload file sctipt -->
+    <script src="js/file.js"></script>
+
 </body>
 
 </html>
