@@ -78,11 +78,6 @@ $announcements = get_actual_announcements_with_filter($sort_by, $order, $start, 
     <!-- Header-->
     <?php if (!array_key_exists('logged_user', $_SESSION)) :
         include_once 'templates/intro.php'; ?>
-
-        <!-- Video -->
-        <div class="container px-0 px-md-3 mt-5">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/HBDIfVjiGeY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
         
     <?php else :
         include_once 'templates/header.php'; ?>
