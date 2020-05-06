@@ -384,7 +384,7 @@ if (array_key_exists('logged_user', $_SESSION)) {
                                 <form class="form" action="announcement.php?id=<?= $_GET['id'] ?>" method="POST">
                                     <label class="sr-only" for="comment_field">Написати коментар</label>
                                     <textarea type="text" name="comment_to_ann" rows="3" class="form-control mb-2 mr-sm-2" id="comment_field" placeholder="Написати коментар"></textarea>
-                                    <button type="submit" name="do_comment" class="btn my-btn-blue mt-sm-1"><i class="fas fa-comment mr-2"></i>Коментувати</button>
+                                    <button type="submit" name="do_comment" class="btn my-btn-blue mt-sm-1" style="position: relative; z-index: 2;"><i class="fas fa-comment mr-2"></i>Коментувати</button>
                                 </form><!-- /Leave New Comment -->
                             </div>
                             <div class="card-body bg-light pt-2 px-2 px-sm-3">
